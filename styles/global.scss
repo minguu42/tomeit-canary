@@ -9,15 +9,15 @@ a {
 }
 
 * {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
 }
 
 button {
-  border: none;
   cursor: pointer;
   background-color: transparent;
+  border: none;
 }
 
 input {
@@ -29,12 +29,12 @@ input:focus {
 }
 
 :root {
-  --c-primary: #192F60;
-  --c-secondary: #427EFF;
-  --c-surface: #FFF;
+  --c-primary: #192f60;
+  --c-secondary: #427eff;
+  --c-surface: #fff;
   --c-outline: rgba(0, 0, 0, 0.12);
-  --c-on-light-high-emphasis: rgba(0,0,0,0.87);
-  --c-on-light-medium-emphasis: rgba(0,0,0,0.60);
-  --c-on-light-disable: rgba(0,0,0,0.37);
+  --c-on-light-high-emphasis: rgba(0, 0, 0, 0.87);
+  --c-on-light-medium-emphasis: rgba(0, 0, 0, 0.6);
+  --c-on-light-disable: rgba(0, 0, 0, 0.37);
   --c-on-dark: #fff;
 }

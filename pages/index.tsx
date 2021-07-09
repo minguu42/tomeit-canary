@@ -1,6 +1,6 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from 'styles/pages/Home.module.scss'
+import Head from "next/head";
+import Image from "next/image";
+import styles from "styles/pages/Home.module.scss";
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
 
@@ -57,12 +57,17 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
-            <Image src="/logo512.png" alt="tomeit Logo" width={72} height={72} />
+            <Image
+              src="/logo512.png"
+              alt="tomeit Logo"
+              width={72}
+              height={72}
+            />
           </span>
         </a>
       </footer>
     </div>
-  )
+  );
 }
