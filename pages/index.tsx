@@ -1,6 +1,7 @@
 import { VFC } from "react";
 import Head from "next/head";
 
+import styles from "styles/pages/Home.module.scss";
 import Header from "components/Header";
 
 const Home: VFC = () => (
@@ -14,8 +15,15 @@ const Home: VFC = () => (
     </Head>
 
     <Header />
-    <main>
-      <h1>Hello, 世界！</h1>
+    <main className={styles.main}>
+      <div className={styles.catch}>
+        <h3 className={styles.heading}>大事なことに集中する</h3>
+        <p className={styles.description}>
+          tomeit は大事なことに集中するためのタスク管理アプリです。
+          <br />
+          ポモドーロテクニックを使って、時間と集中力を有意義に使いましょう！
+        </p>
+      </div>
     </main>
   </>
 );
