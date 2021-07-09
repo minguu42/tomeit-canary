@@ -1,9 +1,9 @@
 ---
 name: Bug report
-about: バグを報告する.
+about: バグを報告する
 title: ''
 labels: 'bug'
-assigness: minguu42
+assignees: ''
 ---
 
 ## 問題

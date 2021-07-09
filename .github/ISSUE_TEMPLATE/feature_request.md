@@ -2,8 +2,8 @@
 name: Feature request
 about: 機能を追加する
 title: ''
-labels: 'feature'
-assigness: minguu42
+labels: 'enhancement'
+assignees: ''
 ---
 
 ## 概要・目的
