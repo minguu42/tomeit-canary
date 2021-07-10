@@ -1,0 +1,28 @@
+@use "styles/variables";
+
+.wrapper {
+  position: relative;
+
+  .menu {
+    position: absolute;
+    top: 40px;
+    left: -88px;
+    z-index: 4;
+    padding: 8px 16px;
+    border: 1px solid var(--c-outline);
+    border-radius: 4px;
+
+    @include variables.dp04;
+
+    .menuItem {
+      width: 78px;
+      height: 46px;
+      line-height: 46px;
+      color: var(--c-error);
+      text-align: center;
+      list-style: none;
+
+      @include variables.button;
+    }
+  }
+}
