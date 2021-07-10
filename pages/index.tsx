@@ -4,6 +4,7 @@ import Head from "next/head";
 import styles from "styles/pages/Home.module.scss";
 import Header from "components/Header";
 import Footer from "components/Footer";
+import GoogleLoginButton from "components/GoogleLoginButton";
 
 const Home: VFC = () => (
   <>
@@ -25,6 +26,7 @@ const Home: VFC = () => (
           ポモドーロテクニックを使って、時間と集中力を有意義に使いましょう！
         </p>
       </div>
+      <GoogleLoginButton />
     </main>
     <Footer />
   </>
