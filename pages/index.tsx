@@ -1,8 +1,25 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
+
 import styles from "styles/pages/Home.module.scss";
+import {useAuth} from "lib/AuthContext";
 
 export default function Home() {
+  const router = useRouter()
+  const { login } = useAuth()
+
+  const handleLogin = async () => {
+    try {
+      if (login) {
+        await login()
+        await router.push('/') //TODO: リダイレクト先 URL を /users にする
+      }
+    } catch {
+      console.log("handleLogin error")
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>

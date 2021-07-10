@@ -1,14 +1,13 @@
 import { VFC, createContext, useState, useEffect, useContext } from "react";
-// @ts-ignore
-import { User } from "firebase";
+import { User } from "@firebase/auth-types";
 
 // @ts-ignore
 import firebase, { auth } from "/lib/firebase";
 
 type AuthContextType = {
   currentUser: User | null;
-  login?: () => void;
-  logout?: () => void;
+  login?: () => Promise<void>;
+  logout?: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType>({ currentUser: null });
