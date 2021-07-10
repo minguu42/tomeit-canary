@@ -1,6 +1,7 @@
 import { VFC, createContext, useState, useEffect, useContext } from "react";
 import { User } from "@firebase/auth-types";
 
+import Loading from "components/Loading";
 // @ts-ignore
 import firebase, { auth } from "/lib/firebase";
 
@@ -22,7 +23,7 @@ type Props = {
 
 const AuthProvider: VFC<Props> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const login = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -36,7 +37,7 @@ const AuthProvider: VFC<Props> = ({ children }) => {
   useEffect(() => {
     return auth.onAuthStateChanged((user: User | null) => {
       setCurrentUser(user);
-      setLoading(false);
+      setIsLoading(false);
     });
   }, []);
 
@@ -48,7 +49,7 @@ const AuthProvider: VFC<Props> = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {loading ? <p>loading...</p> : children}
+      {isLoading ? <Loading /> : children}
     </AuthContext.Provider>
   );
 };

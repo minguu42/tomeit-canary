@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { useEffect, VFC } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -7,6 +7,7 @@ import Header from "components/Header";
 import Footer from "components/Footer";
 import GoogleLoginButton from "components/GoogleLoginButton";
 import { useAuth } from "lib/AuthContext";
+import { route } from "next/dist/next-server/server/router";
 
 type Props = {
   handleLogin: () => Promise<void>;
@@ -40,16 +41,21 @@ const Home: VFC<Props> = ({ handleLogin }) => (
 
 const HomeContainer: VFC = () => {
   const router = useRouter();
-  const { login } = useAuth();
+  const { currentUser, login } = useAuth();
+
+  useEffect(() => {
+    if (currentUser !== null) {
+      router.push("/users").catch(() => window.alert("エラーが発生しました。"));
+    }
+  }, [router, currentUser]);
 
   const handleLogin = async () => {
     try {
       if (login) {
         await login();
-        await router.push("/"); //TODO: リダイレクト先 URL を /users にする
       }
     } catch {
-      console.log("handleLogin error");
+      window.alert("ログインに失敗しました。もう一度お試しください。");
     }
   };
 
