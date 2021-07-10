@@ -8,22 +8,4 @@
   min-height: calc(100vh - 56px - 56px);
   padding-top: 80px;
   margin: 0 auto;
-
-  .catch {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-
-    .heading {
-      color: var(--c-on-light-high-emphasis);
-
-      @include variables.headline2;
-    }
-
-    .description {
-      color: var(--c-on-light-medium-emphasis);
-
-      @include variables.body1;
-    }
-  }
 }

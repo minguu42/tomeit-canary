@@ -1,12 +1,9 @@
 import { VFC } from "react";
 
-import Header from "components/Header";
-
 const UserHome: VFC = () => (
-  <div>
-    <Header />
+  <main>
     <h1>Hello, ユーザ</h1>
-  </div>
+  </main>
 );
 
 export default UserHome;
