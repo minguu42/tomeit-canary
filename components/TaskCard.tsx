@@ -7,12 +7,15 @@ import TimerIcon from "components/icons/TimerIcon";
 import CircleIcon from "components/icons/CircleIcon";
 import PlayCircleIcon from "./icons/PlayCircleIcon";
 
-type Props = {
+export type Task = {
   id: number;
   name: string;
   priority: number;
   deadline: string;
   pomodoroCount: number;
+};
+
+type Props = Task & {
   isPlaying: boolean;
 };
 
