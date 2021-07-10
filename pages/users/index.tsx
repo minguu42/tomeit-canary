@@ -1,8 +1,11 @@
 import { VFC } from "react";
 
+import styles from "styles/pages/UserHome.module.scss";
+import StatusBar from "components/StatusBar";
+
 const UserHome: VFC = () => (
-  <main>
-    <h1>Hello, ユーザ</h1>
+  <main className={styles.main}>
+    <StatusBar restCount={4} undoneTaskNumber={5} pomodoroNumber={2} />
   </main>
 );
 
