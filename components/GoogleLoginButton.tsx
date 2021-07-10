@@ -4,11 +4,11 @@ import Image from "next/image";
 import styles from "styles/components/GoogleLoginButton.module.scss";
 
 type Props = {
-  handleClick: () => void;
+  handleLogin: () => Promise<void>;
 };
 
-const GoogleLoginButton: VFC<Props> = ({ handleClick }) => (
-  <button onClick={handleClick} className={styles.outer}>
+const GoogleLoginButton: VFC<Props> = ({ handleLogin }) => (
+  <button onClick={handleLogin} className={styles.outer}>
     <Image src="/google.png" alt="Google Login Button" width={18} height={18} />
     <p className={styles.text}>Sign in with Google</p>
   </button>

@@ -3,8 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 import styles from "styles/components/Header.module.scss";
+import SummarizeIcon from "components/icons/SummarizeIcon";
+import AccountMenu from "components/AccountMenu";
+import { useAuth } from "lib/AuthContext";
 
-const Header: VFC = () => (
+type Props = {
+  isLoggedIn: boolean;
+};
+
+const Header: VFC<Props> = ({ isLoggedIn }) => (
   <header className={styles.outer}>
     <div className={styles.inner}>
       <Link href="/">
@@ -13,8 +20,20 @@ const Header: VFC = () => (
           <h2 className={styles.appName}>tomeit</h2>
         </a>
       </Link>
+      {isLoggedIn && (
+        <div className={styles.rightWrapper}>
+          <SummarizeIcon fill="#ffffff" />
+          <AccountMenu />
+        </div>
+      )}
     </div>
   </header>
 );
 
-export default Header;
+const HeaderContainer: VFC = () => {
+  const { currentUser } = useAuth();
+
+  return <Header isLoggedIn={currentUser !== null} />;
+};
+
+export default HeaderContainer;
