@@ -6,6 +6,7 @@ import styles from "styles/components/TaskCard.module.scss";
 import TimerIcon from "components/icons/TimerIcon";
 import CircleIcon from "components/icons/CircleIcon";
 import PlayCircleIcon from "./icons/PlayCircleIcon";
+import { formatStringByLength } from "../lib/format";
 
 export type Task = {
   id: number;
@@ -42,10 +43,12 @@ const TaskCard: VFC<Props> = ({
         {priority === 3 && <CircleIcon fill="#bb5535" />}
       </button>
 
-      {pomodoroCount === 0 && <p className={styles.name}>{name}</p>}
+      {pomodoroCount === 0 && (
+        <p className={styles.name}>{formatStringByLength(38, name)}</p>
+      )}
       {1 <= pomodoroCount && pomodoroCount <= 5 && (
         <div>
-          <p className={styles.name}>{name}</p>
+          <p className={styles.name}>{formatStringByLength(38, name)}</p>
           <div className={styles.iconWrapper}>
             {Array.from({ length: pomodoroCount }, (_, i) => i).map((i) => (
               <TimerIcon key={i} size={12} fill="#192f60" />
@@ -55,7 +58,7 @@ const TaskCard: VFC<Props> = ({
       )}
       {6 <= pomodoroCount && (
         <div>
-          <p className={styles.name}>{name}</p>
+          <p className={styles.name}>{formatStringByLength(38, name)}</p>
           <div className={styles.iconWrapper}>
             <TimerIcon size={12} fill="#192f60" />
             <p className={styles.pomodoroCount}>{pomodoroCount}</p>
