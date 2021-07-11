@@ -1,0 +1,15 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 840px;
+  min-height: 100vh;
+  padding: 16px 0;
+  margin: 0 auto;
+
+  .playerLayout {
+    position: fixed;
+    bottom: 16px;
+    left: calc(50% - 160px);
+  }
+}
