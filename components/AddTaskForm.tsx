@@ -2,7 +2,12 @@ import React, { ChangeEventHandler, useState, VFC } from "react";
 
 import styles from "styles/components/AddTaskForm.module.scss";
 import AddTaskIcon from "components/icons/AddTaskIcon";
-import FlagIcon from "./icons/FlagIcon";
+import FlagIcon from "components/icons/FlagIcon";
+import { Task } from "components/TaskCard";
+
+type ContainerProps = {
+  addTask: (task: Task) => void;
+};
 
 type Props = {
   name: string;
@@ -59,7 +64,7 @@ const AddTaskForm: VFC<Props> = ({
   </form>
 );
 
-const AddTaskFormContainer: VFC = () => {
+const AddTaskFormContainer: VFC<ContainerProps> = ({ addTask }) => {
   const [name, setName] = useState("");
   const [priority, setPriority] = useState(0);
   const [deadline, setDeadline] = useState("");
@@ -79,7 +84,19 @@ const AddTaskFormContainer: VFC = () => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    window.alert(deadline);
+    const task: Task = {
+      id: Math.floor(Math.random() * 1000),
+      name: name,
+      priority: priority,
+      deadline: deadline || "0001-01-01",
+      pomodoroCount: 0,
+    };
+
+    addTask(task);
+
+    setName("");
+    setPriority(0);
+    setDeadline("");
   };
 
   return (

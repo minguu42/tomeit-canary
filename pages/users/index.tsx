@@ -1,94 +1,74 @@
-import { VFC } from "react";
+import { VFC, useState } from "react";
 
 import styles from "styles/pages/UserHome.module.scss";
 import StatusBar from "components/StatusBar";
 import AddTaskForm from "components/AddTaskForm";
 import TaskList from "components/TaskList";
 import PomodoroPlayer from "components/PomodoroPlayer";
-
 import type { Task } from "components/TaskCard";
 
-const tasks: Task[] = [
-  {
-    id: 1,
-    name: "国境の長いトンネルを抜けると雪国であった。夜の底は白かった。色々とわからないこともあった。松の木を見た",
-    priority: 0,
-    deadline: "2021-01-01",
-    pomodoroCount: 0,
-  },
-  {
-    id: 2,
-    name: "タスク2",
-    priority: 0,
-    deadline: "2021-12-31",
-    pomodoroCount: 1,
-  },
-  {
-    id: 3,
-    name: "タスク3",
-    priority: 1,
-    deadline: "0001-01-01",
-    pomodoroCount: 2,
-  },
-  {
-    id: 4,
-    name: "タスク4",
-    priority: 2,
-    deadline: "0001-01-01",
-    pomodoroCount: 4,
-  },
-  {
-    id: 5,
-    name: "タスク5",
-    priority: 3,
-    deadline: "0001-01-01",
-    pomodoroCount: 7,
-  },
-  {
-    id: 5,
-    name: "タスク5",
-    priority: 3,
-    deadline: "0001-01-01",
-    pomodoroCount: 7,
-  },
-  {
-    id: 6,
-    name: "タスク5",
-    priority: 3,
-    deadline: "0001-01-01",
-    pomodoroCount: 7,
-  },
-  {
-    id: 7,
-    name: "タスク5",
-    priority: 3,
-    deadline: "0001-01-01",
-    pomodoroCount: 7,
-  },
-  {
-    id: 8,
-    name: "タスク5",
-    priority: 3,
-    deadline: "0001-01-01",
-    pomodoroCount: 7,
-  },
-];
+type Props = {
+  tasks: Task[];
+  addTask: (task: Task) => void;
+  playingTask: Task | null;
+  // playPomodoro: (task: Task) => void;
+  restCount: number;
+  decreaseRestCount: () => void;
+};
 
-const UserHome: VFC = () => (
+const UserHome: VFC<Props> = ({
+  tasks,
+  addTask,
+  playingTask,
+  restCount,
+  decreaseRestCount,
+}) => (
   <main className={styles.main}>
-    <StatusBar restCount={4} undoneTaskNumber={5} pomodoroNumber={2} />
-    <AddTaskForm />
+    <StatusBar
+      restCount={restCount}
+      undoneTaskNumber={tasks.length}
+      pomodoroNumber={2}
+    />
+    <AddTaskForm addTask={addTask} />
     <TaskList tasks={tasks} />
     <div className={styles.playerLayout}>
       <PomodoroPlayer
-        leftTime={1500}
-        task={tasks[0]}
-        isPomodoro={true}
-        isPlayingPomodoro={false}
-        isTimerActive={false}
+        restCount={restCount}
+        playingTask={playingTask}
+        decreaseRestCount={decreaseRestCount}
       />
     </div>
   </main>
 );
 
-export default UserHome;
+const UserHomeContainer: VFC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [playingTask, setPlayingTask] = useState<Task | null>(null);
+  const [restCount, setRestCount] = useState(4);
+
+  const addTask = (task: Task): void => {
+    const tmp = tasks.slice();
+    tmp.push(task);
+    setTasks(tmp);
+  };
+
+  const playTask = (task: Task): void => {
+    setPlayingTask(task);
+  };
+
+  const decreaseRestCount = (): void => {
+    setRestCount((c) => (c === 1 ? 4 : c - 1));
+  };
+
+  return (
+    <UserHome
+      tasks={tasks}
+      addTask={addTask}
+      playingTask={playingTask}
+      restCount={restCount}
+      decreaseRestCount={decreaseRestCount}
+    />
+  );
+};
+
+export default UserHomeContainer;
