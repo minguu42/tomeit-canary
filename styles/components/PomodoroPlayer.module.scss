@@ -35,7 +35,9 @@
 
   .rightWrapper {
     display: flex;
+    flex-direction: row-reverse;
     gap: 8px;
+    min-width: 56px;
   }
 }
 

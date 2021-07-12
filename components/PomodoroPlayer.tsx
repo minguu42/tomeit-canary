@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { useState, useEffect, VFC } from "react";
 // @ts-ignore
 import cn from "classnames";
 
@@ -11,20 +11,32 @@ import PauseCircleIcon from "components/icons/PauseCircleIcon";
 import StopCircleIcon from "components/icons/StopCircle";
 import { convertSecondsForDisplay, formatStringByLength } from "lib/format";
 
+type ContainerProps = {
+  playingTask: Task | null;
+  restCount: number;
+  applyCompletePomodoro: (task: Task | null) => void;
+};
+
 type Props = {
-  leftTime: number;
-  task: Task | null;
+  time: number;
+  playingTask: Task | null;
   isPomodoro: boolean;
-  isPlayingPomodoro: boolean;
-  isTimerActive: boolean;
+  isActive: boolean;
+  handlePlayClick: () => void;
+  handlePauseClick: () => void;
+  handleSkipClick: () => void;
+  handleStopClick: () => void;
 };
 
 const PomodoroPlayer: VFC<Props> = ({
-  leftTime,
-  task,
+  time,
+  playingTask,
   isPomodoro,
-  isPlayingPomodoro,
-  isTimerActive,
+  isActive,
+  handlePlayClick,
+  handlePauseClick,
+  handleSkipClick,
+  handleStopClick,
 }) => (
   <div
     className={cn(styles.outer, {
@@ -35,37 +47,39 @@ const PomodoroPlayer: VFC<Props> = ({
     <div className={styles.leftWrapper}>
       <div className={styles.timer}>
         <TimerIcon fill="#ffffff" />
-        <p>{convertSecondsForDisplay(leftTime)}</p>
+        <p>{convertSecondsForDisplay(time)}</p>
       </div>
       <p className={styles.name}>
-        {task?.name === undefined ? "" : formatStringByLength(17, task.name)}
+        {playingTask?.name === undefined
+          ? ""
+          : formatStringByLength(17, playingTask.name)}
       </p>
     </div>
     <div className={styles.rightWrapper}>
-      {isPomodoro && isTimerActive && (
-        <button>
+      {isPomodoro && isActive && (
+        <button onClick={handlePauseClick}>
           <PauseCircleIcon fill="#ffffff" />
         </button>
       )}
-      {isPomodoro && !isTimerActive && (
+      {isPomodoro && !isActive && (
         <>
-          {isPlayingPomodoro && (
-            <button>
+          <button onClick={handlePlayClick}>
+            <PlayCircleIcon fill="#ffffff" />
+          </button>
+          {time !== 15 && (
+            <button onClick={handleStopClick}>
               <StopCircleIcon fill="#ffffff" />
             </button>
           )}
-          <button>
-            <PlayCircleIcon fill="#ffffff" />
-          </button>
         </>
       )}
-      {!isPomodoro && isTimerActive && (
-        <button>
+      {!isPomodoro && isActive && (
+        <button onClick={handleSkipClick}>
           <CheckCircleIcon fill="#ffffff" />
         </button>
       )}
-      {!isPomodoro && !isTimerActive && (
-        <button className={styles.button}>
+      {!isPomodoro && !isActive && (
+        <button onClick={handlePlayClick}>
           <PlayCircleIcon fill="#ffffff" />
         </button>
       )}
@@ -73,4 +87,79 @@ const PomodoroPlayer: VFC<Props> = ({
   </div>
 );
 
-export default PomodoroPlayer;
+const PomodoroPlayerContainer: VFC<ContainerProps> = ({
+  playingTask,
+  restCount,
+  applyCompletePomodoro,
+}) => {
+  const [time, setTime] = useState(15);
+  const [isActive, setIsActive] = useState(false);
+  const [isPomodoro, setIsPomodoro] = useState(true);
+
+  const handlePlayClick = () => {
+    setIsActive(true);
+  };
+
+  const handlePauseClick = () => {
+    setIsActive(false);
+  };
+
+  const handleSkipClick = () => {
+    setTime(0);
+  };
+
+  const handleStopClick = () => {
+    setTime(15);
+    setIsActive(false);
+  };
+
+  useEffect(() => {
+    if (playingTask !== null) {
+      setIsActive(true);
+    }
+  }, [playingTask]);
+
+  const tick = (): void => {
+    setTime((t) => t - 1);
+  };
+
+  useEffect(() => {
+    if (!isActive) return;
+
+    const timerID = setInterval(() => tick(), 1000);
+    return () => {
+      clearInterval(timerID);
+    };
+  }, [isActive]);
+
+  useEffect(() => {
+    if (time === 0 && isPomodoro) {
+      setIsActive(false);
+      setIsPomodoro(false);
+      setTime(restCount !== 1 ? 3 : 9);
+
+      applyCompletePomodoro(playingTask);
+    }
+
+    if (time === 0 && !isPomodoro) {
+      setIsActive(false);
+      setIsPomodoro(true);
+      setTime(15);
+    }
+  }, [time, playingTask, isPomodoro, restCount, applyCompletePomodoro]);
+
+  return (
+    <PomodoroPlayer
+      time={time}
+      playingTask={playingTask}
+      isPomodoro={isPomodoro}
+      isActive={isActive}
+      handlePlayClick={handlePlayClick}
+      handlePauseClick={handlePauseClick}
+      handleSkipClick={handleSkipClick}
+      handleStopClick={handleStopClick}
+    />
+  );
+};
+
+export default PomodoroPlayerContainer;
