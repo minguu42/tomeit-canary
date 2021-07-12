@@ -1,0 +1,18 @@
+@use "styles/variables";
+
+.outer {
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--c-outline);
+
+    @include variables.subtitle1;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+  }
+}
