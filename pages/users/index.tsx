@@ -9,33 +9,43 @@ import type { Task } from "components/TaskCard";
 
 type Props = {
   tasks: Task[];
-  addTask: (task: Task) => void;
   playingTask: Task | null;
-  // playPomodoro: (task: Task) => void;
   restCount: number;
-  decreaseRestCount: () => void;
+  todayPomodoroNum: number;
+  addTask: (task: Task) => void;
+  playTask: (task: Task) => void;
+  completeTask: (task: Task) => void;
+  applyCompletePomodoro: (task: Task | null) => void;
 };
 
 const UserHome: VFC<Props> = ({
   tasks,
-  addTask,
   playingTask,
   restCount,
-  decreaseRestCount,
+  todayPomodoroNum,
+  addTask,
+  playTask,
+  completeTask,
+  applyCompletePomodoro,
 }) => (
   <main className={styles.main}>
     <StatusBar
       restCount={restCount}
       undoneTaskNumber={tasks.length}
-      pomodoroNumber={2}
+      pomodoroNumber={todayPomodoroNum}
     />
     <AddTaskForm addTask={addTask} />
-    <TaskList tasks={tasks} />
+    <TaskList
+      tasks={tasks}
+      playingTask={playingTask}
+      playTask={playTask}
+      completeTask={completeTask}
+    />
     <div className={styles.playerLayout}>
       <PomodoroPlayer
         restCount={restCount}
         playingTask={playingTask}
-        decreaseRestCount={decreaseRestCount}
+        applyCompletePomodoro={applyCompletePomodoro}
       />
     </div>
   </main>
@@ -45,6 +55,7 @@ const UserHomeContainer: VFC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [playingTask, setPlayingTask] = useState<Task | null>(null);
   const [restCount, setRestCount] = useState(4);
+  const [todayPomodoroNum, setTodayPomodoroNum] = useState(0);
 
   const addTask = (task: Task): void => {
     const tmp = tasks.slice();
@@ -56,7 +67,21 @@ const UserHomeContainer: VFC = () => {
     setPlayingTask(task);
   };
 
-  const decreaseRestCount = (): void => {
+  const completeTask = (task: Task): void => {
+    const tmp = tasks.filter((t) => t.id !== task.id);
+    setTasks(tmp);
+  };
+
+  const applyCompletePomodoro = (task: Task | null): void => {
+    if (task !== null) {
+      task.pomodoroCount += 1;
+      const tmp = tasks.slice();
+      const index = tasks.findIndex((t) => t.id === task.id);
+      tmp[index] = task;
+      setTasks(tmp);
+    }
+
+    setTodayPomodoroNum((n) => n + 1);
     setRestCount((c) => (c === 1 ? 4 : c - 1));
   };
 
@@ -65,8 +90,11 @@ const UserHomeContainer: VFC = () => {
       tasks={tasks}
       addTask={addTask}
       playingTask={playingTask}
+      playTask={playTask}
       restCount={restCount}
-      decreaseRestCount={decreaseRestCount}
+      todayPomodoroNum={todayPomodoroNum}
+      applyCompletePomodoro={applyCompletePomodoro}
+      completeTask={completeTask}
     />
   );
 };

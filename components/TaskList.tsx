@@ -6,9 +6,17 @@ import TaskCard, { Task } from "components/TaskCard";
 
 type Props = {
   tasks: Task[];
+  playingTask: Task | null;
+  playTask: (task: Task) => void;
+  completeTask: (task: Task) => void;
 };
 
-const TaskList: VFC<Props> = ({ tasks }) => (
+const TaskList: VFC<Props> = ({
+  tasks,
+  playingTask,
+  playTask,
+  completeTask,
+}) => (
   <div className={styles.outer}>
     {tasks.map((task) => (
       <TaskCard
@@ -18,7 +26,9 @@ const TaskList: VFC<Props> = ({ tasks }) => (
         priority={task.priority}
         deadline={task.deadline}
         pomodoroCount={task.pomodoroCount}
-        isPlaying={false}
+        isPlaying={playingTask?.id === task.id}
+        handlePlayClick={() => playTask(task)}
+        handleCircleClick={() => completeTask(task)}
       />
     ))}
   </div>

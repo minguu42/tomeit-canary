@@ -14,6 +14,8 @@ export type Task = {
   priority: number;
   deadline: string;
   pomodoroCount: number;
+  handlePlayClick: () => void;
+  handleCircleClick: () => void;
 };
 
 type Props = Task & {
@@ -27,6 +29,8 @@ const TaskCard: VFC<Props> = ({
   deadline,
   pomodoroCount,
   isPlaying,
+  handlePlayClick,
+  handleCircleClick,
 }) => (
   <div
     className={cn(styles.outer, {
@@ -36,7 +40,7 @@ const TaskCard: VFC<Props> = ({
     })}
   >
     <div className={styles.leftWrapper}>
-      <button>
+      <button onClick={handleCircleClick}>
         {priority === 0 && <CircleIcon fill="#666666" />}
         {priority === 1 && <CircleIcon fill="#006e54" />}
         {priority === 2 && <CircleIcon fill="#c89932" />}
@@ -73,7 +77,7 @@ const TaskCard: VFC<Props> = ({
       )}
       {isPlaying && <TimerIcon fill="#212121" />}
       {!isPlaying && (
-        <button>
+        <button onClick={handlePlayClick}>
           <PlayCircleIcon fill="#212121" />
         </button>
       )}

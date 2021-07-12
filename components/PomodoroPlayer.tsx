@@ -14,7 +14,7 @@ import { convertSecondsForDisplay, formatStringByLength } from "lib/format";
 type ContainerProps = {
   playingTask: Task | null;
   restCount: number;
-  decreaseRestCount: () => void;
+  applyCompletePomodoro: (task: Task | null) => void;
 };
 
 type Props = {
@@ -90,7 +90,7 @@ const PomodoroPlayer: VFC<Props> = ({
 const PomodoroPlayerContainer: VFC<ContainerProps> = ({
   playingTask,
   restCount,
-  decreaseRestCount,
+  applyCompletePomodoro,
 }) => {
   const [time, setTime] = useState(15);
   const [isActive, setIsActive] = useState(false);
@@ -138,7 +138,7 @@ const PomodoroPlayerContainer: VFC<ContainerProps> = ({
       setIsPomodoro(false);
       setTime(restCount !== 1 ? 3 : 9);
 
-      decreaseRestCount();
+      applyCompletePomodoro(playingTask);
     }
 
     if (time === 0 && !isPomodoro) {
@@ -146,7 +146,7 @@ const PomodoroPlayerContainer: VFC<ContainerProps> = ({
       setIsPomodoro(true);
       setTime(15);
     }
-  }, [time, isPomodoro, restCount, decreaseRestCount]);
+  }, [time, playingTask, isPomodoro, restCount, applyCompletePomodoro]);
 
   return (
     <PomodoroPlayer
