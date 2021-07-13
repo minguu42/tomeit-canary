@@ -14,6 +14,8 @@ export type Task = {
   priority: number;
   deadline: string;
   pomodoroCount: number;
+  createdAt?: string
+  updatedAt?: string
   handlePlayClick?: () => void;
   handleCircleClick?: () => void;
 };
