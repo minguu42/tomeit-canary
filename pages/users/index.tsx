@@ -1,11 +1,13 @@
-import { VFC, useState } from "react";
+import { VFC, useState, useEffect } from "react";
 
 import styles from "styles/pages/UserHome.module.scss";
 import StatusBar from "components/StatusBar";
 import AddTaskForm from "components/AddTaskForm";
 import TaskList from "components/TaskList";
-import PomodoroPlayer from "components/PomodoroPlayer";
 import type { Task } from "components/TaskCard";
+import PomodoroPlayer from "components/PomodoroPlayer";
+import {fetchData, postData, putData} from "../../lib/fetch";
+import {useAuth} from "lib/AuthContext";
 
 type Props = {
   tasks: Task[];
@@ -56,11 +58,21 @@ const UserHomeContainer: VFC = () => {
   const [playingTask, setPlayingTask] = useState<Task | null>(null);
   const [restCount, setRestCount] = useState(4);
   const [todayPomodoroNum, setTodayPomodoroNum] = useState(0);
+  const { currentUser } = useAuth()
 
   const addTask = (task: Task): void => {
-    const tmp = tasks.slice();
-    tmp.push(task);
-    setTasks(tmp);
+    const request = {
+      name: task.name,
+      priority: task.priority ?? 0,
+      deadline: task.deadline ?? "0001-01-01",
+    }
+    postData("/tasks", request, currentUser).then((data) => {
+      const tmp = tasks.slice();
+      tmp.push(data);
+      setTasks(tmp);
+    }).catch((error) => {
+      console.log(error)
+    })
   };
 
   const playTask = (task: Task): void => {
@@ -68,8 +80,12 @@ const UserHomeContainer: VFC = () => {
   };
 
   const completeTask = (task: Task): void => {
-    const tmp = tasks.filter((t) => t.id !== task.id);
-    setTasks(tmp);
+    putData("/tasks/done/" + String(task.id), {}, currentUser).then((data) => {
+      const tmp = tasks.filter((t) => t.id !== task.id);
+      setTasks(tmp);
+    }).catch((error) => {
+      console.log(error)
+    })
   };
 
   const applyCompletePomodoro = (task: Task | null): void => {
@@ -79,15 +95,40 @@ const UserHomeContainer: VFC = () => {
       const index = tasks.findIndex((t) => t.id === task.id);
       tmp[index] = task;
       setTasks(tmp);
+
+      const req = {taskID: task.id}
+      postData("/pomodoros/logs", req, currentUser).then().catch(
+          (error) => {
+            console.log(error)
+          }
+      )
     }
 
     setTodayPomodoroNum((n) => n + 1);
     setRestCount((c) => (c === 1 ? 4 : c - 1));
   };
 
+  useEffect(() => {
+    fetchData("/tasks", currentUser).then((data) => {
+      if (data.tasks === null) {
+        setTasks([])
+      } else {
+        setTasks(data.tasks)
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+
+    fetchData("/pomodoros/rest/count", currentUser).then((data) => {
+      setRestCount(data.countToNextRest)
+    }).catch((error) => {
+      console.log(error)
+    })
+  }, [currentUser])
+
   return (
     <UserHome
-      tasks={tasks}
+      tasks={tasks.filter((task) => task.isDone === false)}
       addTask={addTask}
       playingTask={playingTask}
       playTask={playTask}

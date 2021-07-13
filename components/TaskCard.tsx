@@ -13,9 +13,12 @@ export type Task = {
   name: string;
   priority: number;
   deadline: string;
+  isDone?: boolean;
   pomodoroCount: number;
-  handlePlayClick: () => void;
-  handleCircleClick: () => void;
+  createdAt?: string
+  updatedAt?: string
+  handlePlayClick?: () => void;
+  handleCircleClick?: () => void;
 };
 
 type Props = Task & {
