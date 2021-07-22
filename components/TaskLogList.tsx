@@ -1,5 +1,3 @@
-import { VFC } from "react";
-
 import styles from "styles/components/TaskLogList.module.scss";
 import TaskLogItem, { TaskLog } from "components/TaskLogItem";
 
@@ -7,7 +5,7 @@ type Props = {
   taskLogs: TaskLog[];
 };
 
-const TaskLogList: VFC<Props> = ({ taskLogs }) => (
+const TaskLogList = ({ taskLogs }: Props) => (
   <div className={styles.outer}>
     <div className={styles.header}>
       <p>完了したタスク</p>

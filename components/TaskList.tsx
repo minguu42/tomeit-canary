@@ -1,6 +1,3 @@
-import { VFC } from "react";
-
-// @ts-ignore
 import styles from "styles/components/TaskList.module.scss";
 import TaskCard, { Task } from "components/TaskCard";
 
@@ -11,12 +8,12 @@ type Props = {
   completeTask: (task: Task) => void;
 };
 
-const TaskList: VFC<Props> = ({
+const TaskList = ({
   tasks,
   playingTask,
   playTask,
   completeTask,
-}) => (
+}: Props): JSX.Element => (
   <div className={styles.outer}>
     {tasks.map((task) => (
       <TaskCard

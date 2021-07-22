@@ -1,12 +1,11 @@
-import { VFC } from "react";
 // @ts-ignore
 import cn from "classnames";
 
 import styles from "styles/components/TaskCard.module.scss";
 import TimerIcon from "components/icons/TimerIcon";
 import CircleIcon from "components/icons/CircleIcon";
-import PlayCircleIcon from "./icons/PlayCircleIcon";
-import { formatStringByLength } from "../lib/format";
+import PlayCircleIcon from "components/icons/PlayCircleIcon";
+import { formatStringByLength } from "lib/format";
 
 export type Task = {
   id: number;
@@ -25,7 +24,7 @@ type Props = Task & {
   isPlaying: boolean;
 };
 
-const TaskCard: VFC<Props> = ({
+const TaskCard = ({
   id,
   name,
   priority,
@@ -34,7 +33,7 @@ const TaskCard: VFC<Props> = ({
   isPlaying,
   handlePlayClick,
   handleCircleClick,
-}) => (
+}: Props): JSX.Element => (
   <div
     className={cn(styles.outer, {
       [styles.borderGreen]: priority === 1,

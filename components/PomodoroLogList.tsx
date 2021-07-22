@@ -1,5 +1,3 @@
-import { VFC } from "react";
-
 import styles from "styles/components/PomodoroLogList.module.scss";
 import PomodoroLogItem, { PomodoroLog } from "components/PomodoroLogItem";
 
@@ -7,7 +5,7 @@ type Props = {
   pomodoroLogs: PomodoroLog[];
 };
 
-const PomodoroLogList: VFC<Props> = ({ pomodoroLogs }) => (
+const PomodoroLogList = ({ pomodoroLogs }: Props): JSX.Element => (
   <div className={styles.outer}>
     <div className={styles.header}>
       <p>実行したポモドーロ</p>

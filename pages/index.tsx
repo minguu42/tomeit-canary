@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import styles from "styles/pages/Home.module.scss";
+import styles from "styles/pages/Landing.module.scss";
 import Catch from "components/Catch";
 import GoogleLoginButton from "components/GoogleLoginButton";
 import { useAuth, login } from "lib/AuthContext";
@@ -11,7 +11,7 @@ type Props = {
   handleLogin: () => Promise<void>;
 };
 
-const Home = ({ handleLogin }: Props): JSX.Element => (
+const Landing = ({ handleLogin }: Props): JSX.Element => (
   <>
     <Head>
       <title>tomeit</title>
@@ -28,7 +28,7 @@ const Home = ({ handleLogin }: Props): JSX.Element => (
   </>
 );
 
-const HomeContainer = (): JSX.Element => {
+const LandingContainer = (): JSX.Element => {
   const router = useRouter();
   const { currentUser } = useAuth();
 
@@ -46,7 +46,7 @@ const HomeContainer = (): JSX.Element => {
     }
   };
 
-  return <Home handleLogin={handleLogin} />;
+  return <Landing handleLogin={handleLogin} />;
 };
 
-export default HomeContainer;
+export default LandingContainer;

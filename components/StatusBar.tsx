@@ -1,6 +1,3 @@
-import { VFC } from "react";
-
-// @ts-ignore
 import styles from "styles/components/StatusBar.module.scss";
 
 type Props = {
@@ -9,11 +6,11 @@ type Props = {
   pomodoroNumber: number;
 };
 
-const StatusBar: VFC<Props> = ({
+const StatusBar = ({
   restCount,
   undoneTaskNumber,
   pomodoroNumber,
-}) => (
+}: Props): JSX.Element => (
   <div className={styles.outer}>
     <div className={styles.item}>
       <p className={styles.value}>{restCount}</p>

@@ -1,5 +1,3 @@
-import { createContext, VFC } from "react";
-
 import styles from "styles/components/TaskLogItem.module.scss";
 import TimerIcon from "components/icons/TimerIcon";
 import { convertDatetimeToTime } from "lib/format";
@@ -13,7 +11,7 @@ export type TaskLog = {
 
 type Props = TaskLog;
 
-const TaskLogItem: VFC<Props> = ({ name, pomodoroCount, completeAt }) => (
+const TaskLogItem = ({ name, pomodoroCount, completeAt }: Props) => (
   <li className={styles.outer}>
     <div className={styles.leftWrapper}>
       <div className={styles.countWrapper}>

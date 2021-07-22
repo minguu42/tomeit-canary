@@ -1,5 +1,3 @@
-import { VFC } from "react";
-
 import styles from "styles/components/PomodoroLogItem.module.scss";
 import TimerIcon from "./icons/TimerIcon";
 import { convertDatetimeToPomodoroTerm } from "../lib/format";
@@ -12,7 +10,7 @@ export type PomodoroLog = {
 
 type Props = PomodoroLog;
 
-const PomodoroLogItem: VFC<Props> = ({ taskName, createdAt }) => (
+const PomodoroLogItem = ({ taskName, createdAt }: Props): JSX.Element => (
   <li className={styles.outer}>
     <div className={styles.leftWrapper}>
       <TimerIcon fill="#192f60" />

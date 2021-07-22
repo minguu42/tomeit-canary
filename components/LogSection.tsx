@@ -1,5 +1,3 @@
-import { VFC } from "react";
-
 import styles from "styles/components/LogSection.module.scss";
 import TaskLogList from "components/TaskLogList";
 import { TaskLog } from "components/TaskLogItem";
@@ -11,7 +9,7 @@ type Props = {
   pomodoroLogs: PomodoroLog[];
 };
 
-const LogSection: VFC<Props> = ({ taskLogs, pomodoroLogs }) => (
+const LogSection = ({ taskLogs, pomodoroLogs }: Props): JSX.Element => (
   <div className={styles.outer}>
     <div className={styles.header}>
       <h6>今日</h6>

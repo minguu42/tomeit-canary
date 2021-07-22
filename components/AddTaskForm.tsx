@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState, VFC } from "react";
+import React, { ChangeEventHandler, useState } from "react";
 
 import styles from "styles/components/AddTaskForm.module.scss";
 import AddTaskIcon from "components/icons/AddTaskIcon";
@@ -19,7 +19,7 @@ type Props = {
   handleSubmit: (e: React.SyntheticEvent) => void;
 };
 
-const AddTaskForm: VFC<Props> = ({
+const AddTaskForm = ({
   name,
   handleNameChange,
   priority,
@@ -27,7 +27,7 @@ const AddTaskForm: VFC<Props> = ({
   deadline,
   handleDeadlineChange,
   handleSubmit,
-}) => (
+}: Props): JSX.Element => (
   <form onSubmit={handleSubmit} className={styles.outer}>
     <div className={styles.leftWrapper}>
       <AddTaskIcon fill="#666666" />
@@ -64,7 +64,7 @@ const AddTaskForm: VFC<Props> = ({
   </form>
 );
 
-const AddTaskFormContainer: VFC<ContainerProps> = ({ addTask }) => {
+const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
   const [name, setName] = useState("");
   const [priority, setPriority] = useState(0);
   const [deadline, setDeadline] = useState("");

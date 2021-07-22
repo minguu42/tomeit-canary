@@ -1,8 +1,8 @@
-import { VFC, useState } from "react";
+import { useState } from "react";
 
 import styles from "styles/components/AccountMenu.module.scss";
-import AccountCircleIcon from "./icons/AccountCircleIcon";
-import { logout } from "../lib/AuthContext";
+import AccountCircleIcon from "components/icons/AccountCircleIcon";
+import { logout } from "lib/AuthContext";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -11,11 +11,11 @@ type Props = {
   handleLogout: () => Promise<void>;
 };
 
-const AccountMenu: VFC<Props> = ({
+const AccountMenu = ({
   isOpen,
   handleAccountClick,
   handleLogout,
-}) => (
+}: Props): JSX.Element => (
   <div role="button" className={styles.wrapper}>
     <span role="button" onClick={handleAccountClick}>
       <AccountCircleIcon fill="#ffffff" />
@@ -30,7 +30,7 @@ const AccountMenu: VFC<Props> = ({
   </div>
 );
 
-const AccountMenuContainer: VFC = () => {
+const AccountMenuContainer = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 

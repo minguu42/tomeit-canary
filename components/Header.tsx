@@ -1,4 +1,3 @@
-import { VFC } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,7 +10,7 @@ type Props = {
   isLoggedIn: boolean;
 };
 
-const Header: VFC<Props> = ({ isLoggedIn }) => (
+const Header = ({ isLoggedIn }: Props): JSX.Element => (
   <header className={styles.outer}>
     <div className={styles.inner}>
       <Link href="/">
@@ -30,7 +29,7 @@ const Header: VFC<Props> = ({ isLoggedIn }) => (
   </header>
 );
 
-const HeaderContainer: VFC = () => {
+const HeaderContainer = (): JSX.Element => {
   const { currentUser } = useAuth();
 
   return <Header isLoggedIn={currentUser !== null} />;

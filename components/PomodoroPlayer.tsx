@@ -1,4 +1,4 @@
-import { useState, useEffect, VFC } from "react";
+import { useState, useEffect } from "react";
 // @ts-ignore
 import cn from "classnames";
 
@@ -28,7 +28,7 @@ type Props = {
   handleStopClick: () => void;
 };
 
-const PomodoroPlayer: VFC<Props> = ({
+const PomodoroPlayer = ({
   time,
   playingTask,
   isPomodoro,
@@ -37,7 +37,7 @@ const PomodoroPlayer: VFC<Props> = ({
   handlePauseClick,
   handleSkipClick,
   handleStopClick,
-}) => (
+}: Props): JSX.Element => (
   <div
     className={cn(styles.outer, {
       [styles.activeBackground]: isPomodoro,
@@ -87,11 +87,11 @@ const PomodoroPlayer: VFC<Props> = ({
   </div>
 );
 
-const PomodoroPlayerContainer: VFC<ContainerProps> = ({
+const PomodoroPlayerContainer = ({
   playingTask,
   restCount,
   applyCompletePomodoro,
-}) => {
+}: ContainerProps): JSX.Element => {
   const [time, setTime] = useState(15);
   const [isActive, setIsActive] = useState(false);
   const [isPomodoro, setIsPomodoro] = useState(true);

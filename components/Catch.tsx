@@ -1,8 +1,6 @@
-import { VFC } from "react";
-
 import styles from "styles/components/Catch.module.scss";
 
-const Catch: VFC = () => (
+const Catch = (): JSX.Element => (
   <div className={styles.catch}>
     <h3 className={styles.heading}>大事なことに集中する</h3>
     <p className={styles.description}>
