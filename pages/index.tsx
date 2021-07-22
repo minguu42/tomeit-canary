@@ -1,17 +1,17 @@
-import { useEffect, VFC } from "react";
+import { useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
 import styles from "styles/pages/Home.module.scss";
 import Catch from "components/Catch";
 import GoogleLoginButton from "components/GoogleLoginButton";
-import { useAuth } from "lib/AuthContext";
+import { useAuth, login } from "lib/AuthContext";
 
 type Props = {
   handleLogin: () => Promise<void>;
 };
 
-const Home: VFC<Props> = ({ handleLogin }) => (
+const Home = ({ handleLogin }: Props): JSX.Element => (
   <>
     <Head>
       <title>tomeit</title>
@@ -28,9 +28,9 @@ const Home: VFC<Props> = ({ handleLogin }) => (
   </>
 );
 
-const HomeContainer: VFC = () => {
+const HomeContainer = (): JSX.Element => {
   const router = useRouter();
-  const { currentUser, login } = useAuth();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     if (currentUser !== null) {
@@ -40,9 +40,7 @@ const HomeContainer: VFC = () => {
 
   const handleLogin = async () => {
     try {
-      if (login) {
-        await login();
-      }
+      await login();
     } catch {
       window.alert("ログインに失敗しました。もう一度お試しください。");
     }

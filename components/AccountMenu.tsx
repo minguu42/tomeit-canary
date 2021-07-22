@@ -2,7 +2,7 @@ import { VFC, useState } from "react";
 
 import styles from "styles/components/AccountMenu.module.scss";
 import AccountCircleIcon from "./icons/AccountCircleIcon";
-import { useAuth } from "../lib/AuthContext";
+import { logout } from "../lib/AuthContext";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -33,7 +33,6 @@ const AccountMenu: VFC<Props> = ({
 const AccountMenuContainer: VFC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const { logout } = useAuth();
 
   const handleAccountClick = () => {
     setIsOpen((isOpen) => !isOpen);
@@ -41,10 +40,8 @@ const AccountMenuContainer: VFC = () => {
 
   const handleLogout = async () => {
     try {
-      if (logout) {
-        await logout();
-        await router.push("/");
-      }
+      await logout();
+      await router.push("/");
     } catch {
       window.alert("ログアウトに失敗しました。もう一度お試しください。");
     }
