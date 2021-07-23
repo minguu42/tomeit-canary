@@ -1,8 +1,8 @@
 import React, { ChangeEventHandler, useState } from "react";
 
 import styles from "styles/components/modules/AddTaskForm.module.scss";
-import AddTaskIcon from "components/icons/AddTaskIcon";
-import FlagIcon from "components/icons/FlagIcon";
+import AddTaskIcon from "components/parts/AddTaskIcon";
+import FlagIcon from "components/parts/FlagIcon";
 import { Task } from "components/parts/TaskCard";
 
 type ContainerProps = {

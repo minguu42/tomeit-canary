@@ -1,9 +1,9 @@
 import { VFC } from "react";
 
 import styles from "styles/pages/LogsPage.module.scss";
-import TaskLogList from "components/modules/TaskLogList";
+import TaskLogList from "components/parts/TaskLogList";
 import { TaskLog } from "components/parts/TaskLogItem";
-import PomodoroLogList from "components/modules/PomodoroLogList";
+import PomodoroLogList from "components/parts/PomodoroLogList";
 import { PomodoroLog } from "components/parts/PomodoroLogItem";
 import LogSection from "../../components/modules/LogSection";
 

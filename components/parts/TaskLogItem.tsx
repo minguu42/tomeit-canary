@@ -1,5 +1,5 @@
 import styles from "styles/components/parts/TaskLogItem.module.scss";
-import TimerIcon from "components/icons/TimerIcon";
+import TimerIcon from "components/parts/TimerIcon";
 import { convertDatetimeToTime } from "lib/format";
 
 export type TaskLog = {

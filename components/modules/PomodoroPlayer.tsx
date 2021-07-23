@@ -4,11 +4,11 @@ import cn from "classnames";
 
 import { Task } from "components/parts/TaskCard";
 import styles from "styles/components/modules/PomodoroPlayer.module.scss";
-import TimerIcon from "components/icons/TimerIcon";
-import PlayCircleIcon from "components/icons/PlayCircleIcon";
-import CheckCircleIcon from "components/icons/CheckCircleIcon";
-import PauseCircleIcon from "components/icons/PauseCircleIcon";
-import StopCircleIcon from "components/icons/StopCircle";
+import TimerIcon from "components/parts/TimerIcon";
+import PlayCircleIcon from "components/parts/PlayCircleIcon";
+import CheckCircleIcon from "components/parts/CheckCircleIcon";
+import PauseCircleIcon from "components/parts/PauseCircleIcon";
+import StopCircleIcon from "components/parts/StopCircleIcon";
 import { convertSecondsForDisplay, formatStringByLength } from "lib/format";
 
 type ContainerProps = {

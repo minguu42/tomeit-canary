@@ -1,5 +1,5 @@
 import styles from "styles/components/parts/PomodoroLogItem.module.scss";
-import TimerIcon from "../icons/TimerIcon";
+import TimerIcon from "./TimerIcon";
 import { convertDatetimeToPomodoroTerm } from "../../lib/format";
 
 export type PomodoroLog = {

@@ -1,7 +1,7 @@
 import styles from "styles/components/modules/LogSection.module.scss";
-import TaskLogList from "components/modules/TaskLogList";
+import TaskLogList from "components/parts/TaskLogList";
 import { TaskLog } from "components/parts/TaskLogItem";
-import PomodoroLogList from "components/modules/PomodoroLogList";
+import PomodoroLogList from "components/parts/PomodoroLogList";
 import { PomodoroLog } from "components/parts/PomodoroLogItem";
 
 type Props = {
