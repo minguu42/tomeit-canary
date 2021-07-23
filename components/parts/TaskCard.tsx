@@ -16,16 +16,15 @@ export type Task = {
   pomodoroCount: number;
   createdAt?: string;
   updatedAt?: string;
-  handlePlayClick?: () => void;
-  handleCircleClick?: () => void;
 };
 
 type Props = Task & {
   isPlaying: boolean;
+  handlePlayClick: () => void;
+  handleCircleClick: () => void;
 };
 
 const TaskCard = ({
-  id,
   name,
   priority,
   deadline,

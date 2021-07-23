@@ -1,19 +1,15 @@
-@use "../../variables";
+@use "styles/variables";
 
-.catch {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+.heading {
+  margin-bottom: 32px;
+  color: var(--c-on-light-high-emphasis);
 
-  .heading {
-    color: var(--c-on-light-high-emphasis);
+  @include variables.headline2;
+}
 
-    @include variables.headline2;
-  }
+.description {
+  margin-bottom: 64px;
+  color: var(--c-on-light-medium-emphasis);
 
-  .description {
-    color: var(--c-on-light-medium-emphasis);
-
-    @include variables.body1;
-  }
+  @include variables.body1;
 }

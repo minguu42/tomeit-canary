@@ -1,4 +1,4 @@
-@use "../../variables";
+@use "styles/variables";
 
 .outer {
   background-color: var(--c-primary);
@@ -6,7 +6,7 @@
   .inner {
     display: flex;
     justify-content: space-between;
-    max-width: 840px;
+    max-width: 1040px;
     margin: 0 auto;
 
     .leftWrapper {

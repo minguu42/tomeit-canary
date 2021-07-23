@@ -1,6 +1,6 @@
 import styles from "styles/components/modules/LogSection.module.scss";
 import TaskLogList from "components/parts/TaskLogList";
-import { TaskLog } from "components/parts/TaskLogItem";
+import { TaskLog } from "components/parts/TaskStack";
 import PomodoroLogList from "components/parts/PomodoroLogList";
 import { PomodoroLog } from "components/parts/PomodoroLogItem";
 

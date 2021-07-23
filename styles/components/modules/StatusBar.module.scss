@@ -1,10 +1,9 @@
-@use "../../variables";
+@use "styles/variables";
 
 .outer {
   display: flex;
   gap: 56px;
   justify-content: center;
-  max-width: 840px;
   height: 80px;
   background-color: var(--c-surface);
   border: 1px solid var(--c-outline);

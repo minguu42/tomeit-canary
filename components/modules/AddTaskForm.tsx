@@ -3,7 +3,7 @@ import React, { ChangeEventHandler, useState } from "react";
 import styles from "styles/components/modules/AddTaskForm.module.scss";
 import AddTaskIcon from "components/parts/AddTaskIcon";
 import FlagIcon from "components/parts/FlagIcon";
-import { Task } from "components/parts/TaskCard";
+import { Task } from "lib/task";
 
 type ContainerProps = {
   addTask: (task: Task) => void;
@@ -89,6 +89,7 @@ const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
       name: name,
       priority: priority,
       deadline: deadline || "0001-01-01",
+      isDone: false,
       pomodoroCount: 0,
     };
 

@@ -3,8 +3,9 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import styles from "styles/pages/Landing.module.scss";
+import Header from "components/modules/Header";
 import Catch from "components/modules/Catch";
-import GoogleLoginButton from "components/parts/GoogleLoginButton";
+import Footer from "components/modules/Footer";
 import { useAuth, login } from "lib/AuthContext";
 
 type Props = {
@@ -21,10 +22,11 @@ const Landing = ({ handleLogin }: Props): JSX.Element => (
       />
     </Head>
 
+    <Header />
     <main className={styles.main}>
-      <Catch />
-      <GoogleLoginButton handleLogin={handleLogin} />
+      <Catch handleLogin={handleLogin} />
     </main>
+    <Footer />
   </>
 );
 

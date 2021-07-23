@@ -1,5 +1,5 @@
 import styles from "styles/components/parts/TaskLogList.module.scss";
-import TaskLogItem, { TaskLog } from "components/parts/TaskLogItem";
+import TaskStack, { TaskLog } from "components/parts/TaskStack";
 
 type Props = {
   taskLogs: TaskLog[];
@@ -12,7 +12,7 @@ const TaskLogList = ({ taskLogs }: Props) => (
     </div>
     <ul className={styles.list}>
       {taskLogs.map((log) => (
-        <TaskLogItem
+        <TaskStack
           key={log.id}
           id={log.id}
           name={log.name}

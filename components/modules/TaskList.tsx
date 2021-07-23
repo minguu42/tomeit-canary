@@ -1,5 +1,6 @@
 import styles from "styles/components/modules/TaskList.module.scss";
-import TaskCard, { Task } from "components/parts/TaskCard";
+import TaskCard from "components/parts/TaskCard";
+import { Task } from "lib/task";
 
 type Props = {
   tasks: Task[];

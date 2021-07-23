@@ -1,5 +1,5 @@
 import styles from "styles/pages/Stack.module.scss";
-import { TaskLog } from "components/parts/TaskLogItem";
+import { TaskLog } from "components/parts/TaskStack";
 import { PomodoroLog } from "components/parts/PomodoroLogItem";
 import LogSection from "components/modules/LogSection";
 

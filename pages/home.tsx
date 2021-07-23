@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import Head from "next/head";
 
 import styles from "styles/pages/Home.module.scss";
+import Header from "../components/modules/Header";
 import StatusBar from "components/modules/StatusBar";
 import AddTaskForm from "components/modules/AddTaskForm";
 import TaskList from "components/modules/TaskList";
-import type { Task } from "components/parts/TaskCard";
 import PomodoroPlayer from "components/modules/PomodoroPlayer";
+import Footer from "components/modules/Footer";
+import { Task } from "lib/task";
 import { fetchData, postData, putData } from "lib/fetch";
 import { useAuth } from "lib/AuthContext";
 
@@ -30,27 +33,35 @@ const Home = ({
   completeTask,
   applyCompletePomodoro,
 }: Props): JSX.Element => (
-  <main className={styles.main}>
-    <StatusBar
-      restCount={restCount}
-      undoneTaskNumber={tasks.length}
-      pomodoroNumber={todayPomodoroNum}
-    />
-    <AddTaskForm addTask={addTask} />
-    <TaskList
-      tasks={tasks}
-      playingTask={playingTask}
-      playTask={playTask}
-      completeTask={completeTask}
-    />
-    <div className={styles.playerLayout}>
-      <PomodoroPlayer
+  <>
+    <Head>
+      <title>ホーム - tomeit</title>
+    </Head>
+
+    <Header />
+    <main className={styles.main}>
+      <StatusBar
         restCount={restCount}
-        playingTask={playingTask}
-        applyCompletePomodoro={applyCompletePomodoro}
+        undoneTaskNumber={tasks.length}
+        pomodoroNumber={todayPomodoroNum}
       />
-    </div>
-  </main>
+      <AddTaskForm addTask={addTask} />
+      <TaskList
+        tasks={tasks}
+        playingTask={playingTask}
+        playTask={playTask}
+        completeTask={completeTask}
+      />
+      <div className={styles.playerLayout}>
+        <PomodoroPlayer
+          restCount={restCount}
+          playingTask={playingTask}
+          applyCompletePomodoro={applyCompletePomodoro}
+        />
+      </div>
+    </main>
+    <Footer />
+  </>
 );
 
 const HomeContainer = (): JSX.Element => {
@@ -61,12 +72,12 @@ const HomeContainer = (): JSX.Element => {
   const { currentUser } = useAuth();
 
   const addTask = (task: Task): void => {
-    const request = {
+    const reqBody = {
       name: task.name,
       priority: task.priority ?? 0,
       deadline: task.deadline ?? "0001-01-01",
     };
-    postData("/tasks", request, currentUser)
+    postData("/tasks", reqBody, currentUser)
       .then((data) => {
         const tmp = tasks.slice();
         tmp.push(data);
@@ -136,7 +147,7 @@ const HomeContainer = (): JSX.Element => {
 
   return (
     <Home
-      tasks={tasks.filter((task) => task.isDone === false)}
+      tasks={tasks.filter((task) => !task.isDone)}
       addTask={addTask}
       playingTask={playingTask}
       playTask={playTask}
