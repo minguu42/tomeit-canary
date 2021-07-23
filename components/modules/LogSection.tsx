@@ -1,23 +1,23 @@
 import styles from "styles/components/modules/LogSection.module.scss";
-import TaskLogList from "components/parts/TaskLogList";
-import { TaskLog } from "components/parts/TaskStack";
-import PomodoroLogList from "components/parts/PomodoroLogList";
-import { PomodoroLog } from "components/parts/PomodoroLogItem";
+import TaskStackList from "components/parts/TaskStackList";
+import PomodoroStackList from "components/parts/PomodoroStackList";
+import type { Task } from "lib/task";
+import type { PomodoroRecord } from "lib/pomodoro";
 
 type Props = {
-  taskLogs: TaskLog[];
-  pomodoroLogs: PomodoroLog[];
+  doneTasks: Task[];
+  pomodoroRecords: PomodoroRecord[];
 };
 
-const LogSection = ({ taskLogs, pomodoroLogs }: Props): JSX.Element => (
+const LogSection = ({ doneTasks, pomodoroRecords }: Props): JSX.Element => (
   <div className={styles.outer}>
     <div className={styles.header}>
       <h6>今日</h6>
-      <p>タスク数：{taskLogs.length}</p>
-      <p>ポモドーロ数：{pomodoroLogs.length}</p>
+      <p>タスク数：{doneTasks.length}</p>
+      <p>ポモドーロ数：{pomodoroRecords.length}</p>
     </div>
-    <TaskLogList taskLogs={taskLogs} />
-    <PomodoroLogList pomodoroLogs={pomodoroLogs} />
+    <TaskStackList doneTasks={doneTasks} />
+    <PomodoroStackList pomodoroRecords={pomodoroRecords} />
   </div>
 );
 

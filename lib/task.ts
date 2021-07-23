@@ -8,10 +8,3 @@ export type Task = {
   createdAt?: string;
   updatedAt?: string;
 };
-
-export type TaskRecord = {
-  id: number;
-  name: string;
-  pomodoroCount: number;
-  completeAt: string;
-}

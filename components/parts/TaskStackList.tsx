@@ -1,27 +1,28 @@
 import styles from "styles/components/parts/TaskLogList.module.scss";
-import TaskStack, { TaskLog } from "components/parts/TaskStack";
+import TaskStackListItem from "components/parts/TaskStackListItem";
+import type { Task } from "lib/task";
 
 type Props = {
-  taskLogs: TaskLog[];
+  doneTasks: Task[];
 };
 
-const TaskLogList = ({ taskLogs }: Props) => (
+const TaskStackList = ({ doneTasks }: Props) => (
   <div className={styles.outer}>
     <div className={styles.header}>
       <p>完了したタスク</p>
     </div>
     <ul className={styles.list}>
-      {taskLogs.map((log) => (
-        <TaskStack
+      {doneTasks.map((log) => (
+        <TaskStackListItem
           key={log.id}
           id={log.id}
           name={log.name}
           pomodoroCount={log.pomodoroCount}
-          completeAt={log.completeAt}
+          completeAt={log.updatedAt}
         />
       ))}
     </ul>
   </div>
 );
 
-export default TaskLogList;
+export default TaskStackList;

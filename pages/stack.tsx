@@ -1,30 +1,42 @@
 import styles from "styles/pages/Stack.module.scss";
-import { TaskLog } from "components/parts/TaskStack";
-import { PomodoroLog } from "components/parts/PomodoroLogItem";
 import LogSection from "components/modules/LogSection";
+import type { Task } from "lib/task";
+import type { PomodoroRecord } from "lib/pomodoro";
 
-const taskLogs: TaskLog[] = [
+const doneTasks: Task[] = [
   {
     id: 1,
     name: "タスク1",
+    priority: 2,
+    deadline: "",
+    isDone: true,
     pomodoroCount: 0,
-    completeAt: "2021-01-01T12:00:00Z",
+    createdAt: "2021-01-01T12:00:00Z",
+    updatedAt: "2021-01-01T12:00:00Z",
   },
   {
     id: 2,
     name: "タスク2",
+    priority: 1,
+    deadline: "",
+    isDone: true,
     pomodoroCount: 4,
-    completeAt: "2021-01-01T12:25:00Z",
+    createdAt: "2021-01-01T12:00:00Z",
+    updatedAt: "2021-01-01T12:25:00Z",
   },
   {
     id: 3,
     name: "タスク3",
+    priority: 0,
+    deadline: "",
+    isDone: true,
     pomodoroCount: 10,
-    completeAt: "2021-01-01T13:00:00Z",
+    createdAt: "2021-01-01T12:00:00Z",
+    updatedAt: "2021-01-01T13:00:00Z",
   },
 ];
 
-const pomodoroLogs: PomodoroLog[] = [
+const pomodoroRecords: PomodoroRecord[] = [
   {
     id: 1,
     taskName: "タスク1",
@@ -47,12 +59,12 @@ const pomodoroLogs: PomodoroLog[] = [
   },
 ];
 
-const LogsPage = (): JSX.Element => {
+const Stack = (): JSX.Element => {
   return (
     <main className={styles.main}>
-      <LogSection taskLogs={taskLogs} pomodoroLogs={pomodoroLogs} />
+      <LogSection doneTasks={doneTasks} pomodoroRecords={pomodoroRecords} />
     </main>
   );
 };
 
-export default LogsPage;
+export default Stack;

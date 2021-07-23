@@ -1,18 +1,19 @@
 import styles from "styles/components/parts/PomodoroLogList.module.scss";
-import PomodoroLogItem, { PomodoroLog } from "components/parts/PomodoroLogItem";
+import PomodoroStackListItem from "components/parts/PomodoroStackListItem";
+import type { PomodoroRecord } from "lib/pomodoro";
 
 type Props = {
-  pomodoroLogs: PomodoroLog[];
+  pomodoroRecords: PomodoroRecord[];
 };
 
-const PomodoroLogList = ({ pomodoroLogs }: Props): JSX.Element => (
+const PomodoroStackList = ({ pomodoroRecords }: Props): JSX.Element => (
   <div className={styles.outer}>
     <div className={styles.header}>
       <p>実行したポモドーロ</p>
     </div>
     <ul className={styles.list}>
-      {pomodoroLogs.map((log) => (
-        <PomodoroLogItem
+      {pomodoroRecords.map((log) => (
+        <PomodoroStackListItem
           key={log.id}
           id={log.id}
           taskName={log.taskName}
@@ -23,4 +24,4 @@ const PomodoroLogList = ({ pomodoroLogs }: Props): JSX.Element => (
   </div>
 );
 
-export default PomodoroLogList;
+export default PomodoroStackList;
