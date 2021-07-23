@@ -1,5 +1,9 @@
+import Head from "next/head";
+
 import styles from "styles/pages/Stack.module.scss";
-import LogSection from "components/modules/LogSection";
+import Header from "components/modules/Header";
+import StackSection from "components/modules/StackSection";
+import Footer from "components/modules/Footer";
 import type { Task } from "lib/task";
 import type { PomodoroRecord } from "lib/pomodoro";
 
@@ -59,12 +63,18 @@ const pomodoroRecords: PomodoroRecord[] = [
   },
 ];
 
-const Stack = (): JSX.Element => {
-  return (
+const Stack = (): JSX.Element => (
+  <>
+    <Head>
+      <title>足跡 - tomeit</title>
+    </Head>
+
+    <Header />
     <main className={styles.main}>
-      <LogSection doneTasks={doneTasks} pomodoroRecords={pomodoroRecords} />
+      <StackSection doneTasks={doneTasks} pomodoroRecords={pomodoroRecords} />
     </main>
-  );
-};
+    <Footer />
+  </>
+);
 
 export default Stack;

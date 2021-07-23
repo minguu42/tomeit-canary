@@ -9,7 +9,7 @@ type Props = {
   pomodoroRecords: PomodoroRecord[];
 };
 
-const LogSection = ({ doneTasks, pomodoroRecords }: Props): JSX.Element => (
+const StackSection = ({ doneTasks, pomodoroRecords }: Props): JSX.Element => (
   <div className={styles.outer}>
     <div className={styles.header}>
       <h6>今日</h6>
@@ -21,4 +21,4 @@ const LogSection = ({ doneTasks, pomodoroRecords }: Props): JSX.Element => (
   </div>
 );
 
-export default LogSection;
+export default StackSection;

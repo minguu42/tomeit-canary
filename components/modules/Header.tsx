@@ -21,7 +21,11 @@ const Header = ({ isLoggedIn }: Props): JSX.Element => (
       </Link>
       {isLoggedIn && (
         <div className={styles.rightWrapper}>
-          <SummarizeIcon fill="#ffffff" />
+          <Link href="/stack">
+            <a>
+              <SummarizeIcon fill="#ffffff" />
+            </a>
+          </Link>
           <AccountMenu />
         </div>
       )}
