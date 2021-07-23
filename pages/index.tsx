@@ -3,8 +3,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import styles from "styles/pages/Landing.module.scss";
-import Catch from "components/Catch";
-import GoogleLoginButton from "components/GoogleLoginButton";
+import Catch from "components/modules/Catch";
+import GoogleLoginButton from "components/parts/GoogleLoginButton";
 import { useAuth, login } from "lib/AuthContext";
 
 type Props = {

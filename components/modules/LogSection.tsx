@@ -1,8 +1,8 @@
 import styles from "styles/components/LogSection.module.scss";
-import TaskLogList from "components/TaskLogList";
-import { TaskLog } from "components/TaskLogItem";
-import PomodoroLogList from "components/PomodoroLogList";
-import { PomodoroLog } from "components/PomodoroLogItem";
+import TaskLogList from "components/modules/TaskLogList";
+import { TaskLog } from "components/parts/TaskLogItem";
+import PomodoroLogList from "components/modules/PomodoroLogList";
+import { PomodoroLog } from "components/parts/PomodoroLogItem";
 
 type Props = {
   taskLogs: TaskLog[];

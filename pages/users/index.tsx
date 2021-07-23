@@ -1,11 +1,11 @@
 import { VFC, useState, useEffect } from "react";
 
 import styles from "styles/pages/UserHome.module.scss";
-import StatusBar from "components/StatusBar";
-import AddTaskForm from "components/AddTaskForm";
-import TaskList from "components/TaskList";
-import type { Task } from "components/TaskCard";
-import PomodoroPlayer from "components/PomodoroPlayer";
+import StatusBar from "components/modules/StatusBar";
+import AddTaskForm from "components/modules/AddTaskForm";
+import TaskList from "components/modules/TaskList";
+import type { Task } from "components/parts/TaskCard";
+import PomodoroPlayer from "components/modules/PomodoroPlayer";
 import { fetchData, postData, putData } from "../../lib/fetch";
 import { useAuth } from "lib/AuthContext";
 

@@ -3,7 +3,7 @@ import React, { ChangeEventHandler, useState } from "react";
 import styles from "styles/components/AddTaskForm.module.scss";
 import AddTaskIcon from "components/icons/AddTaskIcon";
 import FlagIcon from "components/icons/FlagIcon";
-import { Task } from "components/TaskCard";
+import { Task } from "components/parts/TaskCard";
 
 type ContainerProps = {
   addTask: (task: Task) => void;

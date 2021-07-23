@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import styles from "styles/components/Header.module.scss";
 import SummarizeIcon from "components/icons/SummarizeIcon";
-import AccountMenu from "components/AccountMenu";
+import AccountMenu from "components/parts/AccountMenu";
 import { useAuth } from "lib/AuthContext";
 
 type Props = {

@@ -1,11 +1,11 @@
 import { VFC } from "react";
 
 import styles from "styles/pages/LogsPage.module.scss";
-import TaskLogList from "components/TaskLogList";
-import { TaskLog } from "components/TaskLogItem";
-import PomodoroLogList from "components/PomodoroLogList";
-import { PomodoroLog } from "components/PomodoroLogItem";
-import LogSection from "../../components/LogSection";
+import TaskLogList from "components/modules/TaskLogList";
+import { TaskLog } from "components/parts/TaskLogItem";
+import PomodoroLogList from "components/modules/PomodoroLogList";
+import { PomodoroLog } from "components/parts/PomodoroLogItem";
+import LogSection from "../../components/modules/LogSection";
 
 const taskLogs: TaskLog[] = [
   {

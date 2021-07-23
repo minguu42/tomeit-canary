@@ -1,5 +1,5 @@
 import styles from "styles/components/TaskLogList.module.scss";
-import TaskLogItem, { TaskLog } from "components/TaskLogItem";
+import TaskLogItem, { TaskLog } from "components/parts/TaskLogItem";
 
 type Props = {
   taskLogs: TaskLog[];
