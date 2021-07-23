@@ -1,0 +1,15 @@
+@use "styles/variables";
+
+.heading {
+  margin-bottom: 32px;
+  color: var(--c-on-light-high-emphasis);
+
+  @include variables.headline2;
+}
+
+.description {
+  margin-bottom: 64px;
+  color: var(--c-on-light-medium-emphasis);
+
+  @include variables.body1;
+}

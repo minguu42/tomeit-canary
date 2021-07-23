@@ -1,0 +1,26 @@
+@use "../../variables";
+
+.outer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .header {
+    display: flex;
+    align-items: baseline;
+
+    h6 {
+      margin-right: 16px;
+      color: var(--c-on-light-high-emphasis);
+
+      @include variables.headline6;
+    }
+
+    p {
+      margin-right: 8px;
+      color: var(--c-on-light-medium-emphasis);
+
+      @include variables.subtitle2;
+    }
+  }
+}

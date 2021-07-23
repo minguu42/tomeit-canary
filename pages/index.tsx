@@ -1,17 +1,18 @@
-import { useEffect, VFC } from "react";
+import { useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import styles from "styles/pages/Home.module.scss";
-import Catch from "components/Catch";
-import GoogleLoginButton from "components/GoogleLoginButton";
-import { useAuth } from "lib/AuthContext";
+import styles from "styles/pages/Landing.module.scss";
+import Header from "components/modules/Header";
+import Catch from "components/modules/Catch";
+import Footer from "components/modules/Footer";
+import { useAuth, login } from "lib/AuthContext";
 
 type Props = {
   handleLogin: () => Promise<void>;
 };
 
-const Home: VFC<Props> = ({ handleLogin }) => (
+const Landing = ({ handleLogin }: Props): JSX.Element => (
   <>
     <Head>
       <title>tomeit</title>
@@ -21,34 +22,33 @@ const Home: VFC<Props> = ({ handleLogin }) => (
       />
     </Head>
 
+    <Header />
     <main className={styles.main}>
-      <Catch />
-      <GoogleLoginButton handleLogin={handleLogin} />
+      <Catch handleLogin={handleLogin} />
     </main>
+    <Footer />
   </>
 );
 
-const HomeContainer: VFC = () => {
+const LandingContainer = (): JSX.Element => {
   const router = useRouter();
-  const { currentUser, login } = useAuth();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     if (currentUser !== null) {
-      router.push("/users").catch(() => window.alert("エラーが発生しました。"));
+      router.push("/home").catch(() => window.alert("エラーが発生しました。"));
     }
   }, [router, currentUser]);
 
   const handleLogin = async () => {
     try {
-      if (login) {
-        await login();
-      }
+      await login();
     } catch {
       window.alert("ログインに失敗しました。もう一度お試しください。");
     }
   };
 
-  return <Home handleLogin={handleLogin} />;
+  return <Landing handleLogin={handleLogin} />;
 };
 
-export default HomeContainer;
+export default LandingContainer;

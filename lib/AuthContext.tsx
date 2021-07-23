@@ -1,14 +1,11 @@
-import { VFC, createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { User } from "@firebase/auth-types";
 
-import Loading from "components/Loading";
-// @ts-ignore
-import firebase, { auth } from "/lib/firebase";
+import Loading from "pages/loading";
+import firebase, { auth } from "lib/firebase";
 
 type AuthContextType = {
   currentUser: User | null;
-  login?: () => Promise<void>;
-  logout?: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType>({ currentUser: null });
@@ -21,18 +18,9 @@ type Props = {
   children?: JSX.Element;
 };
 
-const AuthProvider: VFC<Props> = ({ children }) => {
+const AuthProvider = ({ children }: Props): JSX.Element => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const login = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    return auth.signInWithRedirect(provider);
-  };
-
-  const logout = () => {
-    return auth.signOut();
-  };
 
   useEffect(() => {
     return auth.onAuthStateChanged((user: User | null) => {
@@ -43,8 +31,6 @@ const AuthProvider: VFC<Props> = ({ children }) => {
 
   const value: AuthContextType = {
     currentUser,
-    login,
-    logout,
   };
 
   return (
@@ -52,6 +38,15 @@ const AuthProvider: VFC<Props> = ({ children }) => {
       {isLoading ? <Loading /> : children}
     </AuthContext.Provider>
   );
+};
+
+export const login = (): Promise<void> => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  return auth.signInWithRedirect(provider);
+};
+
+export const logout = (): Promise<void> => {
+  return auth.signOut();
 };
 
 export default AuthProvider;

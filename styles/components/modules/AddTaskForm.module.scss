@@ -1,0 +1,39 @@
+@use "../../variables";
+
+.outer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border: 1px solid var(--c-outline);
+  border-radius: 4px;
+
+  .leftWrapper {
+    display: flex;
+    gap: 16px;
+
+    input[type="text"] {
+      color: var(--c-on-light-high-emphasis);
+
+      @include variables.body1;
+    }
+  }
+
+  .rightWrapper {
+    display: flex;
+    gap: 4px;
+
+    input[type="number"] {
+      color: var(--c-on-light-medium-emphasis);
+
+      @include variables.body1;
+    }
+
+    input[type="date"] {
+      max-width: 168px;
+      color: var(--c-on-light-medium-emphasis);
+
+      @include variables.body1;
+    }
+  }
+}

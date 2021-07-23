@@ -1,0 +1,61 @@
+@use "../../variables";
+
+.outer {
+  display: flex;
+  justify-content: space-between;
+  height: 44px;
+  padding: 4px 16px;
+  border: 1px solid var(--c-outline);
+  border-radius: 4px;
+
+  .leftWrapper {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+
+    .name {
+      color: var(--c-on-light-high-emphasis);
+
+      @include variables.subtitle1;
+    }
+
+    .iconWrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .countWrapper {
+        position: absolute;
+        top: -3px;
+        left: 13px;
+        color: var(--c-primary);
+
+        @include variables.caption;
+      }
+    }
+  }
+
+  .rightWrapper {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+
+    .deadline {
+      color: var(--c-on-light-medium-emphasis);
+
+      @include variables.body2;
+    }
+  }
+}
+
+.borderGreen {
+  border-color: #006e54;
+}
+
+.borderYellow {
+  border-color: #c89932;
+}
+
+.borderRed {
+  border-color: #bb5535;
+}
