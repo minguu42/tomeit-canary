@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { User } from "@firebase/auth-types";
 
-import Loading from "components/modules/Loading";
+import Loading from "pages/loading";
 import firebase, { auth } from "lib/firebase";
 
 type AuthContextType = {

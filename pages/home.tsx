@@ -1,12 +1,12 @@
-import { VFC, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-import styles from "styles/pages/UserHome.module.scss";
+import styles from "styles/pages/Home.module.scss";
 import StatusBar from "components/modules/StatusBar";
 import AddTaskForm from "components/modules/AddTaskForm";
 import TaskList from "components/modules/TaskList";
 import type { Task } from "components/parts/TaskCard";
 import PomodoroPlayer from "components/modules/PomodoroPlayer";
-import { fetchData, postData, putData } from "../../lib/fetch";
+import { fetchData, postData, putData } from "lib/fetch";
 import { useAuth } from "lib/AuthContext";
 
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
   applyCompletePomodoro: (task: Task | null) => void;
 };
 
-const UserHome: VFC<Props> = ({
+const Home = ({
   tasks,
   playingTask,
   restCount,
@@ -29,7 +29,7 @@ const UserHome: VFC<Props> = ({
   playTask,
   completeTask,
   applyCompletePomodoro,
-}) => (
+}: Props): JSX.Element => (
   <main className={styles.main}>
     <StatusBar
       restCount={restCount}
@@ -53,7 +53,7 @@ const UserHome: VFC<Props> = ({
   </main>
 );
 
-const UserHomeContainer: VFC = () => {
+const HomeContainer = (): JSX.Element => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [playingTask, setPlayingTask] = useState<Task | null>(null);
   const [restCount, setRestCount] = useState(4);
@@ -135,7 +135,7 @@ const UserHomeContainer: VFC = () => {
   }, [currentUser]);
 
   return (
-    <UserHome
+    <Home
       tasks={tasks.filter((task) => task.isDone === false)}
       addTask={addTask}
       playingTask={playingTask}
@@ -148,4 +148,4 @@ const UserHomeContainer: VFC = () => {
   );
 };
 
-export default UserHomeContainer;
+export default HomeContainer;

@@ -34,7 +34,7 @@ const LandingContainer = (): JSX.Element => {
 
   useEffect(() => {
     if (currentUser !== null) {
-      router.push("/users").catch(() => window.alert("エラーが発生しました。"));
+      router.push("/home").catch(() => window.alert("エラーが発生しました。"));
     }
   }, [router, currentUser]);
 

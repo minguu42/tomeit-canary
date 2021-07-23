@@ -1,11 +1,7 @@
-import { VFC } from "react";
-
-import styles from "styles/pages/LogsPage.module.scss";
-import TaskLogList from "components/parts/TaskLogList";
+import styles from "styles/pages/Stack.module.scss";
 import { TaskLog } from "components/parts/TaskLogItem";
-import PomodoroLogList from "components/parts/PomodoroLogList";
 import { PomodoroLog } from "components/parts/PomodoroLogItem";
-import LogSection from "../../components/modules/LogSection";
+import LogSection from "components/modules/LogSection";
 
 const taskLogs: TaskLog[] = [
   {
@@ -51,7 +47,7 @@ const pomodoroLogs: PomodoroLog[] = [
   },
 ];
 
-const LogsPage: VFC = () => {
+const LogsPage = (): JSX.Element => {
   return (
     <main className={styles.main}>
       <LogSection taskLogs={taskLogs} pomodoroLogs={pomodoroLogs} />
