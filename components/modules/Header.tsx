@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import styles from "styles/components/Header.module.scss";
+import styles from "styles/components/modules/Header.module.scss";
 import SummarizeIcon from "components/icons/SummarizeIcon";
 import AccountMenu from "components/parts/AccountMenu";
 import { useAuth } from "lib/AuthContext";

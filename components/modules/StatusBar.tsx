@@ -1,4 +1,4 @@
-import styles from "styles/components/StatusBar.module.scss";
+import styles from "styles/components/modules/StatusBar.module.scss";
 
 type Props = {
   restCount: number;

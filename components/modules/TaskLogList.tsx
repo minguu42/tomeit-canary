@@ -1,4 +1,4 @@
-import styles from "styles/components/TaskLogList.module.scss";
+import styles from "styles/components/parts/TaskLogList.module.scss";
 import TaskLogItem, { TaskLog } from "components/parts/TaskLogItem";
 
 type Props = {

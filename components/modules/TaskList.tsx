@@ -1,4 +1,4 @@
-import styles from "styles/components/TaskList.module.scss";
+import styles from "styles/components/modules/TaskList.module.scss";
 import TaskCard, { Task } from "components/parts/TaskCard";
 
 type Props = {

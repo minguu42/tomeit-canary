@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import cn from "classnames";
 
 import { Task } from "components/parts/TaskCard";
-import styles from "styles/components/PomodoroPlayer.module.scss";
+import styles from "styles/components/modules/PomodoroPlayer.module.scss";
 import TimerIcon from "components/icons/TimerIcon";
 import PlayCircleIcon from "components/icons/PlayCircleIcon";
 import CheckCircleIcon from "components/icons/CheckCircleIcon";

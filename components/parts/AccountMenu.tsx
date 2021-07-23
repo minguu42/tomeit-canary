@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import styles from "styles/components/AccountMenu.module.scss";
+import styles from "styles/components/parts/AccountMenu.module.scss";
 import AccountCircleIcon from "components/icons/AccountCircleIcon";
 import { logout } from "lib/AuthContext";
 import { useRouter } from "next/router";

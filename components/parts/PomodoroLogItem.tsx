@@ -1,4 +1,4 @@
-import styles from "styles/components/PomodoroLogItem.module.scss";
+import styles from "styles/components/parts/PomodoroLogItem.module.scss";
 import TimerIcon from "../icons/TimerIcon";
 import { convertDatetimeToPomodoroTerm } from "../../lib/format";
 

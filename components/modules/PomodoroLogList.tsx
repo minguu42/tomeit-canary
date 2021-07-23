@@ -1,4 +1,4 @@
-import styles from "styles/components/PomodoroLogList.module.scss";
+import styles from "styles/components/parts/PomodoroLogList.module.scss";
 import PomodoroLogItem, { PomodoroLog } from "components/parts/PomodoroLogItem";
 
 type Props = {

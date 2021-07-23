@@ -1,4 +1,4 @@
-import styles from "styles/components/Catch.module.scss";
+import styles from "styles/components/modules/Catch.module.scss";
 
 const Catch = (): JSX.Element => (
   <div className={styles.catch}>

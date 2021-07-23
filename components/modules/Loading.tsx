@@ -1,4 +1,4 @@
-import styles from "styles/components/Loading.module.scss";
+import styles from "styles/components/modules/Loading.module.scss";
 
 const Loading = (): JSX.Element => (
   <div className={styles.main}>

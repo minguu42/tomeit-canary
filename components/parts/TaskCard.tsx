@@ -1,7 +1,7 @@
 // @ts-ignore
 import cn from "classnames";
 
-import styles from "styles/components/TaskCard.module.scss";
+import styles from "styles/components/parts/TaskCard.module.scss";
 import TimerIcon from "components/icons/TimerIcon";
 import CircleIcon from "components/icons/CircleIcon";
 import PlayCircleIcon from "components/icons/PlayCircleIcon";

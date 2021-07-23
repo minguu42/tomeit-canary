@@ -1,4 +1,4 @@
-import styles from "styles/components/TaskLogItem.module.scss";
+import styles from "styles/components/parts/TaskLogItem.module.scss";
 import TimerIcon from "components/icons/TimerIcon";
 import { convertDatetimeToTime } from "lib/format";
 
