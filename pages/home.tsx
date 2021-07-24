@@ -68,7 +68,7 @@ const HomeContainer = (): JSX.Element => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [playingTask, setPlayingTask] = useState<Task | null>(null);
   const [restCount, setRestCount] = useState(4);
-  const [todayPomodoroNum, setTodayPomodoroNum] = useState(0);
+  const [todayPomodoroCount, setTodayPomodoroCount] = useState(0);
   const { currentUser } = useAuth();
 
   const addTask = (task: Task): void => {
@@ -119,7 +119,7 @@ const HomeContainer = (): JSX.Element => {
         });
     }
 
-    setTodayPomodoroNum((n) => n + 1);
+    setTodayPomodoroCount((n) => n + 1);
     setRestCount((c) => (c === 1 ? 4 : c - 1));
   };
 
@@ -152,7 +152,7 @@ const HomeContainer = (): JSX.Element => {
       playingTask={playingTask}
       playTask={playTask}
       restCount={restCount}
-      todayPomodoroNum={todayPomodoroNum}
+      todayPomodoroNum={todayPomodoroCount}
       applyCompletePomodoro={applyCompletePomodoro}
       completeTask={completeTask}
     />

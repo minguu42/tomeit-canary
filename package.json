@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "fmt": "stylelint --fix '**/*.scss' && prettier --write '**/*.{js,jsx,ts,tsx}'",
-    "lint": "npm run fmt && next lint && stylelint '**/*.scss'"
+    "lint": "next lint && stylelint '**/*.scss'"
   },
   "dependencies": {
     "classnames": "^2.2.6",
