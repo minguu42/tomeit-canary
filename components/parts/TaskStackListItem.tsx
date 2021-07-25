@@ -1,9 +1,12 @@
 import styles from "styles/components/parts/TaskLogItem.module.scss";
 import TimerIcon from "components/parts/TimerIcon";
 import { convertDatetimeToTime } from "lib/format";
-import {Task} from "lib/task";
 
-type Props = Task;
+type Props = {
+    name: string;
+    pomodoroCount: number;
+    updatedAt: string | undefined;
+};
 
 const TaskStackListItem = ({ name, pomodoroCount, updatedAt }: Props) => (
   <li className={styles.outer}>
