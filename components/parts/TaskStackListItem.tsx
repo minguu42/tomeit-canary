@@ -5,7 +5,7 @@ import { convertDatetimeToTime } from "lib/format";
 
 type Props = TaskRecord;
 
-const TaskStack = ({ name, pomodoroCount, completeAt }: Props) => (
+const TaskStackListItem = ({ name, pomodoroCount, completeAt }: Props) => (
   <li className={styles.outer}>
     <div className={styles.leftWrapper}>
       <div className={styles.countWrapper}>
@@ -18,4 +18,4 @@ const TaskStack = ({ name, pomodoroCount, completeAt }: Props) => (
   </li>
 );
 
-export default TaskStack;
+export default TaskStackListItem;

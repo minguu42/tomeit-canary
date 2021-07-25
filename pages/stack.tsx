@@ -1,58 +1,85 @@
+import { useState, useEffect } from "react";
+import Head from "next/head";
+
 import styles from "styles/pages/Stack.module.scss";
-import { TaskLog } from "components/parts/TaskStack";
-import { PomodoroLog } from "components/parts/PomodoroLogItem";
-import LogSection from "components/modules/LogSection";
+import Header from "components/modules/Header";
+import StackSection from "components/modules/StackSection";
+import Footer from "components/modules/Footer";
+import { fetchData } from "lib/fetch";
+import { useAuth } from "lib/AuthContext";
+import type { Task } from "lib/task";
+import type { PomodoroRecord } from "lib/pomodoro";
 
-const taskLogs: TaskLog[] = [
-  {
-    id: 1,
-    name: "タスク1",
-    pomodoroCount: 0,
-    completeAt: "2021-01-01T12:00:00Z",
-  },
-  {
-    id: 2,
-    name: "タスク2",
-    pomodoroCount: 4,
-    completeAt: "2021-01-01T12:25:00Z",
-  },
-  {
-    id: 3,
-    name: "タスク3",
-    pomodoroCount: 10,
-    completeAt: "2021-01-01T13:00:00Z",
-  },
-];
-
-const pomodoroLogs: PomodoroLog[] = [
-  {
-    id: 1,
-    taskName: "タスク1",
-    createdAt: "2021-01-01T12:25:00Z",
-  },
-  {
-    id: 2,
-    taskName: "タスク2",
-    createdAt: "2021-01-01T12:55:00Z",
-  },
-  {
-    id: 3,
-    taskName: "タスク1",
-    createdAt: "2021-01-01T13:20:00Z",
-  },
-  {
-    id: 4,
-    taskName: "タスク1",
-    createdAt: "2021-01-01T14:30:00Z",
-  },
-];
-
-const LogsPage = (): JSX.Element => {
-  return (
-    <main className={styles.main}>
-      <LogSection taskLogs={taskLogs} pomodoroLogs={pomodoroLogs} />
-    </main>
-  );
+type Props = {
+  doneTasks: Task[];
+  pomodoroRecords: PomodoroRecord[];
 };
 
-export default LogsPage;
+const Stack = ({ doneTasks, pomodoroRecords }: Props): JSX.Element => (
+  <>
+    <Head>
+      <title>足跡 - tomeit</title>
+    </Head>
+
+    <Header />
+    <main className={styles.main}>
+      <StackSection doneTasks={doneTasks} pomodoroRecords={pomodoroRecords} />
+    </main>
+    <Footer />
+  </>
+);
+
+const StackContainer = (): JSX.Element => {
+  const [doneTasks, setDoneTasks] = useState<Task[]>([]);
+  const [pomodoroRecords, setPomodoroRecords] = useState<PomodoroRecord[]>([]);
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    fetchData("/tasks/done", currentUser)
+      .then((data) => {
+        if (data.tasks === null) {
+          setDoneTasks([]);
+        } else {
+          setDoneTasks(
+            data.tasks.filter(
+              (t: any) =>
+                t.createdAt.slice(0, 10) ===
+                new Date().toISOString().slice(0, 10)
+            )
+          );
+        }
+      })
+      .catch((error) => {
+        console.log("fetch doneTasks failed:", error);
+      });
+
+    fetchData("/pomodoros/records", currentUser)
+      .then((data) => {
+        if (data.pomodoroRecords === null) {
+          setPomodoroRecords([]);
+        } else {
+          const pomodoroRecords = data.pomodoroRecords
+            .map((r: any) => {
+              return {
+                id: r.id,
+                taskName: r.task.name,
+                createdAt: r.createdAt,
+              };
+            })
+            .filter(
+              (r: any) =>
+                r.createdAt.slice(0, 10) ===
+                new Date().toISOString().slice(0, 10)
+            );
+          setPomodoroRecords(pomodoroRecords);
+        }
+      })
+      .catch((error) => {
+        console.log("fetch pomodoroRecords failed:", error);
+      });
+  }, [currentUser]);
+
+  return <Stack doneTasks={doneTasks} pomodoroRecords={pomodoroRecords} />;
+};
+
+export default StackContainer;

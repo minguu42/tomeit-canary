@@ -13,15 +13,39 @@ type Props = {
 const Header = ({ isLoggedIn }: Props): JSX.Element => (
   <header className={styles.outer}>
     <div className={styles.inner}>
-      <Link href="/">
-        <a className={styles.leftWrapper}>
-          <Image src="/logo512.png" alt="tomeit Logo" width={32} height={32} />
-          <h2 className={styles.appName}>tomeit</h2>
-        </a>
-      </Link>
+      {isLoggedIn && (
+        <Link href="/home">
+          <a className={styles.leftWrapper}>
+            <Image
+              src="/logo512.png"
+              alt="tomeit Logo"
+              width={32}
+              height={32}
+            />
+            <h2 className={styles.appName}>tomeit</h2>
+          </a>
+        </Link>
+      )}
+      {!isLoggedIn && (
+        <Link href="/">
+          <a className={styles.leftWrapper}>
+            <Image
+              src="/logo512.png"
+              alt="tomeit Logo"
+              width={32}
+              height={32}
+            />
+            <h2 className={styles.appName}>tomeit</h2>
+          </a>
+        </Link>
+      )}
       {isLoggedIn && (
         <div className={styles.rightWrapper}>
-          <SummarizeIcon fill="#ffffff" />
+          <Link href="/stack">
+            <a>
+              <SummarizeIcon fill="#ffffff" />
+            </a>
+          </Link>
           <AccountMenu />
         </div>
       )}

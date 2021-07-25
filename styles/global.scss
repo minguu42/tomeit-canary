@@ -32,6 +32,10 @@ input:focus {
   outline: none;
 }
 
+svg {
+  display: block;
+}
+
 :root {
   --c-primary: #192f60;
   --c-secondary: #427eff;

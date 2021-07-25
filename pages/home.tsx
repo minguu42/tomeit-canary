@@ -68,7 +68,7 @@ const HomeContainer = (): JSX.Element => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [playingTask, setPlayingTask] = useState<Task | null>(null);
   const [restCount, setRestCount] = useState(4);
-  const [todayPomodoroNum, setTodayPomodoroNum] = useState(0);
+  const [todayPomodoroCount, setTodayPomodoroCount] = useState(0);
   const { currentUser } = useAuth();
 
   const addTask = (task: Task): void => {
@@ -97,6 +97,10 @@ const HomeContainer = (): JSX.Element => {
       .then((data) => {
         const tmp = tasks.filter((t) => t.id !== task.id);
         setTasks(tmp);
+
+        if (playingTask?.id === task.id) {
+          setPlayingTask(null);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -112,19 +116,19 @@ const HomeContainer = (): JSX.Element => {
       setTasks(tmp);
 
       const req = { taskID: task.id };
-      postData("/pomodoros/logs", req, currentUser)
+      postData("/pomodoros/records", req, currentUser)
         .then()
         .catch((error) => {
           console.log(error);
         });
     }
 
-    setTodayPomodoroNum((n) => n + 1);
+    setTodayPomodoroCount((n) => n + 1);
     setRestCount((c) => (c === 1 ? 4 : c - 1));
   };
 
   useEffect(() => {
-    fetchData("/tasks", currentUser)
+    fetchData("/tasks/undone", currentUser)
       .then((data) => {
         if (data.tasks === null) {
           setTasks([]);
@@ -136,12 +140,21 @@ const HomeContainer = (): JSX.Element => {
         console.log(error);
       });
 
-    fetchData("/pomodoros/rest/count", currentUser)
+    fetchData("/pomodoros/rest-count", currentUser)
       .then((data) => {
-        setRestCount(data.countToNextRest);
+        console.log(data.restCount);
+        setRestCount(data.restCount);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("fetch restCount", error);
+      });
+
+    fetchData("/pomodoros/records/count/today", currentUser)
+      .then((data) => {
+        setTodayPomodoroCount(data.todayPomodoroCount);
+      })
+      .catch((error) => {
+        console.log("fetch todayPomodoroCount error:", error);
       });
   }, [currentUser]);
 
@@ -152,7 +165,7 @@ const HomeContainer = (): JSX.Element => {
       playingTask={playingTask}
       playTask={playTask}
       restCount={restCount}
-      todayPomodoroNum={todayPomodoroNum}
+      todayPomodoroNum={todayPomodoroCount}
       applyCompletePomodoro={applyCompletePomodoro}
       completeTask={completeTask}
     />

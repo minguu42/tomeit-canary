@@ -97,7 +97,9 @@ const PomodoroPlayerContainer = ({
   const [isPomodoro, setIsPomodoro] = useState(true);
 
   const handlePlayClick = () => {
-    setIsActive(true);
+    if (playingTask !== null) {
+      setIsActive(true);
+    }
   };
 
   const handlePauseClick = () => {
@@ -116,6 +118,8 @@ const PomodoroPlayerContainer = ({
   useEffect(() => {
     if (playingTask !== null) {
       setIsActive(true);
+    } else {
+      setIsActive(false);
     }
   }, [playingTask]);
 
