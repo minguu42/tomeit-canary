@@ -1,11 +1,11 @@
 import styles from "styles/components/parts/TaskLogItem.module.scss";
 import TimerIcon from "components/parts/TimerIcon";
-import { TaskRecord } from "lib/task";
 import { convertDatetimeToTime } from "lib/format";
+import {Task} from "lib/task";
 
-type Props = TaskRecord;
+type Props = Task;
 
-const TaskStackListItem = ({ name, pomodoroCount, completeAt }: Props) => (
+const TaskStackListItem = ({ name, pomodoroCount, updatedAt }: Props) => (
   <li className={styles.outer}>
     <div className={styles.leftWrapper}>
       <div className={styles.countWrapper}>
@@ -14,7 +14,7 @@ const TaskStackListItem = ({ name, pomodoroCount, completeAt }: Props) => (
       </div>
       <p className={styles.name}>{name}</p>
     </div>
-    <p className={styles.time}>{convertDatetimeToTime(completeAt)}</p>
+    <p className={styles.time}>{convertDatetimeToTime(updatedAt)}</p>
   </li>
 );
 
