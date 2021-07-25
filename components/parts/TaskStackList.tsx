@@ -12,14 +12,13 @@ const TaskStackList = ({ doneTasks }: Props) => (
       <p>完了したタスク</p>
     </div>
     <ul className={styles.list}>
-      {doneTasks.map((log) => (
+      {doneTasks.map((task) => (
         <TaskStackListItem
-          key={log.id}
-          id={log.id}
-          name={log.name}
-          pomodoroCount={log.pomodoroCount}
-          completeAt={log.updatedAt}
-        />
+          key={task.id}
+          name={task.name}
+          pomodoroCount={task.pomodoroCount}
+          updatedAt={task.updatedAt}
+         />
       ))}
     </ul>
   </div>
