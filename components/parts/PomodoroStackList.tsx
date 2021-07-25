@@ -12,12 +12,12 @@ const PomodoroStackList = ({ pomodoroRecords }: Props): JSX.Element => (
       <p>実行したポモドーロ</p>
     </div>
     <ul className={styles.list}>
-      {pomodoroRecords.map((log) => (
+      {pomodoroRecords.map((record) => (
         <PomodoroStackListItem
-          key={log.id}
-          id={log.id}
-          taskName={log.taskName}
-          createdAt={log.createdAt}
+          key={record.id}
+          id={record.id}
+          taskName={record.taskName}
+          createdAt={record.createdAt}
         />
       ))}
     </ul>

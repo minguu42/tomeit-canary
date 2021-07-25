@@ -26,12 +26,12 @@ export const convertDatetimeToPomodoroTerm = (createdAt: string): string => {
   const start = new Date(createdAt);
   start.setMinutes(start.getMinutes() - 25);
   return (
-    String(start.getUTCHours()) +
+    String(start.getUTCHours()).padStart(2, "0") +
     "：" +
     String(start.getUTCMinutes()).padStart(2, "0") +
     " - " +
     createdAt.slice(11, 13).padStart(2, "0") +
     "：" +
-    createdAt.slice(14, 16)
+    createdAt.slice(14, 16).padStart(2, "0")
   );
 };
