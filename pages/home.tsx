@@ -97,6 +97,10 @@ const HomeContainer = (): JSX.Element => {
       .then((data) => {
         const tmp = tasks.filter((t) => t.id !== task.id);
         setTasks(tmp);
+
+        if (playingTask?.id === task.id) {
+          setPlayingTask(null);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -112,7 +116,7 @@ const HomeContainer = (): JSX.Element => {
       setTasks(tmp);
 
       const req = { taskID: task.id };
-      postData("/pomodoros/logs", req, currentUser)
+      postData("/pomodoros/records", req, currentUser)
         .then()
         .catch((error) => {
           console.log(error);
@@ -124,7 +128,7 @@ const HomeContainer = (): JSX.Element => {
   };
 
   useEffect(() => {
-    fetchData("/tasks", currentUser)
+    fetchData("/tasks/undone", currentUser)
       .then((data) => {
         if (data.tasks === null) {
           setTasks([]);
@@ -136,12 +140,21 @@ const HomeContainer = (): JSX.Element => {
         console.log(error);
       });
 
-    fetchData("/pomodoros/rest/count", currentUser)
+    fetchData("/pomodoros/rest-count", currentUser)
       .then((data) => {
-        setRestCount(data.countToNextRest);
+        console.log(data.restCount);
+        setRestCount(data.restCount);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("fetch restCount", error);
+      });
+
+    fetchData("/pomodoros/records/count/today", currentUser)
+      .then((data) => {
+        setTodayPomodoroCount(data.todayPomodoroCount);
+      })
+      .catch((error) => {
+        console.log("fetch todayPomodoroCount error:", error);
       });
   }, [currentUser]);
 

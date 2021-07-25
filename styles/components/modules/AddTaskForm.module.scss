@@ -2,6 +2,7 @@
 
 .outer {
   display: flex;
+  gap: 8px;
   align-items: center;
   justify-content: space-between;
   padding: 8px 16px;
@@ -11,8 +12,11 @@
   .leftWrapper {
     display: flex;
     gap: 16px;
+    width: 100%;
 
     input[type="text"] {
+      display: block;
+      width: 100%;
       color: var(--c-on-light-high-emphasis);
 
       @include variables.body1;
