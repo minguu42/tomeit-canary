@@ -1,34 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# tomeit
 
-## Getting Started
+`tomeit` はtomeit は「集中力と時間を管理する」をコンセプトにしたタスク管理アプリです.
+ポモドーロ・テクニックという時間管理法を取り入れ, 自身の集中力と時間を意識して行動できます.
 
-First, run the development server:
+% 開発中ですのでデータが消える可能性があります. 使用はお試し程度で留めてください.
+
+## セットアップ
+
+1. `.env.local`ファイルを作成する
+
+% ユーザ認証に Firebase Authentication を使用しています. そのため動かすには Firebase プロジェクトを作成し, アプリを追加する必要があります.
+
+```bash
+NEXT_PUBLIC_FIREBASE_API_KEY=<firebase api key>
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=<firebase auth domain>
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=<firebase project id>
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=<firebase storage bucket>
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=<firebase sender id>
+NEXT_PUBLIC_FIREBASE_APP_ID=<firebase app id>
+
+NEXT_PUBLIC_API_URL=http://localhost:8080
+```
+
+2. コマンドの実行
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 開発環境
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- プログラミング言語：TypeScript
+- ライブラリ・フレームワーク：React, Next.js
+- スタイリング：CSS Modules + Sass
+- 状態管理：useContext
+- デプロイ：Vercel
+- フォーマッタ・リンタ：Pritter, ESLint, stylelint
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.tsx`.
+### 自動整形
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+npm run fmt
+```
 
-## Learn More
+### 静的解析
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run lint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ローカル実行
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+npm run dev
+```
