@@ -6,7 +6,7 @@ export const postData = async (
   path = "/",
   data = {},
   currentUser: User | null
-) => {
+): Promise<any> => {
   if (currentUser === null) {
     return;
   }
@@ -24,7 +24,10 @@ export const postData = async (
   return response.json();
 };
 
-export const fetchData = async (path = "/", currentUser: User | null) => {
+export const fetchData = async (
+  path = "/",
+  currentUser: User | null
+): Promise<any> => {
   if (currentUser === null) {
     return;
   }
@@ -45,7 +48,7 @@ export const putData = async (
   path = "/",
   data = {},
   currentUser: User | null
-) => {
+): Promise<any> => {
   if (currentUser === null) {
     return;
   }

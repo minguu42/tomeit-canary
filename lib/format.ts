@@ -18,7 +18,7 @@ export const formatStringByLength = (length: number, name: string): string => {
 
 export const convertDatetimeToTime = (datetime: string | undefined): string => {
   if (datetime === undefined) {
-    return ""
+    return "";
   }
   const hour = datetime.slice(11, 13);
   const minutes = datetime.slice(14, 16);

@@ -3,12 +3,16 @@ import TimerIcon from "components/parts/TimerIcon";
 import { convertDatetimeToTime } from "lib/format";
 
 type Props = {
-    name: string;
-    pomodoroCount: number;
-    updatedAt: string | undefined;
+  name: string;
+  pomodoroCount: number;
+  updatedAt: string | undefined;
 };
 
-const TaskStackListItem = ({ name, pomodoroCount, updatedAt }: Props) => (
+const TaskStackListItem = ({
+  name,
+  pomodoroCount,
+  updatedAt,
+}: Props): JSX.Element => (
   <li className={styles.outer}>
     <div className={styles.leftWrapper}>
       <div className={styles.countWrapper}>

@@ -1,5 +1,6 @@
 import Document, {
   DocumentContext,
+  DocumentInitialProps,
   Head,
   Html,
   Main,
@@ -7,7 +8,9 @@ import Document, {
 } from "next/document";
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
+  static async getInitialProps(
+    ctx: DocumentContext
+  ): Promise<DocumentInitialProps> {
     return await Document.getInitialProps(ctx);
   }
 

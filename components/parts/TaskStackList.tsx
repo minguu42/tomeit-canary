@@ -6,7 +6,7 @@ type Props = {
   doneTasks: Task[];
 };
 
-const TaskStackList = ({ doneTasks }: Props) => (
+const TaskStackList = ({ doneTasks }: Props): JSX.Element => (
   <div className={styles.outer}>
     <div className={styles.header}>
       <p>完了したタスク</p>
@@ -18,7 +18,7 @@ const TaskStackList = ({ doneTasks }: Props) => (
           name={task.name}
           pomodoroCount={task.pomodoroCount}
           updatedAt={task.updatedAt}
-         />
+        />
       ))}
     </ul>
   </div>

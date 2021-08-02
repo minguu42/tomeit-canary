@@ -10,7 +10,7 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>({ currentUser: null });
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   return useContext(AuthContext);
 };
 
