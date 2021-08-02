@@ -94,7 +94,7 @@ const HomeContainer = (): JSX.Element => {
 
   const completeTask = (task: Task): void => {
     putData("/tasks/done/" + String(task.id), {}, currentUser)
-      .then((data) => {
+      .then(() => {
         const tmp = tasks.filter((t) => t.id !== task.id);
         setTasks(tmp);
 
