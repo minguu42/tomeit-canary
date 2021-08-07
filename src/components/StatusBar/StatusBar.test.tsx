@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import StatusBar from "./index";
+import { StatusBar } from "./index";
 
 beforeEach(() => {
   render(<StatusBar restCount={1} undoneTaskNumber={4} pomodoroNumber={8} />);

@@ -5,7 +5,7 @@ module.exports = {
   testPathIgnorePatterns: ["<rootDir>[/\\\\](node_modules|.next)[/\\\\]"],
   moduleNameMapper: {
     "\\.(css|scss)$": "identity-obj-proxy",
-    "^(pages|components)/(.+)": "<rootDir>/src/$1",
+    "^(pages|components)/(.+)": "<rootDir>/src/$1/$2",
   },
   globals: {
     "ts-jest": {

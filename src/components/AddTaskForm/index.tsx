@@ -1,8 +1,8 @@
 import React, { ChangeEventHandler, useState } from "react";
 
-import styles from "components/AddTaskForm/AddTaskForm.module.scss";
 import AddTaskIcon from "components/common/icons/AddTaskIcon";
 import FlagIcon from "components/common/icons/FlagIcon";
+import styles from "components/AddTaskForm/AddTaskForm.module.scss";
 import { Task } from "lib/task";
 
 type ContainerProps = {
@@ -19,7 +19,7 @@ type Props = {
   handleSubmit: (e: React.SyntheticEvent) => void;
 };
 
-const AddTaskForm = ({
+export const AddTaskForm = ({
   name,
   handleNameChange,
   priority,
