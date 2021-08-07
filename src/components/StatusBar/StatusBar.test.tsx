@@ -28,7 +28,7 @@ describe("display", () => {
     expect(screen.getByText("8")).toBeInTheDocument();
   });
 
-  it("should display", () => {
+  it("should display pomodoroNumber", () => {
     expect(screen.getByText("今日のポモドーロ数")).toBeInTheDocument();
   });
 });
