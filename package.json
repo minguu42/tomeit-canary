@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "fmt": "prettier -w --ignore-path ./.gitignore '**/*.{js,jsx,ts,tsx,scss,json,md}' ; stylelint --fix '**/*.scss'",
-    "lint": "next lint ; stylelint '**/*.scss'"
+    "lint": "next lint ; stylelint '**/*.scss'",
+    "test": "jest"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -18,18 +19,25 @@
     "sass": "^1.35.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
     "@types/classnames": "^2.3.1",
+    "@types/jest": "^26.0.24",
     "@types/react": "17.0.14",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "eslint": "7.30.0",
     "eslint-config-next": "11.0.1",
     "eslint-config-prettier": "^8.3.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-recess-order": "^2.4.0",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-order": "^4.1.0",
+    "ts-jest": "^27.0.4",
     "typescript": "4.3.5"
   }
 }

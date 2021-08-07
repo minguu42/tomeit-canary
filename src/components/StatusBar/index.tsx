@@ -6,7 +6,7 @@ type Props = {
   pomodoroNumber: number;
 };
 
-const StatusBar = ({
+export const StatusBar = ({
   restCount,
   undoneTaskNumber,
   pomodoroNumber,
