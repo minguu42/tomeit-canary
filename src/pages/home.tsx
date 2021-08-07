@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 
 import styles from "styles/pages/Home.module.scss";
-import Header from "../components/modules/Header";
+import Header from "components/modules/Header";
 import StatusBar from "components/modules/StatusBar";
 import AddTaskForm from "components/modules/AddTaskForm";
 import TaskList from "components/modules/TaskList";
