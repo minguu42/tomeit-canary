@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import styles from "styles/components/parts/GoogleLoginButton.module.scss";
+import styles from "components/Catch/GoogleLoginButton.module.scss";
 
 type Props = {
   handleLogin: () => Promise<void>;

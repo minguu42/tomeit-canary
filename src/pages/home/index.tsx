@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 
-import styles from "styles/pages/Home.module.scss";
-import Header from "components/modules/Header";
-import StatusBar from "components/modules/StatusBar";
-import AddTaskForm from "components/modules/AddTaskForm";
-import TaskList from "components/modules/TaskList";
-import PomodoroPlayer from "components/modules/PomodoroPlayer";
-import Footer from "components/modules/Footer";
+import Header from "components/common/Header";
+import StatusBar from "components/StatusBar";
+import AddTaskForm from "components/AddTaskForm";
+import TaskList from "components/TaskList";
+import PomodoroPlayer from "components/PomodoroPlayer";
+import Footer from "components/common/Footer";
+import styles from "pages/home/Home.module.scss";
 import { Task } from "lib/task";
 import { fetchData, postData, putData } from "lib/fetch";
 import { useAuth } from "lib/AuthContext";
@@ -23,7 +23,7 @@ type Props = {
   applyCompletePomodoro: (task: Task | null) => void;
 };
 
-const Home = ({
+const Index = ({
   tasks,
   playingTask,
   restCount,
@@ -159,7 +159,7 @@ const HomeContainer = (): JSX.Element => {
   }, [currentUser]);
 
   return (
-    <Home
+    <Index
       tasks={tasks.filter((task) => !task.isDone)}
       addTask={addTask}
       playingTask={playingTask}

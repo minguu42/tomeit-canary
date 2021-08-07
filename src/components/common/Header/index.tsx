@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import styles from "styles/components/modules/Header.module.scss";
-import SummarizeIcon from "components/parts/SummarizeIcon";
-import AccountMenu from "components/parts/AccountMenu";
+import SummarizeIcon from "components/common/icons/SummarizeIcon";
+import AccountMenu from "components/common/Header/AccountMenu";
+import styles from "components/common/Header/Header.module.scss";
 import { useAuth } from "lib/AuthContext";
 
 type Props = {

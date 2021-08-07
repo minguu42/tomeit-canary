@@ -1,5 +1,5 @@
-import styles from "styles/components/parts/PomodoroLogList.module.scss";
-import PomodoroStackListItem from "components/parts/PomodoroStackListItem";
+import PomodoroStackListItem from "components/StackSection/PomodoroStackListItem";
+import styles from "components/StackSection/PomodoroStackList.module.scss";
 import type { PomodoroRecord } from "lib/pomodoro";
 
 type Props = {

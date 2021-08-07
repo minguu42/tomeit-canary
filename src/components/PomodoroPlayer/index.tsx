@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 // @ts-ignore
 import cn from "classnames";
 
-import styles from "styles/components/modules/PomodoroPlayer.module.scss";
-import TimerIcon from "components/parts/TimerIcon";
-import PlayCircleIcon from "components/parts/PlayCircleIcon";
-import CheckCircleIcon from "components/parts/CheckCircleIcon";
-import PauseCircleIcon from "components/parts/PauseCircleIcon";
-import StopCircleIcon from "components/parts/StopCircleIcon";
+import styles from "components/PomodoroPlayer/PomodoroPlayer.module.scss";
+import TimerIcon from "components/common/icons/TimerIcon";
+import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
+import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
+import PauseCircleIcon from "components/common/icons/PauseCircleIcon";
+import StopCircleIcon from "components/common/icons/StopCircleIcon";
 import { Task } from "lib/task";
 import { convertSecondsForDisplay, formatStringByLength } from "lib/format";
 

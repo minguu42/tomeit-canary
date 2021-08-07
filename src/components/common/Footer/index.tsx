@@ -1,4 +1,4 @@
-import styles from "styles/components/modules/Footer.module.scss";
+import styles from "components/common/Footer/Footer.module.scss";
 
 const Footer = (): JSX.Element => (
   <footer className={styles.outer}>

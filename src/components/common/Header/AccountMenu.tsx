@@ -1,9 +1,9 @@
 import { useState } from "react";
-
-import styles from "styles/components/parts/AccountMenu.module.scss";
-import AccountCircleIcon from "components/parts/AccountCircleIcon";
-import { logout } from "lib/AuthContext";
 import { useRouter } from "next/router";
+
+import AccountCircleIcon from "components/common/icons/AccountCircleIcon";
+import styles from "components/common/Header/AccountMenu.module.scss";
+import { logout } from "lib/AuthContext";
 
 type Props = {
   isOpen: boolean;

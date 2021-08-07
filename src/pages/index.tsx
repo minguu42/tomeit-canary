@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import styles from "styles/pages/Landing.module.scss";
-import Header from "components/modules/Header";
-import Catch from "components/modules/Catch";
-import Footer from "components/modules/Footer";
+import Header from "components/common/Header";
+import Catch from "components/Catch";
+import Footer from "components/common/Footer";
+import styles from "pages/Landing.module.scss";
 import { useAuth, login } from "lib/AuthContext";
 
 type Props = {

@@ -1,5 +1,5 @@
-import styles from "styles/components/parts/TaskLogItem.module.scss";
-import TimerIcon from "components/parts/TimerIcon";
+import TimerIcon from "components/common/icons/TimerIcon";
+import styles from "components/StackSection/TaskStackListItem.module.scss";
 import { convertDatetimeToTime } from "lib/format";
 
 type Props = {

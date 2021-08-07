@@ -1,6 +1,6 @@
-import styles from "styles/components/modules/LogSection.module.scss";
-import TaskStackList from "components/parts/TaskStackList";
-import PomodoroStackList from "components/parts/PomodoroStackList";
+import TaskStackList from "components/StackSection/TaskStackList";
+import PomodoroStackList from "components/StackSection/PomodoroStackList";
+import styles from "components/StackSection/StackSection.module.scss";
 import type { Task } from "lib/task";
 import type { PomodoroRecord } from "lib/pomodoro";
 

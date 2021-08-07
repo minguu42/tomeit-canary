@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 
-import styles from "styles/pages/Stack.module.scss";
-import Header from "components/modules/Header";
-import StackSection from "components/modules/StackSection";
-import Footer from "components/modules/Footer";
+import styles from "pages/stack/Stack.module.scss";
+import Header from "components/common/Header";
+import StackSection from "components/StackSection";
+import Footer from "components/common/Footer";
 import { fetchData } from "lib/fetch";
 import { useAuth } from "lib/AuthContext";
 import type { Task } from "lib/task";

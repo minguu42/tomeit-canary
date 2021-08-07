@@ -2,10 +2,10 @@
 // @ts-ignore
 import cn from "classnames";
 
-import styles from "styles/components/parts/TaskCard.module.scss";
-import TimerIcon from "components/parts/TimerIcon";
-import CircleIcon from "components/parts/CircleIcon";
-import PlayCircleIcon from "components/parts/PlayCircleIcon";
+import styles from "components/TaskList/TaskCard.module.scss";
+import TimerIcon from "components/common/icons/TimerIcon";
+import CircleIcon from "components/common/icons/CircleIcon";
+import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
 import { formatStringByLength } from "lib/format";
 
 export type Task = {

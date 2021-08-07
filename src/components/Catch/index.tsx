@@ -1,5 +1,5 @@
-import styles from "styles/components/modules/Catch.module.scss";
-import GoogleLoginButton from "components/parts/GoogleLoginButton";
+import styles from "components/Catch/Catch.module.scss";
+import GoogleLoginButton from "components/Catch/GoogleLoginButton";
 
 type Props = {
   handleLogin: () => Promise<void>;
