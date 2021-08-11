@@ -1,4 +1,4 @@
-import styles from "components/CatchMessage/CatchMessage.module.scss";
+import styles from "components/landing/CatchMessage/CatchMessage.module.scss";
 
 export const CatchMessage = (): JSX.Element => (
   <div className={styles.wrapper}>

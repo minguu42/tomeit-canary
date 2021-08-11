@@ -13,6 +13,7 @@ describe("display", () => {
       screen.getByText("tomeit でやるべきことのみをやる")
     ).toBeInTheDocument();
   });
+
   it("should display description", () => {
     expect(
       screen.getByText(

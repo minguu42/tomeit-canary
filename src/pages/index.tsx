@@ -3,10 +3,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import Header from "components/common/Header";
+import CatchMessage from "components/landing/CatchMessage";
 import Footer from "components/common/Footer";
 import styles from "pages/Landing.module.scss";
 import { useAuth, login } from "lib/AuthContext";
-import CatchMessage from "../components/CatchMessage";
 
 type Props = {
   handleLogin: () => Promise<void>;
