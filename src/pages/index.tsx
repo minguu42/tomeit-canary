@@ -3,10 +3,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import Header from "components/common/Header";
-import Catch from "components/Catch";
 import Footer from "components/common/Footer";
 import styles from "pages/Landing.module.scss";
 import { useAuth, login } from "lib/AuthContext";
+import CatchMessage from "../components/CatchMessage";
 
 type Props = {
   handleLogin: () => Promise<void>;
@@ -18,13 +18,13 @@ const Landing = ({ handleLogin }: Props): JSX.Element => (
       <title>tomeit</title>
       <meta
         name="description"
-        content="tomeit は「大事なことに集中する」をコンセプトとしたタスク管理アプリです。ポモドーロテクニックを使って、時間と集中力を有意義に使いましょう！"
+        content="tomeit は必要なことだけに集中するためのタスク管理アプリです。ポモドーロテクニックを使って、今やるべきことのみを行い, 時間を有意義に使いましょう！"
       />
     </Head>
 
     <Header />
     <main className={styles.main}>
-      <Catch handleLogin={handleLogin} />
+      <CatchMessage />
     </main>
     <Footer />
   </>

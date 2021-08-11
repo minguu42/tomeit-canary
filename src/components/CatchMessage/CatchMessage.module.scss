@@ -1,0 +1,14 @@
+@use "styles/variables";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  .advertisingSlogan {
+    @include variables.headline3;
+  }
+  .description {
+    max-width: 504px;
+    @include variables.body1;
+  }
+}
