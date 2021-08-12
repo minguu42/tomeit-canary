@@ -9,7 +9,7 @@ import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
 import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
 import PauseCircleIcon from "components/common/icons/PauseCircleIcon";
 import StopCircleIcon from "components/common/icons/StopCircleIcon";
-import { Task } from "lib/task";
+import { Task } from "types/task";
 import { convertSecondsForDisplay, formatStringByLength } from "lib/format";
 
 type ContainerProps = {

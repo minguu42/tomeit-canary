@@ -1,33 +1,15 @@
-import styles from "components/TaskList/TaskList.module.scss";
-import TaskCard from "components/TaskList/TaskCard";
-import { Task } from "lib/task";
+import styles from "components/home/TaskList/TaskList.module.scss";
+import TaskListItem from "components/home/TaskList/TaskListItem";
+import { Task } from "types/task";
 
 type Props = {
   tasks: Task[];
-  playingTask: Task | null;
-  playTask: (task: Task) => void;
-  completeTask: (task: Task) => void;
 };
 
-const TaskList = ({
-  tasks,
-  playingTask,
-  playTask,
-  completeTask,
-}: Props): JSX.Element => (
-  <div className={styles.outer}>
+const TaskList = ({ tasks }: Props): JSX.Element => (
+  <div className={styles.list}>
     {tasks.map((task) => (
-      <TaskCard
-        key={task.id}
-        id={task.id}
-        name={task.name}
-        priority={task.priority}
-        deadline={task.deadline}
-        pomodoroCount={task.pomodoroCount}
-        isPlaying={playingTask?.id === task.id}
-        handlePlayClick={() => playTask(task)}
-        handleCircleClick={() => completeTask(task)}
-      />
+      <TaskListItem key={task.id} task={task} />
     ))}
   </div>
 );
