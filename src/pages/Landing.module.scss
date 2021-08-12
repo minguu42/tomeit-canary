@@ -1,6 +1,15 @@
 .main {
+  display: flex;
+  justify-content: space-between;
   max-width: 1040px;
   min-height: calc(100vh - 56px);
-  padding-top: 80px;
+  padding-top: 112px;
   margin: 0 auto;
+  background-color: var(--c-background);
+}
+
+.leftWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
 }

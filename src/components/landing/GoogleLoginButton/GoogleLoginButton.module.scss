@@ -1,21 +1,22 @@
 @use "styles/variables";
 
-.outer {
+.container {
   display: flex;
   gap: 8px;
   align-items: center;
   width: 186px;
   height: 36px;
   padding: 8px 16px;
+  background-color: var(--c-surface);
   border: 1px solid var(--c-outline);
-
   @include variables.dp02;
 
-  .text {
+  .label {
+    color: var(--c-on-surface-high);
     @include variables.body2;
   }
 }
 
-.outer:hover {
-  background-color: rgba(0, 0, 0, 0.06);
+.container:hover {
+  background-color: var(--c-surface-hover);
 }
