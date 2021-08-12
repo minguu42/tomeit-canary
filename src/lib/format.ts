@@ -1,11 +1,9 @@
-export const convertSecondsForDisplay = (seconds: number): string => {
-  const minutes = Math.floor(seconds / 60);
-  const restSeconds = seconds % 60;
-  return (
-    String(minutes).padStart(2, "0") +
-    "：" +
-    String(restSeconds).padStart(2, "0")
-  );
+export const formatSeconds = (seconds: number): string => {
+  const mmNum = Math.floor(seconds / 60);
+  const ssNum = seconds % 60;
+  const mm = String(mmNum).padStart(2, "0");
+  const ss = String(ssNum).padStart(2, "0");
+  return `${mm}：${ss}`;
 };
 
 export const formatStringByLength = (length: number, name: string): string => {
