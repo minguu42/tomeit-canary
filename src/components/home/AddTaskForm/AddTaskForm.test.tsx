@@ -11,12 +11,12 @@ beforeEach(() => {
 
   render(
     <AddTaskForm
-      name=""
-      handleNameChange={handleNameChange}
+      title=""
+      handleTitleChange={handleNameChange}
       expectedPomodoroNum={0}
       handleExpectedPomodoroNumChange={handleExpectedPomodoroNumChange}
-      deadline="2021-01-01"
-      handleDeadlineChange={handleDeadlineChange}
+      dueOn="2021-01-01"
+      handleDueOnChange={handleDeadlineChange}
       handleSubmit={handleSubmit}
     />
   );

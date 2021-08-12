@@ -1,11 +1,11 @@
 @use "styles/variables";
 
 .outer {
-  height: 56px;
   display: flex;
   gap: 8px;
   align-items: center;
   justify-content: space-between;
+  height: 56px;
   padding: 16px;
   background-color: var(--c-surface);
   border-bottom: 1px solid var(--c-outline);

@@ -3,29 +3,24 @@ import React, { ChangeEventHandler, useState } from "react";
 import AddIcon from "components/common/icons/AddIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
 import styles from "components/home/AddTaskForm/AddTaskForm.module.scss";
-import { Task } from "lib/task";
-
-type ContainerProps = {
-  addTask: (task: Task) => void;
-};
 
 type Props = {
-  name: string;
-  handleNameChange: ChangeEventHandler<HTMLInputElement>;
+  title: string;
+  handleTitleChange: ChangeEventHandler<HTMLInputElement>;
   expectedPomodoroNum: number;
   handleExpectedPomodoroNumChange: ChangeEventHandler<HTMLInputElement>;
-  deadline: string;
-  handleDeadlineChange: ChangeEventHandler<HTMLInputElement>;
+  dueOn: string;
+  handleDueOnChange: ChangeEventHandler<HTMLInputElement>;
   handleSubmit: (e: React.SyntheticEvent) => void;
 };
 
 export const AddTaskForm = ({
-  name,
-  handleNameChange,
+  title,
+  handleTitleChange,
   expectedPomodoroNum,
   handleExpectedPomodoroNumChange,
-  deadline,
-  handleDeadlineChange,
+  dueOn,
+  handleDueOnChange,
   handleSubmit,
 }: Props): JSX.Element => (
   <form onSubmit={handleSubmit} className={styles.outer}>
@@ -35,8 +30,8 @@ export const AddTaskForm = ({
         type="text"
         title="タスク名"
         placeholder="タスクを追加"
-        value={name}
-        onChange={handleNameChange}
+        value={title}
+        onChange={handleTitleChange}
         required
       />
     </div>
@@ -53,58 +48,59 @@ export const AddTaskForm = ({
       <input
         type="date"
         title="期日"
-        value={deadline}
-        onChange={handleDeadlineChange}
+        value={dueOn}
+        onChange={handleDueOnChange}
       />
     </div>
     <button type="submit" hidden />
   </form>
 );
 
-const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
-  const [name, setName] = useState("");
-  const [priority, setPriority] = useState(0);
-  const [deadline, setDeadline] = useState("");
+const AddTaskFormContainer = (): JSX.Element => {
+  const [title, setTitle] = useState("");
+  const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
+  const [dueOn, setDueOn] = useState("");
 
-  const handleNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setName(e.target.value);
+  const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setTitle(e.target.value);
   };
 
-  const handlePriorityChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setPriority(Number(e.target.value));
-  };
+  const handleExpectedPomodoroNumChange: ChangeEventHandler<HTMLInputElement> =
+    (e) => {
+      setExpectedPomodoroNum(Number(e.target.value));
+    };
 
-  const handleDeadlineChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setDeadline(e.target.value);
+  const handleDueOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setDueOn(e.target.value);
   };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const task: Task = {
-      id: Math.floor(Math.random() * 1000),
-      name: name,
-      priority: priority,
-      deadline: deadline || "0001-01-01",
-      isDone: false,
-      pomodoroCount: 0,
-    };
+    // const task: Task = {
+    //   id: Math.floor(Math.random() * 1000),
+    //   name: name,
+    //   priority: priority,
+    //   deadline: deadline || "0001-01-01",
+    //   isDone: false,
+    //   pomodoroCount: 0,
+    // };
 
-    addTask(task);
+    // TODO: タスクリストにタスクを追加する
 
-    setName("");
-    setPriority(0);
-    setDeadline("");
+    setTitle("");
+    setExpectedPomodoroNum(0);
+    setDueOn("");
   };
 
   return (
     <AddTaskForm
-      name={name}
-      handleNameChange={handleNameChange}
-      expectedPomodoroNum={priority}
-      handleExpectedPomodoroNumChange={handlePriorityChange}
-      deadline={deadline}
-      handleDeadlineChange={handleDeadlineChange}
+      title={title}
+      handleTitleChange={handleTitleChange}
+      expectedPomodoroNum={expectedPomodoroNum}
+      handleExpectedPomodoroNumChange={handleExpectedPomodoroNumChange}
+      dueOn={dueOn}
+      handleDueOnChange={handleDueOnChange}
       handleSubmit={handleSubmit}
     />
   );
