@@ -6,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "fmt": "prettier -w --ignore-path ./.gitignore '**/*.{js,jsx,ts,tsx,scss,json,md}' ; stylelint --fix '**/*.scss'",
-    "lint": "next lint ; stylelint '**/*.scss'",
-    "test": "jest"
+    "lint": "next lint"
   },
   "dependencies": {
     "classnames": "^2.2.6",
