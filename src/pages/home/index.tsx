@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 import TopAppBar from "components/common/TopAppBar";
+import HomeHeading from "components/home/HomeHeading";
 import AddTaskForm from "components/home/AddTaskForm";
 import TaskList from "components/home/TaskList";
 import PomodoroPlayer from "components/home/PomodoroPlayer";
@@ -73,8 +74,11 @@ const Home = (): JSX.Element => (
 
     <TopAppBar />
     <main className={styles.main}>
-      <AddTaskForm />
-      <TaskList tasks={tasks} />
+      <HomeHeading headingText="いつか" tasks={tasks} />
+      <div className={styles.taskListLayout}>
+        <AddTaskForm />
+        <TaskList tasks={tasks} />
+      </div>
       <div className={styles.playerLayout}>
         <PomodoroPlayer />
       </div>

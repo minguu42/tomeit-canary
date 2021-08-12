@@ -1,0 +1,17 @@
+@use "styles/variables";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .heading {
+    color: var(--c-on-background-high);
+    @include variables.headline5;
+  }
+
+  .taskNum {
+    color: var(--c-on-background-medium);
+    @include variables.subtitle2;
+  }
+}
