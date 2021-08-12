@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 
 import styles from "pages/stack/Stack.module.scss";
-import Header from "components/common/Header";
+import TopAppBar from "components/common/TopAppBar";
 import StackSection from "components/StackSection";
 import Footer from "components/common/Footer";
 import { fetchData } from "lib/fetch";
@@ -21,7 +21,7 @@ const Stack = ({ doneTasks, pomodoroRecords }: Props): JSX.Element => (
       <title>足跡 - tomeit</title>
     </Head>
 
-    <Header />
+    <TopAppBar />
     <main className={styles.main}>
       <StackSection doneTasks={doneTasks} pomodoroRecords={pomodoroRecords} />
     </main>

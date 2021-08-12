@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 import AccountCircleIcon from "components/common/icons/AccountCircleIcon";
-import styles from "components/common/Header/AccountMenu.module.scss";
+import styles from "components/common/TopAppBar/AccountMenu.module.scss";
 import { logout } from "lib/AuthContext";
 
 type Props = {
@@ -16,7 +16,7 @@ const AccountMenu = ({
   handleAccountClick,
   handleLogout,
 }: Props): JSX.Element => (
-  <div role="button" className={styles.wrapper}>
+  <div className={styles.container}>
     <span role="button" onClick={handleAccountClick}>
       <AccountCircleIcon fill="#ffffff" />
     </span>

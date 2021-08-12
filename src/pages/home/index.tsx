@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 
-import Header from "components/common/Header";
+import TopAppBar from "components/common/TopAppBar";
 import StatusBar from "components/StatusBar";
 import AddTaskForm from "components/AddTaskForm";
 import TaskList from "components/TaskList";
@@ -38,7 +38,7 @@ const Index = ({
       <title>ホーム - tomeit</title>
     </Head>
 
-    <Header />
+    <TopAppBar />
     <main className={styles.main}>
       <StatusBar
         restCount={restCount}

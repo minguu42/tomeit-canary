@@ -2,15 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 import SummarizeIcon from "components/common/icons/SummarizeIcon";
-import AccountMenu from "components/common/Header/AccountMenu";
-import styles from "components/common/Header/Header.module.scss";
+import AccountMenu from "components/common/TopAppBar/AccountMenu";
+import styles from "components/common/TopAppBar/TopAppBar.module.scss";
 import { useAuth } from "lib/AuthContext";
 
 type Props = {
   isLoggedIn: boolean;
 };
 
-const Header = ({ isLoggedIn }: Props): JSX.Element => (
+const TopAppBar = ({ isLoggedIn }: Props): JSX.Element => (
   <header className={styles.outer}>
     <div className={styles.inner}>
       {isLoggedIn && (
@@ -53,10 +53,10 @@ const Header = ({ isLoggedIn }: Props): JSX.Element => (
   </header>
 );
 
-const HeaderContainer = (): JSX.Element => {
+const TopAppBarContainer = (): JSX.Element => {
   const { currentUser } = useAuth();
 
-  return <Header isLoggedIn={currentUser !== null} />;
+  return <TopAppBar isLoggedIn={currentUser !== null} />;
 };
 
-export default HeaderContainer;
+export default TopAppBarContainer;

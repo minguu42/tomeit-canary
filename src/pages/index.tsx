@@ -3,7 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import Header from "components/common/Header";
+import TopAppBar from "components/common/TopAppBar";
 import CatchMessage from "components/landing/CatchMessage";
 import GoogleLoginButton from "components/landing/GoogleLoginButton";
 import styles from "pages/Landing.module.scss";
@@ -19,7 +19,7 @@ const Landing = (): JSX.Element => (
       />
     </Head>
 
-    <Header />
+    <TopAppBar />
     <main className={styles.main}>
       <div className={styles.leftWrapper}>
         <CatchMessage />
