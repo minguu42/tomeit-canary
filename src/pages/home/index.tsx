@@ -3,10 +3,9 @@ import Head from "next/head";
 
 import TopAppBar from "components/common/TopAppBar";
 import StatusBar from "components/StatusBar";
-import AddTaskForm from "components/AddTaskForm";
+import AddTaskForm from "components/home/AddTaskForm";
 import TaskList from "components/TaskList";
 import PomodoroPlayer from "components/PomodoroPlayer";
-import Footer from "components/common/Footer";
 import styles from "pages/home/Home.module.scss";
 import { Task } from "lib/task";
 import { fetchData, postData, putData } from "lib/fetch";
@@ -60,7 +59,6 @@ const Index = ({
         />
       </div>
     </main>
-    <Footer />
   </>
 );
 

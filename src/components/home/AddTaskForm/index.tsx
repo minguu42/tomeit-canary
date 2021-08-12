@@ -1,8 +1,8 @@
 import React, { ChangeEventHandler, useState } from "react";
 
-import AddTaskIcon from "components/common/icons/AddTaskIcon";
-import FlagIcon from "components/common/icons/FlagIcon";
-import styles from "components/AddTaskForm/AddTaskForm.module.scss";
+import AddIcon from "components/common/icons/AddIcon";
+import TimerIcon from "components/common/icons/TimerIcon";
+import styles from "components/home/AddTaskForm/AddTaskForm.module.scss";
 import { Task } from "lib/task";
 
 type ContainerProps = {
@@ -12,8 +12,8 @@ type ContainerProps = {
 type Props = {
   name: string;
   handleNameChange: ChangeEventHandler<HTMLInputElement>;
-  priority: number;
-  handlePriorityChange: ChangeEventHandler<HTMLInputElement>;
+  expectedPomodoroNum: number;
+  handleExpectedPomodoroNumChange: ChangeEventHandler<HTMLInputElement>;
   deadline: string;
   handleDeadlineChange: ChangeEventHandler<HTMLInputElement>;
   handleSubmit: (e: React.SyntheticEvent) => void;
@@ -22,15 +22,15 @@ type Props = {
 export const AddTaskForm = ({
   name,
   handleNameChange,
-  priority,
-  handlePriorityChange,
+  expectedPomodoroNum,
+  handleExpectedPomodoroNumChange,
   deadline,
   handleDeadlineChange,
   handleSubmit,
 }: Props): JSX.Element => (
   <form onSubmit={handleSubmit} className={styles.outer}>
     <div className={styles.leftWrapper}>
-      <AddTaskIcon fill="#666666" />
+      <AddIcon fill="#212121" />
       <input
         type="text"
         title="タスク名"
@@ -38,26 +38,23 @@ export const AddTaskForm = ({
         value={name}
         onChange={handleNameChange}
         required
-        className={styles.inputName}
       />
     </div>
     <div className={styles.rightWrapper}>
-      <FlagIcon fill="#666666" />
+      <TimerIcon fill="#666666" />
       <input
         type="number"
-        title="優先度"
-        value={priority}
-        onChange={handlePriorityChange}
+        title="予想ポモドーロ数"
+        value={expectedPomodoroNum}
+        onChange={handleExpectedPomodoroNumChange}
         min={0}
-        max={3}
-        className={styles.priorityInput}
+        max={6}
       />
       <input
         type="date"
         title="期日"
         value={deadline}
         onChange={handleDeadlineChange}
-        className={styles.deadlineInput}
       />
     </div>
     <button type="submit" hidden />
@@ -104,8 +101,8 @@ const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
     <AddTaskForm
       name={name}
       handleNameChange={handleNameChange}
-      priority={priority}
-      handlePriorityChange={handlePriorityChange}
+      expectedPomodoroNum={priority}
+      handleExpectedPomodoroNumChange={handlePriorityChange}
       deadline={deadline}
       handleDeadlineChange={handleDeadlineChange}
       handleSubmit={handleSubmit}
