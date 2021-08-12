@@ -4,15 +4,12 @@ import { useRouter } from "next/router";
 
 import Header from "components/common/Header";
 import CatchMessage from "components/landing/CatchMessage";
+import GoogleLoginButton from "components/landing/GoogleLoginButton";
 import Footer from "components/common/Footer";
 import styles from "pages/Landing.module.scss";
-import { useAuth, login } from "lib/AuthContext";
+import { useAuth } from "lib/AuthContext";
 
-type Props = {
-  handleLogin: () => Promise<void>;
-};
-
-const Landing = ({ handleLogin }: Props): JSX.Element => (
+const Landing = (): JSX.Element => (
   <>
     <Head>
       <title>tomeit</title>
@@ -25,6 +22,7 @@ const Landing = ({ handleLogin }: Props): JSX.Element => (
     <Header />
     <main className={styles.main}>
       <CatchMessage />
+      <GoogleLoginButton />
     </main>
     <Footer />
   </>
@@ -40,15 +38,7 @@ const LandingContainer = (): JSX.Element => {
     }
   }, [router, currentUser]);
 
-  const handleLogin = async () => {
-    try {
-      await login();
-    } catch {
-      window.alert("ログインに失敗しました。もう一度お試しください。");
-    }
-  };
-
-  return <Landing handleLogin={handleLogin} />;
+  return <Landing />;
 };
 
 export default LandingContainer;
