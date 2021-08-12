@@ -6,7 +6,7 @@ type Props = {
   tasks: Task[];
 };
 
-const TaskList = ({ tasks }: Props): JSX.Element => (
+export const TaskList = ({ tasks }: Props): JSX.Element => (
   <div className={styles.list}>
     {tasks.map((task) => (
       <TaskListItem key={task.id} task={task} />

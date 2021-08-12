@@ -2,8 +2,9 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { TaskListItem } from "./TaskListItem";
+import { Task } from "types/task";
 
-const task1 = {
+const task1: Task = {
   id: 1,
   title: "タスク1",
   expectedPomodoroNum: 4,
