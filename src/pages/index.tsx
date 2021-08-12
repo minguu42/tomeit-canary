@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Header from "components/common/Header";
 import CatchMessage from "components/landing/CatchMessage";
 import GoogleLoginButton from "components/landing/GoogleLoginButton";
-import Footer from "components/common/Footer";
 import styles from "pages/Landing.module.scss";
 import { useAuth } from "lib/AuthContext";
 
@@ -21,10 +21,19 @@ const Landing = (): JSX.Element => (
 
     <Header />
     <main className={styles.main}>
-      <CatchMessage />
-      <GoogleLoginButton />
+      <div className={styles.leftWrapper}>
+        <CatchMessage />
+        <GoogleLoginButton />
+      </div>
+      <div>
+        <Image
+          src="/work_from_home.png"
+          alt="work image"
+          width={480}
+          height={340}
+        />
+      </div>
     </main>
-    <Footer />
   </>
 );
 
