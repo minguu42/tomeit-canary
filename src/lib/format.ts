@@ -6,14 +6,6 @@ export const formatSeconds = (seconds: number): string => {
   return `${mm}：${ss}`;
 };
 
-export const formatStringByLength = (length: number, name: string): string => {
-  if (name.length >= length) {
-    return name.slice(0, length) + "...";
-  } else {
-    return name;
-  }
-};
-
 export const convertDatetimeToTime = (datetime: string | undefined): string => {
   if (datetime === undefined) {
     return "";
