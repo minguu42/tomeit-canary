@@ -1,5 +1,5 @@
+import TaskListItem from "components/common/TaskListItem";
 import styles from "components/home/TaskList/TaskList.module.scss";
-import TaskListItem from "components/home/TaskList/TaskListItem";
 import { Task } from "types/task";
 
 type Props = {
