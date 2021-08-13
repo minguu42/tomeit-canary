@@ -56,3 +56,9 @@
     @include variables.subtitle2;
   }
 }
+
+.completedAt {
+  min-width: 56px;
+  color: var(--c-on-surface-medium);
+  @include variables.subtitle1;
+}

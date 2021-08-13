@@ -1,18 +1,9 @@
-export const formatSeconds = (seconds: number): string => {
+export const formatTimerTime = (seconds: number): string => {
   const mmNum = Math.floor(seconds / 60);
   const ssNum = seconds % 60;
   const mm = String(mmNum).padStart(2, "0");
   const ss = String(ssNum).padStart(2, "0");
   return `${mm}：${ss}`;
-};
-
-export const convertDatetimeToTime = (datetime: string | undefined): string => {
-  if (datetime === undefined) {
-    return "";
-  }
-  const hour = datetime.slice(11, 13);
-  const minutes = datetime.slice(14, 16);
-  return hour + "：" + minutes;
 };
 
 export const formatDate = (date: Date): string => {
@@ -22,7 +13,15 @@ export const formatDate = (date: Date): string => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-export const displayLocalDate = (date: Date): string => {
+export const formatToLocalTime = (date: Date): string => {
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+  const hh = String(date.getHours()).padStart(2, "0");
+  const mm = String(date.getMinutes()).padStart(2, "0");
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  return `${hh}：${mm}`;
+};
+
+export const formatToLocalDate = (date: Date): string => {
   date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
   const dateStr = date.toLocaleDateString("ja-JP", {
     year: "numeric",
@@ -31,4 +30,13 @@ export const displayLocalDate = (date: Date): string => {
   });
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
   return dateStr;
+};
+
+export const convertDatetimeToTime = (datetime: string | undefined): string => {
+  if (datetime === undefined) {
+    return "";
+  }
+  const hour = datetime.slice(11, 13);
+  const minutes = datetime.slice(14, 16);
+  return hour + "：" + minutes;
 };

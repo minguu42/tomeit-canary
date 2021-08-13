@@ -7,11 +7,11 @@ type Props = {
 };
 
 export const TaskList = ({ tasks }: Props): JSX.Element => (
-  <div className={styles.list}>
+  <ul className={styles.list}>
     {tasks.map((task) => (
       <TaskListItem key={task.id} task={task} />
     ))}
-  </div>
+  </ul>
 );
 
 export default TaskList;

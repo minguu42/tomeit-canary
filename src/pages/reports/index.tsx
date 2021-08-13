@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import TopAppBar from "components/common/TopAppBar";
 import ReportsHeading from "components/reports/ReportsHeading";
+import TaskRecordList from "components/reports/TaskRecordList";
 import styles from "pages/reports/Reports.module.scss";
 
 const Reports = (): JSX.Element => (
@@ -11,7 +12,8 @@ const Reports = (): JSX.Element => (
     </Head>
     <TopAppBar />
     <main className={styles.main}>
-      <ReportsHeading date={new Date()} />
+      <ReportsHeading />
+      <TaskRecordList />
     </main>
   </>
 );

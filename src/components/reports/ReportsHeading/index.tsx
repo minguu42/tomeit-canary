@@ -17,4 +17,9 @@ export const ReportsHeading = ({ date }: Props): JSX.Element => (
   </div>
 );
 
-export default ReportsHeading;
+const ReportsHeadingContainer = (): JSX.Element => {
+  const today = new Date();
+  return <ReportsHeading date={today} />;
+};
+
+export default ReportsHeadingContainer;

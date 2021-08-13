@@ -8,7 +8,7 @@ import StopCircleIcon from "components/common/icons/StopCircleIcon";
 import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
 import styles from "components/home/PomodoroPlayer/PomodoroPlayer.module.scss";
 import { Task } from "types/task";
-import { formatSeconds } from "lib/format";
+import { formatTimerTime } from "lib/format";
 
 type Props = {
   time: number;
@@ -38,7 +38,7 @@ export const PomodoroPlayer = ({
     <div className={styles.timer}>
       {isNextPomodoro && <TimerIcon fill="#ffffff" />}
       {!isNextPomodoro && <TimerIcon fill="#080a0f" />}
-      <p>{formatSeconds(time)}</p>
+      <p>{formatTimerTime(time)}</p>
     </div>
 
     {playingTask !== null && (
