@@ -1,0 +1,41 @@
+@use "styles/variables";
+
+.outer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 16px;
+  background-color: var(--c-surface);
+  border-bottom: 1px solid var(--c-outline);
+
+  .leftWrapper {
+    display: flex;
+    gap: 32px;
+    width: 100%;
+
+    input[type="text"] {
+      display: block;
+      width: 100%;
+      color: var(--c-on-surface-high);
+      @include variables.subtitle1;
+    }
+  }
+
+  .rightWrapper {
+    display: flex;
+    gap: 4px;
+
+    input[type="number"] {
+      color: var(--c-on-surface-medium);
+      @include variables.subtitle1;
+    }
+
+    input[type="date"] {
+      max-width: 160px;
+      color: var(--c-on-surface-medium);
+      @include variables.subtitle1;
+    }
+  }
+}

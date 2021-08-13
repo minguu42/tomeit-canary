@@ -41,7 +41,7 @@ const TopAppBar = ({ isLoggedIn }: Props): JSX.Element => (
       )}
       {isLoggedIn && (
         <div className={styles.rightWrapper}>
-          <Link href="/stack">
+          <Link href="/reports">
             <a>
               <SummarizeIcon fill="#ffffff" />
             </a>

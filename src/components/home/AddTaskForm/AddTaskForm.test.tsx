@@ -5,17 +5,18 @@ import { AddTaskForm } from "./index";
 
 beforeEach(() => {
   const handleNameChange = jest.fn();
-  const handlePriorityChange = jest.fn();
+  const handleExpectedPomodoroNumChange = jest.fn();
   const handleDeadlineChange = jest.fn();
   const handleSubmit = jest.fn();
+
   render(
     <AddTaskForm
-      name=""
-      handleNameChange={handleNameChange}
-      priority={0}
-      handlePriorityChange={handlePriorityChange}
-      deadline="2021-01-01"
-      handleDeadlineChange={handleDeadlineChange}
+      title=""
+      handleTitleChange={handleNameChange}
+      expectedPomodoroNum={0}
+      handleExpectedPomodoroNumChange={handleExpectedPomodoroNumChange}
+      dueOn="2021-01-01"
+      handleDueOnChange={handleDeadlineChange}
       handleSubmit={handleSubmit}
     />
   );
@@ -25,9 +26,11 @@ describe("display", () => {
   it("should display name field", () => {
     expect(screen.getByRole("textbox")).toBeInTheDocument();
   });
-  it("should display priority field", () => {
+
+  it("should display expectedPomodoroNum field", () => {
     expect(screen.getByRole("spinbutton")).toBeInTheDocument();
   });
+
   it("should display deadline field", () => {
     expect(screen.getByDisplayValue("2021-01-01")).toBeInTheDocument();
   });

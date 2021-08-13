@@ -1,19 +1,9 @@
-export const convertSecondsForDisplay = (seconds: number): string => {
-  const minutes = Math.floor(seconds / 60);
-  const restSeconds = seconds % 60;
-  return (
-    String(minutes).padStart(2, "0") +
-    "：" +
-    String(restSeconds).padStart(2, "0")
-  );
-};
-
-export const formatStringByLength = (length: number, name: string): string => {
-  if (name.length >= length) {
-    return name.slice(0, length) + "...";
-  } else {
-    return name;
-  }
+export const formatSeconds = (seconds: number): string => {
+  const mmNum = Math.floor(seconds / 60);
+  const ssNum = seconds % 60;
+  const mm = String(mmNum).padStart(2, "0");
+  const ss = String(ssNum).padStart(2, "0");
+  return `${mm}：${ss}`;
 };
 
 export const convertDatetimeToTime = (datetime: string | undefined): string => {
@@ -25,16 +15,20 @@ export const convertDatetimeToTime = (datetime: string | undefined): string => {
   return hour + "：" + minutes;
 };
 
-export const convertDatetimeToPomodoroTerm = (createdAt: string): string => {
-  const start = new Date(createdAt);
-  start.setMinutes(start.getMinutes() - 25);
-  return (
-    String(start.getUTCHours()).padStart(2, "0") +
-    "：" +
-    String(start.getUTCMinutes()).padStart(2, "0") +
-    " - " +
-    createdAt.slice(11, 13).padStart(2, "0") +
-    "：" +
-    createdAt.slice(14, 16).padStart(2, "0")
-  );
+export const formatDate = (date: Date): string => {
+  const yyyy = String(date.getFullYear()).padStart(4, "0");
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+};
+
+export const displayLocalDate = (date: Date): string => {
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+  const dateStr = date.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  return dateStr;
 };
