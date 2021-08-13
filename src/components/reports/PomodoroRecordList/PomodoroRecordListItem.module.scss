@@ -1,0 +1,23 @@
+@use "styles/variables";
+
+.container {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  background-color: var(--c-surface);
+  border-bottom: 1px solid var(--c-outline);
+
+  .taskTitle {
+    flex: 0 1 100%;
+    color: var(--c-on-surface-high);
+    @include variables.subtitle1;
+  }
+
+  .pomodoroDuring {
+    min-width: 120px;
+    color: var(--c-on-surface-medium);
+    @include variables.subtitle1;
+  }
+}

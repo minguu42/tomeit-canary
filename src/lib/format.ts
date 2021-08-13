@@ -32,11 +32,16 @@ export const formatToLocalDate = (date: Date): string => {
   return dateStr;
 };
 
-export const convertDatetimeToTime = (datetime: string | undefined): string => {
-  if (datetime === undefined) {
-    return "";
-  }
-  const hour = datetime.slice(11, 13);
-  const minutes = datetime.slice(14, 16);
-  return hour + "：" + minutes;
+export const formatToLocalPomodoroDuring = (date: Date): string => {
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+  const completedHour = String(date.getHours()).padStart(2, "0");
+  const completedMinutes = String(date.getMinutes()).padStart(2, "0");
+
+  date.setMinutes(date.getMinutes() - 25);
+  const startHour = String(date.getHours()).padStart(2, "0");
+  const startMinutes = String(date.getMinutes()).padStart(2, "0");
+  date.setMinutes(date.getMinutes() + 25);
+
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  return `${startHour}：${startMinutes} - ${completedHour}：${completedMinutes}`;
 };
