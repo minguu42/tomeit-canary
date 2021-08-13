@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { TaskListItem } from "./TaskListItem";
+import { TaskListItem } from "./index";
 import { Task } from "types/task";
 
 const task1: Task = {

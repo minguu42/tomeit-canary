@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { User } from "@firebase/auth-types";
 
-import Loading from "pages/loading";
+import LoadingCover from "components/common/LoadingCover";
 import firebase, { auth } from "lib/firebase";
 
 type AuthContextType = {
@@ -35,7 +35,7 @@ const AuthProvider = ({ children }: Props): JSX.Element => {
 
   return (
     <AuthContext.Provider value={value}>
-      {isLoading ? <Loading /> : children}
+      {isLoading ? <LoadingCover /> : children}
     </AuthContext.Provider>
   );
 };
