@@ -7,14 +7,24 @@ import { formatToLocalDate } from "lib/format";
 
 type Props = {
   task: Task;
+  isPlaying: boolean;
   completeTask: (task: Task) => void;
+  setTask: (task: Task) => void;
 };
 
-export const TaskListItem = ({ task, completeTask }: Props): JSX.Element => (
+export const TaskListItem = ({
+  task,
+  isPlaying,
+  completeTask,
+  setTask,
+}: Props): JSX.Element => (
   <div className={styles.container}>
-    <button onClick={() => completeTask(task)}>
-      <CircleIcon fill="#212121" />
-    </button>
+    {isPlaying && <TimerIcon fill="#192f60" />}
+    {!isPlaying && (
+      <button onClick={() => completeTask(task)}>
+        <CircleIcon fill="#212121" />
+      </button>
+    )}
 
     <div className={styles.main}>
       {task.actualPomodoroNum === 0 &&
@@ -62,9 +72,11 @@ export const TaskListItem = ({ task, completeTask }: Props): JSX.Element => (
       )}
     </div>
 
-    <button>
-      <PlayCircleIcon fill="#212121" />
-    </button>
+    {!isPlaying && (
+      <button onClick={() => setTask(task)}>
+        <PlayCircleIcon fill="#212121" />
+      </button>
+    )}
   </div>
 );
 
