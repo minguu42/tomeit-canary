@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
 
 import AccountCircleIcon from "components/common/icons/AccountCircleIcon";
 import styles from "components/common/TopAppBar/AccountMenu.module.scss";
-import { logout } from "lib/AuthContext";
 
 type Props = {
   isOpen: boolean;
   handleAccountClick: () => void;
+  handleLogout: () => Promise<void>;
+};
+
+type ContainerProps = {
   handleLogout: () => Promise<void>;
 };
 
@@ -30,21 +32,13 @@ const AccountMenu = ({
   </div>
 );
 
-const AccountMenuContainer = (): JSX.Element => {
+const AccountMenuContainer = ({
+  handleLogout,
+}: ContainerProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
 
   const handleAccountClick = () => {
     setIsOpen((isOpen) => !isOpen);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      await router.push("/");
-    } catch {
-      window.alert("ログアウトに失敗しました。もう一度お試しください。");
-    }
   };
 
   return (
