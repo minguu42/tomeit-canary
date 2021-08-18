@@ -31,8 +31,15 @@ const tasks: Task[] = [
 
 beforeEach(() => {
   const completeTask = jest.fn();
-  const setTask = jest.fn()
-  render(<TaskList tasks={tasks} playingTask={null} completeTask={completeTask} setTask={setTask} />);
+  const setTask = jest.fn();
+  render(
+    <TaskList
+      tasks={tasks}
+      playingTask={null}
+      completeTask={completeTask}
+      setTask={setTask}
+    />
+  );
 });
 
 describe("display", () => {

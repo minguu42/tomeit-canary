@@ -18,8 +18,15 @@ const task1: Task = {
 
 beforeEach(() => {
   const completeTask = jest.fn();
-  const setTask = jest.fn()
-  render(<TaskListItem task={task1} isPlaying={false} completeTask={completeTask} setTask={setTask} />);
+  const setTask = jest.fn();
+  render(
+    <TaskListItem
+      task={task1}
+      isPlaying={false}
+      completeTask={completeTask}
+      setTask={setTask}
+    />
+  );
 });
 
 describe("display", () => {
