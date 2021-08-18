@@ -12,9 +12,10 @@ import { useState } from "react";
 type Props = {
   tasks: Task[];
   addTask: (task: Task) => void;
+  completeTask: (task: Task) => void;
 };
 
-const Home = ({ tasks, addTask }: Props): JSX.Element => (
+const Home = ({ tasks, addTask, completeTask }: Props): JSX.Element => (
   <>
     <Head>
       <title>ホーム - tomeit</title>
@@ -25,7 +26,7 @@ const Home = ({ tasks, addTask }: Props): JSX.Element => (
       <HomeHeading headingText="いつか" tasks={tasks} />
       <div className={styles.taskListLayout}>
         <AddTaskForm addTask={addTask} />
-        <TaskList tasks={tasks} />
+        <TaskList tasks={tasks} completeTask={completeTask} />
       </div>
       <div className={styles.playerLayout}>
         <PomodoroPlayer />
@@ -48,7 +49,12 @@ const HomeContainer = (): JSX.Element => {
     setTasks(tmp);
   };
 
-  return <Home tasks={tasks} addTask={addTask} />;
+  const completeTask = (task: Task): void => {
+    const tmp = tasks.filter((t) => t.id !== task.id);
+    setTasks(tmp);
+  };
+
+  return <Home tasks={tasks} addTask={addTask} completeTask={completeTask} />;
 };
 
 export default HomeContainer;
