@@ -1,16 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import SummarizeIcon from "components/common/icons/SummarizeIcon";
 import AccountMenu from "components/common/TopAppBar/AccountMenu";
 import styles from "components/common/TopAppBar/TopAppBar.module.scss";
-import { useAuth } from "lib/AuthContext";
+import { logout, useAuth } from "contexts/AuthContext";
 
 type Props = {
   isLoggedIn: boolean;
+  handleLogout: () => Promise<void>;
 };
 
-const TopAppBar = ({ isLoggedIn }: Props): JSX.Element => (
+const TopAppBar = ({ isLoggedIn, handleLogout }: Props): JSX.Element => (
   <header className={styles.outer}>
     <div className={styles.inner}>
       {isLoggedIn && (
@@ -46,7 +48,7 @@ const TopAppBar = ({ isLoggedIn }: Props): JSX.Element => (
               <SummarizeIcon fill="#ffffff" />
             </a>
           </Link>
-          <AccountMenu />
+          <AccountMenu handleLogout={handleLogout} />
         </div>
       )}
     </div>
@@ -55,8 +57,20 @@ const TopAppBar = ({ isLoggedIn }: Props): JSX.Element => (
 
 const TopAppBarContainer = (): JSX.Element => {
   const { currentUser } = useAuth();
+  const router = useRouter();
 
-  return <TopAppBar isLoggedIn={currentUser !== null} />;
+  const handleLogout = async () => {
+    try {
+      await logout();
+      await router.push("/");
+    } catch {
+      window.alert("ログアウトに失敗しました。もう一度お試しください。");
+    }
+  };
+
+  return (
+    <TopAppBar isLoggedIn={currentUser !== null} handleLogout={handleLogout} />
+  );
 };
 
 export default TopAppBarContainer;

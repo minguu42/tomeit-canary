@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import styles from "components/landing/GoogleLoginButton/GoogleLoginButton.module.scss";
-import { login } from "lib/AuthContext";
+import { login } from "contexts/AuthContext";
 
 type Props = {
   handleLogin: () => Promise<void>;

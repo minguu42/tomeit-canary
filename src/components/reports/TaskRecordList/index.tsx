@@ -1,4 +1,4 @@
-import TaskListItem from "components/common/TaskListItem";
+import TaskRecordListItem from "components/reports/TaskRecordList/TaskRecordListItem";
 import styles from "components/reports/TaskRecordList/TaskRecordList.module.scss";
 import { Task } from "types/task";
 
@@ -14,7 +14,7 @@ export const TaskRecordList = ({ tasks }: Props): JSX.Element => (
     </div>
     <ul>
       {tasks.map((task) => (
-        <TaskListItem key={task.id} task={task} />
+        <TaskRecordListItem key={task.id} task={task} />
       ))}
     </ul>
   </div>

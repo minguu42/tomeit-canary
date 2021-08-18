@@ -7,7 +7,7 @@ import TopAppBar from "components/common/TopAppBar";
 import CatchMessage from "components/landing/CatchMessage";
 import GoogleLoginButton from "components/landing/GoogleLoginButton";
 import styles from "pages/Landing.module.scss";
-import { useAuth } from "lib/AuthContext";
+import { useAuth } from "contexts/AuthContext";
 
 const Landing = (): JSX.Element => (
   <>

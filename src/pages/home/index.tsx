@@ -7,66 +7,27 @@ import TaskList from "components/home/TaskList";
 import PomodoroPlayer from "components/home/PomodoroPlayer";
 import styles from "pages/home/Home.module.scss";
 import { Task } from "types/task";
+import { useState } from "react";
 
-const tasks: Task[] = [
-  {
-    id: 1,
-    title: "タスク1の名前を長くしてみた。もっともっと長く、長く",
-    expectedPomodoroNum: 0,
-    actualPomodoroNum: 0,
-    dueOn: new Date("0001-01-01T00:00:00Z"),
-    isCompleted: false,
-    completedAt: new Date("0001-01-01T00:00:00Z"),
-    createdAt: new Date("0001-01-01T00:00:00Z"),
-    updatedAt: new Date("0001-01-01T00:00:00Z"),
-  },
-  {
-    id: 2,
-    title: "タスク2",
-    expectedPomodoroNum: 0,
-    actualPomodoroNum: 0,
-    dueOn: new Date("2021-01-01T00:00:00Z"),
-    isCompleted: false,
-    completedAt: new Date("0001-01-01T00:00:00Z"),
-    createdAt: new Date("0001-01-01T00:00:00Z"),
-    updatedAt: new Date("0001-01-01T00:00:00Z"),
-  },
-  {
-    id: 3,
-    title: "タスク3",
-    expectedPomodoroNum: 6,
-    actualPomodoroNum: 4,
-    dueOn: new Date("2021-12-30T09:00:00Z"),
-    isCompleted: false,
-    completedAt: new Date("0001-01-01T00:00:00Z"),
-    createdAt: new Date("0001-01-01T00:00:00Z"),
-    updatedAt: new Date("0001-01-01T00:00:00Z"),
-  },
-  {
-    id: 4,
-    title: "タスク4",
-    expectedPomodoroNum: 6,
-    actualPomodoroNum: 0,
-    dueOn: new Date("0001-01-01T00:00:00Z"),
-    isCompleted: false,
-    completedAt: new Date("0001-01-01T00:00:00Z"),
-    createdAt: new Date("0001-01-01T00:00:00Z"),
-    updatedAt: new Date("0001-01-01T00:00:00Z"),
-  },
-  {
-    id: 5,
-    title: "タスク5",
-    expectedPomodoroNum: 0,
-    actualPomodoroNum: 4,
-    dueOn: new Date("0001-01-01T00:00:00Z"),
-    isCompleted: false,
-    completedAt: new Date("0001-01-01T00:00:00Z"),
-    createdAt: new Date("0001-01-01T00:00:00Z"),
-    updatedAt: new Date("0001-01-01T00:00:00Z"),
-  },
-];
+type Props = {
+  tasks: Task[];
+  playingTask: Task | null;
+  nextRestCount: number;
+  addTask: (task: Task) => void;
+  completeTask: (task: Task) => void;
+  setTask: (task: Task) => void;
+  completePomodoro: (task: Task) => void;
+};
 
-const Home = (): JSX.Element => (
+const Home = ({
+  tasks,
+  playingTask,
+  nextRestCount,
+  addTask,
+  completeTask,
+  setTask,
+  completePomodoro,
+}: Props): JSX.Element => (
   <>
     <Head>
       <title>ホーム - tomeit</title>
@@ -76,18 +37,70 @@ const Home = (): JSX.Element => (
     <main className={styles.main}>
       <HomeHeading headingText="いつか" tasks={tasks} />
       <div className={styles.taskListLayout}>
-        <AddTaskForm />
-        <TaskList tasks={tasks} />
+        <AddTaskForm addTask={addTask} />
+        <TaskList
+          tasks={tasks}
+          playingTask={playingTask}
+          completeTask={completeTask}
+          setTask={setTask}
+        />
       </div>
       <div className={styles.playerLayout}>
-        <PomodoroPlayer />
+        <PomodoroPlayer
+          playingTask={playingTask}
+          nextRestCount={nextRestCount}
+          completePomodoro={completePomodoro}
+        />
       </div>
     </main>
   </>
 );
 
 const HomeContainer = (): JSX.Element => {
-  return <Home />;
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [playingTask, setPlayingTask] = useState<Task | null>(null);
+  const [nextRestCount, setNextRestCount] = useState(4);
+
+  const addTask = (task: Task): void => {
+    // const reqBody = {
+    //   title: task.title,
+    //   expectedPomodoroNum: task.expectedPomodoroNum ?? 0,
+    //   dueOn: task.dueOn ?? "0001-01-01T00:00:00Z",
+    // }
+    const tmp = tasks.slice();
+    tmp.push(task);
+    setTasks(tmp);
+  };
+
+  const completeTask = (task: Task): void => {
+    const tmp = tasks.filter((t) => t.id !== task.id);
+    setTasks(tmp);
+  };
+
+  const setTask = (task: Task): void => {
+    setPlayingTask(task);
+  };
+
+  const completePomodoro = (task: Task): void => {
+    task.actualPomodoroNum += 1;
+    const tmp = tasks.slice();
+    const index = tasks.findIndex((t) => t.id === task.id);
+    tmp[index] = task;
+    setTasks(tmp);
+    setNextRestCount((c) => (c === 1 ? 4 : c - 1));
+  };
+
+  return (
+    <Home
+      tasks={tasks}
+      playingTask={playingTask}
+      nextRestCount={nextRestCount}
+      addTask={addTask}
+      completeTask={completeTask}
+      setTask={setTask}
+      completePomodoro={completePomodoro}
+    />
+  );
 };
 
 export default HomeContainer;

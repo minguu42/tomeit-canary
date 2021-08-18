@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import cn from "classnames";
@@ -18,6 +19,12 @@ type Props = {
   handlePlayClick: () => void;
   handleStopClick: () => void;
   handleSkipClick: () => void;
+};
+
+type ContainerProps = {
+  playingTask: Task | null;
+  nextRestCount: number;
+  completePomodoro: (task: Task) => void;
 };
 
 export const PomodoroPlayer = ({
@@ -69,22 +76,71 @@ export const PomodoroPlayer = ({
   </div>
 );
 
-const PomodoroPlayerContainer = (): JSX.Element => {
+const PomodoroPlayerContainer = ({
+  playingTask,
+  nextRestCount,
+  completePomodoro,
+}: ContainerProps): JSX.Element => {
+  const [time, setTime] = useState(15);
+  const [isActive, setIsActive] = useState(false);
+  const [isNextPomodoro, setIsNextPomodoro] = useState(true);
+
+  const tick = (): void => {
+    setTime((t) => t - 1);
+  };
+
+  useEffect(() => {
+    if (!isActive) return;
+
+    const timerID = setInterval(() => tick(), 1000);
+    return () => {
+      clearInterval(timerID);
+    };
+  }, [isActive]);
+
   const handlePlayClick = (): void => {
-    return;
+    setIsActive(true);
   };
+
   const handleStopClick = (): void => {
-    return;
+    setTime(15);
+    setIsActive(false);
   };
+
   const handleSkipClick = (): void => {
-    return;
+    setTime(0);
   };
+
+  useEffect(() => {
+    if (playingTask !== null) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
+  }, [playingTask]);
+
+  useEffect(() => {
+    if (time === 0) {
+      setIsActive(false);
+      if (isNextPomodoro && playingTask) {
+        setIsNextPomodoro(false);
+        setTime(nextRestCount !== 1 ? 3 : 9);
+
+        completePomodoro(playingTask);
+      } else {
+        setIsActive(false);
+        setIsNextPomodoro(true);
+        setTime(15);
+      }
+    }
+  }, [time, playingTask, isNextPomodoro, nextRestCount, completePomodoro]);
+
   return (
     <PomodoroPlayer
-      time={1500}
-      playingTask={null}
-      isNextPomodoro={true}
-      isActive={false}
+      time={time}
+      playingTask={playingTask}
+      isNextPomodoro={isNextPomodoro}
+      isActive={isActive}
       handlePlayClick={handlePlayClick}
       handleStopClick={handleStopClick}
       handleSkipClick={handleSkipClick}

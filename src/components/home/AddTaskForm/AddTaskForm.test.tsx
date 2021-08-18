@@ -15,7 +15,7 @@ beforeEach(() => {
       handleTitleChange={handleNameChange}
       expectedPomodoroNum={0}
       handleExpectedPomodoroNumChange={handleExpectedPomodoroNumChange}
-      dueOn="2021-01-01"
+      dueOn={new Date("2021-01-01T00:00:00Z")}
       handleDueOnChange={handleDeadlineChange}
       handleSubmit={handleSubmit}
     />
