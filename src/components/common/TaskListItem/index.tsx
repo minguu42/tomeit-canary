@@ -3,7 +3,7 @@ import TimerIcon from "components/common/icons/TimerIcon";
 import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
 import styles from "components/common/TaskListItem/TaskListItem.module.scss";
 import { Task } from "types/task";
-import { formatToLocalDate, formatDate, formatToLocalTime } from "lib/format";
+import { formatToLocalDate, formatToLocalTime } from "lib/format";
 import CheckCircleIcon from "../icons/CheckCircleIcon";
 
 type Props = {
@@ -22,12 +22,10 @@ export const TaskListItem = ({ task }: Props): JSX.Element => (
     <div className={styles.main}>
       {task.actualPomodoroNum === 0 &&
         task.expectedPomodoroNum === 0 &&
-        formatDate(task.dueOn) === "0001-01-01" && (
-          <p className={styles.title}>{task.title}</p>
-        )}
+        task.dueOn === null && <p className={styles.title}>{task.title}</p>}
       {(task.actualPomodoroNum !== 0 ||
         task.expectedPomodoroNum !== 0 ||
-        formatDate(task.dueOn) !== "0001-01-01") && (
+        task.dueOn !== null) && (
         <>
           <p className={styles.title}>{task.title}</p>
           <div className={styles.captions}>
@@ -59,7 +57,7 @@ export const TaskListItem = ({ task }: Props): JSX.Element => (
               </div>
             )}
 
-            {formatDate(task.dueOn) !== "0001-01-01" && (
+            {task.dueOn !== null && (
               <p className={styles.dueOn}>{formatToLocalDate(task.dueOn)}</p>
             )}
           </div>
@@ -69,7 +67,7 @@ export const TaskListItem = ({ task }: Props): JSX.Element => (
 
     {task.isCompleted && (
       <p className={styles.completedAt}>
-        {formatToLocalTime(task.completedAt)}
+        {task.completedAt !== null && formatToLocalTime(task.completedAt)}
       </p>
     )}
     {!task.isCompleted && (

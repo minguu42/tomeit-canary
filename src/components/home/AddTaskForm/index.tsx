@@ -3,15 +3,21 @@ import React, { ChangeEventHandler, useState } from "react";
 import AddIcon from "components/common/icons/AddIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
 import styles from "components/home/AddTaskForm/AddTaskForm.module.scss";
+import { Task } from "types/task";
+import { formatDate } from "lib/format";
 
 type Props = {
   title: string;
   handleTitleChange: ChangeEventHandler<HTMLInputElement>;
   expectedPomodoroNum: number;
   handleExpectedPomodoroNumChange: ChangeEventHandler<HTMLInputElement>;
-  dueOn: string;
+  dueOn: Date | null;
   handleDueOnChange: ChangeEventHandler<HTMLInputElement>;
   handleSubmit: (e: React.SyntheticEvent) => void;
+};
+
+type ContainerProps = {
+  addTask: (task: Task) => void;
 };
 
 export const AddTaskForm = ({
@@ -48,7 +54,7 @@ export const AddTaskForm = ({
       <input
         type="date"
         title="期日"
-        value={dueOn}
+        value={dueOn !== null ? formatDate(dueOn) : ""}
         onChange={handleDueOnChange}
       />
     </div>
@@ -56,10 +62,10 @@ export const AddTaskForm = ({
   </form>
 );
 
-const AddTaskFormContainer = (): JSX.Element => {
+const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
   const [title, setTitle] = useState("");
   const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
-  const [dueOn, setDueOn] = useState("");
+  const [dueOn, setDueOn] = useState<Date | null>(null);
 
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
@@ -71,26 +77,27 @@ const AddTaskFormContainer = (): JSX.Element => {
     };
 
   const handleDueOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setDueOn(e.target.value);
+    setDueOn(new Date(e.target.value + "T00:00:00Z"));
   };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    // const task: Task = {
-    //   id: Math.floor(Math.random() * 1000),
-    //   name: name,
-    //   priority: priority,
-    //   deadline: deadline || "0001-01-01",
-    //   isDone: false,
-    //   pomodoroCount: 0,
-    // };
+    const task: Task = {
+      id: Math.floor(Math.random() * 1000),
+      title: title,
+      expectedPomodoroNum: expectedPomodoroNum,
+      actualPomodoroNum: 0,
+      dueOn: dueOn,
+      isCompleted: false,
+      completedAt: null,
+    };
 
-    // TODO: タスクリストにタスクを追加する
+    addTask(task);
 
     setTitle("");
     setExpectedPomodoroNum(0);
-    setDueOn("");
+    setDueOn(null);
   };
 
   return (

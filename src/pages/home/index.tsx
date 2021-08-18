@@ -7,66 +7,14 @@ import TaskList from "components/home/TaskList";
 import PomodoroPlayer from "components/home/PomodoroPlayer";
 import styles from "pages/home/Home.module.scss";
 import { Task } from "types/task";
+import { useState } from "react";
 
-const tasks: Task[] = [
-  {
-    id: 1,
-    title: "タスク1の名前を長くしてみた。もっともっと長く、長く",
-    expectedPomodoroNum: 0,
-    actualPomodoroNum: 0,
-    dueOn: new Date("0001-01-01T00:00:00Z"),
-    isCompleted: false,
-    completedAt: new Date("0001-01-01T00:00:00Z"),
-    createdAt: new Date("0001-01-01T00:00:00Z"),
-    updatedAt: new Date("0001-01-01T00:00:00Z"),
-  },
-  {
-    id: 2,
-    title: "タスク2",
-    expectedPomodoroNum: 0,
-    actualPomodoroNum: 0,
-    dueOn: new Date("2021-01-01T00:00:00Z"),
-    isCompleted: false,
-    completedAt: new Date("0001-01-01T00:00:00Z"),
-    createdAt: new Date("0001-01-01T00:00:00Z"),
-    updatedAt: new Date("0001-01-01T00:00:00Z"),
-  },
-  {
-    id: 3,
-    title: "タスク3",
-    expectedPomodoroNum: 6,
-    actualPomodoroNum: 4,
-    dueOn: new Date("2021-12-30T09:00:00Z"),
-    isCompleted: false,
-    completedAt: new Date("0001-01-01T00:00:00Z"),
-    createdAt: new Date("0001-01-01T00:00:00Z"),
-    updatedAt: new Date("0001-01-01T00:00:00Z"),
-  },
-  {
-    id: 4,
-    title: "タスク4",
-    expectedPomodoroNum: 6,
-    actualPomodoroNum: 0,
-    dueOn: new Date("0001-01-01T00:00:00Z"),
-    isCompleted: false,
-    completedAt: new Date("0001-01-01T00:00:00Z"),
-    createdAt: new Date("0001-01-01T00:00:00Z"),
-    updatedAt: new Date("0001-01-01T00:00:00Z"),
-  },
-  {
-    id: 5,
-    title: "タスク5",
-    expectedPomodoroNum: 0,
-    actualPomodoroNum: 4,
-    dueOn: new Date("0001-01-01T00:00:00Z"),
-    isCompleted: false,
-    completedAt: new Date("0001-01-01T00:00:00Z"),
-    createdAt: new Date("0001-01-01T00:00:00Z"),
-    updatedAt: new Date("0001-01-01T00:00:00Z"),
-  },
-];
+type Props = {
+  tasks: Task[];
+  addTask: (task: Task) => void;
+};
 
-const Home = (): JSX.Element => (
+const Home = ({ tasks, addTask }: Props): JSX.Element => (
   <>
     <Head>
       <title>ホーム - tomeit</title>
@@ -76,7 +24,7 @@ const Home = (): JSX.Element => (
     <main className={styles.main}>
       <HomeHeading headingText="いつか" tasks={tasks} />
       <div className={styles.taskListLayout}>
-        <AddTaskForm />
+        <AddTaskForm addTask={addTask} />
         <TaskList tasks={tasks} />
       </div>
       <div className={styles.playerLayout}>
@@ -87,7 +35,20 @@ const Home = (): JSX.Element => (
 );
 
 const HomeContainer = (): JSX.Element => {
-  return <Home />;
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const addTask = (task: Task): void => {
+    // const reqBody = {
+    //   title: task.title,
+    //   expectedPomodoroNum: task.expectedPomodoroNum ?? 0,
+    //   dueOn: task.dueOn ?? "0001-01-01T00:00:00Z",
+    // }
+    const tmp = tasks.slice();
+    tmp.push(task);
+    setTasks(tmp);
+  };
+
+  return <Home tasks={tasks} addTask={addTask} />;
 };
 
 export default HomeContainer;

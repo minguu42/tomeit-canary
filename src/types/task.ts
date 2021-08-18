@@ -3,9 +3,9 @@ export type Task = {
   title: string;
   expectedPomodoroNum: number;
   actualPomodoroNum: number;
-  dueOn: Date;
+  dueOn: Date | null;
   isCompleted: boolean;
-  completedAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  completedAt: Date | null;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
