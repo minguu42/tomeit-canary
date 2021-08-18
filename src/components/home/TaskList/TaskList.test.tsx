@@ -30,7 +30,8 @@ const tasks: Task[] = [
 ];
 
 beforeEach(() => {
-  render(<TaskList tasks={tasks} />);
+  const completeTask = jest.fn();
+  render(<TaskList tasks={tasks} completeTask={completeTask} />);
 });
 
 describe("display", () => {

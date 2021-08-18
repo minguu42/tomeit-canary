@@ -1,23 +1,20 @@
 import CircleIcon from "components/common/icons/CircleIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
 import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
-import styles from "components/common/TaskListItem/TaskListItem.module.scss";
+import styles from "components/home/TaskList/TaskListItem/TaskListItem.module.scss";
 import { Task } from "types/task";
-import { formatToLocalDate, formatToLocalTime } from "lib/format";
-import CheckCircleIcon from "../icons/CheckCircleIcon";
+import { formatToLocalDate } from "lib/format";
 
 type Props = {
   task: Task;
+  completeTask: (task: Task) => void;
 };
 
-export const TaskListItem = ({ task }: Props): JSX.Element => (
+export const TaskListItem = ({ task, completeTask }: Props): JSX.Element => (
   <div className={styles.container}>
-    {task.isCompleted && <CheckCircleIcon fill="#192f60" />}
-    {!task.isCompleted && (
-      <button>
-        <CircleIcon fill="#212121" />
-      </button>
-    )}
+    <button onClick={() => completeTask(task)}>
+      <CircleIcon fill="#212121" />
+    </button>
 
     <div className={styles.main}>
       {task.actualPomodoroNum === 0 &&
@@ -65,16 +62,9 @@ export const TaskListItem = ({ task }: Props): JSX.Element => (
       )}
     </div>
 
-    {task.isCompleted && (
-      <p className={styles.completedAt}>
-        {task.completedAt !== null && formatToLocalTime(task.completedAt)}
-      </p>
-    )}
-    {!task.isCompleted && (
-      <button>
-        <PlayCircleIcon fill="#212121" />
-      </button>
-    )}
+    <button>
+      <PlayCircleIcon fill="#212121" />
+    </button>
   </div>
 );
 
