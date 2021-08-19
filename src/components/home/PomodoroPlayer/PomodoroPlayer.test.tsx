@@ -7,11 +7,11 @@ import { Task } from "types/task";
 const task: Task = {
   id: 1,
   title: "タスク1",
-  expectedPomodoroNum: 4,
-  actualPomodoroNum: 2,
+  expectedPomodoroNumber: 4,
+  actualPomodoroNumber: 2,
   dueOn: new Date("2021-01-01T00:00:00Z"),
   isCompleted: false,
-  completedAt: new Date("0001-01-01T00:00:00Z"),
+  completedOn: new Date("0001-01-01T00:00:00Z"),
   createdAt: new Date("0001-01-01T00:00:00Z"),
   updatedAt: new Date("0001-01-01T00:00:00Z"),
 };

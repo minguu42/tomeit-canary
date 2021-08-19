@@ -6,8 +6,10 @@ import AddTaskForm from "components/home/AddTaskForm";
 import TaskList from "components/home/TaskList";
 import PomodoroPlayer from "components/home/PomodoroPlayer";
 import styles from "pages/home/Home.module.scss";
-import { Task } from "types/task";
-import { useState } from "react";
+import { isJsonTask, isJsonTasks, Task, newTask } from "types/task";
+import { useEffect, useState } from "react";
+import { getData, postData } from "lib/fetch";
+import { useAuth } from "contexts/AuthContext";
 
 type Props = {
   tasks: Task[];
@@ -60,16 +62,43 @@ const HomeContainer = (): JSX.Element => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [playingTask, setPlayingTask] = useState<Task | null>(null);
   const [nextRestCount, setNextRestCount] = useState(4);
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    getData("/tasks", currentUser)
+      .then((data) => {
+        if (isJsonTasks(data)) {
+          const tasks = data.tasks.map((task) => newTask(task));
+          setTasks(tasks);
+        }
+      })
+      .catch((error) => {
+        window.alert(
+          "タスクの読み込みに失敗しました。ページを再読み込みしてください"
+        );
+        console.log("getTasks failed:", error);
+      });
+  }, [currentUser]);
 
   const addTask = (task: Task): void => {
-    // const reqBody = {
-    //   title: task.title,
-    //   expectedPomodoroNum: task.expectedPomodoroNum ?? 0,
-    //   dueOn: task.dueOn ?? "0001-01-01T00:00:00Z",
-    // }
-    const tmp = tasks.slice();
-    tmp.push(task);
-    setTasks(tmp);
+    const reqBody = {
+      title: task.title,
+      expectedPomodoroNum: task.expectedPomodoroNumber ?? 0,
+      dueOn: task.dueOn ?? "0001-01-01T00:00:00Z",
+    };
+    postData("/tasks", reqBody, currentUser)
+      .then((data) => {
+        console.log(data);
+        if (isJsonTask(data)) {
+          const tmp = tasks.slice();
+          tmp.push(newTask(data));
+          setTasks(tmp);
+        }
+      })
+      .catch((error) => {
+        window.alert("タスクの作成に失敗しました。もう一度お試しください");
+        console.log("postTask failed:", error);
+      });
   };
 
   const completeTask = (task: Task): void => {
@@ -82,7 +111,7 @@ const HomeContainer = (): JSX.Element => {
   };
 
   const completePomodoro = (task: Task): void => {
-    task.actualPomodoroNum += 1;
+    task.actualPomodoroNumber += 1;
     const tmp = tasks.slice();
     const index = tasks.findIndex((t) => t.id === task.id);
     tmp[index] = task;
