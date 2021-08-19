@@ -13,42 +13,44 @@ export const TaskRecordListItem = ({ task }: Props): JSX.Element => (
     <CheckCircleIcon fill="#192f60" />
 
     <div className={styles.main}>
-      {task.actualPomodoroNum === 0 &&
-        task.expectedPomodoroNum === 0 &&
+      {task.actualPomodoroNumber === 0 &&
+        task.expectedPomodoroNumber === 0 &&
         task.dueOn === null && <p className={styles.title}>{task.title}</p>}
-      {(task.actualPomodoroNum !== 0 ||
-        task.expectedPomodoroNum !== 0 ||
+      {(task.actualPomodoroNumber !== 0 ||
+        task.expectedPomodoroNumber !== 0 ||
         task.dueOn !== null) && (
         <>
           <p className={styles.title}>{task.title}</p>
           <div className={styles.captions}>
-            {task.actualPomodoroNum > 0 && task.expectedPomodoroNum > 0 && (
+            {task.actualPomodoroNumber > 0 && task.expectedPomodoroNumber > 0 && (
               <div className={styles.pomodoroNumWrapper}>
                 <div className={styles.actualPomodoroNumWrapper}>
                   <TimerIcon size={16} fill="#666666" />
-                  <p>{task.actualPomodoroNum}</p>
+                  <p>{task.actualPomodoroNumber}</p>
                 </div>
                 <p className={styles.divider}>/</p>
                 <div className={styles.expectedPomodoroNumWrapper}>
                   <TimerIcon size={16} fill="#9e9e9e" />
-                  <p>{task.expectedPomodoroNum}</p>
+                  <p>{task.expectedPomodoroNumber}</p>
                 </div>
               </div>
             )}
 
-            {task.actualPomodoroNum > 0 && task.expectedPomodoroNum === 0 && (
-              <div className={styles.actualPomodoroNumWrapper}>
-                <TimerIcon size={16} fill="#666666" />
-                <p>{task.actualPomodoroNum}</p>
-              </div>
-            )}
+            {task.actualPomodoroNumber > 0 &&
+              task.expectedPomodoroNumber === 0 && (
+                <div className={styles.actualPomodoroNumWrapper}>
+                  <TimerIcon size={16} fill="#666666" />
+                  <p>{task.actualPomodoroNumber}</p>
+                </div>
+              )}
 
-            {task.actualPomodoroNum === 0 && task.expectedPomodoroNum > 0 && (
-              <div className={styles.expectedPomodoroNumWrapper}>
-                <TimerIcon size={16} fill="#9e9e9e" />
-                <p>{task.expectedPomodoroNum}</p>
-              </div>
-            )}
+            {task.actualPomodoroNumber === 0 &&
+              task.expectedPomodoroNumber > 0 && (
+                <div className={styles.expectedPomodoroNumWrapper}>
+                  <TimerIcon size={16} fill="#9e9e9e" />
+                  <p>{task.expectedPomodoroNumber}</p>
+                </div>
+              )}
 
             {task.dueOn !== null && (
               <p className={styles.dueOn}>{formatToLocalDate(task.dueOn)}</p>
@@ -59,7 +61,7 @@ export const TaskRecordListItem = ({ task }: Props): JSX.Element => (
     </div>
 
     <p className={styles.completedAt}>
-      {task.completedAt !== null && formatToLocalTime(task.completedAt)}
+      {task.completedOn !== null && formatToLocalTime(task.completedOn)}
     </p>
   </div>
 );
