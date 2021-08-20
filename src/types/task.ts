@@ -10,7 +10,7 @@ export type Task = {
   updatedAt?: Date;
 };
 
-export type JsonTask = {
+export type TaskResponse = {
   id: number;
   title: string;
   expectedPomodoroNumber: number;
@@ -22,12 +22,12 @@ export type JsonTask = {
   updatedAt: string;
 };
 
-export type JsonTasks = {
-  tasks: JsonTask[];
+export type TasksResponse = {
+  tasks: TaskResponse[];
 };
 
-export const isJsonTask = (arg: unknown): arg is JsonTask => {
-  const t = arg as JsonTask;
+export const isTaskResponse = (arg: unknown): arg is TaskResponse => {
+  const t = arg as TaskResponse;
 
   return (
     typeof t?.id === "number" &&
@@ -42,28 +42,28 @@ export const isJsonTask = (arg: unknown): arg is JsonTask => {
   );
 };
 
-export const isJsonTasks = (arg: unknown): arg is JsonTasks => {
-  const ts = arg as JsonTasks;
+export const isTasksResponse = (arg: unknown): arg is TasksResponse => {
+  const ts = arg as TasksResponse;
 
-  return Array.isArray(ts?.tasks) && ts?.tasks.every(isJsonTask);
+  return Array.isArray(ts?.tasks) && ts?.tasks.every(isTaskResponse);
 };
 
-export const newTask = (jsonTask: JsonTask): Task => {
+export const newTask = (taskResponse: TaskResponse): Task => {
   return {
-    id: jsonTask.id,
-    title: jsonTask.title,
-    expectedPomodoroNumber: jsonTask.expectedPomodoroNumber,
-    actualPomodoroNumber: jsonTask.actualPomodoroNumber,
+    id: taskResponse.id,
+    title: taskResponse.title,
+    expectedPomodoroNumber: taskResponse.expectedPomodoroNumber,
+    actualPomodoroNumber: taskResponse.actualPomodoroNumber,
     dueOn:
-      jsonTask.dueOn !== "0001-01-01T00:00:00Z"
-        ? new Date(jsonTask.dueOn)
+      taskResponse.dueOn !== "0001-01-01T00:00:00Z"
+        ? new Date(taskResponse.dueOn)
         : null,
-    isCompleted: jsonTask.isCompleted,
+    isCompleted: taskResponse.isCompleted,
     completedOn:
-      jsonTask.completedOn !== "0001-01-01T00:00:00Z"
-        ? new Date(jsonTask.completedOn)
+      taskResponse.completedOn !== "0001-01-01T00:00:00Z"
+        ? new Date(taskResponse.completedOn)
         : null,
-    createdAt: new Date(jsonTask.createdAt),
-    updatedAt: new Date(jsonTask.updatedAt),
+    createdAt: new Date(taskResponse.createdAt),
+    updatedAt: new Date(taskResponse.updatedAt),
   };
 };

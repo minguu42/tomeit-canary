@@ -7,7 +7,7 @@ import AddTaskForm from "components/home/AddTaskForm";
 import TaskList from "components/home/TaskList";
 import PomodoroPlayer from "components/home/PomodoroPlayer";
 import styles from "pages/home/Home.module.scss";
-import { Task, isJsonTask, isJsonTasks, newTask } from "types/task";
+import { Task, isTaskResponse, isTasksResponse, newTask } from "types/task";
 import { getData, postData, patchData } from "lib/fetch";
 import { useAuth } from "contexts/AuthContext";
 import { isNextRestCountResponse } from "../../types/pomodoro";
@@ -68,7 +68,7 @@ const HomeContainer = (): JSX.Element => {
   useEffect(() => {
     getData("/tasks?is-completed=false", currentUser)
       .then((data) => {
-        if (isJsonTasks(data)) {
+        if (isTasksResponse(data)) {
           const tasks = data.tasks.map((task) => newTask(task));
           setTasks(tasks);
         }
@@ -102,7 +102,7 @@ const HomeContainer = (): JSX.Element => {
     postData("/tasks", reqBody, currentUser)
       .then((data) => {
         console.log(data);
-        if (isJsonTask(data)) {
+        if (isTaskResponse(data)) {
           const tmp = tasks.slice();
           tmp.push(newTask(data));
           setTasks(tmp);
