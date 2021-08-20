@@ -1,12 +1,22 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
 
 import TopAppBar from "components/common/TopAppBar";
 import ReportsHeading from "components/reports/ReportsHeading";
 import TaskRecordList from "components/reports/TaskRecordList";
-import PomodoroRecordList from "components/reports/PomodoroRecordList";
+import PomodoroList from "components/reports/PomodoroRecordList";
 import styles from "pages/reports/Reports.module.scss";
+import { isTasksResponse, newTask, Task } from "types/task";
+import { isPomodorosResponse, newPomodoro, Pomodoro } from "types/pomodoro";
+import { useAuth } from "contexts/AuthContext";
+import { getData } from "lib/fetch";
 
-const Reports = (): JSX.Element => (
+type Props = {
+  tasks: Task[];
+  pomodoros: Pomodoro[];
+};
+
+const Reports = ({ tasks, pomodoros }: Props): JSX.Element => (
   <>
     <Head>
       <title>レポート - tomeit</title>
@@ -15,10 +25,48 @@ const Reports = (): JSX.Element => (
     <TopAppBar />
     <main className={styles.main}>
       <ReportsHeading />
-      <TaskRecordList />
-      <PomodoroRecordList />
+      <TaskRecordList tasks={tasks} />
+      <PomodoroList pomodoros={pomodoros} />
     </main>
   </>
 );
 
-export default Reports;
+const ReportsContainer = (): JSX.Element => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [pomodoros, setPomodoros] = useState<Pomodoro[]>([]);
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    const today = new Date().toISOString();
+    getData(`/tasks?is-completed=true&completed-on=${today}`, currentUser)
+      .then((data) => {
+        if (isTasksResponse(data)) {
+          const tasks = data.tasks.map((t) => newTask(t));
+          setTasks(tasks);
+        }
+      })
+      .catch((error) => {
+        window.alert(
+          "タスクの読み込みに失敗しました。ページを再読み込みしてください"
+        );
+        console.log("getTasks failed:", error);
+      });
+    getData(`/pomodoros?completed-on=${today}`, currentUser)
+      .then((data) => {
+        if (isPomodorosResponse(data)) {
+          const pomodoros = data.pomodoros.map((p) => newPomodoro(p));
+          setPomodoros(pomodoros);
+        }
+      })
+      .catch((error) => {
+        window.alert(
+          "ポモドーロ記録の読み込みに失敗しました。ページを再読み込みしてください"
+        );
+        console.log("getPomodoros failed:", error);
+      });
+  }, [currentUser]);
+
+  return <Reports tasks={tasks} pomodoros={pomodoros} />;
+};
+
+export default ReportsContainer;
