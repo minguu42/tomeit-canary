@@ -2,12 +2,13 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { PomodoroRecordListItem } from "./PomodoroRecordListItem";
-import { PomodoroRecord } from "types/pomodoro";
+import { Pomodoro } from "types/pomodoro";
 
-const pomodoroRecord1: PomodoroRecord = {
+const pomodoroRecord1: Pomodoro = {
   id: 1,
   taskTitle: "タスク1",
-  completedAt: new Date("2021-01-01T00:00:00Z"),
+  completedOn: new Date("2021-01-01T00:00:00Z"),
+  createdAt: new Date("2021-01-01T00:00:00Z"),
 };
 
 beforeEach(() => {

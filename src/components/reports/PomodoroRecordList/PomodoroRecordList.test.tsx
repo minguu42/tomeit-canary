@@ -1,24 +1,26 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
-import { PomodoroRecordList } from "components/reports/PomodoroRecordList";
-import { PomodoroRecord } from "types/pomodoro";
+import { PomodoroList } from "components/reports/PomodoroRecordList";
+import { Pomodoro } from "types/pomodoro";
 
-const pomodoroRecords: PomodoroRecord[] = [
+const pomodoroRecords: Pomodoro[] = [
   {
     id: 1,
     taskTitle: "タスク1",
-    completedAt: new Date("2021-01-01T00:00:00Z"),
+    completedOn: new Date("2021-01-01T00:00:00Z"),
+    createdAt: new Date("2021-01-01T00:00:00Z"),
   },
   {
     id: 2,
     taskTitle: "タスク2",
-    completedAt: new Date("2021-01-01T00:30:00Z"),
+    completedOn: new Date("2021-01-01T00:30:00Z"),
+    createdAt: new Date("2021-01-01T00:30:00Z"),
   },
 ];
 
 beforeEach(() => {
-  render(<PomodoroRecordList pomodoroRecords={pomodoroRecords} />);
+  render(<PomodoroList pomodoros={pomodoroRecords} />);
 });
 
 describe("display", () => {
