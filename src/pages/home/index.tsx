@@ -1,173 +1,163 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 
-import Header from "components/common/Header";
-import StatusBar from "components/StatusBar";
-import AddTaskForm from "components/AddTaskForm";
-import TaskList from "components/TaskList";
-import PomodoroPlayer from "components/PomodoroPlayer";
-import Footer from "components/common/Footer";
+import TopAppBar from "components/common/TopAppBar";
+import HomeHeading from "components/home/HomeHeading";
+import AddTaskForm from "components/home/AddTaskForm";
+import TaskList from "components/home/TaskList";
+import PomodoroPlayer from "components/home/PomodoroPlayer";
 import styles from "pages/home/Home.module.scss";
-import { Task } from "lib/task";
-import { fetchData, postData, putData } from "lib/fetch";
-import { useAuth } from "lib/AuthContext";
+import { Task, isTaskResponse, isTasksResponse, newTask } from "types/task";
+import { getData, postData, patchData } from "lib/fetch";
+import { useAuth } from "contexts/AuthContext";
+import { isNextRestCountResponse } from "../../types/pomodoro";
 
 type Props = {
   tasks: Task[];
   playingTask: Task | null;
-  restCount: number;
-  todayPomodoroNum: number;
+  nextRestCount: number;
   addTask: (task: Task) => void;
-  playTask: (task: Task) => void;
   completeTask: (task: Task) => void;
-  applyCompletePomodoro: (task: Task | null) => void;
+  setTask: (task: Task) => void;
+  completePomodoro: (task: Task) => void;
 };
 
-const Index = ({
+const Home = ({
   tasks,
   playingTask,
-  restCount,
-  todayPomodoroNum,
+  nextRestCount,
   addTask,
-  playTask,
   completeTask,
-  applyCompletePomodoro,
+  setTask,
+  completePomodoro,
 }: Props): JSX.Element => (
   <>
     <Head>
       <title>ホーム - tomeit</title>
     </Head>
 
-    <Header />
+    <TopAppBar />
     <main className={styles.main}>
-      <StatusBar
-        restCount={restCount}
-        undoneTaskNumber={tasks.length}
-        pomodoroNumber={todayPomodoroNum}
-      />
-      <AddTaskForm addTask={addTask} />
-      <TaskList
-        tasks={tasks}
-        playingTask={playingTask}
-        playTask={playTask}
-        completeTask={completeTask}
-      />
+      <HomeHeading headingText="いつか" tasks={tasks} />
+      <div className={styles.taskListLayout}>
+        <AddTaskForm addTask={addTask} />
+        <TaskList
+          tasks={tasks}
+          playingTask={playingTask}
+          completeTask={completeTask}
+          setTask={setTask}
+        />
+      </div>
       <div className={styles.playerLayout}>
         <PomodoroPlayer
-          restCount={restCount}
           playingTask={playingTask}
-          applyCompletePomodoro={applyCompletePomodoro}
+          nextRestCount={nextRestCount}
+          completePomodoro={completePomodoro}
         />
       </div>
     </main>
-    <Footer />
   </>
 );
 
 const HomeContainer = (): JSX.Element => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [playingTask, setPlayingTask] = useState<Task | null>(null);
-  const [restCount, setRestCount] = useState(4);
-  const [todayPomodoroCount, setTodayPomodoroCount] = useState(0);
+  const [nextRestCount, setNextRestCount] = useState(4);
   const { currentUser } = useAuth();
 
-  const addTask = (task: Task): void => {
-    const reqBody = {
-      name: task.name,
-      priority: task.priority ?? 0,
-      deadline: task.deadline ?? "0001-01-01",
-    };
-    postData("/tasks", reqBody, currentUser)
-      .then((data) => {
-        const tmp = tasks.slice();
-        tmp.push(data);
-        setTasks(tmp);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const playTask = (task: Task): void => {
-    setPlayingTask(task);
-  };
-
-  const completeTask = (task: Task): void => {
-    putData("/tasks/done/" + String(task.id), {}, currentUser)
-      .then(() => {
-        const tmp = tasks.filter((t) => t.id !== task.id);
-        setTasks(tmp);
-
-        if (playingTask?.id === task.id) {
-          setPlayingTask(null);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const applyCompletePomodoro = (task: Task | null): void => {
-    if (task !== null) {
-      task.pomodoroCount += 1;
-      const tmp = tasks.slice();
-      const index = tasks.findIndex((t) => t.id === task.id);
-      tmp[index] = task;
-      setTasks(tmp);
-
-      const req = { taskID: task.id };
-      postData("/pomodoros/records", req, currentUser)
-        .then()
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-
-    setTodayPomodoroCount((n) => n + 1);
-    setRestCount((c) => (c === 1 ? 4 : c - 1));
-  };
-
   useEffect(() => {
-    fetchData("/tasks/undone", currentUser)
+    getData("/tasks?is-completed=false", currentUser)
       .then((data) => {
-        if (data.tasks === null) {
-          setTasks([]);
-        } else {
-          setTasks(data.tasks);
+        if (isTasksResponse(data)) {
+          const tasks = data.tasks.map((task) => newTask(task));
+          setTasks(tasks);
         }
       })
       .catch((error) => {
-        console.log(error);
+        window.alert(
+          "タスクの読み込みに失敗しました。ページを再読み込みしてください"
+        );
+        console.log("getTasks failed:", error);
       });
-
-    fetchData("/pomodoros/rest-count", currentUser)
+    getData("/pomodoros/next-rest-count", currentUser)
       .then((data) => {
-        console.log(data.restCount);
-        setRestCount(data.restCount);
+        if (isNextRestCountResponse(data)) {
+          setNextRestCount(data.nextRestCount);
+        }
       })
       .catch((error) => {
-        console.log("fetch restCount", error);
-      });
-
-    fetchData("/pomodoros/records/count/today", currentUser)
-      .then((data) => {
-        setTodayPomodoroCount(data.todayPomodoroCount);
-      })
-      .catch((error) => {
-        console.log("fetch todayPomodoroCount error:", error);
+        window.alert(
+          "次の15分休憩までのカウントの読み込みに失敗しました。ページを再読み込みしてください"
+        );
+        console.log("getNextRestCount failed:", error);
       });
   }, [currentUser]);
 
+  const addTask = (task: Task): void => {
+    const reqBody = {
+      title: task.title,
+      expectedPomodoroNumber: task.expectedPomodoroNumber ?? 0,
+      dueOn: task.dueOn ?? "0001-01-01T00:00:00Z",
+    };
+    postData("/tasks", reqBody, currentUser)
+      .then((data) => {
+        if (isTaskResponse(data)) {
+          const tmp = tasks.slice();
+          tmp.push(newTask(data));
+          setTasks(tmp);
+        }
+      })
+      .catch((error) => {
+        window.alert("タスクの作成に失敗しました。もう一度お試しください");
+        console.log("postTask failed:", error);
+      });
+  };
+
+  const completeTask = (task: Task): void => {
+    const reqBody = {
+      isCompleted: true,
+    };
+    patchData("/tasks/" + String(task.id), reqBody, currentUser)
+      .then(() => {
+        const tmp = tasks.filter((t) => t.id !== task.id);
+        setTasks(tmp);
+      })
+      .catch((error) => {
+        window.alert("タスクの完了に失敗しました。もう一度お試しください");
+        console.log("patchTask failed:", error);
+      });
+  };
+
+  const setTask = (task: Task): void => {
+    setPlayingTask(task);
+  };
+
+  const completePomodoro = (task: Task): void => {
+    const reqBody = { taskID: task.id };
+    postData("/pomodoros", reqBody, currentUser)
+      .then(() => {
+        task.actualPomodoroNumber += 1;
+        const tmp = tasks.slice();
+        const index = tasks.findIndex((t) => t.id === task.id);
+        tmp[index] = task;
+        setTasks(tmp);
+        setNextRestCount((c) => (c === 1 ? 4 : c - 1));
+      })
+      .catch((error) => {
+        window.alert("ポモドーロの記録に失敗しました。もう一度お試しください");
+        console.log("postPomodoros failed:", error);
+      });
+  };
+
   return (
-    <Index
-      tasks={tasks.filter((task) => !task.isDone)}
-      addTask={addTask}
+    <Home
+      tasks={tasks}
       playingTask={playingTask}
-      playTask={playTask}
-      restCount={restCount}
-      todayPomodoroNum={todayPomodoroCount}
-      applyCompletePomodoro={applyCompletePomodoro}
+      nextRestCount={nextRestCount}
+      addTask={addTask}
       completeTask={completeTask}
+      setTask={setTask}
+      completePomodoro={completePomodoro}
     />
   );
 };

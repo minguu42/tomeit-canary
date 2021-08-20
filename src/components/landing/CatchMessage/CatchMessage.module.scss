@@ -1,0 +1,18 @@
+@use "styles/variables";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .advertisingSlogan {
+    color: var(--c-on-background-high);
+    @include variables.headline3;
+  }
+
+  .description {
+    max-width: 504px;
+    color: var(--c-on-background-medium);
+    @include variables.body1;
+  }
+}

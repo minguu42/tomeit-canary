@@ -1,0 +1,11 @@
+@use "styles/variables";
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: var(--c-on-background-high);
+  background-color: var(--c-background);
+  @include variables.headline6;
+}

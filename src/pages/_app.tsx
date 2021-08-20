@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 
+import AuthProvider from "contexts/AuthContext";
 import "styles/global.scss";
-import AuthProvider from "lib/AuthContext";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (

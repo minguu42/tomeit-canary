@@ -1,0 +1,17 @@
+@use "styles/variables";
+
+.container {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+
+  h2 {
+    color: var(--c-on-background-high);
+    @include variables.headline5;
+  }
+
+  p {
+    color: var(--c-on-background-medium);
+    @include variables.subtitle1;
+  }
+}

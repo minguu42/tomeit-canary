@@ -18,9 +18,6 @@ class MyDocument extends Document {
     return (
       <Html lang="ja">
         <Head>
-          {/* TODO: 検索結果に表示されるのを防ぐ. リリース時には削除する. */}
-          <meta name="robots" content="noindex, nofollow" />
-
           <link
             rel="icon"
             href="/favicon.ico"

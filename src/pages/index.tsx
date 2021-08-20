@@ -1,32 +1,39 @@
 import { useEffect } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
-import Header from "components/common/Header";
-import Catch from "components/Catch";
-import Footer from "components/common/Footer";
+import TopAppBar from "components/common/TopAppBar";
+import CatchMessage from "components/landing/CatchMessage";
+import GoogleLoginButton from "components/landing/GoogleLoginButton";
 import styles from "pages/Landing.module.scss";
-import { useAuth, login } from "lib/AuthContext";
+import { useAuth } from "contexts/AuthContext";
 
-type Props = {
-  handleLogin: () => Promise<void>;
-};
-
-const Landing = ({ handleLogin }: Props): JSX.Element => (
+const Landing = (): JSX.Element => (
   <>
     <Head>
       <title>tomeit</title>
       <meta
         name="description"
-        content="tomeit は「大事なことに集中する」をコンセプトとしたタスク管理アプリです。ポモドーロテクニックを使って、時間と集中力を有意義に使いましょう！"
+        content="tomeit は必要なことだけに集中するためのタスク管理アプリです。ポモドーロテクニックを使って、今やるべきことのみを行い, 時間を有意義に使いましょう！"
       />
     </Head>
 
-    <Header />
+    <TopAppBar />
     <main className={styles.main}>
-      <Catch handleLogin={handleLogin} />
+      <div className={styles.leftWrapper}>
+        <CatchMessage />
+        <GoogleLoginButton />
+      </div>
+      <div>
+        <Image
+          src="/work_from_home.png"
+          alt="work image"
+          width={480}
+          height={340}
+        />
+      </div>
     </main>
-    <Footer />
   </>
 );
 
@@ -40,15 +47,7 @@ const LandingContainer = (): JSX.Element => {
     }
   }, [router, currentUser]);
 
-  const handleLogin = async () => {
-    try {
-      await login();
-    } catch {
-      window.alert("ログインに失敗しました。もう一度お試しください。");
-    }
-  };
-
-  return <Landing handleLogin={handleLogin} />;
+  return <Landing />;
 };
 
 export default LandingContainer;

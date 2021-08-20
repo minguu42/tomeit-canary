@@ -6,7 +6,7 @@ export const postData = async (
   path = "/",
   data = {},
   currentUser: User | null
-): Promise<any> => {
+): Promise<unknown> => {
   if (currentUser === null) {
     return;
   }
@@ -24,10 +24,10 @@ export const postData = async (
   return response.json();
 };
 
-export const fetchData = async (
+export const getData = async (
   path = "/",
   currentUser: User | null
-): Promise<any> => {
+): Promise<unknown> => {
   if (currentUser === null) {
     return;
   }
@@ -44,17 +44,17 @@ export const fetchData = async (
   return response.json();
 };
 
-export const putData = async (
+export const patchData = async (
   path = "/",
   data = {},
   currentUser: User | null
-): Promise<any> => {
+): Promise<unknown> => {
   if (currentUser === null) {
     return;
   }
   const idToken = await currentUser.getIdToken(true);
   const response = await window.fetch(API_URL + path, {
-    method: "PUT",
+    method: "PATCH",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",

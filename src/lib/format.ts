@@ -1,40 +1,47 @@
-export const convertSecondsForDisplay = (seconds: number): string => {
-  const minutes = Math.floor(seconds / 60);
-  const restSeconds = seconds % 60;
-  return (
-    String(minutes).padStart(2, "0") +
-    "：" +
-    String(restSeconds).padStart(2, "0")
-  );
+export const formatTimerTime = (seconds: number): string => {
+  const mmNum = Math.floor(seconds / 60);
+  const ssNum = seconds % 60;
+  const mm = String(mmNum).padStart(2, "0");
+  const ss = String(ssNum).padStart(2, "0");
+  return `${mm}：${ss}`;
 };
 
-export const formatStringByLength = (length: number, name: string): string => {
-  if (name.length >= length) {
-    return name.slice(0, length) + "...";
-  } else {
-    return name;
-  }
+export const formatDate = (date: Date): string => {
+  const yyyy = String(date.getFullYear()).padStart(4, "0");
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
 };
 
-export const convertDatetimeToTime = (datetime: string | undefined): string => {
-  if (datetime === undefined) {
-    return "";
-  }
-  const hour = datetime.slice(11, 13);
-  const minutes = datetime.slice(14, 16);
-  return hour + "：" + minutes;
+export const formatToLocalTime = (date: Date): string => {
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+  const hh = String(date.getHours()).padStart(2, "0");
+  const mm = String(date.getMinutes()).padStart(2, "0");
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  return `${hh}：${mm}`;
 };
 
-export const convertDatetimeToPomodoroTerm = (createdAt: string): string => {
-  const start = new Date(createdAt);
-  start.setMinutes(start.getMinutes() - 25);
-  return (
-    String(start.getUTCHours()).padStart(2, "0") +
-    "：" +
-    String(start.getUTCMinutes()).padStart(2, "0") +
-    " - " +
-    createdAt.slice(11, 13).padStart(2, "0") +
-    "：" +
-    createdAt.slice(14, 16).padStart(2, "0")
-  );
+export const formatToLocalDate = (date: Date): string => {
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+  const dateStr = date.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  return dateStr;
+};
+
+export const formatToLocalPomodoroDuring = (date: Date): string => {
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+  const completedHour = String(date.getHours()).padStart(2, "0");
+  const completedMinutes = String(date.getMinutes()).padStart(2, "0");
+
+  date.setMinutes(date.getMinutes() - 25);
+  const startHour = String(date.getHours()).padStart(2, "0");
+  const startMinutes = String(date.getMinutes()).padStart(2, "0");
+  date.setMinutes(date.getMinutes() + 25);
+
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  return `${startHour}：${startMinutes} - ${completedHour}：${completedMinutes}`;
 };

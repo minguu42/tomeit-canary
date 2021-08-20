@@ -1,0 +1,31 @@
+@use "styles/variables";
+
+.outer {
+  background-color: var(--c-primary);
+
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1040px;
+    margin: 0 auto;
+
+    .leftWrapper {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      height: 56px;
+
+      .appName {
+        color: var(--c-on-primary-high);
+
+        @include variables.headline6;
+      }
+    }
+
+    .rightWrapper {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+  }
+}
