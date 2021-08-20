@@ -101,7 +101,6 @@ const HomeContainer = (): JSX.Element => {
     };
     postData("/tasks", reqBody, currentUser)
       .then((data) => {
-        console.log(data);
         if (isTaskResponse(data)) {
           const tmp = tasks.slice();
           tmp.push(newTask(data));
@@ -134,12 +133,20 @@ const HomeContainer = (): JSX.Element => {
   };
 
   const completePomodoro = (task: Task): void => {
-    task.actualPomodoroNumber += 1;
-    const tmp = tasks.slice();
-    const index = tasks.findIndex((t) => t.id === task.id);
-    tmp[index] = task;
-    setTasks(tmp);
-    setNextRestCount((c) => (c === 1 ? 4 : c - 1));
+    const reqBody = { taskID: task.id };
+    postData("/pomodoros", reqBody, currentUser)
+      .then(() => {
+        task.actualPomodoroNumber += 1;
+        const tmp = tasks.slice();
+        const index = tasks.findIndex((t) => t.id === task.id);
+        tmp[index] = task;
+        setTasks(tmp);
+        setNextRestCount((c) => (c === 1 ? 4 : c - 1));
+      })
+      .catch((error) => {
+        window.alert("ポモドーロの記録に失敗しました。もう一度お試しください");
+        console.log("postPomodoros failed:", error);
+      });
   };
 
   return (
