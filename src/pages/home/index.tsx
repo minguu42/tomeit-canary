@@ -10,6 +10,7 @@ import styles from "pages/home/Home.module.scss";
 import { Task, isJsonTask, isJsonTasks, newTask } from "types/task";
 import { getData, postData, patchData } from "lib/fetch";
 import { useAuth } from "contexts/AuthContext";
+import { isNextRestCountResponse } from "../../types/pomodoro";
 
 type Props = {
   tasks: Task[];
@@ -77,6 +78,18 @@ const HomeContainer = (): JSX.Element => {
           "タスクの読み込みに失敗しました。ページを再読み込みしてください"
         );
         console.log("getTasks failed:", error);
+      });
+    getData("/pomodoros/next-rest-count", currentUser)
+      .then((data) => {
+        if (isNextRestCountResponse(data)) {
+          setNextRestCount(data.nextRestCount);
+        }
+      })
+      .catch((error) => {
+        window.alert(
+          "次の15分休憩までのカウントの読み込みに失敗しました。ページを再読み込みしてください"
+        );
+        console.log("getNextRestCount failed:", error);
       });
   }, [currentUser]);
 
