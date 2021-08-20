@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 
 import TopAppBar from "components/common/TopAppBar";
@@ -6,8 +7,10 @@ import AddTaskForm from "components/home/AddTaskForm";
 import TaskList from "components/home/TaskList";
 import PomodoroPlayer from "components/home/PomodoroPlayer";
 import styles from "pages/home/Home.module.scss";
-import { Task } from "types/task";
-import { useState } from "react";
+import { Task, isTaskResponse, isTasksResponse, newTask } from "types/task";
+import { getData, postData, patchData } from "lib/fetch";
+import { useAuth } from "contexts/AuthContext";
+import { isNextRestCountResponse } from "../../types/pomodoro";
 
 type Props = {
   tasks: Task[];
@@ -60,21 +63,69 @@ const HomeContainer = (): JSX.Element => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [playingTask, setPlayingTask] = useState<Task | null>(null);
   const [nextRestCount, setNextRestCount] = useState(4);
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    getData("/tasks?is-completed=false", currentUser)
+      .then((data) => {
+        if (isTasksResponse(data)) {
+          const tasks = data.tasks.map((task) => newTask(task));
+          setTasks(tasks);
+        }
+      })
+      .catch((error) => {
+        window.alert(
+          "タスクの読み込みに失敗しました。ページを再読み込みしてください"
+        );
+        console.log("getTasks failed:", error);
+      });
+    getData("/pomodoros/next-rest-count", currentUser)
+      .then((data) => {
+        if (isNextRestCountResponse(data)) {
+          setNextRestCount(data.nextRestCount);
+        }
+      })
+      .catch((error) => {
+        window.alert(
+          "次の15分休憩までのカウントの読み込みに失敗しました。ページを再読み込みしてください"
+        );
+        console.log("getNextRestCount failed:", error);
+      });
+  }, [currentUser]);
 
   const addTask = (task: Task): void => {
-    // const reqBody = {
-    //   title: task.title,
-    //   expectedPomodoroNum: task.expectedPomodoroNum ?? 0,
-    //   dueOn: task.dueOn ?? "0001-01-01T00:00:00Z",
-    // }
-    const tmp = tasks.slice();
-    tmp.push(task);
-    setTasks(tmp);
+    const reqBody = {
+      title: task.title,
+      expectedPomodoroNumber: task.expectedPomodoroNumber ?? 0,
+      dueOn: task.dueOn ?? "0001-01-01T00:00:00Z",
+    };
+    postData("/tasks", reqBody, currentUser)
+      .then((data) => {
+        if (isTaskResponse(data)) {
+          const tmp = tasks.slice();
+          tmp.push(newTask(data));
+          setTasks(tmp);
+        }
+      })
+      .catch((error) => {
+        window.alert("タスクの作成に失敗しました。もう一度お試しください");
+        console.log("postTask failed:", error);
+      });
   };
 
   const completeTask = (task: Task): void => {
-    const tmp = tasks.filter((t) => t.id !== task.id);
-    setTasks(tmp);
+    const reqBody = {
+      isCompleted: true,
+    };
+    patchData("/tasks/" + String(task.id), reqBody, currentUser)
+      .then(() => {
+        const tmp = tasks.filter((t) => t.id !== task.id);
+        setTasks(tmp);
+      })
+      .catch((error) => {
+        window.alert("タスクの完了に失敗しました。もう一度お試しください");
+        console.log("patchTask failed:", error);
+      });
   };
 
   const setTask = (task: Task): void => {
@@ -82,12 +133,20 @@ const HomeContainer = (): JSX.Element => {
   };
 
   const completePomodoro = (task: Task): void => {
-    task.actualPomodoroNum += 1;
-    const tmp = tasks.slice();
-    const index = tasks.findIndex((t) => t.id === task.id);
-    tmp[index] = task;
-    setTasks(tmp);
-    setNextRestCount((c) => (c === 1 ? 4 : c - 1));
+    const reqBody = { taskID: task.id };
+    postData("/pomodoros", reqBody, currentUser)
+      .then(() => {
+        task.actualPomodoroNumber += 1;
+        const tmp = tasks.slice();
+        const index = tasks.findIndex((t) => t.id === task.id);
+        tmp[index] = task;
+        setTasks(tmp);
+        setNextRestCount((c) => (c === 1 ? 4 : c - 1));
+      })
+      .catch((error) => {
+        window.alert("ポモドーロの記録に失敗しました。もう一度お試しください");
+        console.log("postPomodoros failed:", error);
+      });
   };
 
   return (

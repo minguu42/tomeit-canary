@@ -86,11 +86,11 @@ const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
     const task: Task = {
       id: Math.floor(Math.random() * 1000),
       title: title,
-      expectedPomodoroNum: expectedPomodoroNum,
-      actualPomodoroNum: 0,
+      expectedPomodoroNumber: expectedPomodoroNum,
+      actualPomodoroNumber: 0,
       dueOn: dueOn,
       isCompleted: false,
-      completedAt: null,
+      completedOn: null,
     };
 
     addTask(task);
