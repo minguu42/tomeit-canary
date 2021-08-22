@@ -13,7 +13,6 @@ start:
 .PHONY: fmt
 fmt:
 	@prettier -w --ignore-path ./.gitignore "**/*.{js,jsx,ts,tsx,scss,json,md}"
-	@eslint --fix --ignore-path ./.gitignore "**/*.{js,jsx,ts,tsx}"
 	@stylelint --fix --ignore-path ./.gitignore "**/*.scss"
 
 .PHONY: lint
