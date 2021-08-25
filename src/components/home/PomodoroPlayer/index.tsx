@@ -81,7 +81,7 @@ const PomodoroPlayerContainer = ({
   nextRestCount,
   completePomodoro,
 }: ContainerProps): JSX.Element => {
-  const [time, setTime] = useState(15);
+  const [time, setTime] = useState(1500);
   const [isActive, setIsActive] = useState(false);
   const [isNextPomodoro, setIsNextPomodoro] = useState(true);
 
@@ -103,7 +103,7 @@ const PomodoroPlayerContainer = ({
   };
 
   const handleStopClick = (): void => {
-    setTime(15);
+    setTime(1500);
     setIsActive(false);
   };
 
@@ -124,7 +124,7 @@ const PomodoroPlayerContainer = ({
       setIsActive(false);
       if (isNextPomodoro && playingTask) {
         setIsNextPomodoro(false);
-        setTime(nextRestCount !== 1 ? 3 : 9);
+        setTime(nextRestCount !== 1 ? 300 : 900);
 
         completePomodoro(playingTask);
       } else {
