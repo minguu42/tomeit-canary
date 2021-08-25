@@ -1,16 +1,21 @@
-import React, { ChangeEventHandler, useState } from "react";
+import React, { ChangeEventHandler } from "react";
 
 import AddIcon from "components/common/icons/AddIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
-import styles from "components/home/AddTaskForm/AddTaskForm.module.scss";
+import styles from "./styles.module.scss";
 import { Task } from "types/task";
 import { formatDate } from "lib/format";
+import {
+  useTitleInput,
+  useExpectedPomodoroNumberInput,
+  useDueOnInput,
+} from "./hooks";
 
 type Props = {
   title: string;
   handleTitleChange: ChangeEventHandler<HTMLInputElement>;
-  expectedPomodoroNum: number;
-  handleExpectedPomodoroNumChange: ChangeEventHandler<HTMLInputElement>;
+  expectedPomodoroNumber: number;
+  handleExpectedPomodoroNumberChange: ChangeEventHandler<HTMLInputElement>;
   dueOn: Date | null;
   handleDueOnChange: ChangeEventHandler<HTMLInputElement>;
   handleSubmit: (e: React.SyntheticEvent) => void;
@@ -23,8 +28,8 @@ type ContainerProps = {
 export const AddTaskForm = ({
   title,
   handleTitleChange,
-  expectedPomodoroNum,
-  handleExpectedPomodoroNumChange,
+  expectedPomodoroNumber,
+  handleExpectedPomodoroNumberChange,
   dueOn,
   handleDueOnChange,
   handleSubmit,
@@ -46,8 +51,8 @@ export const AddTaskForm = ({
       <input
         type="number"
         title="予想ポモドーロ数"
-        value={expectedPomodoroNum}
-        onChange={handleExpectedPomodoroNumChange}
+        value={expectedPomodoroNumber}
+        onChange={handleExpectedPomodoroNumberChange}
         min={0}
         max={6}
       />
@@ -63,22 +68,13 @@ export const AddTaskForm = ({
 );
 
 const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
-  const [title, setTitle] = useState("");
-  const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
-  const [dueOn, setDueOn] = useState<Date | null>(null);
-
-  const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handleExpectedPomodoroNumChange: ChangeEventHandler<HTMLInputElement> =
-    (e) => {
-      setExpectedPomodoroNum(Number(e.target.value));
-    };
-
-  const handleDueOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setDueOn(new Date(e.target.value + "T00:00:00Z"));
-  };
+  const { title, handleTitleChange, resetTitle } = useTitleInput("");
+  const {
+    expectedPomodoroNumber,
+    handleExpectedPomodoroNumberChange,
+    resetExpectedPomodoroNumber,
+  } = useExpectedPomodoroNumberInput(0);
+  const { dueOn, handleDueOnChange, resetDueOn } = useDueOnInput();
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -86,7 +82,7 @@ const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
     const task: Task = {
       id: Math.floor(Math.random() * 1000),
       title: title,
-      expectedPomodoroNumber: expectedPomodoroNum,
+      expectedPomodoroNumber: expectedPomodoroNumber,
       actualPomodoroNumber: 0,
       dueOn: dueOn,
       isCompleted: false,
@@ -95,17 +91,17 @@ const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
 
     addTask(task);
 
-    setTitle("");
-    setExpectedPomodoroNum(0);
-    setDueOn(null);
+    resetTitle();
+    resetExpectedPomodoroNumber();
+    resetDueOn();
   };
 
   return (
     <AddTaskForm
       title={title}
       handleTitleChange={handleTitleChange}
-      expectedPomodoroNum={expectedPomodoroNum}
-      handleExpectedPomodoroNumChange={handleExpectedPomodoroNumChange}
+      expectedPomodoroNumber={expectedPomodoroNumber}
+      handleExpectedPomodoroNumberChange={handleExpectedPomodoroNumberChange}
       dueOn={dueOn}
       handleDueOnChange={handleDueOnChange}
       handleSubmit={handleSubmit}
