@@ -12,21 +12,15 @@ import { Task } from "models/task";
 import { useAuth } from "contexts/AuthContext";
 
 type Props = {
-  tasks: Task[];
   playingTask: Task | null;
   nextRestCount: number;
-  addTask: (task: Task) => void;
-  completeTask: (task: Task) => void;
   setTask: (task: Task) => void;
   completePomodoro: (task: Task) => void;
 };
 
 const Home = ({
-  tasks,
   playingTask,
   nextRestCount,
-  addTask,
-  completeTask,
   setTask,
   completePomodoro,
 }: Props): JSX.Element => (
@@ -37,15 +31,10 @@ const Home = ({
 
     <TopAppBar />
     <main className={styles.main}>
-      <HomeHeading headingText="いつか" tasks={tasks} />
+      <HomeHeading />
       <div className={styles.taskListLayout}>
-        <AddTaskForm addTask={addTask} />
-        <TaskList
-          tasks={tasks}
-          playingTask={playingTask}
-          completeTask={completeTask}
-          setTask={setTask}
-        />
+        <AddTaskForm />
+        <TaskList playingTask={playingTask} setTask={setTask} />
       </div>
       <div className={styles.playerLayout}>
         <PomodoroPlayer
@@ -102,46 +91,6 @@ const HomeContainer = (): JSX.Element => {
   //     });
   // }, [currentUser]);
 
-  const addTask = (task: Task): void => {
-    // もっとシンプルにできるよ
-    // const reqBody = {
-    //   title: task.title,
-    //   expectedPomodoroNumber: task.expectedPomodoroNumber ?? 0,
-    //   dueOn: task.dueOn ?? "0001-01-01T00:00:00Z",
-    // };
-    // postData("/tasks", reqBody, currentUser)
-    //   .then((data) => {
-    //     if (isTaskResponse(data)) {
-    //       const tmp = tasks.slice();
-    //       tmp.push(newTask(data));
-    //       setTasks(tmp);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     window.alert("タスクの作成に失敗しました。もう一度お試しください");
-    //     console.log("postTask failed:", error);
-    //   });
-    setTasks((prev) => [...prev, task]);
-  };
-
-  const completeTask = (task: Task): void => {
-    // もっとシンプルに実装しよう
-    // const reqBody = {
-    //   isCompleted: true,
-    // };
-    // patchData("/tasks/" + String(task.id), reqBody, currentUser)
-    //   .then(() => {
-    //     const tmp = tasks.filter((t) => t.id !== task.id);
-    //     setTasks(tmp);
-    //   })
-    //   .catch((error) => {
-    //     window.alert("タスクの完了に失敗しました。もう一度お試しください");
-    //     console.log("patchTask failed:", error);
-    //   });
-    const index = tasks.findIndex((t) => t.id == task.id);
-    setTasks((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
-  };
-
   const setTask = (task: Task): void => {
     setPlayingTask(task);
   };
@@ -174,11 +123,8 @@ const HomeContainer = (): JSX.Element => {
 
   return (
     <Home
-      tasks={tasks}
       playingTask={playingTask}
       nextRestCount={nextRestCount}
-      addTask={addTask}
-      completeTask={completeTask}
       setTask={setTask}
       completePomodoro={completePomodoro}
     />
