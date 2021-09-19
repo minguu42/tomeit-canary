@@ -1,25 +1,37 @@
+.DEFAULT_GOAL := help
+
 .PHONY: dev
-dev:
+dev:  ## 開発用サーバを起動する
 	@next dev
 
 .PHONY: build
-build:
+build:  ## ビルドする
 	@next build
 
 .PHONY: start
-start:
+start:  ## 本番サーバを起動する
 	@next start
 
 .PHONY: fmt
-fmt:
-	@prettier -w --ignore-path ./.gitignore "**/*.{js,jsx,ts,tsx,scss,json,md}"
+fmt:  ## Prettier, stylelint による自動整形を実行する
+	@prettier --ignore-path ./.gitignore -l -w "**/*.{js,jsx,ts,tsx,scss,json,md}"
 	@stylelint --fix --ignore-path ./.gitignore "**/*.scss"
 
 .PHONY: lint
-lint:
+lint:  ## ESLint, stylelint による静的解析を実行する
 	@next lint
 	@stylelint --ignore-path ./.gitignore "**/*.scss"
 
 .PHONY: test
-test:
+test:  ## Jest でテストを実行する
 	@jest
+
+.PHONY: check
+check: ## fmt, lint, test を実行し, 適切な状態か確認する
+	@make fmt
+	@make lint
+	@make test
+
+.PHONY: help
+help: ## ヘルプを表示する
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
