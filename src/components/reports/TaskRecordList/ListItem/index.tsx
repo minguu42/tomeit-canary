@@ -1,7 +1,7 @@
 import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
-import styles from "components/reports/TaskRecordList/TaskRecordListItem.module.scss";
-import { Task } from "types/task";
+import styles from "./styles.module.scss";
+import { Task } from "models/task";
 import { formatToLocalDate, formatToLocalTime } from "lib/format";
 
 type Props = {

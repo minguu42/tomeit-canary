@@ -1,3 +1,5 @@
+import { atom } from "recoil";
+
 export type Task = {
   id: number;
   title: string;
@@ -67,3 +69,8 @@ export const newTask = (taskResponse: TaskResponse): Task => {
     updatedAt: new Date(taskResponse.updatedAt),
   };
 };
+
+export const tasksState = atom<Task[]>({
+  key: "tasksState",
+  default: [],
+});

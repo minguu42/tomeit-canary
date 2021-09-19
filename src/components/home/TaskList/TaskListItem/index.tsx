@@ -1,8 +1,8 @@
 import CircleIcon from "components/common/icons/CircleIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
 import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
-import styles from "components/home/TaskList/TaskListItem/TaskListItem.module.scss";
-import { Task } from "types/task";
+import styles from "./styles.module.scss";
+import { Task } from "models/task";
 import { formatToLocalDate } from "lib/format";
 
 type Props = {

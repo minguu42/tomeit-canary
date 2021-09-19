@@ -5,8 +5,8 @@ module.exports = {
       "src/components",
       "src/contexts",
       "src/lib",
+      "src/models",
       "src/pages",
-      "src/types",
     ],
   },
 };

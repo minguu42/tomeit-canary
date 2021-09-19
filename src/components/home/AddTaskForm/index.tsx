@@ -3,13 +3,14 @@ import React, { ChangeEventHandler } from "react";
 import AddIcon from "components/common/icons/AddIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
 import styles from "./styles.module.scss";
-import { Task } from "types/task";
+import { Task, tasksState } from "models/task";
 import { formatDate } from "lib/format";
 import {
   useTitleInput,
   useExpectedPomodoroNumberInput,
   useDueOnInput,
 } from "./hooks";
+import { useSetRecoilState } from "recoil";
 
 type Props = {
   title: string;
@@ -19,10 +20,6 @@ type Props = {
   dueOn: Date | null;
   handleDueOnChange: ChangeEventHandler<HTMLInputElement>;
   handleSubmit: (e: React.SyntheticEvent) => void;
-};
-
-type ContainerProps = {
-  addTask: (task: Task) => void;
 };
 
 export const AddTaskForm = ({
@@ -67,7 +64,7 @@ export const AddTaskForm = ({
   </form>
 );
 
-const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
+const AddTaskFormContainer = (): JSX.Element => {
   const { title, handleTitleChange, resetTitle } = useTitleInput("");
   const {
     expectedPomodoroNumber,
@@ -75,6 +72,7 @@ const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
     resetExpectedPomodoroNumber,
   } = useExpectedPomodoroNumberInput(0);
   const { dueOn, handleDueOnChange, resetDueOn } = useDueOnInput();
+  const setTasks = useSetRecoilState(tasksState);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -89,7 +87,8 @@ const AddTaskFormContainer = ({ addTask }: ContainerProps): JSX.Element => {
       completedOn: null,
     };
 
-    addTask(task);
+    // TODO: タスク追加 API を叩く
+    setTasks((prev) => [...prev, task]);
 
     resetTitle();
     resetExpectedPomodoroNumber();

@@ -1,5 +1,7 @@
-import styles from "components/home/HomeHeading/HomeHeading.module.scss";
-import { Task } from "types/task";
+import { useRecoilValue } from "recoil";
+
+import styles from "./styles.module.scss";
+import { Task, tasksState } from "models/task";
 
 type Props = {
   headingText: string;
@@ -13,4 +15,10 @@ export const HomeHeading = ({ headingText, tasks }: Props): JSX.Element => (
   </div>
 );
 
-export default HomeHeading;
+const HomeHeadingContainer = (): JSX.Element => {
+  const tasks = useRecoilValue(tasksState);
+
+  return <HomeHeading headingText="いつか" tasks={tasks} />;
+};
+
+export default HomeHeadingContainer;

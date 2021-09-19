@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import SummarizeIcon from "components/common/icons/SummarizeIcon";
 import AccountMenu from "components/common/TopAppBar/AccountMenu";
-import styles from "components/common/TopAppBar/TopAppBar.module.scss";
+import styles from "./styles.module.scss";
 import { logout, useAuth } from "contexts/AuthContext";
 
 type Props = {

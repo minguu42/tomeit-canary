@@ -1,6 +1,6 @@
-import TaskRecordListItem from "components/reports/TaskRecordList/TaskRecordListItem";
-import styles from "components/reports/TaskRecordList/TaskRecordList.module.scss";
-import { Task } from "types/task";
+import TaskRecordListItem from "./ListItem";
+import styles from "./styles.module.scss";
+import { Task } from "models/task";
 
 type Props = {
   tasks: Task[];
