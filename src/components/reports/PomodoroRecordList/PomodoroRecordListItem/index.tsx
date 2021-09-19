@@ -1,5 +1,5 @@
 import TimerIcon from "components/common/icons/TimerIcon";
-import styles from "components/reports/PomodoroRecordList/PomodoroRecordListItem.module.scss";
+import styles from "./styles.module.scss";
 import { formatToLocalPomodoroDuring } from "lib/format";
 import { Pomodoro } from "types/pomodoro";
 

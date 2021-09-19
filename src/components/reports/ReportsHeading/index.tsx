@@ -1,4 +1,4 @@
-import styles from "components/reports/ReportsHeading/ReportsHeading.module.scss";
+import styles from "./styles.module.scss";
 
 type Props = {
   date: Date;

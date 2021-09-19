@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import styles from "components/landing/GoogleLoginButton/GoogleLoginButton.module.scss";
+import styles from "./styles.module.scss";
 import { login } from "contexts/AuthContext";
 
 type Props = {

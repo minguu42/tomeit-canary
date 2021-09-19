@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import AccountCircleIcon from "components/common/icons/AccountCircleIcon";
-import styles from "components/common/TopAppBar/AccountMenu.module.scss";
+import styles from "./styles.module.scss";
 
 type Props = {
   isOpen: boolean;

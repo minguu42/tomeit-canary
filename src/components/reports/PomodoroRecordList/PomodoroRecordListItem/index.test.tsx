@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
 
-import { PomodoroRecordListItem } from "./PomodoroRecordListItem";
+import { PomodoroRecordListItem } from "./index";
 import { Pomodoro } from "types/pomodoro";
 
 const pomodoroRecord1: Pomodoro = {

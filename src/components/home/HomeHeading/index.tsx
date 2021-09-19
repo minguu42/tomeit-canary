@@ -1,4 +1,4 @@
-import styles from "components/home/HomeHeading/HomeHeading.module.scss";
+import styles from "./styles.module.scss";
 import { Task } from "types/task";
 
 type Props = {

@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import cn from "classnames";
 
 import TimerIcon from "components/common/icons/TimerIcon";
 import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
 import StopCircleIcon from "components/common/icons/StopCircleIcon";
 import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
-import styles from "components/home/PomodoroPlayer/PomodoroPlayer.module.scss";
+import styles from "./styles.module.scss";
 import { Task } from "types/task";
 import { formatTimerTime } from "lib/format";
 

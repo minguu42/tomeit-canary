@@ -1,5 +1,5 @@
-import PomodoroRecordListItem from "components/reports/PomodoroRecordList/PomodoroRecordListItem";
-import styles from "components/reports/PomodoroRecordList/PomodoroRecordList.module.scss";
+import PomodoroRecordListItem from "./PomodoroRecordListItem";
+import styles from "./styles.module.scss";
 import { Pomodoro } from "types/pomodoro";
 
 type Props = {

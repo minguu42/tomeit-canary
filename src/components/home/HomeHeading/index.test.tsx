@@ -1,8 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
 
 import { HomeHeading } from "./index";
-import { Task } from "../../../types/task";
+import { Task } from "types/task";
 
 const tasks: Task[] = [
   {

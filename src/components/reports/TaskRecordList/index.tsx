@@ -1,5 +1,5 @@
-import TaskRecordListItem from "components/reports/TaskRecordList/TaskRecordListItem";
-import styles from "components/reports/TaskRecordList/TaskRecordList.module.scss";
+import TaskRecordListItem from "./ListItem";
+import styles from "./styles.module.scss";
 import { Task } from "types/task";
 
 type Props = {

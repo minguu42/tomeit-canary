@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
 
 import { PomodoroPlayer } from "./index";
 import { Task } from "types/task";
