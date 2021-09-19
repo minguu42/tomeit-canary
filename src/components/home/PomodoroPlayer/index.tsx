@@ -6,7 +6,7 @@ import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
 import StopCircleIcon from "components/common/icons/StopCircleIcon";
 import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
 import styles from "./styles.module.scss";
-import { Task } from "types/task";
+import { Task } from "models/task";
 import { formatTimerTime } from "lib/format";
 
 type Props = {

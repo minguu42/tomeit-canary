@@ -8,7 +8,7 @@ import AddTaskForm from "components/home/AddTaskForm";
 import TaskList from "components/home/TaskList";
 import PomodoroPlayer from "components/home/PomodoroPlayer";
 import styles from "pages/home/Home.module.scss";
-import { Task } from "types/task";
+import { Task } from "models/task";
 import { useAuth } from "contexts/AuthContext";
 
 type Props = {

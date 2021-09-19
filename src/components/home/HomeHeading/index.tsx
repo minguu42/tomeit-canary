@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss";
-import { Task } from "types/task";
+import { Task } from "models/task";
 
 type Props = {
   headingText: string;

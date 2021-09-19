@@ -3,7 +3,7 @@ import React, { ChangeEventHandler } from "react";
 import AddIcon from "components/common/icons/AddIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
 import styles from "./styles.module.scss";
-import { Task } from "types/task";
+import { Task } from "models/task";
 import { formatDate } from "lib/format";
 import {
   useTitleInput,

@@ -6,8 +6,8 @@ import ReportsHeading from "components/reports/ReportsHeading";
 import TaskRecordList from "components/reports/TaskRecordList";
 import PomodoroList from "components/reports/PomodoroRecordList";
 import styles from "pages/reports/Reports.module.scss";
-import { Task } from "types/task";
-import { Pomodoro } from "types/pomodoro";
+import { Task } from "models/task";
+import { Pomodoro } from "models/pomodoro";
 
 type Props = {
   tasks: Task[];

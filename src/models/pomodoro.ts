@@ -1,4 +1,4 @@
-import { isTaskResponse, TaskResponse } from "types/task";
+import { isTaskResponse, TaskResponse } from "models/task";
 
 export type PomodoroResponse = {
   id: number;
