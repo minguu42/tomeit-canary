@@ -5,7 +5,7 @@ import TopAppBar from "components/common/TopAppBar";
 import ReportsHeading from "components/reports/ReportsHeading";
 import TaskRecordList from "components/reports/TaskRecordList";
 import PomodoroList from "components/reports/PomodoroRecordList";
-import styles from "pages/reports/Reports.module.scss";
+import styles from "./styles.module.scss";
 import { Task } from "models/task";
 import { Pomodoro } from "models/pomodoro";
 

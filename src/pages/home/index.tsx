@@ -7,7 +7,7 @@ import HomeHeading from "components/home/HomeHeading";
 import AddTaskForm from "components/home/AddTaskForm";
 import TaskList from "components/home/TaskList";
 import PomodoroPlayer from "components/home/PomodoroPlayer";
-import styles from "pages/home/Home.module.scss";
+import styles from "./styles.module.scss";
 import { Task } from "models/task";
 import { useAuth } from "contexts/AuthContext";
 
