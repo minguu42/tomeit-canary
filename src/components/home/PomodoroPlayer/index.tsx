@@ -8,7 +8,8 @@ import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
 import styles from "./styles.module.scss";
 import { playingTaskState, Task, tasksState } from "models/task";
 import { formatTimerTime } from "lib/format";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
+import { makeSound } from "lib/sound";
 
 type Props = {
   time: number;
@@ -66,15 +67,22 @@ export const PomodoroPlayer = ({
         <PlayCircleIcon fill="#080a0f" />
       </button>
     )}
+    <audio src="/complete.mp3" id="complete" />
+    <audio src="/finish_rest.mp3" id="finish_rest" />
   </div>
 );
 
+const POMODORO_TIME = 15;
+const SHORT_REST_TIME = 3;
+const LONG_REST_TIME = 9;
+const INIT_REST_COUNT = 4;
+
 const PomodoroPlayerContainer = (): JSX.Element => {
-  const [time, setTime] = useState(1500);
+  const [time, setTime] = useState(POMODORO_TIME);
   const [isActive, setIsActive] = useState(false);
   const [isNextPomodoro, setIsNextPomodoro] = useState(true);
-  const [restCount, setRestCount] = useState(4);
-  const playingTask = useRecoilValue(playingTaskState);
+  const [restCount, setRestCount] = useState(INIT_REST_COUNT);
+  const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
   const [tasks, setTasks] = useRecoilState(tasksState);
 
   const tick = (): void => {
@@ -95,7 +103,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
   };
 
   const handleStopClick = (): void => {
-    setTime(1500);
+    setTime(POMODORO_TIME);
     setIsActive(false);
   };
 
@@ -104,36 +112,39 @@ const PomodoroPlayerContainer = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (playingTask !== null) {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
-    }
-  }, [playingTask]);
-
-  useEffect(() => {
     if (time === 0) {
       setIsActive(false);
       if (isNextPomodoro && playingTask) {
+        makeSound("#complete").catch((err) => console.error(err));
         setIsNextPomodoro(false);
-        setTime(restCount !== 1 ? 300 : 900);
+        setTime(restCount !== 1 ? SHORT_REST_TIME : LONG_REST_TIME);
 
         // TODO: ポモドーロ実行 API を叩く
         const index = tasks.findIndex((t) => t.id === playingTask.id);
-        playingTask.actualPomodoroNumber += 1;
+        const tmp = { ...playingTask };
+        tmp.actualPomodoroNumber += 1;
         setTasks((prev) => [
           ...prev.slice(0, index),
-          playingTask,
+          tmp,
           ...prev.slice(index + 1),
         ]);
-        setRestCount((c) => (c === 1 ? 4 : c - 1));
+        setPlayingTask(tmp);
+        setRestCount((c) => (c === 1 ? INIT_REST_COUNT : c - 1));
       } else {
-        setIsActive(false);
+        makeSound("#finish_rest").catch((err) => console.error(err));
         setIsNextPomodoro(true);
-        setTime(15);
+        setTime(POMODORO_TIME);
       }
     }
-  }, [isNextPomodoro, playingTask, restCount, setTasks, tasks, time]);
+  }, [
+    isNextPomodoro,
+    playingTask,
+    restCount,
+    setPlayingTask,
+    setTasks,
+    tasks,
+    time,
+  ]);
 
   return (
     <PomodoroPlayer
