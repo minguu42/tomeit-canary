@@ -18,7 +18,7 @@ export const TaskListItem = ({
   completeTask,
   setTask,
 }: Props): JSX.Element => (
-  <div className={s.container}>
+  <li className={s.container}>
     {isPlaying && <TimerIcon fill="#192f60" />}
     {!isPlaying && (
       <button onClick={() => completeTask(task)}>
@@ -59,7 +59,7 @@ export const TaskListItem = ({
         <PlayCircleIcon fill="#212121" />
       </button>
     )}
-  </div>
+  </li>
 );
 
 export default TaskListItem;
