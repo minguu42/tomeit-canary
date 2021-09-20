@@ -1,6 +1,7 @@
 import TaskListItem from "./TaskListItem";
 import s from "./styles.module.scss";
-import { Task } from "models/task";
+import { playingTaskState, Task, tasksState } from "models/task";
+import { useRecoilState } from "recoil";
 
 type Props = {
   tasks: Task[];
@@ -28,4 +29,28 @@ export const TaskList = ({
   </ul>
 );
 
-export default TaskList;
+const TaskListContainer = (): JSX.Element => {
+  const [tasks, setTasks] = useRecoilState(tasksState);
+  const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
+
+  const completeTask = (task: Task): void => {
+    // TODO: タスク完了 API を叩く
+    const index = tasks.findIndex((t) => t.id === task.id);
+    setTasks((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+  };
+
+  const setTask = (task: Task): void => {
+    setPlayingTask(task);
+  };
+
+  return (
+    <TaskList
+      tasks={tasks}
+      playingTask={playingTask}
+      completeTask={completeTask}
+      setTask={setTask}
+    />
+  );
+};
+
+export default TaskListContainer;
