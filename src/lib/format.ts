@@ -21,10 +21,21 @@ export const formatToLocalTime = (date: Date): string => {
   return `${hh}：${mm}`;
 };
 
-export const formatToLocalDate = (date: Date): string => {
+export const formatToLocalDatetime = (date: Date): string => {
   date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
   const dateStr = date.toLocaleDateString("ja-JP", {
     year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  return dateStr;
+};
+
+export const formatToLocalDate = (date: Date): string => {
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+  const dateStr = date.toLocaleDateString("ja-JP", {
+    weekday: "long",
     month: "long",
     day: "numeric",
   });

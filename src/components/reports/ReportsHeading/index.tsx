@@ -1,4 +1,5 @@
 import styles from "./styles.module.scss";
+import { formatToLocalDate } from "lib/format";
 
 type Props = {
   date: Date;
@@ -7,13 +8,7 @@ type Props = {
 export const ReportsHeading = ({ date }: Props): JSX.Element => (
   <div className={styles.container}>
     <h2>今日のレポート</h2>
-    <p>
-      {date.toLocaleDateString("ja-JP", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-      })}
-    </p>
+    <p>{formatToLocalDate(date)}</p>
   </div>
 );
 
