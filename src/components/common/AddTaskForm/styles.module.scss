@@ -1,0 +1,32 @@
+@use "styles/variables";
+
+.container {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  background-color: var(--c-surface);
+  border-bottom: 1px solid var(--c-outline);
+}
+
+.title {
+  display: block;
+  flex: 0 1 100%;
+  height: 52px;
+  margin-left: 32px;
+  color: var(--c-on-surface-high);
+  @include variables.subtitle1;
+}
+
+.expectedNum {
+  height: 52px;
+  color: var(--c-on-surface-medium);
+  @include variables.subtitle1;
+}
+
+.dueOn {
+  height: 52px;
+  margin-left: 4px;
+  color: var(--c-on-surface-medium);
+  @include variables.subtitle1;
+}
