@@ -3,7 +3,7 @@ import TimerIcon from "components/common/icons/TimerIcon";
 import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
 import styles from "./styles.module.scss";
 import { Task } from "models/task";
-import { formatToLocalDate } from "lib/format";
+import { formatToLocalDatetime } from "lib/format";
 
 type Props = {
   task: Task;
@@ -67,7 +67,9 @@ export const TaskListItem = ({
               )}
 
             {task.dueOn !== null && (
-              <p className={styles.dueOn}>{formatToLocalDate(task.dueOn)}</p>
+              <p className={styles.dueOn}>
+                {formatToLocalDatetime(task.dueOn)}
+              </p>
             )}
           </div>
         </>
