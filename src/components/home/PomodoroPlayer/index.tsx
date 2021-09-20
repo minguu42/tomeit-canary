@@ -6,8 +6,9 @@ import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
 import StopCircleIcon from "components/common/icons/StopCircleIcon";
 import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
 import styles from "./styles.module.scss";
-import { Task } from "models/task";
+import { playingTaskState, Task, tasksState } from "models/task";
 import { formatTimerTime } from "lib/format";
+import { useRecoilValue, useRecoilState } from "recoil";
 
 type Props = {
   time: number;
@@ -17,12 +18,6 @@ type Props = {
   handlePlayClick: () => void;
   handleStopClick: () => void;
   handleSkipClick: () => void;
-};
-
-type ContainerProps = {
-  playingTask: Task | null;
-  nextRestCount: number;
-  completePomodoro: (task: Task) => void;
 };
 
 export const PomodoroPlayer = ({
@@ -74,14 +69,13 @@ export const PomodoroPlayer = ({
   </div>
 );
 
-const PomodoroPlayerContainer = ({
-  playingTask,
-  nextRestCount,
-  completePomodoro,
-}: ContainerProps): JSX.Element => {
+const PomodoroPlayerContainer = (): JSX.Element => {
   const [time, setTime] = useState(1500);
   const [isActive, setIsActive] = useState(false);
   const [isNextPomodoro, setIsNextPomodoro] = useState(true);
+  const [restCount, setRestCount] = useState(4);
+  const playingTask = useRecoilValue(playingTaskState);
+  const [tasks, setTasks] = useRecoilState(tasksState);
 
   const tick = (): void => {
     setTime((t) => t - 1);
@@ -122,16 +116,24 @@ const PomodoroPlayerContainer = ({
       setIsActive(false);
       if (isNextPomodoro && playingTask) {
         setIsNextPomodoro(false);
-        setTime(nextRestCount !== 1 ? 300 : 900);
+        setTime(restCount !== 1 ? 300 : 900);
 
-        completePomodoro(playingTask);
+        // TODO: ポモドーロ実行 API を叩く
+        const index = tasks.findIndex((t) => t.id === playingTask.id);
+        playingTask.actualPomodoroNumber += 1;
+        setTasks((prev) => [
+          ...prev.slice(0, index),
+          playingTask,
+          ...prev.slice(index + 1),
+        ]);
+        setRestCount((c) => (c === 1 ? 4 : c - 1));
       } else {
         setIsActive(false);
         setIsNextPomodoro(true);
         setTime(15);
       }
     }
-  }, [time, playingTask, isNextPomodoro, nextRestCount, completePomodoro]);
+  }, [isNextPomodoro, playingTask, restCount, setTasks, tasks, time]);
 
   return (
     <PomodoroPlayer

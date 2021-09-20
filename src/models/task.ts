@@ -74,3 +74,8 @@ export const tasksState = atom<Task[]>({
   key: "tasksState",
   default: [],
 });
+
+export const playingTaskState = atom<Task | null>({
+  key: "playingTaskState",
+  default: null,
+});
