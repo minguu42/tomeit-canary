@@ -76,9 +76,9 @@ export const tasksState = atom<Task[]>({
   default: [],
 });
 
-type TaskFilter = "Today" | "Tomorrow" | "Someday";
+type TasksFilter = "Today" | "Tomorrow" | "Someday";
 
-export const tasksFilterState = atom<TaskFilter>({
+export const tasksFilterState = atom<TasksFilter>({
   key: "tasksFilterState",
   default: "Someday",
 });
