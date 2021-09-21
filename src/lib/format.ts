@@ -32,15 +32,12 @@ export const formatToLocalDatetime = (date: Date): string => {
   return dateStr;
 };
 
-export const formatToLocalDate = (date: Date): string => {
-  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-  const dateStr = date.toLocaleDateString("ja-JP", {
+export const formatDateToJP = (date: Date): string => {
+  return date.toLocaleDateString("ja-JP", {
     weekday: "long",
     month: "long",
     day: "numeric",
   });
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
-  return dateStr;
 };
 
 export const formatToLocalPomodoroDuring = (date: Date): string => {
