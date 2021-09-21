@@ -4,9 +4,9 @@ import Head from "next/head";
 import TopAppBar from "components/common/TopAppBar";
 import TaskListHeader from "components/common/TaskListHeader";
 import AddTaskForm from "components/common/AddTaskForm";
-import s from "./styles.module.scss";
-import TaskList from "components/common/TaskList";
+import TaskList from "components/today/TaskList";
 import PomodoroPlayer from "components/home/PomodoroPlayer";
+import s from "./styles.module.scss";
 
 const Today: NextPage = () => (
   <>
