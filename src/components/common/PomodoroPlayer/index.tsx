@@ -6,9 +6,14 @@ import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
 import StopCircleIcon from "components/common/icons/StopCircleIcon";
 import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
 import styles from "./styles.module.scss";
-import { playingTaskState, Task, tasksState } from "models/task";
+import {
+  tasksState,
+  filteredTasksState,
+  playingTaskState,
+  Task,
+} from "models/task";
 import { formatTimerTime } from "lib/format";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { makeSound } from "lib/sound";
 
 type Props = {
@@ -83,7 +88,8 @@ const PomodoroPlayerContainer = (): JSX.Element => {
   const [isNextPomodoro, setIsNextPomodoro] = useState(true);
   const [restCount, setRestCount] = useState(INIT_REST_COUNT);
   const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
-  const [tasks, setTasks] = useRecoilState(tasksState);
+  const filteredTasks = useRecoilValue(filteredTasksState);
+  const setTasks = useSetRecoilState(tasksState);
 
   const tick = (): void => {
     setTime((t) => t - 1);
@@ -120,7 +126,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
         setTime(restCount !== 1 ? SHORT_REST_TIME : LONG_REST_TIME);
 
         // TODO: ポモドーロ実行 API を叩く
-        const index = tasks.findIndex((t) => t.id === playingTask.id);
+        const index = filteredTasks.findIndex((t) => t.id === playingTask.id);
         const tmp = { ...playingTask };
         tmp.actualPomodoroNumber += 1;
         setTasks((prev) => [
@@ -142,7 +148,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
     restCount,
     setPlayingTask,
     setTasks,
-    tasks,
+    filteredTasks,
     time,
   ]);
 

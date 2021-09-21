@@ -6,10 +6,10 @@ import TasksPageLayout from "components/common/TasksPageLayout";
 const Today: NextPage = () => (
   <>
     <Head>
-      <title>今日 - tomeit</title>
+      <title>いつか - tomeit</title>
     </Head>
 
-    <TasksPageLayout tasksFilter="Today" />
+    <TasksPageLayout tasksFilter="Someday" />
   </>
 );
 

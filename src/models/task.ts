@@ -1,4 +1,5 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
+import { formatDate } from "../lib/format";
 
 export type Task = {
   id: number;
@@ -73,6 +74,46 @@ export const newTask = (taskResponse: TaskResponse): Task => {
 export const tasksState = atom<Task[]>({
   key: "tasksState",
   default: [],
+});
+
+export type TasksFilter = "Today" | "Tomorrow" | "Someday";
+
+export const tasksFilterState = atom<TasksFilter>({
+  key: "tasksFilterState",
+  default: "Someday",
+});
+
+export const filteredTasksState = selector<Task[]>({
+  key: "filteredTasksState",
+  get: ({ get }) => {
+    const filter = get(tasksFilterState);
+    const tasks = get(tasksState);
+
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+
+    switch (filter) {
+      case "Today":
+        return tasks.filter((task) => {
+          if (task.dueOn === null) {
+            return false;
+          } else {
+            return formatDate(task.dueOn) === formatDate(today);
+          }
+        });
+      case "Tomorrow":
+        return tasks.filter((task) => {
+          if (task.dueOn === null) {
+            return false;
+          } else {
+            return formatDate(task.dueOn) === formatDate(tomorrow);
+          }
+        });
+      case "Someday":
+        return tasks;
+    }
+  },
 });
 
 export const playingTaskState = atom<Task | null>({
