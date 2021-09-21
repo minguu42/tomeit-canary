@@ -1,5 +1,5 @@
 import s from "./styles.module.scss";
-import { Task, filteredTasksState } from "models/task";
+import { Task, filteredTasksState, tasksFilterState } from "models/task";
 import { formatToLocalDate } from "lib/format";
 import { useRecoilValue } from "recoil";
 
@@ -20,10 +20,23 @@ export const TaskListHeader = ({ title, tasks, date }: Props): JSX.Element => (
 );
 
 const TaskListHeaderContainer = (): JSX.Element => {
-  const tasks = useRecoilValue(filteredTasksState);
+  const tasksFilter = useRecoilValue(tasksFilterState);
+  const filteredTasks = useRecoilValue(filteredTasksState);
   const today = new Date();
-
-  return <TaskListHeader title="今日" tasks={tasks} date={today} />;
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+  switch (tasksFilter) {
+    case "Today":
+      return (
+        <TaskListHeader title={"今日"} tasks={filteredTasks} date={today} />
+      );
+    case "Tomorrow":
+      return (
+        <TaskListHeader title={"明日"} tasks={filteredTasks} date={tomorrow} />
+      );
+    case "Someday":
+      return <TaskListHeader title="いつか" tasks={filteredTasks} />;
+  }
 };
 
 export default TaskListHeaderContainer;

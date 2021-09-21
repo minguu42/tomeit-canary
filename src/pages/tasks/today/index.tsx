@@ -1,31 +1,27 @@
+import { useEffect } from "react";
 import { NextPage } from "next";
 import Head from "next/head";
+import { useSetRecoilState } from "recoil";
 
-import TopAppBar from "components/common/TopAppBar";
-import TaskListHeader from "components/common/TaskListHeader";
-import AddTaskForm from "components/common/AddTaskForm";
-import TaskList from "components/today/TaskList";
-import PomodoroPlayer from "components/home/PomodoroPlayer";
-import s from "./styles.module.scss";
+import TasksPageLayout from "components/common/TasksPageLayout";
+import { tasksFilterState } from "models/task";
 
-const Today: NextPage = () => (
-  <>
-    <Head>
-      <title>今日 - tomeit</title>
-    </Head>
+const Today: NextPage = () => {
+  const setTasksFilter = useSetRecoilState(tasksFilterState);
 
-    <TopAppBar />
-    <main className={s.main}>
-      <TaskListHeader />
-      <div className={s.listLayout}>
-        <AddTaskForm />
-        <TaskList />
-      </div>
-      <div className={s.playerLayout}>
-        <PomodoroPlayer />
-      </div>
-    </main>
-  </>
-);
+  useEffect(() => {
+    setTasksFilter("Today");
+  }, [setTasksFilter]);
+
+  return (
+    <>
+      <Head>
+        <title>今日 - tomeit</title>
+      </Head>
+
+      <TasksPageLayout />
+    </>
+  );
+};
 
 export default Today;
