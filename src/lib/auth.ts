@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   User,
@@ -47,4 +48,15 @@ export const useAuth = (): boolean => {
 
 export const useUser = (): UserState => {
   return useRecoilValue(userState);
+};
+
+export const useRequiredLogin = (): void => {
+  const user = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user === null) {
+      void router.push("/");
+    }
+  }, [router, user]);
 };

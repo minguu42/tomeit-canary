@@ -44,9 +44,7 @@ const LandingContainer: NextPage = () => {
 
   useEffect(() => {
     if (user !== null) {
-      router
-        .push("/tasks/today")
-        .catch(() => window.alert("エラーが発生しました。"));
+      void router.push("/tasks/today");
     }
   }, [router, user]);
 
