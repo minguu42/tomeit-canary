@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import s from "./styles.module.scss";
-import { login } from "contexts/AuthContext";
+import { login } from "lib/auth";
 
 type Props = {
   handleLogin: () => Promise<void>;

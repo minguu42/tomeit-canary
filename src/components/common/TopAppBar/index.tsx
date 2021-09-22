@@ -7,7 +7,7 @@ import MenuIcon from "components/common/icons/MenuIcon";
 import SummarizeIcon from "components/common/icons/SummarizeIcon";
 import AccountMenu from "components/common/TopAppBar/AccountMenu";
 import s from "./styles.module.scss";
-import { logout, useAuth } from "contexts/AuthContext";
+import { logout, useUser } from "lib/auth";
 import { navigationDrawerExistsState } from "components/common/NavigationDrawer";
 
 type Props = {
@@ -49,7 +49,7 @@ const TopAppBar = ({
 );
 
 const TopAppBarContainer = (): JSX.Element => {
-  const { currentUser } = useAuth();
+  const user = useUser();
   const router = useRouter();
   const setNavigationDrawerExists = useSetRecoilState(
     navigationDrawerExistsState
@@ -70,7 +70,7 @@ const TopAppBarContainer = (): JSX.Element => {
 
   return (
     <TopAppBar
-      isLoggedIn={currentUser !== null}
+      isLoggedIn={user !== null}
       toggleDrawer={toggleDrawer}
       handleLogout={handleLogout}
     />

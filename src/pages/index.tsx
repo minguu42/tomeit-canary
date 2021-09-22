@@ -8,7 +8,7 @@ import TopAppBar from "components/common/TopAppBar";
 import CatchMessage from "components/landing/CatchMessage";
 import GoogleLoginButton from "components/landing/GoogleLoginButton";
 import s from "./styles.module.scss";
-import { useAuth } from "contexts/AuthContext";
+import { useUser } from "lib/auth";
 
 const Landing = (): JSX.Element => (
   <>
@@ -40,15 +40,15 @@ const Landing = (): JSX.Element => (
 
 const LandingContainer: NextPage = () => {
   const router = useRouter();
-  const { currentUser } = useAuth();
+  const user = useUser();
 
   useEffect(() => {
-    if (currentUser !== null) {
+    if (user !== null) {
       router
         .push("/tasks/today")
         .catch(() => window.alert("エラーが発生しました。"));
     }
-  }, [router, currentUser]);
+  }, [router, user]);
 
   return <Landing />;
 };
