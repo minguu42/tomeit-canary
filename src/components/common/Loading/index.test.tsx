@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 
-import { LoadingCover } from "./index";
+import { Loading } from "./index";
 
 it("should display loading...", () => {
-  render(<LoadingCover />);
+  render(<Loading />);
 
   expect(screen.getByText("Loading...")).toBeInTheDocument();
 });

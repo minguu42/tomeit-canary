@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 
-export const LoadingCover = (): JSX.Element => (
+export const Loading = (): JSX.Element => (
   <div className={styles.container}>Loading...</div>
 );
 
-export default LoadingCover;
+export default Loading;

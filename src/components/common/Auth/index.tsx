@@ -1,4 +1,4 @@
-import LoadingCover from "components/common/LoadingCover";
+import Loading from "components/common/Loading";
 import { useAuth } from "lib/auth";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 const Auth = ({ children }: Props): JSX.Element => {
   const isLoading = useAuth();
 
-  return isLoading ? <LoadingCover /> : children;
+  return isLoading ? <Loading /> : children;
 };
 
 export default Auth;
