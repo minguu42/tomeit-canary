@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import cn from "classnames";
 
 import TimerIcon from "components/common/icons/TimerIcon";
@@ -13,7 +14,6 @@ import {
   Task,
 } from "models/task";
 import { formatTimerTime } from "lib/format";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { makeSound } from "lib/sound";
 
 type Props = {
