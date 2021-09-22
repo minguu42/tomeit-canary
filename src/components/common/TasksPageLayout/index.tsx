@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
-import { tasksFilterState, TasksFilter } from "models/task";
-
 import TopAppBar from "components/common/TopAppBar";
 import NavigationDrawer, {
   navigationDrawerExistsState,
@@ -12,6 +10,7 @@ import AddTaskForm from "components/common/AddTaskForm";
 import TaskList from "components/common/TaskList";
 import PomodoroPlayer from "components/common/PomodoroPlayer";
 import s from "./styles.module.scss";
+import { tasksFilterState, TasksFilter } from "models/task";
 
 type Props = {
   navigationDrawerExists: boolean;
