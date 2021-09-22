@@ -50,11 +50,16 @@ svg {
   --c-on-background-medium: rgba(0, 0, 0, 0.6);
   --c-on-background-disable: rgba(0, 0, 0, 0.38);
   --c-surface: #fff;
-  --c-surface-hover: rgba(0, 0, 0, 0.04);
   --c-on-surface-high: rgba(0, 0, 0, 0.87);
   --c-on-surface-medium: rgba(0, 0, 0, 0.6);
   --c-on-surface-disable: rgba(0, 0, 0, 0.38);
   --c-error: #b00020;
   --c-on-error: #fff;
   --c-outline: rgba(0, 0, 0, 0.12);
+  --c-hover: rgba(0, 0, 0, 0.04);
+  --c-focus: rgba(0, 0, 0, 0.12);
+  --c-selected: rgba(25, 47, 96, 0.08);
+  --c-activated: rgba(25, 47, 96, 0.12);
+  --c-pressed: rgba(0, 0, 0, 0.12);
+  --c-dragged: rgba(0, 0, 0, 0.08);
 }

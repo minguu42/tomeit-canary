@@ -27,6 +27,6 @@
   @include variables.button;
 
   &:hover {
-    background-color: var(--c-surface-hover);
+    background-color: var(--c-hover);
   }
 }
