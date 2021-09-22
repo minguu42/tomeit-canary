@@ -3,7 +3,6 @@ module.exports = {
   eslint: {
     dirs: [
       "src/components",
-      "src/contexts",
       "src/lib",
       "src/models",
       "src/pages",

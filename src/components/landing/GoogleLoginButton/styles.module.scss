@@ -11,12 +11,12 @@
   border: 1px solid var(--c-outline);
   @include variables.dp02;
 
-  .label {
-    color: var(--c-on-surface-high);
-    @include variables.body2;
+  &:hover {
+    background-color: var(--c-hover);
   }
 }
 
-.container:hover {
-  background-color: var(--c-hover);
+.label {
+  color: var(--c-on-surface-high);
+  @include variables.body2;
 }

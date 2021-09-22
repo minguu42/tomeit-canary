@@ -1,16 +1,16 @@
 import Image from "next/image";
 
-import styles from "./styles.module.scss";
-import { login } from "contexts/AuthContext";
+import s from "./styles.module.scss";
+import { login } from "lib/auth";
 
 type Props = {
   handleLogin: () => Promise<void>;
 };
 
 export const GoogleLoginButton = ({ handleLogin }: Props): JSX.Element => (
-  <button onClick={handleLogin} className={styles.container}>
-    <Image src="/google.png" alt="Google logo image" width={18} height={18} />
-    <p className={styles.label}>Sign in with Google</p>
+  <button onClick={handleLogin} className={s.container}>
+    <Image src="/google.png" alt="Google logo" width={18} height={18} />
+    <p className={s.label}>Sign in with Google</p>
   </button>
 );
 

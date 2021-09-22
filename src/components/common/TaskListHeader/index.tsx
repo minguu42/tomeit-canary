@@ -1,7 +1,8 @@
+import { useRecoilValue } from "recoil";
+
 import s from "./styles.module.scss";
 import { Task, filteredTasksState, tasksFilterState } from "models/task";
 import { formatDateToJP } from "lib/format";
-import { useRecoilValue } from "recoil";
 
 type Props = {
   title: string;

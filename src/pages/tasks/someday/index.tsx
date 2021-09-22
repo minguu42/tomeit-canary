@@ -2,15 +2,20 @@ import { NextPage } from "next";
 import Head from "next/head";
 
 import TasksPageLayout from "components/common/TasksPageLayout";
+import { useRequiredLogin } from "lib/auth";
 
-const Today: NextPage = () => (
-  <>
-    <Head>
-      <title>いつか - tomeit</title>
-    </Head>
+const Someday: NextPage = () => {
+  useRequiredLogin();
 
-    <TasksPageLayout tasksFilter="Someday" />
-  </>
-);
+  return (
+    <>
+      <Head>
+        <title>いつか - tomeit</title>
+      </Head>
 
-export default Today;
+      <TasksPageLayout tasksFilter="Someday" />
+    </>
+  );
+};
+
+export default Someday;

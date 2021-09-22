@@ -1,15 +1,15 @@
 import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 
-import AuthProvider from "contexts/AuthContext";
 import "styles/global.scss";
+import Auth from "components/common/Auth";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <RecoilRoot>
-      <AuthProvider>
+      <Auth>
         <Component {...pageProps} />
-      </AuthProvider>
+      </Auth>
     </RecoilRoot>
   );
 }
