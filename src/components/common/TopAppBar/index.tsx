@@ -1,65 +1,65 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSetRecoilState } from "recoil";
 
+import MenuIcon from "components/common/icons/MenuIcon";
 import SummarizeIcon from "components/common/icons/SummarizeIcon";
 import AccountMenu from "components/common/TopAppBar/AccountMenu";
-import styles from "./styles.module.scss";
+import s from "./styles.module.scss";
 import { logout, useAuth } from "contexts/AuthContext";
+import { navigationDrawerExistsState } from "components/common/NavigationDrawer";
 
 type Props = {
   isLoggedIn: boolean;
+  toggleDrawer: () => void;
   handleLogout: () => Promise<void>;
 };
 
-const TopAppBar = ({ isLoggedIn, handleLogout }: Props): JSX.Element => (
-  <header className={styles.outer}>
-    <div className={styles.inner}>
+const TopAppBar = ({
+  isLoggedIn,
+  toggleDrawer,
+  handleLogout,
+}: Props): JSX.Element => (
+  <header className={s.container}>
+    <div className={s.leftWrapper}>
       {isLoggedIn && (
-        <Link href="/home">
-          <a className={styles.leftWrapper}>
-            <Image
-              src="/logo512.png"
-              alt="tomeit Logo"
-              width={32}
-              height={32}
-            />
-            <h2 className={styles.appName}>tomeit</h2>
-          </a>
-        </Link>
+        <button onClick={toggleDrawer}>
+          <MenuIcon fill="#ffffff" />
+        </button>
       )}
-      {!isLoggedIn && (
-        <Link href="/">
-          <a className={styles.leftWrapper}>
-            <Image
-              src="/logo512.png"
-              alt="tomeit Logo"
-              width={32}
-              height={32}
-            />
-            <h2 className={styles.appName}>tomeit</h2>
-          </a>
-        </Link>
-      )}
-      {isLoggedIn && (
-        <div className={styles.rightWrapper}>
-          <Link href="/reports">
-            <a>
-              <SummarizeIcon fill="#ffffff" />
-            </a>
-          </Link>
-          <AccountMenu handleLogout={handleLogout} />
-        </div>
-      )}
+      <Link href={isLoggedIn ? "/tasks/today" : "/"}>
+        <a className={s.brand}>
+          <Image src="/logo512.png" alt="tomeit logo" width={32} height={32} />
+          <h2 className={s.appName}>tomeit</h2>
+        </a>
+      </Link>
     </div>
+    {isLoggedIn && (
+      <div className={s.rightWrapper}>
+        <Link href="/reports">
+          <a>
+            <SummarizeIcon fill="#ffffff" />
+          </a>
+        </Link>
+        <AccountMenu handleLogout={handleLogout} />
+      </div>
+    )}
   </header>
 );
 
 const TopAppBarContainer = (): JSX.Element => {
   const { currentUser } = useAuth();
   const router = useRouter();
+  const setNavigationDrawerExists = useSetRecoilState(
+    navigationDrawerExistsState
+  );
 
-  const handleLogout = async () => {
+  const toggleDrawer = (): void => {
+    setNavigationDrawerExists((prev) => !prev);
+  };
+
+  const handleLogout = async (): Promise<void> => {
     try {
       await logout();
       await router.push("/");
@@ -69,7 +69,11 @@ const TopAppBarContainer = (): JSX.Element => {
   };
 
   return (
-    <TopAppBar isLoggedIn={currentUser !== null} handleLogout={handleLogout} />
+    <TopAppBar
+      isLoggedIn={currentUser !== null}
+      toggleDrawer={toggleDrawer}
+      handleLogout={handleLogout}
+    />
   );
 };
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { atom, useRecoilValue } from "recoil";
 import cn from "classnames";
 
 import TodayIcon from "components/common/icons/TodayIcon";
@@ -6,7 +7,6 @@ import TomorrowIcon from "components/common/icons/TomorrowIcon";
 import DateRangeIcon from "components/common/icons/DateRangeIcon";
 import s from "./styles.module.scss";
 import { TasksFilter, tasksFilterState } from "models/task";
-import { useRecoilValue } from "recoil";
 
 type Props = {
   tasksFilter: TasksFilter;
@@ -46,6 +46,11 @@ const NavigationDrawer = ({ tasksFilter }: Props): JSX.Element => (
     </nav>
   </aside>
 );
+
+export const navigationDrawerExistsState = atom({
+  key: "navigationDrawerExists",
+  default: false,
+});
 
 const NavigationDrawerContainer = (): JSX.Element => {
   const tasksFilter = useRecoilValue(tasksFilterState);
