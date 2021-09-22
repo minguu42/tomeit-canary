@@ -1,31 +1,32 @@
 @use "styles/variables";
 
-.outer {
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 16px;
   background-color: var(--c-primary);
+}
 
-  .inner {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1040px;
-    margin: 0 auto;
+.leftWrapper {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
 
-    .leftWrapper {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      height: 56px;
+.brand {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
 
-      .appName {
-        color: var(--c-on-primary-high);
+.appName {
+  color: var(--c-on-primary-high);
+  @include variables.headline6;
+}
 
-        @include variables.headline6;
-      }
-    }
-
-    .rightWrapper {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-  }
+.rightWrapper {
+  display: flex;
+  gap: 16px;
 }

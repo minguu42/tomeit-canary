@@ -1,0 +1,32 @@
+@use "styles/variables";
+
+.container {
+  width: 256px;
+  min-height: calc(100vh - 56px);
+  padding: 18px 8px 8px;
+  color: var(--c-surface);
+  border-right: 1px solid var(--c-outline);
+}
+
+.navItem {
+  display: flex;
+  gap: 32px;
+  padding: 8px;
+  color: var(--c-on-surface-high);
+  border-right: 4px;
+  @include variables.body2;
+
+  &:hover {
+    background-color: var(--c-hover);
+  }
+
+  &:focus {
+    background-color: var(--c-focus);
+    outline: none;
+  }
+}
+
+.activated {
+  color: var(--c-primary);
+  background-color: var(--c-activated);
+}

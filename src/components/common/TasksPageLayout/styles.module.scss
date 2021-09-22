@@ -1,16 +1,22 @@
+.ndLayout {
+  display: flex;
+}
+
 .main {
   display: flex;
   flex-direction: column;
+  grid-area: main;
+  width: 100%;
   max-width: 1040px;
   padding: 16px 0;
   margin: 0 auto;
 }
 
-.listLayout {
+.list {
   margin-top: 16px;
 }
 
-.playerLayout {
+.player {
   position: fixed;
   bottom: 16px;
   left: 50%;
