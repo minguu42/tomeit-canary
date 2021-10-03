@@ -128,7 +128,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
         // TODO: ポモドーロ実行 API を叩く
         const index = filteredTasks.findIndex((t) => t.id === playingTask.id);
         const tmp = { ...playingTask };
-        tmp.actualPomodoroNumber += 1;
+        tmp.actualPomodoroNum += 1;
         setTasks((prev) => [
           ...prev.slice(0, index),
           tmp,

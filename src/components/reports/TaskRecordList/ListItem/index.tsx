@@ -13,44 +13,42 @@ export const TaskRecordListItem = ({ task }: Props): JSX.Element => (
     <CheckCircleIcon fill="#192f60" />
 
     <div className={styles.main}>
-      {task.actualPomodoroNumber === 0 &&
-        task.expectedPomodoroNumber === 0 &&
+      {task.actualPomodoroNum === 0 &&
+        task.expectedPomodoroNum === 0 &&
         task.dueOn === null && <p className={styles.title}>{task.title}</p>}
-      {(task.actualPomodoroNumber !== 0 ||
-        task.expectedPomodoroNumber !== 0 ||
+      {(task.actualPomodoroNum !== 0 ||
+        task.expectedPomodoroNum !== 0 ||
         task.dueOn !== null) && (
         <>
           <p className={styles.title}>{task.title}</p>
           <div className={styles.captions}>
-            {task.actualPomodoroNumber > 0 && task.expectedPomodoroNumber > 0 && (
+            {task.actualPomodoroNum > 0 && task.expectedPomodoroNum > 0 && (
               <div className={styles.pomodoroNumWrapper}>
                 <div className={styles.actualPomodoroNumWrapper}>
                   <TimerIcon size={16} fill="#666666" />
-                  <p>{task.actualPomodoroNumber}</p>
+                  <p>{task.actualPomodoroNum}</p>
                 </div>
                 <p className={styles.divider}>/</p>
                 <div className={styles.expectedPomodoroNumWrapper}>
                   <TimerIcon size={16} fill="#9e9e9e" />
-                  <p>{task.expectedPomodoroNumber}</p>
+                  <p>{task.expectedPomodoroNum}</p>
                 </div>
               </div>
             )}
 
-            {task.actualPomodoroNumber > 0 &&
-              task.expectedPomodoroNumber === 0 && (
-                <div className={styles.actualPomodoroNumWrapper}>
-                  <TimerIcon size={16} fill="#666666" />
-                  <p>{task.actualPomodoroNumber}</p>
-                </div>
-              )}
+            {task.actualPomodoroNum > 0 && task.expectedPomodoroNum === 0 && (
+              <div className={styles.actualPomodoroNumWrapper}>
+                <TimerIcon size={16} fill="#666666" />
+                <p>{task.actualPomodoroNum}</p>
+              </div>
+            )}
 
-            {task.actualPomodoroNumber === 0 &&
-              task.expectedPomodoroNumber > 0 && (
-                <div className={styles.expectedPomodoroNumWrapper}>
-                  <TimerIcon size={16} fill="#9e9e9e" />
-                  <p>{task.expectedPomodoroNumber}</p>
-                </div>
-              )}
+            {task.actualPomodoroNum === 0 && task.expectedPomodoroNum > 0 && (
+              <div className={styles.expectedPomodoroNumWrapper}>
+                <TimerIcon size={16} fill="#9e9e9e" />
+                <p>{task.expectedPomodoroNum}</p>
+              </div>
+            )}
 
             {task.dueOn !== null && (
               <p className={styles.dueOn}>

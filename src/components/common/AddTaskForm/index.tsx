@@ -10,8 +10,8 @@ import { formatDate } from "lib/format";
 type Props = {
   title: string;
   handleTitleChange: React.ChangeEventHandler<HTMLInputElement>;
-  expectedPomodoroNumber: number;
-  handleExpectedPomodoroNumberChange: React.ChangeEventHandler<HTMLInputElement>;
+  expectedPomodoroNum: number;
+  handleExpectedPomodoroNumChange: React.ChangeEventHandler<HTMLInputElement>;
   dueOn: Date | null;
   handleDueOnChange: React.ChangeEventHandler<HTMLInputElement>;
   handleSubmit: (e: React.SyntheticEvent) => void;
@@ -20,8 +20,8 @@ type Props = {
 export const AddTaskForm = ({
   title,
   handleTitleChange,
-  expectedPomodoroNumber,
-  handleExpectedPomodoroNumberChange,
+  expectedPomodoroNum,
+  handleExpectedPomodoroNumChange,
   dueOn,
   handleDueOnChange,
   handleSubmit,
@@ -41,8 +41,8 @@ export const AddTaskForm = ({
     <input
       type="number"
       title="予想ポモドーロ数"
-      value={expectedPomodoroNumber}
-      onChange={handleExpectedPomodoroNumberChange}
+      value={expectedPomodoroNum}
+      onChange={handleExpectedPomodoroNumChange}
       min={0}
       max={6}
       className={s.expectedNum}
@@ -60,7 +60,7 @@ export const AddTaskForm = ({
 
 const AddTaskFormContainer = (): JSX.Element => {
   const [title, setTitle] = useState("");
-  const [expectedPomodoroNumber, setExpectedPomodoroNumber] = useState(0);
+  const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
   const [dueOn, setDueOn] = useState<Date | null>(null);
   const setTasks = useSetRecoilState(tasksState);
 
@@ -68,9 +68,9 @@ const AddTaskFormContainer = (): JSX.Element => {
     setTitle(e.target.value);
   };
 
-  const handleExpectedPomodoroNumberChange: React.ChangeEventHandler<HTMLInputElement> =
+  const handleExpectedPomodoroNumChange: React.ChangeEventHandler<HTMLInputElement> =
     (e) => {
-      setExpectedPomodoroNumber(Number(e.target.value));
+      setExpectedPomodoroNum(Number(e.target.value));
     };
 
   const handleDueOnChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -83,8 +83,8 @@ const AddTaskFormContainer = (): JSX.Element => {
     const task: Task = {
       id: Math.floor(Math.random() * 1000),
       title: title,
-      expectedPomodoroNumber: expectedPomodoroNumber,
-      actualPomodoroNumber: 0,
+      expectedPomodoroNum: expectedPomodoroNum,
+      actualPomodoroNum: 0,
       dueOn: dueOn,
       isCompleted: false,
       completedOn: null,
@@ -94,7 +94,7 @@ const AddTaskFormContainer = (): JSX.Element => {
     setTasks((prev) => [...prev, task]);
 
     setTitle("");
-    setExpectedPomodoroNumber(0);
+    setExpectedPomodoroNum(0);
     setDueOn(null);
   };
 
@@ -102,8 +102,8 @@ const AddTaskFormContainer = (): JSX.Element => {
     <AddTaskForm
       title={title}
       handleTitleChange={handleTitleChange}
-      expectedPomodoroNumber={expectedPomodoroNumber}
-      handleExpectedPomodoroNumberChange={handleExpectedPomodoroNumberChange}
+      expectedPomodoroNum={expectedPomodoroNum}
+      handleExpectedPomodoroNumChange={handleExpectedPomodoroNumChange}
       dueOn={dueOn}
       handleDueOnChange={handleDueOnChange}
       handleSubmit={handleSubmit}
