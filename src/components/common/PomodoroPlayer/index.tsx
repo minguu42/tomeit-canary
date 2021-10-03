@@ -15,6 +15,8 @@ import {
 } from "models/task";
 import { formatTimerTime } from "lib/format";
 import { makeSound } from "lib/sound";
+import { useUser } from "lib/auth";
+import { postData } from "lib/fetch";
 
 type Props = {
   time: number;
@@ -90,6 +92,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
   const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
   const filteredTasks = useRecoilValue(filteredTasksState);
   const setTasks = useSetRecoilState(tasksState);
+  const user = useUser();
 
   const tick = (): void => {
     setTime((t) => t - 1);
@@ -125,7 +128,9 @@ const PomodoroPlayerContainer = (): JSX.Element => {
         setIsNextPomodoro(false);
         setTime(restCount !== 1 ? SHORT_REST_TIME : LONG_REST_TIME);
 
-        // TODO: ポモドーロ実行 API を叩く
+        postData("/pomodoros", { taskID: playingTask.id }, user).catch((err) =>
+          console.error(err)
+        );
         const index = filteredTasks.findIndex((t) => t.id === playingTask.id);
         const tmp = { ...playingTask };
         tmp.actualPomodoroNum += 1;
@@ -150,6 +155,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
     setTasks,
     filteredTasks,
     time,
+    user,
   ]);
 
   return (
