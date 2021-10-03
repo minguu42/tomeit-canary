@@ -45,13 +45,11 @@ export const newPomodoro = (pomodoroResponse: PomodoroResponse): Pomodoro => {
   };
 };
 
-export type NextRestCountResponse = {
-  nextRestCount: number;
+export type restCountResponse = {
+  restCount: number;
 };
 
-export const isNextRestCountResponse = (
-  arg: unknown
-): arg is NextRestCountResponse => {
-  const n = arg as NextRestCountResponse;
-  return typeof n?.nextRestCount === "number";
+export const isRestCountResponse = (arg: unknown): arg is restCountResponse => {
+  const n = arg as restCountResponse;
+  return typeof n?.restCount === "number";
 };

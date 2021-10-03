@@ -13,10 +13,11 @@ import {
   playingTaskState,
   Task,
 } from "models/task";
+import { isRestCountResponse } from "models/pomodoro";
 import { formatTimerTime } from "lib/format";
 import { makeSound } from "lib/sound";
 import { useUser } from "lib/auth";
-import { postData } from "lib/fetch";
+import { getData, postData } from "lib/fetch";
 
 type Props = {
   time: number;
@@ -119,6 +120,16 @@ const PomodoroPlayerContainer = (): JSX.Element => {
   const handleSkipClick = (): void => {
     setTime(0);
   };
+
+  useEffect(() => {
+    getData("/pomodoros/rest-count", user)
+      .then((data) => {
+        if (isRestCountResponse(data)) {
+          setRestCount(data.restCount);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, [user]);
 
   useEffect(() => {
     if (time === 0) {
