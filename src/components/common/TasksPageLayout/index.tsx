@@ -10,7 +10,15 @@ import AddTaskForm from "components/common/AddTaskForm";
 import TaskList from "components/common/TaskList";
 import PomodoroPlayer from "components/common/PomodoroPlayer";
 import s from "./styles.module.scss";
-import { tasksFilterState, TasksFilter } from "models/task";
+import {
+  tasksFilterState,
+  TasksFilter,
+  isTasksResponse,
+  tasksState,
+  newTask,
+} from "models/task";
+import { getData } from "lib/fetch";
+import { useUser } from "lib/auth";
 
 type Props = {
   navigationDrawerExists: boolean;
@@ -43,11 +51,20 @@ const TasksPageLayoutContainer = ({
   tasksFilter,
 }: ContainerProps): JSX.Element => {
   const setTasksFilter = useSetRecoilState(tasksFilterState);
+  const setTasks = useSetRecoilState(tasksState);
   const navigationDrawerExists = useRecoilValue(navigationDrawerExistsState);
+  const user = useUser();
 
   useEffect(() => {
+    getData("/tasks", user)
+      .then((data) => {
+        if (isTasksResponse(data)) {
+          setTasks(data.tasks.map((taskResponse) => newTask(taskResponse)));
+        }
+      })
+      .catch((error) => console.error(error));
     setTasksFilter(tasksFilter);
-  }, [setTasksFilter, tasksFilter]);
+  }, [user, setTasksFilter, tasksFilter, setTasks]);
 
   return <TasksPageLayout navigationDrawerExists={navigationDrawerExists} />;
 };
