@@ -1,11 +1,11 @@
-import { User } from "@firebase/auth-types";
+import { UserState } from "lib/auth";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 
 export const postData = async (
   path = "/",
   data = {},
-  currentUser: User | null
+  currentUser: UserState
 ): Promise<unknown> => {
   if (currentUser === null) {
     return;
@@ -26,7 +26,7 @@ export const postData = async (
 
 export const getData = async (
   path = "/",
-  currentUser: User | null
+  currentUser: UserState
 ): Promise<unknown> => {
   if (currentUser === null) {
     return;
@@ -47,7 +47,7 @@ export const getData = async (
 export const patchData = async (
   path = "/",
   data = {},
-  currentUser: User | null
+  currentUser: UserState
 ): Promise<unknown> => {
   if (currentUser === null) {
     return;

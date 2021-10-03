@@ -29,25 +29,26 @@ export const TaskListItem = ({
     <div className={s.main}>
       <h3 className={s.title}>{task.title}</h3>
       <div className={s.captions}>
-        {task.actualPomodoroNumber > 0 && (
+        {task.actualPomodoroNum > 0 && (
           <div className={s.actualWrapper}>
             <TimerIcon size={16} fill="#666666" />
-            <p>{task.actualPomodoroNumber}</p>
+            <p>{task.actualPomodoroNum}</p>
           </div>
         )}
 
-        {task.expectedPomodoroNumber > 0 && (
+        {task.expectedPomodoroNum > 0 && (
           <div className={s.expectedWrapper}>
-            {task.actualPomodoroNumber > 0 && <p className={s.divider}>/</p>}
+            {task.actualPomodoroNum > 0 && <p className={s.divider}>/</p>}
             <TimerIcon size={16} fill="#9e9e9e" />
-            <p>{task.expectedPomodoroNumber}</p>
+            <p>{task.expectedPomodoroNum}</p>
           </div>
         )}
 
         {task.dueOn !== null && (
           <>
-            {(task.expectedPomodoroNumber > 0 ||
-              task.actualPomodoroNumber > 0) && <div className={s.spacing} />}
+            {(task.expectedPomodoroNum > 0 || task.actualPomodoroNum > 0) && (
+              <div className={s.spacing} />
+            )}
             <p className={s.dueOn}>{formatToLocalDatetime(task.dueOn)}</p>
           </>
         )}

@@ -12,7 +12,7 @@ import {
 
 import { app } from "lib/firebase";
 
-type UserState = User | null;
+export type UserState = User | null;
 
 const userState = atom<UserState>({
   key: "userState",
