@@ -4,8 +4,10 @@ import { useSetRecoilState } from "recoil";
 import AddIcon from "components/common/icons/AddIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
 import s from "./styles.module.scss";
-import { Task, tasksState } from "models/task";
+import { isTaskResponse, newTask, tasksState } from "models/task";
 import { formatDate } from "lib/format";
+import { postData } from "lib/fetch";
+import { useUser } from "lib/auth";
 
 type Props = {
   title: string;
@@ -63,6 +65,7 @@ const AddTaskFormContainer = (): JSX.Element => {
   const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
   const [dueOn, setDueOn] = useState<Date | null>(null);
   const setTasks = useSetRecoilState(tasksState);
+  const user = useUser();
 
   const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);
@@ -80,18 +83,18 @@ const AddTaskFormContainer = (): JSX.Element => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const task: Task = {
-      id: Math.floor(Math.random() * 1000),
+    const respBody = {
       title: title,
       expectedPomodoroNum: expectedPomodoroNum,
-      actualPomodoroNum: 0,
       dueOn: dueOn,
-      isCompleted: false,
-      completedOn: null,
     };
-
-    // TODO: タスク追加 API を叩く
-    setTasks((prev) => [...prev, task]);
+    postData("/tasks", respBody, user)
+      .then((data) => {
+        if (isTaskResponse(data)) {
+          setTasks((prev) => [...prev, newTask(data)]);
+        }
+      })
+      .catch((error) => console.error(error));
 
     setTitle("");
     setExpectedPomodoroNum(0);
