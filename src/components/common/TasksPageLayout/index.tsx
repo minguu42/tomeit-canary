@@ -56,7 +56,7 @@ const TasksPageLayoutContainer = ({
   const user = useUser();
 
   useEffect(() => {
-    getData("/tasks", user)
+    getData("/tasks?isCompleted=false", user)
       .then((data) => {
         if (isTasksResponse(data)) {
           setTasks(data.tasks.map((taskResponse) => newTask(taskResponse)));

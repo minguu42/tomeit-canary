@@ -1,3 +1,5 @@
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+
 import TaskListItem from "./TaskListItem";
 import s from "./styles.module.scss";
 import {
@@ -6,7 +8,8 @@ import {
   Task,
   tasksState,
 } from "models/task";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { patchData } from "lib/fetch";
+import { useUser } from "lib/auth";
 
 type Props = {
   tasks: Task[];
@@ -38,11 +41,18 @@ const TaskListContainer = (): JSX.Element => {
   const setTasks = useSetRecoilState(tasksState);
   const filteredTasks = useRecoilValue(filteredTasksState);
   const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
+  const user = useUser();
 
   const completeTask = (task: Task): void => {
-    // TODO: タスク完了 API を叩く
-    const index = filteredTasks.findIndex((t) => t.id === task.id);
-    setTasks((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+    const reqBody = {
+      isCompleted: "true",
+    };
+    patchData(`/tasks/${task.id}`, reqBody, user)
+      .then(() => {
+        const index = filteredTasks.findIndex((t) => t.id === task.id);
+        setTasks((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+      })
+      .catch((error) => console.error(error));
   };
 
   const setTask = (task: Task): void => {
