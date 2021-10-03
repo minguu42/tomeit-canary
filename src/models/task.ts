@@ -57,13 +57,10 @@ export const newTask = (taskResponse: TaskResponse): Task => {
     title: taskResponse.title,
     expectedPomodoroNum: taskResponse.expectedPomodoroNum,
     actualPomodoroNum: taskResponse.actualPomodoroNum,
-    dueOn:
-      taskResponse.dueOn !== "0001-01-01T00:00:00Z"
-        ? new Date(taskResponse.dueOn)
-        : null,
+    dueOn: taskResponse.dueOn !== "" ? new Date(taskResponse.dueOn) : null,
     isCompleted: taskResponse.isCompleted,
     completedOn:
-      taskResponse.completedOn !== "0001-01-01T00:00:00Z"
+      taskResponse.completedOn !== ""
         ? new Date(taskResponse.completedOn)
         : null,
     createdAt: new Date(taskResponse.createdAt),
