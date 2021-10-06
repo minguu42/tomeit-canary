@@ -1,0 +1,493 @@
+openapi: 3.0.3
+
+info:
+  title: tomeit API
+  description: tomeit の REST API の仕様書である.
+  version: 0.3.2
+
+servers:
+  - url: http://localhost:8080/v0
+    description: ローカルの開発用 API サーバ
+
+tags:
+  - name: tasks
+    description: タスク関連 API
+  - name: pomodoros
+    description: ポモドーロ関連 API
+
+paths:
+  /tasks:
+    post:
+      tags:
+        - tasks
+      summary: タスク作成 API
+      parameters:
+        - $ref: "#/components/parameters/idToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+                  example: タスク1
+                expectedPomodoroNum:
+                  type: integer
+                  example: 4
+                dueOn:
+                  type: string
+                  example: "2021-12-31T00:00:00Z"
+      responses:
+        "201":
+          description: 成功
+          headers:
+            Location:
+              schema:
+                type: string
+                example: https://api.tomeit.com/v0/tasks/1
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+    get:
+      tags:
+        - tasks
+      summary: タスク一覧取得 API
+      description: 作成日時の昇順で最大30件まで取得する.
+      parameters:
+        - $ref: "#/components/parameters/idToken"
+        - name: isCompleted
+          description: タスクが完了したかどうかで絞り込みを行う. 省略可能.
+          in: "query"
+          schema:
+            type: string
+            example: "false"
+        - name: completedOn
+          description: タスクを完了した日付で絞り込む. 省略可能.
+          in: "query"
+          schema:
+            type: string
+            example: "2021-01-01T00:00:00Z"
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tasks"
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+  /tasks/{taskID}:
+    patch:
+      summary: タスク一部更新 API
+      tags:
+        - tasks
+      description: 現時点では isCompleted の値のみ変更できる.
+      parameters:
+        - $ref: "#/components/parameters/idToken"
+        - $ref: "#/components/parameters/taskID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isCompleted:
+                  type: string
+                  example: "false"
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+        "403":
+          $ref: "#/components/responses/AuthorizationError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    put:
+      summary: タスク更新 API
+      tags:
+        - tasks
+      parameters:
+        - $ref: "#/components/parameters/idToken"
+        - $ref: "#/components/parameters/taskID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - expectedPomodoroNum
+                - dueOn
+                - isCompleted
+              properties:
+                title:
+                  type: string
+                  example: タスク1
+                expectedPomodoroNum:
+                  type: integer
+                  example: 2
+                dueOn:
+                  type: string
+                  example: "2021-01-01T00:00:00Z"
+                isCompleted:
+                  type: boolean
+                  example: false
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+        "403":
+          $ref: "#/components/responses/AuthorizationError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    delete:
+      summary: タスク削除 API
+      tags:
+        - tasks
+      parameters:
+        - $ref: "#/components/parameters/idToken"
+        - $ref: "#/components/parameters/taskID"
+      responses:
+        "204":
+          description: 成功
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+        "403":
+          $ref: "#/components/responses/AuthorizationError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+  /pomodoros:
+    post:
+      summary: ポモドーロ記録作成 API
+      tags:
+        - pomodoros
+      parameters:
+        - $ref: "#/components/parameters/idToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - taskID
+              properties:
+                taskID:
+                  type: integer
+                  example: 1
+      responses:
+        "201":
+          description: 成功
+          headers:
+            Location:
+              schema:
+                type: string
+                example: https://api.tomeit.com/v0/pomodoros/1
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pomodoro"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+    get:
+      summary: ポモドーロ記録一覧取得 API
+      tags:
+        - pomodoros
+      description: 作成日時の昇順で最大30件まで取得する.
+      parameters:
+        - $ref: "#/components/parameters/idToken"
+        - name: createdOn
+          in: "query"
+          description: 作成日付で絞り込む
+          schema:
+            type: string
+            example: "2021-01-01T00:00:00Z"
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pomodoros"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+  /pomodoros/{pomodoroID}:
+    delete:
+      summary: ポモドーロ記録削除 API
+      tags:
+        - pomodoros
+      parameters:
+        - $ref: "#/components/parameters/idToken"
+        - $ref: "#/components/parameters/pomodoroID"
+      responses:
+        "204":
+          description: 成功
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+        "403":
+          $ref: "#/components/responses/AuthorizationError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+  /pomodoros/rest-count:
+    get:
+      summary: 次の長い休憩までのカウント取得 API
+      tags:
+        - pomodoros
+      parameters:
+        - $ref: "#/components/parameters/idToken"
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  restCount:
+                    type: integer
+                    example: 3
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+
+components:
+  schemas:
+    Task:
+      type: object
+      required:
+        - id
+        - title
+        - expectedPomodoroNum
+        - actualPomodoroNum
+        - dueOn
+        - isCompleted
+        - completedOn
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          description: タスク ID
+          type: integer
+          minimum: 1
+          example: 1
+        title:
+          description: タイトル
+          type: string
+          example: タスク1
+        expectedPomodoroNum:
+          description: 予測ポモドーロ数
+          type: integer
+          minimum: 0
+          maximum: 6
+          example: 4
+        actualPomodoroNum:
+          description: 完了したポモドーロ数
+          type: integer
+          minimum: 0
+          example: 2
+        dueOn:
+          description: |
+            期限日付
+
+            省略可. 存在しない場合は ""（空の文字列）を返す.
+          type: string
+          example: "2021-01-01T00:00:00Z"
+        isCompleted:
+          description: 完了したかどうか
+          type: boolean
+        completedOn:
+          description: |
+            完了した日付
+
+            タスクが完了済みでない場合は ""（空の文字列）を返す.
+          type: string
+          example: "2021-01-01T00:00:00Z"
+        createdAt:
+          description: 作成日時
+          type: string
+          example: "2021-01-01T00:00:00Z"
+        updatedAt:
+          description: 更新日時
+          type: string
+          example: "2021-01-01T00:00:00Z"
+    Tasks:
+      type: object
+      required:
+        - tasks
+      properties:
+        tasks:
+          description: タスク一覧
+          type: array
+          items:
+            $ref: "#/components/schemas/Task"
+    Pomodoro:
+      type: object
+      required:
+        - id
+        - task
+        - createdAt
+      properties:
+        id:
+          description: ポモドーロ記録 ID
+          type: integer
+          minimum: 1
+          example: 1
+        task:
+          $ref: "#/components/schemas/Task"
+        createdAt:
+          description: 作成日時
+          type: string
+          example: "2021-01-01T00:00:00Z"
+    Pomodoros:
+      type: object
+      required:
+        - pomodoros
+      properties:
+        pomodoros:
+          description: ポモドーロ記録一覧
+          type: array
+          items:
+            $ref: "#/components/schemas/Pomodoro"
+  responses:
+    BadRequestError:
+      description: リクエストが間違っている
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - error
+            properties:
+              status:
+                description: ユーザ向けの大まかなエラーの説明
+                type: string
+                example: リクエストに何らかの間違いがあります。
+              error:
+                description: 開発者向けの具体的なエラーの説明
+                type: string
+                example: some error messages
+    AuthenticationError:
+      description: 認証が必要である
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - error
+            properties:
+              status:
+                description: ユーザ向けの大まかなエラーの説明
+                type: string
+                example: ログインする必要があります。
+              error:
+                description: 開発者向けの具体的なエラーの説明
+                type: string
+                example: some error messages
+    AuthorizationError:
+      description: リソースへのアクセス権限がない
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - error
+            properties:
+              status:
+                description: ユーザ向けの大まかなエラーの説明
+                type: string
+                example: 指定されたリソースに対してアクセス権限がありません。
+              error:
+                description: 開発者向けの具体的なエラーの説明
+                type: string
+                example: some error messages
+    NotFoundError:
+      description: リソースが存在しない
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - error
+            properties:
+              status:
+                description: ユーザ向けの大まかなエラーの説明
+                type: string
+                example: 指定されたリソースが存在しません。
+              error:
+                description: 開発者向けの具体的なエラーの説明
+                type: string
+                example: some error messages
+    InternalServerError:
+      description: サーバ側で何らかのエラーが発生した
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - error
+            properties:
+              status:
+                description: ユーザ向けの大まかなエラーの説明
+                type: string
+                example: サーバ側で何らかのエラーが発生しました。
+              error:
+                description: 開発者向けの具体的なエラーの説明
+                type: string
+                example: some error messages
+  parameters:
+    idToken:
+      name: Authorization
+      in: header
+      description: ユーザ識別用の Firebase ID トークン
+      required: true
+      schema:
+        type: string
+    taskID:
+      name: taskID
+      in: path
+      description: 一意のタスクを特定するタスク ID
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    pomodoroID:
+      name: pomodoroID
+      in: path
+      description: 一意のポモドーロ記録を特定するポモドーロ記録 ID
+      required: true
+      schema:
+        type: integer
+        minimum: 1
