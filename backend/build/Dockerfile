@@ -1,7 +1,7 @@
 FROM golang:1.16
 
 WORKDIR /go/src/app
-COPY . .
+COPY ./backend .
 
 RUN go get -d -v ./...
 
