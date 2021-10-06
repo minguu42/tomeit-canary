@@ -3,7 +3,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: build/Dockerfile
+      dockerfile: backend/build/Dockerfile
     environment:
       - PORT
       - DSN
