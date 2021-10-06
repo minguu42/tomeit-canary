@@ -10,8 +10,12 @@ dev-f:  ## フロントエンドの開発用サーバを起動する
 	@next dev
 
 .PHONY: dev-b
-dev-b:  ## バックエンドの開発用サーバを起動する.
+dev-b:  ## バックエンドの開発用サーバを起動する
 	@docker compose --env-file ./.env.local up api
+
+.PHONY: docs
+docs: ## http://localhost:8000 で仕様書を表示するサーバを起動する
+	@docker compose --env-file ./.env.local up -d docs
 
 .PHONY: build
 build:  ## ビルドする
@@ -42,7 +46,7 @@ check: ## fmt, lint, test を実行し, 適切な状態か確認する
 	@make test
 
 .PHONY: down
-down:  ## Docker コンテナを停止し, 削除する
+down:  ## 関連する Docker コンテナを停止し, 削除する
 	@docker compose --env-file ./.env.local down
 
 .PHONY: help

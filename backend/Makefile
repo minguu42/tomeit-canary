@@ -4,14 +4,6 @@
 dev: ## ローカルサーバを起動する
 	@docker compose up api
 
-.PHONY: down
-down: ## 関連する Docker コンテナを削除する
-	@docker compose down
-
-.PHONY: docs
-docs: ## Swagger UI で http://localhost:8000 に仕様書を表示する
-	@docker compose up -d docs
-
 .PHONY: fmt
 fmt: ## gofmt, goimports による自動整形を実行する
 	@gofmt -l -s -w .
@@ -41,6 +33,10 @@ cover: ## テストカバレッジを測定する
 .PHONY: bench
 bench: ## ハンドラ関数のベンチマークを実行する
 	@go test -bench .
+
+.PHONY: down
+down: ## 関連する Docker コンテナを削除する
+	@docker compose down
 
 .PHONY: help
 help: ## ヘルプを表示する
