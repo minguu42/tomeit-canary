@@ -1,8 +1,17 @@
 .DEFAULT_GOAL := help
 
 .PHONY: dev
-dev:  ## 開発用サーバを起動する
+dev:  ## フロントエンドとバックエンドの開発用サーバを起動する
+	@docker compose --env-file ./.env.local up -d api
 	@next dev
+
+.PHONY: dev-f
+dev-f:  ## フロントエンドの開発用サーバを起動する
+	@next dev
+
+.PHONY: dev-b
+dev-b:  ## バックエンドの開発用サーバを起動する.
+	@docker compose --env-file ./.env.local up api
 
 .PHONY: build
 build:  ## ビルドする
@@ -31,6 +40,10 @@ check: ## fmt, lint, test を実行し, 適切な状態か確認する
 	@make fmt
 	@make lint
 	@make test
+
+.PHONY: down
+down:  ## Docker コンテナを停止し, 削除する
+	@docker compose --env-file ./.env.local down
 
 .PHONY: help
 help: ## ヘルプを表示する
