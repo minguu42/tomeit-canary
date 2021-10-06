@@ -27,13 +27,13 @@ start:  ## 本番サーバを起動する
 
 .PHONY: fmt
 fmt:  ## Prettier, stylelint による自動整形を実行する
-	@prettier --ignore-path ./.gitignore -l -w "**/*.{js,jsx,ts,tsx,scss,json,md}"
-	@stylelint --fix --ignore-path ./.gitignore "**/*.scss"
+	@prettier --ignore-path ./.lintignore -l -w "**/*.{js,jsx,ts,tsx,scss,json,md}"
+	@stylelint --fix --ignore-path ./.lintignore "**/*.scss"
 
 .PHONY: lint
 lint:  ## ESLint, stylelint による静的解析を実行する
 	@next lint
-	@stylelint --ignore-path ./.gitignore "**/*.scss"
+	@stylelint --ignore-path ./.lintignore "**/*.scss"
 
 .PHONY: test
 test:  ## Jest でテストを実行する
