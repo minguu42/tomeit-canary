@@ -24,7 +24,7 @@ lint: ## govet, staticcheck による静的解析を実行する
 
 .PHONY: test
 test:  ## テストを実行する
-	@docker compose up -d db-test
+	@docker compose --env-file ./.env.local up -d db-test
 	@go test
 
 .PHONY: check
