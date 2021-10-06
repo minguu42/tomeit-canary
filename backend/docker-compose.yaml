@@ -1,0 +1,60 @@
+version: "3"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+    environment:
+      - PORT
+      - DSN
+      - GOOGLE_CREDENTIALS_JSON
+      - ALLOW_ORIGINS
+    container_name: tomeit-api
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/go/src/app
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - db-dev
+  db-dev:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+    container_name: tomeit-api-db-dev
+    restart: always
+    volumes:
+      - data-dev:/var/lib/mysql
+      - ./build/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+  db-test:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: passsword
+      MYSQL_DATABASE: db_test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: password
+    container_name: tomeit-api-db-test
+    restart: always
+    ports:
+      - "13306:3306"
+    volumes:
+      - data-test:/var/lib/mysql
+  docs:
+    image: swaggerapi/swagger-ui
+    container_name: tomeit-api-docs
+    environment:
+      API_URL: openapi.yaml
+    ports:
+      - "8000:8080"
+    volumes:
+      - ./docs/openapi.yaml:/usr/share/nginx/html/openapi.yaml
+
+volumes:
+  data-dev:
+    driver: local
+  data-test:
+    driver: local
