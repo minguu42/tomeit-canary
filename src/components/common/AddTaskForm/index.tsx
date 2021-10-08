@@ -1,10 +1,15 @@
-import React, { useState } from "react";
-import { useSetRecoilState } from "recoil";
+import React, { useEffect, useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import AddIcon from "components/common/icons/AddIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
 import s from "./styles.module.scss";
-import { isTaskResponse, newTask, tasksState } from "models/task";
+import {
+  isTaskResponse,
+  newTask,
+  tasksFilterState,
+  tasksState,
+} from "models/task";
 import { formatDate } from "lib/format";
 import { postData } from "lib/fetch";
 import { useUser } from "lib/auth";
@@ -66,6 +71,23 @@ const AddTaskFormContainer = (): JSX.Element => {
   const [dueOn, setDueOn] = useState<Date | null>(null);
   const setTasks = useSetRecoilState(tasksState);
   const user = useUser();
+  const tasksFilter = useRecoilValue(tasksFilterState);
+
+  useEffect(() => {
+    const today = new Date();
+    switch (tasksFilter) {
+      case "Today":
+        setDueOn(today);
+        break;
+      case "Tomorrow":
+        today.setDate(today.getDate() + 1);
+        setDueOn(today);
+        break;
+      case "Someday":
+        setDueOn(null);
+        break;
+    }
+  }, [tasksFilter]);
 
   const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);

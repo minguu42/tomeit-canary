@@ -69,8 +69,8 @@ func (p *postTasksRequest) Bind(r *http.Request) error {
 	if p.Title == "" {
 		return errors.New("missing required title field")
 	}
-	if p.DueOn == "" {
-		p.DueOn = "0001-01-01T00:00:00Z"
+	if _, err := time.Parse(time.RFC3339, p.DueOn); err != nil && p.DueOn != "" {
+		return errors.New("dueOn field format is wrong")
 	}
 	return nil
 }
@@ -84,16 +84,17 @@ func postTasks(db dbInterface) http.HandlerFunc {
 			return
 		}
 
-		dueAt, err := time.Parse(time.RFC3339, reqBody.DueOn)
-		if err != nil {
-			log.Println("time.Parse failed:", err)
-			_ = render.Render(w, r, badRequestError(err))
-			return
+		var dueOn *time.Time
+		tmpDueOn, err := time.Parse(time.RFC3339, reqBody.DueOn)
+		if err == nil {
+			dueOn = &tmpDueOn
+		} else {
+			dueOn = nil
 		}
 
 		user := r.Context().Value(userKey).(*User)
 
-		task, err := db.createTask(user.ID, reqBody.Title, reqBody.ExpectedPomodoroNum, dueAt)
+		task, err := db.createTask(user.ID, reqBody.Title, reqBody.ExpectedPomodoroNum, dueOn)
 		if err != nil {
 			log.Println("db.createTask failed:", err)
 			_ = render.Render(w, r, badRequestError(err))

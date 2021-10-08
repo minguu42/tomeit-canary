@@ -3,7 +3,7 @@ import CircleIcon from "components/common/icons/CircleIcon";
 import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
 import s from "./styles.module.scss";
 import { Task } from "models/task";
-import { formatToLocalDatetime } from "lib/format";
+import { formatToJapanDateString } from "lib/format";
 
 type Props = {
   task: Task;
@@ -49,7 +49,7 @@ export const TaskListItem = ({
             {(task.expectedPomodoroNum > 0 || task.actualPomodoroNum > 0) && (
               <div className={s.spacing} />
             )}
-            <p className={s.dueOn}>{formatToLocalDatetime(task.dueOn)}</p>
+            <p className={s.dueOn}>{formatToJapanDateString(task.dueOn)}</p>
           </>
         )}
       </div>

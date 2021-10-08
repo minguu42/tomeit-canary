@@ -2,9 +2,7 @@ import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import TopAppBar from "components/common/TopAppBar";
-import NavigationDrawer, {
-  navigationDrawerExistsState,
-} from "components/common/NavigationDrawer";
+import Drawer, { drawerExistsState } from "components/common/Drawer";
 import TaskListHeader from "components/common/TaskListHeader";
 import AddTaskForm from "components/common/AddTaskForm";
 import TaskList from "components/common/TaskList";
@@ -21,18 +19,18 @@ import { getData } from "lib/fetch";
 import { useUser } from "lib/auth";
 
 type Props = {
-  navigationDrawerExists: boolean;
+  drawerExists: boolean;
 };
 
 type ContainerProps = {
   tasksFilter: TasksFilter;
 };
 
-const TasksPageLayout = ({ navigationDrawerExists }: Props): JSX.Element => (
+const TasksPageLayout = ({ drawerExists }: Props): JSX.Element => (
   <>
     <TopAppBar />
     <div className={s.ndLayout}>
-      {navigationDrawerExists && <NavigationDrawer />}
+      {drawerExists && <Drawer />}
       <main className={s.main}>
         <TaskListHeader />
         <div className={s.list}>
@@ -52,7 +50,7 @@ const TasksPageLayoutContainer = ({
 }: ContainerProps): JSX.Element => {
   const setTasksFilter = useSetRecoilState(tasksFilterState);
   const setTasks = useSetRecoilState(tasksState);
-  const navigationDrawerExists = useRecoilValue(navigationDrawerExistsState);
+  const DrawerExists = useRecoilValue(drawerExistsState);
   const user = useUser();
 
   useEffect(() => {
@@ -66,7 +64,7 @@ const TasksPageLayoutContainer = ({
     setTasksFilter(tasksFilter);
   }, [user, setTasksFilter, tasksFilter, setTasks]);
 
-  return <TasksPageLayout navigationDrawerExists={navigationDrawerExists} />;
+  return <TasksPageLayout drawerExists={DrawerExists} />;
 };
 
 export default TasksPageLayoutContainer;

@@ -6,7 +6,7 @@ import (
 )
 
 type taskDBInterface interface {
-	createTask(userID int, title string, priority int, dueOn time.Time) (*Task, error)
+	createTask(userID int, title string, priority int, dueOn *time.Time) (*Task, error)
 	getTaskByID(id int) (*Task, error)
 	getTasksByUser(user *User, options *getTasksOptions) ([]Task, error)
 	getActualPomodoroNumByID(id int) (int, error)
@@ -14,13 +14,13 @@ type taskDBInterface interface {
 	deleteTask(task *Task) error
 }
 
-func (db *DB) createTask(userID int, title string, expectedPomodoroNum int, dueOn time.Time) (*Task, error) {
+func (db *DB) createTask(userID int, title string, expectedPomodoroNum int, dueOn *time.Time) (*Task, error) {
 	now := time.Now()
 	task := Task{
 		UserID:              userID,
 		Title:               title,
 		ExpectedPomodoroNum: expectedPomodoroNum,
-		DueOn:               &dueOn,
+		DueOn:               dueOn,
 		IsCompleted:         false,
 		CompletedOn:         nil,
 		CreatedAt:           now,
@@ -28,7 +28,7 @@ func (db *DB) createTask(userID int, title string, expectedPomodoroNum int, dueO
 	}
 
 	q := db.DB
-	if dueOn.IsZero() {
+	if dueOn == nil {
 		q = q.Omit("DueOn")
 	}
 

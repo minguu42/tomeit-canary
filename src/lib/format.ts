@@ -14,22 +14,17 @@ export const formatDate = (date: Date): string => {
 };
 
 export const formatToLocalTime = (date: Date): string => {
-  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
   const hh = String(date.getHours()).padStart(2, "0");
   const mm = String(date.getMinutes()).padStart(2, "0");
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
   return `${hh}：${mm}`;
 };
 
-export const formatToLocalDatetime = (date: Date): string => {
-  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-  const dateStr = date.toLocaleDateString("ja-JP", {
+export const formatToJapanDateString = (date: Date): string => {
+  return date.toLocaleDateString("ja-JP", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
-  return dateStr;
 };
 
 export const formatDateToJP = (date: Date): string => {
@@ -41,7 +36,6 @@ export const formatDateToJP = (date: Date): string => {
 };
 
 export const formatToLocalPomodoroDuring = (date: Date): string => {
-  date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
   const completedHour = String(date.getHours()).padStart(2, "0");
   const completedMinutes = String(date.getMinutes()).padStart(2, "0");
 
@@ -50,6 +44,5 @@ export const formatToLocalPomodoroDuring = (date: Date): string => {
   const startMinutes = String(date.getMinutes()).padStart(2, "0");
   date.setMinutes(date.getMinutes() + 25);
 
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
   return `${startHour}：${startMinutes} - ${completedHour}：${completedMinutes}`;
 };

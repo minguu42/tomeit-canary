@@ -2,7 +2,7 @@ import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
 import TimerIcon from "components/common/icons/TimerIcon";
 import styles from "./styles.module.scss";
 import { Task } from "models/task";
-import { formatToLocalDatetime, formatToLocalTime } from "lib/format";
+import { formatToJapanDateString, formatToLocalTime } from "lib/format";
 
 type Props = {
   task: Task;
@@ -52,7 +52,7 @@ export const TaskRecordListItem = ({ task }: Props): JSX.Element => (
 
             {task.dueOn !== null && (
               <p className={styles.dueOn}>
-                {formatToLocalDatetime(task.dueOn)}
+                {formatToJapanDateString(task.dueOn)}
               </p>
             )}
           </div>
