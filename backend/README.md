@@ -1,10 +1,6 @@
 # tomeit API
 
-`tomeit API` は tomeit のバックエンドとなる REST API です.
-
-[TODO: GitHub Pages で Swagger UI をホスティングしたら追加する]: <> (## ドキュメント)
-
-[comment]: <> (この API のエンドポイントは[こちら]&#40;GitHub Pages の URL&#41;に載っています.)
+`tomeit API` は tomeit のデータや処理を扱う REST API です.
 
 ## 開発環境
 
