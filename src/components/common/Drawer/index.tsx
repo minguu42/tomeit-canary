@@ -49,7 +49,7 @@ const Drawer = ({ tasksFilter }: Props): JSX.Element => (
 
 export const drawerExistsState = atom({
   key: "drawerExists",
-  default: false,
+  default: true,
 });
 
 const DrawerContainer = (): JSX.Element => {
