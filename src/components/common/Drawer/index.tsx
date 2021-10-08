@@ -12,7 +12,7 @@ type Props = {
   tasksFilter: TasksFilter;
 };
 
-const NavigationDrawer = ({ tasksFilter }: Props): JSX.Element => (
+const Drawer = ({ tasksFilter }: Props): JSX.Element => (
   <aside className={s.container}>
     <nav>
       <Link href="/tasks/today">
@@ -47,15 +47,15 @@ const NavigationDrawer = ({ tasksFilter }: Props): JSX.Element => (
   </aside>
 );
 
-export const navigationDrawerExistsState = atom({
-  key: "navigationDrawerExists",
+export const drawerExistsState = atom({
+  key: "drawerExists",
   default: false,
 });
 
-const NavigationDrawerContainer = (): JSX.Element => {
+const DrawerContainer = (): JSX.Element => {
   const tasksFilter = useRecoilValue(tasksFilterState);
 
-  return <NavigationDrawer tasksFilter={tasksFilter} />;
+  return <Drawer tasksFilter={tasksFilter} />;
 };
 
-export default NavigationDrawerContainer;
+export default DrawerContainer;
