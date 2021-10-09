@@ -1,0 +1,13 @@
+name: Test GitHub Actions
+on: push
+jobs:
+  greeting:
+  runs-on: ubuntu-20.04
+  env:
+    GREETING: Hello
+  steps:
+    - name: Greeting
+      run: echo "$GREETING $FIRST_NAME $LAST_NAME"
+      env:
+        FIRST_NAME: Satoshi
+        LAST_NAME: Pokemon
