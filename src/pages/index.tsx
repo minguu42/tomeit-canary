@@ -26,12 +26,12 @@ const Landing = (): JSX.Element => (
         <CatchMessage />
         <GoogleLoginButton />
       </div>
-      <div>
+      <div className={s.imageContainer}>
         <Image
           src="/work_from_home.png"
           alt="work image"
-          width={480}
-          height={340}
+          layout="fill"
+          objectFit="contain"
         />
       </div>
     </main>

@@ -4,14 +4,22 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  @include variables.mq(xs) {
+    gap: 16px;
+  }
 }
 
 .catch {
   color: var(--c-on-background-high);
   @include variables.headline3;
+  @include variables.mq(xs) {
+    text-align: center;
+    @include variables.headline5;
+  }
 }
 
 .description {
+  width: 100%;
   max-width: 504px;
   color: var(--c-on-background-medium);
   @include variables.body1;
