@@ -4,7 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import TopAppBar from "components/common/DrawerLayout/TopAppBar";
+import DrawerLayout from "components/common/DrawerLayout";
 import CatchMessage from "components/landing/CatchMessage";
 import GoogleLoginButton from "components/landing/GoogleLoginButton";
 import s from "./styles.module.scss";
@@ -20,21 +20,22 @@ const Landing = (): JSX.Element => (
       />
     </Head>
 
-    <TopAppBar />
-    <main className={s.main}>
-      <div className={s.leftWrapper}>
-        <CatchMessage />
-        <GoogleLoginButton />
+    <DrawerLayout>
+      <div className={s.mainLayout}>
+        <div className={s.leftWrapper}>
+          <CatchMessage />
+          <GoogleLoginButton />
+        </div>
+        <div className={s.imageContainer}>
+          <Image
+            src="/work_from_home.png"
+            alt="work image"
+            layout="fill"
+            objectFit="contain"
+          />
+        </div>
       </div>
-      <div className={s.imageContainer}>
-        <Image
-          src="/work_from_home.png"
-          alt="work image"
-          layout="fill"
-          objectFit="contain"
-        />
-      </div>
-    </main>
+    </DrawerLayout>
   </>
 );
 
