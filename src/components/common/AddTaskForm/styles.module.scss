@@ -18,10 +18,19 @@
   @include variables.subtitle1;
 }
 
+.hideInXS {
+  @include variables.mq(xs) {
+    display: none;
+  }
+}
+
 .expectedNum {
   height: 52px;
   color: var(--c-on-surface-medium);
   @include variables.subtitle1;
+  @include variables.mq(xs) {
+    display: none;
+  }
 }
 
 .dueOn {
@@ -30,4 +39,7 @@
   margin-left: 4px;
   color: var(--c-on-surface-medium);
   @include variables.subtitle1;
+  @include variables.mq(xs) {
+    display: none;
+  }
 }

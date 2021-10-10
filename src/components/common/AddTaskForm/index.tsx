@@ -44,7 +44,9 @@ export const AddTaskForm = ({
       required
       className={s.title}
     />
-    <TimerIcon fill="#666666" />
+    <div className={s.hideInXS}>
+      <TimerIcon fill="#666666" />
+    </div>
     <input
       type="number"
       title="予想ポモドーロ数"
