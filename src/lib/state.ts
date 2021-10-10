@@ -2,7 +2,7 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 const isDrawerOpenState = atom({
   key: "isDrawerOpenState",
-  default: true,
+  default: false,
 });
 
 export const useIsDrawerOpen = (): boolean => {
