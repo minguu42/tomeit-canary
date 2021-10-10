@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSetRecoilState } from "recoil";
 
 import MenuIcon from "components/common/icons/MenuIcon";
 import SummarizeIcon from "components/common/icons/SummarizeIcon";
-import AccountMenu from "components/common/TopAppBar/AccountMenu";
+import AccountMenu from "components/common/DrawerLayout/TopAppBar/AccountMenu";
 import s from "./styles.module.scss";
 import { logout, useUser } from "lib/auth";
-import { drawerExistsState } from "components/common/Drawer";
+import { useToggleDrawer } from "lib/state";
 
 type Props = {
   isLoggedIn: boolean;
@@ -51,11 +50,7 @@ const TopAppBar = ({
 const TopAppBarContainer = (): JSX.Element => {
   const user = useUser();
   const router = useRouter();
-  const setNavigationDrawerExists = useSetRecoilState(drawerExistsState);
-
-  const toggleDrawer = (): void => {
-    setNavigationDrawerExists((prev) => !prev);
-  };
+  const toggleDrawer = useToggleDrawer();
 
   const handleLogout = async (): Promise<void> => {
     try {

@@ -144,3 +144,16 @@
   box-shadow: 0 24px 38px rgba(0, 0, 0, 0.14), 0 9px 46px rgba(0, 0, 0, 0.12),
     0 11px 15px rgba(0, 0, 0, 0.2);
 }
+
+$breakpoints: (
+  "xs": 599px,
+  "sm": 904px,
+  "md": 1239px,
+  "lg": 1439px,
+);
+
+@mixin mq($size) {
+  @media screen and (max-width: #{map-get($breakpoints, $size)}) {
+    @content;
+  }
+}

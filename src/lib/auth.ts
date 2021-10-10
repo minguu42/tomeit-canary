@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 
 import { app } from "lib/firebase";
+import { useToggleDrawer } from "lib/state";
 
 export type UserState = User | null;
 
@@ -59,4 +60,17 @@ export const useRequiredLogin = (): void => {
       void router.push("/");
     }
   }, [router, user]);
+};
+
+export const useLoggedInAlready = (): void => {
+  const user = useUser();
+  const router = useRouter();
+  const toggleDrawer = useToggleDrawer();
+
+  useEffect(() => {
+    if (user !== null) {
+      toggleDrawer();
+      void router.push("/tasks/today");
+    }
+  }, [router, toggleDrawer, user]);
 };

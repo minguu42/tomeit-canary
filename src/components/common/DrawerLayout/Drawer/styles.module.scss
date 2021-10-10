@@ -1,0 +1,53 @@
+@use "styles/variables";
+
+.container {
+  display: flex;
+  @include variables.mq(xs) {
+    position: relative;
+  }
+}
+
+.drawer {
+  width: 256px;
+  min-height: calc(100vh - 56px);
+  padding: 18px 8px 8px;
+  background-color: var(--c-surface);
+  border-right: 1px solid var(--c-outline);
+  @include variables.mq(xs) {
+    position: absolute;
+    z-index: 16;
+    @include variables.dp16;
+  }
+}
+
+.navItem {
+  display: flex;
+  gap: 32px;
+  padding: 8px;
+  color: var(--c-on-surface-high);
+  border-right: 4px;
+  @include variables.body2;
+  &:hover {
+    background-color: var(--c-hover);
+  }
+  &:focus {
+    background-color: var(--c-focus);
+  }
+}
+
+.navItemActivated {
+  color: var(--c-primary);
+  background-color: var(--c-activated);
+}
+
+.background {
+  display: none;
+  width: calc(100vw - 256px);
+  min-height: calc(100vh - 56px);
+  background-color: rgba(0, 0, 0, 0.4);
+  @include variables.mq(xs) {
+    position: absolute;
+    left: 256px;
+    display: block;
+  }
+}
