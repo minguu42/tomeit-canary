@@ -6,7 +6,7 @@ import TimerIcon from "components/common/icons/TimerIcon";
 import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
 import StopCircleIcon from "components/common/icons/StopCircleIcon";
 import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
-import styles from "./styles.module.scss";
+import s from "./styles.module.scss";
 import {
   tasksState,
   filteredTasksState,
@@ -39,20 +39,18 @@ export const PomodoroPlayer = ({
   handleSkipClick,
 }: Props): JSX.Element => (
   <div
-    className={cn(styles.container, {
-      [styles.isPomodoro]: isNextPomodoro,
-      [styles.isNotPomodoro]: !isNextPomodoro,
+    className={cn(s.player, {
+      [s.isPomodoro]: isNextPomodoro,
+      [s.isNotPomodoro]: !isNextPomodoro,
     })}
   >
-    <div className={styles.timer}>
+    <div className={s.timer}>
       {isNextPomodoro && <TimerIcon fill="#ffffff" />}
       {!isNextPomodoro && <TimerIcon fill="#080a0f" />}
       <p>{formatTimerTime(time)}</p>
     </div>
 
-    {playingTask !== null && (
-      <p className={styles.title}>{playingTask.title}</p>
-    )}
+    {playingTask !== null && <p className={s.title}>{playingTask.title}</p>}
 
     {playingTask === null && <PlayCircleIcon fill="#707e9c" />}
     {playingTask !== null && isNextPomodoro && isActive && (
