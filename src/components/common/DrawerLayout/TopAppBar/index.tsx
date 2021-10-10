@@ -5,10 +5,10 @@ import { useSetRecoilState } from "recoil";
 
 import MenuIcon from "components/common/icons/MenuIcon";
 import SummarizeIcon from "components/common/icons/SummarizeIcon";
-import AccountMenu from "components/common/TopAppBar/AccountMenu";
+import AccountMenu from "components/common/DrawerLayout/TopAppBar/AccountMenu";
+import { drawerExistsState } from "components/common/DrawerLayout/Drawer";
 import s from "./styles.module.scss";
 import { logout, useUser } from "lib/auth";
-import { drawerExistsState } from "components/common/Drawer";
 
 type Props = {
   isLoggedIn: boolean;

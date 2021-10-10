@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
-import TopAppBar from "components/common/TopAppBar";
-import Drawer, { drawerExistsState } from "components/common/Drawer";
+import TopAppBar from "components/common/DrawerLayout/TopAppBar";
+import Drawer, {
+  drawerExistsState,
+} from "components/common/DrawerLayout/Drawer";
 import TaskListHeader from "components/common/TaskListHeader";
 import AddTaskForm from "components/common/AddTaskForm";
 import TaskList from "components/common/TaskList";

@@ -4,7 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import TopAppBar from "components/common/TopAppBar";
+import TopAppBar from "components/common/DrawerLayout/TopAppBar";
 import CatchMessage from "components/landing/CatchMessage";
 import GoogleLoginButton from "components/landing/GoogleLoginButton";
 import s from "./styles.module.scss";
