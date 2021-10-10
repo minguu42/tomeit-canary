@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {atom, useRecoilState, useRecoilValue} from "recoil";
+import { useRecoilValue } from "recoil";
 import cn from "classnames";
 
 import TodayIcon from "components/common/icons/TodayIcon";
@@ -7,13 +7,14 @@ import TomorrowIcon from "components/common/icons/TomorrowIcon";
 import DateRangeIcon from "components/common/icons/DateRangeIcon";
 import s from "./styles.module.scss";
 import { TasksFilter, tasksFilterState } from "models/task";
+import { useIsDrawerOpen, useToggleDrawer } from "lib/state";
 
 type Props = {
   tasksFilter: TasksFilter;
-  onBackgroundClick: () => void;
+  toggleDrawer: () => void;
 };
 
-const Drawer = ({ tasksFilter, onBackgroundClick }: Props): JSX.Element => (
+const Drawer = ({ tasksFilter, toggleDrawer }: Props): JSX.Element => (
   <div className={s.container}>
     <aside className={s.drawer}>
       <nav>
@@ -49,24 +50,20 @@ const Drawer = ({ tasksFilter, onBackgroundClick }: Props): JSX.Element => (
         </Link>
       </nav>
     </aside>
-    <button onClick={onBackgroundClick} className={s.background} />
+    <button onClick={toggleDrawer} className={s.background} />
   </div>
 );
 
-export const drawerExistsState = atom({
-  key: "drawerExists",
-  default: true,
-});
-
 const DrawerContainer = (): JSX.Element => {
-  const [drawerExists, setDrawerExists] = useRecoilState(drawerExistsState);
+  const isDrawerOpen = useIsDrawerOpen();
+  const toggleDrawer = useToggleDrawer();
   const tasksFilter = useRecoilValue(tasksFilterState);
 
-  const onBackgroundClick = (): void => {
-    setDrawerExists((prev) => !prev)
-  }
-
-  return drawerExists ? <Drawer tasksFilter={tasksFilter} onBackgroundClick={onBackgroundClick} /> : <></>;
+  return isDrawerOpen ? (
+    <Drawer tasksFilter={tasksFilter} toggleDrawer={toggleDrawer} />
+  ) : (
+    <></>
+  );
 };
 
 export default DrawerContainer;
