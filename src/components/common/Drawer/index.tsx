@@ -13,38 +13,43 @@ type Props = {
 };
 
 const Drawer = ({ tasksFilter }: Props): JSX.Element => (
-  <aside className={s.container}>
-    <nav>
-      <Link href="/tasks/today">
-        <a
-          className={cn(s.navItem, { [s.activated]: tasksFilter === "Today" })}
-        >
-          <TodayIcon fill="#212121" />
-          今日
-        </a>
-      </Link>
-      <Link href="/tasks/tomorrow">
-        <a
-          className={cn(s.navItem, {
-            [s.activated]: tasksFilter === "Tomorrow",
-          })}
-        >
-          <TomorrowIcon fill="#212121" />
-          明日
-        </a>
-      </Link>
-      <Link href="/tasks/someday">
-        <a
-          className={cn(s.navItem, {
-            [s.activated]: tasksFilter === "Someday",
-          })}
-        >
-          <DateRangeIcon fill="#212121" />
-          いつか
-        </a>
-      </Link>
-    </nav>
-  </aside>
+  <div className={s.container}>
+    <aside className={s.drawer}>
+      <nav>
+        <Link href="/tasks/today">
+          <a
+            className={cn(s.navItem, {
+              [s.navItemActivated]: tasksFilter === "Today",
+            })}
+          >
+            <TodayIcon fill="#212121" />
+            今日
+          </a>
+        </Link>
+        <Link href="/tasks/tomorrow">
+          <a
+            className={cn(s.navItem, {
+              [s.navItemActivated]: tasksFilter === "Tomorrow",
+            })}
+          >
+            <TomorrowIcon fill="#212121" />
+            明日
+          </a>
+        </Link>
+        <Link href="/tasks/someday">
+          <a
+            className={cn(s.navItem, {
+              [s.navItemActivated]: tasksFilter === "Someday",
+            })}
+          >
+            <DateRangeIcon fill="#212121" />
+            いつか
+          </a>
+        </Link>
+      </nav>
+    </aside>
+    <button className={s.background} />
+  </div>
 );
 
 export const drawerExistsState = atom({
@@ -53,9 +58,10 @@ export const drawerExistsState = atom({
 });
 
 const DrawerContainer = (): JSX.Element => {
+  const drawerExists = useRecoilValue(drawerExistsState);
   const tasksFilter = useRecoilValue(tasksFilterState);
 
-  return <Drawer tasksFilter={tasksFilter} />;
+  return drawerExists ? <Drawer tasksFilter={tasksFilter} /> : <></>;
 };
 
 export default DrawerContainer;
