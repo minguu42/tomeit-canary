@@ -3,6 +3,7 @@
 .PHONY: dev
 dev:  ## フロントエンドとバックエンドの開発用サーバを起動する
 	@docker compose --env-file ./.env.local up -d api
+	@open http://localhost:3000/
 	@next dev
 
 .PHONY: dev-f
