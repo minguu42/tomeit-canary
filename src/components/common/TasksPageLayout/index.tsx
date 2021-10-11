@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 
-import TopAppBar from "components/common/DrawerLayout/TopAppBar";
-import Drawer from "components/common/DrawerLayout/Drawer";
+import DrawerLayout from "components/common/DrawerLayout";
 import TaskListHeader from "components/common/TaskListHeader";
 import AddTaskForm from "components/common/AddTaskForm";
 import TaskList from "components/common/TaskList";
@@ -23,22 +22,18 @@ type ContainerProps = {
 };
 
 const TasksPageLayout = (): JSX.Element => (
-  <>
-    <TopAppBar />
-    <div className={s.ndLayout}>
-      <Drawer />
-      <main className={s.main}>
-        <TaskListHeader />
-        <div className={s.list}>
-          <AddTaskForm />
-          <TaskList />
-        </div>
-        <div className={s.player}>
-          <PomodoroPlayer />
-        </div>
-      </main>
+  <DrawerLayout>
+    <div className={s.mainLayout}>
+      <TaskListHeader />
+      <div className={s.listLayout}>
+        <AddTaskForm />
+        <TaskList />
+      </div>
+      <div className={s.playerLayout}>
+        <PomodoroPlayer />
+      </div>
     </div>
-  </>
+  </DrawerLayout>
 );
 
 const TasksPageLayoutContainer = ({

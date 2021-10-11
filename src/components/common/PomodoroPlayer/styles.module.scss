@@ -1,29 +1,13 @@
 @use "styles/variables";
 
-.container {
+.player {
   z-index: 8;
   display: flex;
-  gap: 32px;
+  gap: 16px;
   justify-content: space-between;
   padding: 16px;
   border-radius: 4px;
   @include variables.dp08;
-}
-
-.timer {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  @include variables.headline6;
-}
-
-.title {
-  display: -webkit-box;
-  max-width: 360px;
-  overflow: hidden;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  @include variables.subtitle1;
 }
 
 .isPomodoro {
@@ -34,4 +18,22 @@
 .isNotPomodoro {
   color: var(--c-on-secondary-high);
   background-color: var(--c-secondary);
+}
+
+.timer {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  min-width: 88px;
+  @include variables.headline6;
+}
+
+.title {
+  display: -webkit-box;
+  min-width: 112px;
+  max-width: 360px;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  @include variables.subtitle1;
 }
