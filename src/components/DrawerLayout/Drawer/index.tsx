@@ -7,7 +7,7 @@ import TomorrowIcon from "components/icons/TomorrowIcon";
 import DateRangeIcon from "components/icons/DateRangeIcon";
 import s from "./styles.module.scss";
 import { TasksFilter, tasksFilterState } from "models/task";
-import { useIsDrawerOpen, useToggleDrawer } from "lib/state";
+import { useIsDrawerOpen, useToggleDrawer } from "lib/states";
 
 type Props = {
   tasksFilter: TasksFilter;

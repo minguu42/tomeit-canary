@@ -7,7 +7,7 @@ import SummarizeIcon from "components/icons/SummarizeIcon";
 import AccountMenu from "components/DrawerLayout/TopAppBar/AccountMenu";
 import s from "./styles.module.scss";
 import { logout, useUser } from "lib/auth";
-import { useToggleDrawer, useCloseDrawer } from "lib/state";
+import { useToggleDrawer, useCloseDrawer } from "lib/states";
 
 type Props = {
   isLoggedIn: boolean;

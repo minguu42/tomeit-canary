@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 
 import { app } from "lib/firebase";
-import { useToggleDrawer } from "lib/state";
+import { useToggleDrawer } from "lib/states";
 
 export type UserState = User | null;
 
