@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import cn from "classnames";
 
-import TimerIcon from "components/common/icons/TimerIcon";
-import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
-import StopCircleIcon from "components/common/icons/StopCircleIcon";
-import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
+import TimerIcon from "components/icons/TimerIcon";
+import PlayCircleIcon from "components/icons/PlayCircleIcon";
+import StopCircleIcon from "components/icons/StopCircleIcon";
+import CheckCircleIcon from "components/icons/CheckCircleIcon";
 import s from "./styles.module.scss";
 import {
   tasksState,

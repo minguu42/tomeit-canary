@@ -1,6 +1,6 @@
-import TimerIcon from "components/common/icons/TimerIcon";
-import CircleIcon from "components/common/icons/CircleIcon";
-import PlayCircleIcon from "components/common/icons/PlayCircleIcon";
+import TimerIcon from "components/icons/TimerIcon";
+import CircleIcon from "components/icons/CircleIcon";
+import PlayCircleIcon from "components/icons/PlayCircleIcon";
 import s from "./styles.module.scss";
 import { Task } from "models/task";
 import { formatToJapanDateString } from "lib/format";

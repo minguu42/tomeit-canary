@@ -2,9 +2,9 @@ import Link from "next/link";
 import { useRecoilValue } from "recoil";
 import cn from "classnames";
 
-import TodayIcon from "components/common/icons/TodayIcon";
-import TomorrowIcon from "components/common/icons/TomorrowIcon";
-import DateRangeIcon from "components/common/icons/DateRangeIcon";
+import TodayIcon from "components/icons/TodayIcon";
+import TomorrowIcon from "components/icons/TomorrowIcon";
+import DateRangeIcon from "components/icons/DateRangeIcon";
 import s from "./styles.module.scss";
 import { TasksFilter, tasksFilterState } from "models/task";
 import { useIsDrawerOpen, useToggleDrawer } from "lib/state";

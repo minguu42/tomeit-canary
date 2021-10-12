@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 
-import DrawerLayout from "components/common/DrawerLayout";
-import TaskListHeader from "components/common/TaskListHeader";
-import AddTaskForm from "components/common/AddTaskForm";
-import TaskList from "components/common/TaskList";
-import PomodoroPlayer from "components/common/PomodoroPlayer";
+import DrawerLayout from "components/DrawerLayout";
+import TaskListHeader from "components/TaskListHeader";
+import AddTaskForm from "components/AddTaskForm";
+import TaskList from "components/TaskList";
+import PomodoroPlayer from "components/PomodoroPlayer";
 import s from "./styles.module.scss";
 import {
   tasksFilterState,

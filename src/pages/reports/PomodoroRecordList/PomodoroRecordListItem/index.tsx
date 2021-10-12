@@ -1,4 +1,4 @@
-import TimerIcon from "components/common/icons/TimerIcon";
+import TimerIcon from "components/icons/TimerIcon";
 import styles from "./styles.module.scss";
 import { formatToLocalPomodoroDuring } from "lib/format";
 import { Pomodoro } from "models/pomodoro";

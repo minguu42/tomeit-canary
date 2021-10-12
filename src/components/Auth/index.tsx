@@ -1,4 +1,4 @@
-import Loading from "components/common/Loading";
+import Loading from "components/Loading";
 import { useAuth } from "lib/auth";
 
 type Props = {

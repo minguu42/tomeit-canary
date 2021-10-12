@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import MenuIcon from "components/common/icons/MenuIcon";
-import SummarizeIcon from "components/common/icons/SummarizeIcon";
-import AccountMenu from "components/common/DrawerLayout/TopAppBar/AccountMenu";
+import MenuIcon from "components/icons/MenuIcon";
+import SummarizeIcon from "components/icons/SummarizeIcon";
+import AccountMenu from "components/DrawerLayout/TopAppBar/AccountMenu";
 import s from "./styles.module.scss";
 import { logout, useUser } from "lib/auth";
 import { useToggleDrawer } from "lib/state";

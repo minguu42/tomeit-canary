@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 
 import "styles/global.scss";
-import Auth from "components/common/Auth";
+import Auth from "components/Auth";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (

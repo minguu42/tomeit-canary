@@ -1,4 +1,4 @@
-import DrawerLayout from "components/common/DrawerLayout";
+import DrawerLayout from "components/DrawerLayout";
 
 const Reports = (): JSX.Element => (
   <DrawerLayout>

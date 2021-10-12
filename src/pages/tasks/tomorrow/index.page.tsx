@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Head from "next/head";
 
-import TasksPageLayout from "components/common/TasksPageLayout";
+import TasksPageLayout from "components/TasksPageLayout";
 import { useRequiredLogin } from "lib/auth";
 
 const Tomorrow: NextPage = () => {

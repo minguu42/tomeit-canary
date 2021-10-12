@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 
-import DrawerLayout from "components/common/DrawerLayout";
+import DrawerLayout from "components/DrawerLayout";
 import CatchMessage from "./CatchMessage";
 import GoogleLoginButton from "./GoogleLoginButton";
 import s from "./styles.module.scss";

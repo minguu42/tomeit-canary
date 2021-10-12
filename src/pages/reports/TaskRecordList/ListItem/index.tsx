@@ -1,5 +1,5 @@
-import CheckCircleIcon from "components/common/icons/CheckCircleIcon";
-import TimerIcon from "components/common/icons/TimerIcon";
+import CheckCircleIcon from "components/icons/CheckCircleIcon";
+import TimerIcon from "components/icons/TimerIcon";
 import styles from "./styles.module.scss";
 import { Task } from "models/task";
 import { formatToJapanDateString, formatToLocalTime } from "lib/format";

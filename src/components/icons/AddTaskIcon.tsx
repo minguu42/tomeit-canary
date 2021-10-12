@@ -1,11 +1,9 @@
-import { VFC } from "react";
-
 type Props = {
   size?: number;
   fill?: string;
 };
 
-const AddTaskIcon: VFC<Props> = ({ size, fill }) => (
+const AddTaskIcon = ({ size, fill }: Props): JSX.Element => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     enableBackground="new 0 0 24 24"

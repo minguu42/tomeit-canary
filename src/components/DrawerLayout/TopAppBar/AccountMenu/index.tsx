@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import AccountCircleIcon from "components/common/icons/AccountCircleIcon";
+import AccountCircleIcon from "components/icons/AccountCircleIcon";
 import styles from "./styles.module.scss";
 
 type Props = {

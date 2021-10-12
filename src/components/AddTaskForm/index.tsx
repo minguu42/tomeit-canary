@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
-import AddIcon from "components/common/icons/AddIcon";
-import TimerIcon from "components/common/icons/TimerIcon";
+import AddIcon from "components/icons/AddIcon";
+import TimerIcon from "components/icons/TimerIcon";
 import s from "./styles.module.scss";
 import {
   isTaskResponse,

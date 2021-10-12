@@ -1,11 +1,9 @@
-import { VFC } from "react";
-
 type Props = {
   size?: number;
   fill?: string;
 };
 
-const FlagIcon: VFC<Props> = ({ size, fill }) => (
+const FlagIcon = ({ size, fill }: Props): JSX.Element => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     height={size ?? 24}

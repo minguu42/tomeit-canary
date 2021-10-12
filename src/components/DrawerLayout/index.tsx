@@ -1,5 +1,5 @@
-import TopAppBar from "components/common/DrawerLayout/TopAppBar";
-import Drawer from "components/common/DrawerLayout/Drawer";
+import TopAppBar from "components/DrawerLayout/TopAppBar";
+import Drawer from "components/DrawerLayout/Drawer";
 import s from "./styles.module.scss";
 
 type Props = {
