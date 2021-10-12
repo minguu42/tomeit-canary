@@ -69,8 +69,8 @@ export const useLoggedInAlready = (): void => {
 
   useEffect(() => {
     if (user !== null) {
-      toggleDrawer();
       void router.push("/tasks/today");
+      toggleDrawer();
     }
   }, [router, toggleDrawer, user]);
 };
