@@ -7,20 +7,22 @@ import { formatToJapanDateString } from "lib/format";
 
 type Props = {
   task: Task;
-  isPlaying: boolean;
+  isTaskSet: boolean;
+  isPomodoroPlaying: boolean;
   completeTask: (task: Task) => void;
   setTask: (task: Task) => void;
 };
 
 export const TaskListItem = ({
   task,
-  isPlaying,
+  isTaskSet,
+  isPomodoroPlaying,
   completeTask,
   setTask,
 }: Props): JSX.Element => (
   <li className={s.container}>
-    {isPlaying && <TimerIcon fill="#192f60" />}
-    {!isPlaying && (
+    {isTaskSet && isPomodoroPlaying && <TimerIcon fill="#192f60" />}
+    {(!isTaskSet || !isPomodoroPlaying) && (
       <button onClick={() => completeTask(task)}>
         <CircleIcon fill="#212121" />
       </button>
@@ -55,7 +57,7 @@ export const TaskListItem = ({
       </div>
     </div>
 
-    {!isPlaying && (
+    {!isTaskSet && (
       <button onClick={() => setTask(task)}>
         <PlayCircleIcon fill="#212121" />
       </button>

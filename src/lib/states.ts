@@ -24,3 +24,31 @@ export const useCloseDrawer = (): (() => void) => {
     setIsDrawerOpen(false);
   };
 };
+
+const isPomodoroPlayingState = atom({
+  key: "isPomodoroPlayingState",
+  default: false,
+});
+
+export const useIsPomodoroPlaying = (): boolean => {
+  return useRecoilValue(isPomodoroPlayingState);
+};
+
+type IsPomodoroPlayingActions = {
+  startPlayingPomodoro: () => void;
+  endPlayingPomodoro: () => void;
+};
+
+export const useIsPomodoroPlayingActions = (): IsPomodoroPlayingActions => {
+  const setIsPomodoroPlaying = useSetRecoilState(isPomodoroPlayingState);
+
+  const startPlayingPomodoro = (): void => {
+    setIsPomodoroPlaying(true);
+  };
+
+  const endPlayingPomodoro = (): void => {
+    setIsPomodoroPlaying(false);
+  };
+
+  return { startPlayingPomodoro, endPlayingPomodoro };
+};

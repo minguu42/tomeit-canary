@@ -18,6 +18,7 @@ import { formatTimerTime } from "lib/format";
 import { makeSound } from "lib/sound";
 import { useUser } from "lib/auth";
 import { getData, postData } from "lib/fetch";
+import { useIsPomodoroPlayingActions } from "lib/states";
 
 type Props = {
   time: number;
@@ -78,7 +79,7 @@ export const PomodoroPlayer = ({
   </div>
 );
 
-const POMODORO_TIME = 1500;
+const POMODORO_TIME = 15;
 const SHORT_REST_TIME = 300;
 const LONG_REST_TIME = 900;
 const INIT_REST_COUNT = 4;
@@ -92,6 +93,8 @@ const PomodoroPlayerContainer = (): JSX.Element => {
   const filteredTasks = useRecoilValue(filteredTasksState);
   const setTasks = useSetRecoilState(tasksState);
   const user = useUser();
+  const { startPlayingPomodoro, endPlayingPomodoro } =
+    useIsPomodoroPlayingActions();
 
   const tick = (): void => {
     setTime((t) => t - 1);
@@ -108,6 +111,9 @@ const PomodoroPlayerContainer = (): JSX.Element => {
 
   const handlePlayClick = (): void => {
     setIsActive(true);
+    if (isNextPomodoro) {
+      startPlayingPomodoro();
+    }
   };
 
   const handleStopClick = (): void => {
@@ -135,6 +141,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
       if (isNextPomodoro && playingTask) {
         makeSound("#complete").catch((err) => console.error(err));
         setIsNextPomodoro(false);
+        endPlayingPomodoro();
         setTime(restCount !== 1 ? SHORT_REST_TIME : LONG_REST_TIME);
 
         postData("/pomodoros", { taskID: playingTask.id }, user).catch((err) =>
@@ -165,6 +172,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
     filteredTasks,
     time,
     user,
+    endPlayingPomodoro,
   ]);
 
   return (

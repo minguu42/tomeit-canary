@@ -10,10 +10,12 @@ import {
 } from "models/task";
 import { patchData } from "lib/fetch";
 import { useUser } from "lib/auth";
+import { useIsPomodoroPlaying } from "lib/states";
 
 type Props = {
   tasks: Task[];
   playingTask: Task | null;
+  isPomodoroPlaying: boolean;
   completeTask: (task: Task) => void;
   setTask: (task: Task) => void;
 };
@@ -21,6 +23,7 @@ type Props = {
 export const TaskList = ({
   tasks,
   playingTask,
+  isPomodoroPlaying,
   completeTask,
   setTask,
 }: Props): JSX.Element => (
@@ -29,7 +32,8 @@ export const TaskList = ({
       <TaskListItem
         key={task.id}
         task={task}
-        isPlaying={task.id === playingTask?.id}
+        isTaskSet={task.id === playingTask?.id}
+        isPomodoroPlaying={isPomodoroPlaying}
         completeTask={completeTask}
         setTask={setTask}
       />
@@ -41,6 +45,7 @@ const TaskListContainer = (): JSX.Element => {
   const setTasks = useSetRecoilState(tasksState);
   const filteredTasks = useRecoilValue(filteredTasksState);
   const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
+  const isPomodoroPlaying = useIsPomodoroPlaying();
   const user = useUser();
 
   const completeTask = (task: Task): void => {
@@ -63,6 +68,7 @@ const TaskListContainer = (): JSX.Element => {
     <TaskList
       tasks={filteredTasks}
       playingTask={playingTask}
+      isPomodoroPlaying={isPomodoroPlaying}
       completeTask={completeTask}
       setTask={setTask}
     />
