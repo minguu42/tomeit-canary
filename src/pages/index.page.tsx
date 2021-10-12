@@ -3,8 +3,8 @@ import Head from "next/head";
 import Image from "next/image";
 
 import DrawerLayout from "components/common/DrawerLayout";
-import CatchMessage from "components/landing/CatchMessage";
-import GoogleLoginButton from "components/landing/GoogleLoginButton";
+import CatchMessage from "./CatchMessage";
+import GoogleLoginButton from "./GoogleLoginButton";
 import s from "./styles.module.scss";
 import { useLoggedInAlready } from "lib/auth";
 
