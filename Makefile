@@ -2,7 +2,7 @@
 
 .PHONY: dev
 dev:  ## フロントエンドとバックエンドの開発用サーバを起動する
-	@docker compose --env-file ./.env.local up -d api
+	@docker compose --env-file ./.env.development.local up -d api
 	@open http://localhost:3000/
 	@next dev
 
@@ -12,11 +12,11 @@ dev-f:  ## フロントエンドの開発用サーバを起動する
 
 .PHONY: dev-b
 dev-b:  ## バックエンドの開発用サーバを起動する
-	@docker compose --env-file ./.env.local up api
+	@docker compose --env-file ./.env.development.local up api
 
 .PHONY: docs
 docs: ## http://localhost:8000 で仕様書を表示するサーバを起動する
-	@docker compose --env-file ./.env.local up -d docs
+	@docker compose --env-file ./.env.development.local up -d docs
 
 .PHONY: build
 build:  ## ビルドする
@@ -54,7 +54,7 @@ test-f:  ## Jest でテストを実行する
 
 .PHONY: test-b
 test-b:  ## バックエンドのテストを実行する
-	@docker compose --env-file ./.env.local up -d db-test
+	@docker compose --env-file ./.env.development.local up -d db-test
 	@cd backend && \
 	go test
 
@@ -83,7 +83,7 @@ bench-b:  ## ベンチマークを測定する
 
 .PHONY: down
 down:  ## 関連する Docker コンテナを停止し, 削除する
-	@docker compose --env-file ./.env.local down
+	@docker compose --env-file ./.env.development.local down
 
 .PHONY: help
 help: ## ヘルプを表示する
