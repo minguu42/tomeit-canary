@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, selector, useSetRecoilState } from "recoil";
 import { formatDate } from "../lib/format";
 
 export type Task = {
@@ -72,6 +72,39 @@ export const tasksState = atom<Task[]>({
   key: "tasksState",
   default: [],
 });
+
+type TasksActions = {
+  initTasks: (tasks: Task[]) => void;
+  addTask: (task: Task) => void;
+  replaceTask: (index: number, task: Task) => void;
+  deleteTask: (index: number) => void;
+};
+
+export const useTasksActions = (): TasksActions => {
+  const setTasks = useSetRecoilState(tasksState);
+
+  const initTasks = (tasks: Task[]): void => {
+    setTasks(tasks);
+  };
+
+  const addTask = (task: Task): void => {
+    setTasks((prev) => [...prev, task]);
+  };
+
+  const replaceTask = (index: number, newTask: Task): void => {
+    setTasks((prev) => [
+      ...prev.slice(0, index),
+      newTask,
+      ...prev.slice(index + 1),
+    ]);
+  };
+
+  const deleteTask = (index: number): void => {
+    setTasks((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+  };
+
+  return { initTasks, addTask, replaceTask, deleteTask };
+};
 
 export type TasksFilter = "Today" | "Tomorrow" | "Someday";
 
