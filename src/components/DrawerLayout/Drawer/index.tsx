@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { useRecoilValue } from "recoil";
 import cn from "classnames";
 
 import TodayIcon from "components/icons/TodayIcon";
 import TomorrowIcon from "components/icons/TomorrowIcon";
 import DateRangeIcon from "components/icons/DateRangeIcon";
 import s from "./styles.module.scss";
-import { TasksFilter, tasksFilterState } from "models/task";
+import { TasksFilter, useTasksFilter } from "models/task";
 import { useIsDrawerOpen, useIsDrawerOpenActions } from "lib/states";
 
 type Props = {
@@ -57,7 +56,7 @@ const Drawer = ({ tasksFilter, closeDrawer }: Props): JSX.Element => (
 const DrawerContainer = (): JSX.Element => {
   const isDrawerOpen = useIsDrawerOpen();
   const { closeDrawer } = useIsDrawerOpenActions();
-  const tasksFilter = useRecoilValue(tasksFilterState);
+  const tasksFilter = useTasksFilter();
 
   return isDrawerOpen ? (
     <Drawer tasksFilter={tasksFilter} closeDrawer={closeDrawer} />

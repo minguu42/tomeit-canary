@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
 
 import DrawerLayout from "components/DrawerLayout";
 import TaskListHeader from "components/TaskListHeader";
@@ -8,11 +7,11 @@ import TaskList from "components/TaskList";
 import PomodoroPlayer from "components/PomodoroPlayer";
 import s from "./styles.module.scss";
 import {
-  tasksFilterState,
-  TasksFilter,
   isTasksResponse,
   newTask,
   useTasksActions,
+  TasksFilter,
+  useTasksFilterActions,
 } from "models/task";
 import { getData } from "lib/fetch";
 import { useUser } from "lib/auth";
@@ -39,7 +38,7 @@ const TasksPageLayout = (): JSX.Element => (
 const TasksPageLayoutContainer = ({
   tasksFilter,
 }: ContainerProps): JSX.Element => {
-  const setTasksFilter = useSetRecoilState(tasksFilterState);
+  const { initTasksFilter } = useTasksFilterActions();
   const { initTasks } = useTasksActions();
   const user = useUser();
 
@@ -51,8 +50,8 @@ const TasksPageLayoutContainer = ({
         }
       })
       .catch((error) => console.error(error));
-    setTasksFilter(tasksFilter);
-  }, [user, setTasksFilter, tasksFilter, initTasks]);
+    initTasksFilter(tasksFilter);
+  }, [user, tasksFilter, initTasks, initTasksFilter]);
 
   return <TasksPageLayout />;
 };

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
 
 import AddIcon from "components/icons/AddIcon";
 import TimerIcon from "components/icons/TimerIcon";
@@ -7,8 +6,8 @@ import s from "./styles.module.scss";
 import {
   isTaskResponse,
   newTask,
-  tasksFilterState,
   useTasksActions,
+  useTasksFilter,
 } from "models/task";
 import { formatDate } from "lib/format";
 import { postData } from "lib/fetch";
@@ -73,7 +72,7 @@ const AddTaskFormContainer = (): JSX.Element => {
   const [dueOn, setDueOn] = useState<Date | null>(null);
   const { addTask } = useTasksActions();
   const user = useUser();
-  const tasksFilter = useRecoilValue(tasksFilterState);
+  const tasksFilter = useTasksFilter();
 
   useEffect(() => {
     const today = new Date();

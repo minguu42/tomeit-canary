@@ -1,4 +1,4 @@
-import { atom, selector, useSetRecoilState } from "recoil";
+import { atom, selector, useRecoilValue, useSetRecoilState } from "recoil";
 import { formatDate } from "../lib/format";
 
 export type Task = {
@@ -108,10 +108,28 @@ export const useTasksActions = (): TasksActions => {
 
 export type TasksFilter = "Today" | "Tomorrow" | "Someday";
 
-export const tasksFilterState = atom<TasksFilter>({
+const tasksFilterState = atom<TasksFilter>({
   key: "tasksFilterState",
   default: "Someday",
 });
+
+export const useTasksFilter = (): TasksFilter => {
+  return useRecoilValue(tasksFilterState);
+};
+
+type TasksFilterActions = {
+  initTasksFilter: (filter: TasksFilter) => void;
+};
+
+export const useTasksFilterActions = (): TasksFilterActions => {
+  const setTasksFilter = useSetRecoilState(tasksFilterState);
+
+  const initTasksFilter = (filter: TasksFilter) => {
+    setTasksFilter(filter);
+  };
+
+  return { initTasksFilter };
+};
 
 export const filteredTasksState = selector<Task[]>({
   key: "filteredTasksState",
