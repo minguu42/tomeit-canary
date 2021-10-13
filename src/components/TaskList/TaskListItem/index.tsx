@@ -57,7 +57,7 @@ export const TaskListItem = ({
       </div>
     </div>
 
-    {!isTaskSet && (
+    {(!isTaskSet || !isPomodoroPlaying) && (
       <button onClick={() => setTask(task)}>
         <PlayCircleIcon fill="#212121" />
       </button>
