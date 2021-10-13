@@ -168,7 +168,25 @@ export const useFilteredTasks = (): Task[] => {
   return useRecoilValue(filteredTasksState);
 };
 
-export const playingTaskState = atom<Task | null>({
+const playingTaskState = atom<Task | null>({
   key: "playingTaskState",
   default: null,
 });
+
+export const usePlayingTask = (): Task | null => {
+  return useRecoilValue(playingTaskState);
+};
+
+type PlayingTaskActions = {
+  setTaskInPlayer: (task: Task) => void;
+};
+
+export const usePlayingTaskActions = (): PlayingTaskActions => {
+  const setPlayingTask = useSetRecoilState(playingTaskState);
+
+  const setTaskInPlayer = (task: Task): void => {
+    setPlayingTask(task);
+  };
+
+  return { setTaskInPlayer };
+};

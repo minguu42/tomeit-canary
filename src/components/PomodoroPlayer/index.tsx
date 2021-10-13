@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
 import cn from "classnames";
 
 import TimerIcon from "components/icons/TimerIcon";
@@ -9,9 +8,10 @@ import CheckCircleIcon from "components/icons/CheckCircleIcon";
 import s from "./styles.module.scss";
 import {
   Task,
-  playingTaskState,
   useTasksActions,
   useFilteredTasks,
+  usePlayingTask,
+  usePlayingTaskActions,
 } from "models/task";
 import { isRestCountResponse } from "models/pomodoro";
 import { formatTimerTime } from "lib/format";
@@ -89,7 +89,8 @@ const PomodoroPlayerContainer = (): JSX.Element => {
   const [isActive, setIsActive] = useState(false);
   const [isNextPomodoro, setIsNextPomodoro] = useState(true);
   const [restCount, setRestCount] = useState(INIT_REST_COUNT);
-  const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
+  const playingTask = usePlayingTask();
+  const { setTaskInPlayer } = usePlayingTaskActions();
   const filteredTasks = useFilteredTasks();
   const { replaceTask } = useTasksActions();
   const user = useUser();
@@ -151,7 +152,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
         const newTask = { ...playingTask };
         newTask.actualPomodoroNum += 1;
         replaceTask(index, newTask);
-        setPlayingTask(newTask);
+        setTaskInPlayer(newTask);
         setRestCount((c) => (c === 1 ? INIT_REST_COUNT : c - 1));
       } else {
         makeSound("#finish_rest").catch((err) => console.error(err));
@@ -163,12 +164,12 @@ const PomodoroPlayerContainer = (): JSX.Element => {
     isNextPomodoro,
     playingTask,
     restCount,
-    setPlayingTask,
     filteredTasks,
     time,
     user,
     endPlayingPomodoro,
     replaceTask,
+    setTaskInPlayer,
   ]);
 
   return (
