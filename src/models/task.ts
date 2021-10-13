@@ -68,7 +68,7 @@ export const newTask = (taskResponse: TaskResponse): Task => {
   };
 };
 
-export const tasksState = atom<Task[]>({
+const tasksState = atom<Task[]>({
   key: "tasksState",
   default: [],
 });
