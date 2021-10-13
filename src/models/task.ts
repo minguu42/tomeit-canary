@@ -131,7 +131,7 @@ export const useTasksFilterActions = (): TasksFilterActions => {
   return { initTasksFilter };
 };
 
-export const filteredTasksState = selector<Task[]>({
+const filteredTasksState = selector<Task[]>({
   key: "filteredTasksState",
   get: ({ get }) => {
     const filter = get(tasksFilterState);
@@ -163,6 +163,10 @@ export const filteredTasksState = selector<Task[]>({
     }
   },
 });
+
+export const useFilteredTasks = (): Task[] => {
+  return useRecoilValue(filteredTasksState);
+};
 
 export const playingTaskState = atom<Task | null>({
   key: "playingTaskState",

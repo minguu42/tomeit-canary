@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import cn from "classnames";
 
 import TimerIcon from "components/icons/TimerIcon";
@@ -8,10 +8,10 @@ import StopCircleIcon from "components/icons/StopCircleIcon";
 import CheckCircleIcon from "components/icons/CheckCircleIcon";
 import s from "./styles.module.scss";
 import {
-  useTasksActions,
-  filteredTasksState,
-  playingTaskState,
   Task,
+  playingTaskState,
+  useTasksActions,
+  useFilteredTasks,
 } from "models/task";
 import { isRestCountResponse } from "models/pomodoro";
 import { formatTimerTime } from "lib/format";
@@ -90,7 +90,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
   const [isNextPomodoro, setIsNextPomodoro] = useState(true);
   const [restCount, setRestCount] = useState(INIT_REST_COUNT);
   const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
-  const filteredTasks = useRecoilValue(filteredTasksState);
+  const filteredTasks = useFilteredTasks();
   const { replaceTask } = useTasksActions();
   const user = useUser();
   const { startPlayingPomodoro, endPlayingPomodoro } =

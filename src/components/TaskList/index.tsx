@@ -1,11 +1,11 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 import TaskListItem from "./TaskListItem";
 import s from "./styles.module.scss";
 import {
-  filteredTasksState,
   playingTaskState,
   Task,
+  useFilteredTasks,
   useTasksActions,
 } from "models/task";
 import { patchData } from "lib/fetch";
@@ -43,7 +43,7 @@ export const TaskList = ({
 
 const TaskListContainer = (): JSX.Element => {
   const { deleteTask } = useTasksActions();
-  const filteredTasks = useRecoilValue(filteredTasksState);
+  const filteredTasks = useFilteredTasks();
   const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
   const isPomodoroPlaying = useIsPomodoroPlaying();
   const user = useUser();

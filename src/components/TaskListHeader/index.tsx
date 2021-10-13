@@ -1,7 +1,5 @@
-import { useRecoilValue } from "recoil";
-
 import s from "./styles.module.scss";
-import { Task, filteredTasksState, useTasksFilter } from "models/task";
+import { Task, useTasksFilter, useFilteredTasks } from "models/task";
 import { formatDateToJP } from "lib/format";
 
 type Props = {
@@ -22,7 +20,7 @@ export const TaskListHeader = ({ title, tasks, date }: Props): JSX.Element => (
 
 const TaskListHeaderContainer = (): JSX.Element => {
   const tasksFilter = useTasksFilter();
-  const filteredTasks = useRecoilValue(filteredTasksState);
+  const filteredTasks = useFilteredTasks();
   const today = new Date();
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
