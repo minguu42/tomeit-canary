@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 
 import AddIcon from "components/icons/AddIcon";
 import TimerIcon from "components/icons/TimerIcon";
@@ -8,7 +8,7 @@ import {
   isTaskResponse,
   newTask,
   tasksFilterState,
-  tasksState,
+  useTasksActions,
 } from "models/task";
 import { formatDate } from "lib/format";
 import { postData } from "lib/fetch";
@@ -71,7 +71,7 @@ const AddTaskFormContainer = (): JSX.Element => {
   const [title, setTitle] = useState("");
   const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
   const [dueOn, setDueOn] = useState<Date | null>(null);
-  const setTasks = useSetRecoilState(tasksState);
+  const { addTask } = useTasksActions();
   const user = useUser();
   const tasksFilter = useRecoilValue(tasksFilterState);
 
@@ -115,7 +115,7 @@ const AddTaskFormContainer = (): JSX.Element => {
     postData("/tasks", respBody, user)
       .then((data) => {
         if (isTaskResponse(data)) {
-          setTasks((prev) => [...prev, newTask(data)]);
+          addTask(newTask(data));
         }
       })
       .catch((error) => console.error(error));

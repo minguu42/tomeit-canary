@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import cn from "classnames";
 
 import TimerIcon from "components/icons/TimerIcon";
@@ -8,7 +8,7 @@ import StopCircleIcon from "components/icons/StopCircleIcon";
 import CheckCircleIcon from "components/icons/CheckCircleIcon";
 import s from "./styles.module.scss";
 import {
-  tasksState,
+  useTasksActions,
   filteredTasksState,
   playingTaskState,
   Task,
@@ -91,7 +91,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
   const [restCount, setRestCount] = useState(INIT_REST_COUNT);
   const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
   const filteredTasks = useRecoilValue(filteredTasksState);
-  const setTasks = useSetRecoilState(tasksState);
+  const { replaceTask } = useTasksActions();
   const user = useUser();
   const { startPlayingPomodoro, endPlayingPomodoro } =
     useIsPomodoroPlayingActions();
@@ -148,14 +148,10 @@ const PomodoroPlayerContainer = (): JSX.Element => {
           console.error(err)
         );
         const index = filteredTasks.findIndex((t) => t.id === playingTask.id);
-        const tmp = { ...playingTask };
-        tmp.actualPomodoroNum += 1;
-        setTasks((prev) => [
-          ...prev.slice(0, index),
-          tmp,
-          ...prev.slice(index + 1),
-        ]);
-        setPlayingTask(tmp);
+        const newTask = { ...playingTask };
+        newTask.actualPomodoroNum += 1;
+        replaceTask(index, newTask);
+        setPlayingTask(newTask);
         setRestCount((c) => (c === 1 ? INIT_REST_COUNT : c - 1));
       } else {
         makeSound("#finish_rest").catch((err) => console.error(err));
@@ -168,11 +164,11 @@ const PomodoroPlayerContainer = (): JSX.Element => {
     playingTask,
     restCount,
     setPlayingTask,
-    setTasks,
     filteredTasks,
     time,
     user,
     endPlayingPomodoro,
+    replaceTask,
   ]);
 
   return (

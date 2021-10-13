@@ -11,8 +11,8 @@ import {
   tasksFilterState,
   TasksFilter,
   isTasksResponse,
-  tasksState,
   newTask,
+  useTasksActions,
 } from "models/task";
 import { getData } from "lib/fetch";
 import { useUser } from "lib/auth";
@@ -40,19 +40,19 @@ const TasksPageLayoutContainer = ({
   tasksFilter,
 }: ContainerProps): JSX.Element => {
   const setTasksFilter = useSetRecoilState(tasksFilterState);
-  const setTasks = useSetRecoilState(tasksState);
+  const { initTasks } = useTasksActions();
   const user = useUser();
 
   useEffect(() => {
     getData("/tasks?isCompleted=false", user)
       .then((data) => {
         if (isTasksResponse(data)) {
-          setTasks(data.tasks.map((taskResponse) => newTask(taskResponse)));
+          initTasks(data.tasks.map((t) => newTask(t)));
         }
       })
       .catch((error) => console.error(error));
     setTasksFilter(tasksFilter);
-  }, [user, setTasksFilter, tasksFilter, setTasks]);
+  }, [user, setTasksFilter, tasksFilter, initTasks]);
 
   return <TasksPageLayout />;
 };
