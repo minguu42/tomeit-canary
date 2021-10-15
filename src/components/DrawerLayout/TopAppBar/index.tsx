@@ -7,7 +7,7 @@ import SummarizeIcon from "components/icons/SummarizeIcon";
 import AccountMenu from "components/DrawerLayout/TopAppBar/AccountMenu";
 import s from "./styles.module.scss";
 import { logout, useUser } from "lib/auth";
-import { useToggleDrawer, useCloseDrawer } from "lib/states";
+import { useIsDrawerOpenActions } from "lib/states";
 
 type Props = {
   isLoggedIn: boolean;
@@ -50,8 +50,7 @@ const TopAppBar = ({
 const TopAppBarContainer = (): JSX.Element => {
   const user = useUser();
   const router = useRouter();
-  const toggleDrawer = useToggleDrawer();
-  const closeDrawer = useCloseDrawer();
+  const { closeDrawer, toggleDrawer } = useIsDrawerOpenActions();
 
   const handleLogout = async (): Promise<void> => {
     try {

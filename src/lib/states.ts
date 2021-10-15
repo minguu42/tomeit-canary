@@ -9,19 +9,25 @@ export const useIsDrawerOpen = (): boolean => {
   return useRecoilValue(isDrawerOpenState);
 };
 
-export const useToggleDrawer = (): (() => void) => {
-  const setIsDrawerOpen = useSetRecoilState(isDrawerOpenState);
-
-  return (): void => {
-    setIsDrawerOpen((prev) => !prev);
-  };
+type IsDrawerOpenActions = {
+  closeDrawer: () => void;
+  toggleDrawer: () => void;
 };
 
-export const useCloseDrawer = (): (() => void) => {
+export const useIsDrawerOpenActions = (): IsDrawerOpenActions => {
   const setIsDrawerOpen = useSetRecoilState(isDrawerOpenState);
 
-  return (): void => {
+  const closeDrawer = (): void => {
     setIsDrawerOpen(false);
+  };
+
+  const toggleDrawer = (): void => {
+    setIsDrawerOpen((prev) => !prev);
+  };
+
+  return {
+    closeDrawer,
+    toggleDrawer,
   };
 };
 

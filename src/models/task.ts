@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, selector, useRecoilValue, useSetRecoilState } from "recoil";
 import { formatDate } from "../lib/format";
 
 export type Task = {
@@ -68,19 +68,74 @@ export const newTask = (taskResponse: TaskResponse): Task => {
   };
 };
 
-export const tasksState = atom<Task[]>({
+const tasksState = atom<Task[]>({
   key: "tasksState",
   default: [],
 });
 
+export const useTasks = (): Task[] => {
+  return useRecoilValue(tasksState);
+};
+
+type TasksActions = {
+  initTasks: (tasks: Task[]) => void;
+  addTask: (task: Task) => void;
+  replaceTask: (index: number, task: Task) => void;
+  deleteTask: (index: number) => void;
+};
+
+export const useTasksActions = (): TasksActions => {
+  const setTasks = useSetRecoilState(tasksState);
+
+  const initTasks = (tasks: Task[]): void => {
+    setTasks(tasks);
+  };
+
+  const addTask = (task: Task): void => {
+    setTasks((prev) => [...prev, task]);
+  };
+
+  const replaceTask = (index: number, newTask: Task): void => {
+    setTasks((prev) => [
+      ...prev.slice(0, index),
+      newTask,
+      ...prev.slice(index + 1),
+    ]);
+  };
+
+  const deleteTask = (index: number): void => {
+    setTasks((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+  };
+
+  return { initTasks, addTask, replaceTask, deleteTask };
+};
+
 export type TasksFilter = "Today" | "Tomorrow" | "Someday";
 
-export const tasksFilterState = atom<TasksFilter>({
+const tasksFilterState = atom<TasksFilter>({
   key: "tasksFilterState",
   default: "Someday",
 });
 
-export const filteredTasksState = selector<Task[]>({
+export const useTasksFilter = (): TasksFilter => {
+  return useRecoilValue(tasksFilterState);
+};
+
+type TasksFilterActions = {
+  initTasksFilter: (filter: TasksFilter) => void;
+};
+
+export const useTasksFilterActions = (): TasksFilterActions => {
+  const setTasksFilter = useSetRecoilState(tasksFilterState);
+
+  const initTasksFilter = (filter: TasksFilter) => {
+    setTasksFilter(filter);
+  };
+
+  return { initTasksFilter };
+};
+
+const filteredTasksState = selector<Task[]>({
   key: "filteredTasksState",
   get: ({ get }) => {
     const filter = get(tasksFilterState);
@@ -113,7 +168,29 @@ export const filteredTasksState = selector<Task[]>({
   },
 });
 
-export const playingTaskState = atom<Task | null>({
+export const useFilteredTasks = (): Task[] => {
+  return useRecoilValue(filteredTasksState);
+};
+
+const playingTaskState = atom<Task | null>({
   key: "playingTaskState",
   default: null,
 });
+
+export const usePlayingTask = (): Task | null => {
+  return useRecoilValue(playingTaskState);
+};
+
+type PlayingTaskActions = {
+  setTaskInPlayer: (task: Task) => void;
+};
+
+export const usePlayingTaskActions = (): PlayingTaskActions => {
+  const setPlayingTask = useSetRecoilState(playingTaskState);
+
+  const setTaskInPlayer = (task: Task): void => {
+    setPlayingTask(task);
+  };
+
+  return { setTaskInPlayer };
+};

@@ -1,20 +1,19 @@
 import Link from "next/link";
-import { useRecoilValue } from "recoil";
 import cn from "classnames";
 
 import TodayIcon from "components/icons/TodayIcon";
 import TomorrowIcon from "components/icons/TomorrowIcon";
 import DateRangeIcon from "components/icons/DateRangeIcon";
 import s from "./styles.module.scss";
-import { TasksFilter, tasksFilterState } from "models/task";
-import { useIsDrawerOpen, useToggleDrawer } from "lib/states";
+import { TasksFilter, useTasksFilter } from "models/task";
+import { useIsDrawerOpen, useIsDrawerOpenActions } from "lib/states";
 
 type Props = {
   tasksFilter: TasksFilter;
-  toggleDrawer: () => void;
+  closeDrawer: () => void;
 };
 
-const Drawer = ({ tasksFilter, toggleDrawer }: Props): JSX.Element => (
+const Drawer = ({ tasksFilter, closeDrawer }: Props): JSX.Element => (
   <div className={s.container}>
     <aside className={s.drawer}>
       <nav>
@@ -50,17 +49,17 @@ const Drawer = ({ tasksFilter, toggleDrawer }: Props): JSX.Element => (
         </Link>
       </nav>
     </aside>
-    <button onClick={toggleDrawer} className={s.background} />
+    <button onClick={closeDrawer} className={s.background} />
   </div>
 );
 
 const DrawerContainer = (): JSX.Element => {
   const isDrawerOpen = useIsDrawerOpen();
-  const toggleDrawer = useToggleDrawer();
-  const tasksFilter = useRecoilValue(tasksFilterState);
+  const { closeDrawer } = useIsDrawerOpenActions();
+  const tasksFilter = useTasksFilter();
 
   return isDrawerOpen ? (
-    <Drawer tasksFilter={tasksFilter} toggleDrawer={toggleDrawer} />
+    <Drawer tasksFilter={tasksFilter} closeDrawer={closeDrawer} />
   ) : (
     <></>
   );

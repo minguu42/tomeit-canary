@@ -1,12 +1,12 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-
 import TaskListItem from "./TaskListItem";
 import s from "./styles.module.scss";
 import {
-  filteredTasksState,
-  playingTaskState,
   Task,
-  tasksState,
+  useFilteredTasks,
+  usePlayingTask,
+  usePlayingTaskActions,
+  useTasks,
+  useTasksActions,
 } from "models/task";
 import { patchData } from "lib/fetch";
 import { useUser } from "lib/auth";
@@ -42,9 +42,11 @@ export const TaskList = ({
 );
 
 const TaskListContainer = (): JSX.Element => {
-  const setTasks = useSetRecoilState(tasksState);
-  const filteredTasks = useRecoilValue(filteredTasksState);
-  const [playingTask, setPlayingTask] = useRecoilState(playingTaskState);
+  const { deleteTask } = useTasksActions();
+  const tasks = useTasks();
+  const filteredTasks = useFilteredTasks();
+  const playingTask = usePlayingTask();
+  const { setTaskInPlayer } = usePlayingTaskActions();
   const isPomodoroPlaying = useIsPomodoroPlaying();
   const user = useUser();
 
@@ -54,14 +56,10 @@ const TaskListContainer = (): JSX.Element => {
     };
     patchData(`/tasks/${task.id}`, reqBody, user)
       .then(() => {
-        const index = filteredTasks.findIndex((t) => t.id === task.id);
-        setTasks((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+        const index = tasks.findIndex((t) => t.id === task.id);
+        deleteTask(index);
       })
       .catch((error) => console.error(error));
-  };
-
-  const setTask = (task: Task): void => {
-    setPlayingTask(task);
   };
 
   return (
@@ -70,7 +68,7 @@ const TaskListContainer = (): JSX.Element => {
       playingTask={playingTask}
       isPomodoroPlaying={isPomodoroPlaying}
       completeTask={completeTask}
-      setTask={setTask}
+      setTask={setTaskInPlayer}
     />
   );
 };
