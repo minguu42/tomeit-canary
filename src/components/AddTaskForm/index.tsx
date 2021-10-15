@@ -121,7 +121,19 @@ const AddTaskFormContainer = (): JSX.Element => {
 
     setTitle("");
     setExpectedPomodoroNum(0);
-    setDueOn(null);
+    const today = new Date();
+    switch (tasksFilter) {
+      case "Today":
+        setDueOn(today);
+        break;
+      case "Tomorrow":
+        today.setDate(today.getDate() + 1);
+        setDueOn(today);
+        break;
+      case "Someday":
+        setDueOn(null);
+        break;
+    }
   };
 
   return (
