@@ -73,6 +73,10 @@ const tasksState = atom<Task[]>({
   default: [],
 });
 
+export const useTasks = (): Task[] => {
+  return useRecoilValue(tasksState);
+};
+
 type TasksActions = {
   initTasks: (tasks: Task[]) => void;
   addTask: (task: Task) => void;

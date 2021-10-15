@@ -8,8 +8,8 @@ import CheckCircleIcon from "components/icons/CheckCircleIcon";
 import s from "./styles.module.scss";
 import {
   Task,
+  useTasks,
   useTasksActions,
-  useFilteredTasks,
   usePlayingTask,
   usePlayingTaskActions,
 } from "models/task";
@@ -89,10 +89,10 @@ const PomodoroPlayerContainer = (): JSX.Element => {
   const [isActive, setIsActive] = useState(false);
   const [isNextPomodoro, setIsNextPomodoro] = useState(true);
   const [restCount, setRestCount] = useState(INIT_REST_COUNT);
+  const tasks = useTasks();
+  const { replaceTask } = useTasksActions();
   const playingTask = usePlayingTask();
   const { setTaskInPlayer } = usePlayingTaskActions();
-  const filteredTasks = useFilteredTasks();
-  const { replaceTask } = useTasksActions();
   const user = useUser();
   const { startPlayingPomodoro, endPlayingPomodoro } =
     useIsPomodoroPlayingActions();
@@ -148,7 +148,7 @@ const PomodoroPlayerContainer = (): JSX.Element => {
         postData("/pomodoros", { taskID: playingTask.id }, user).catch((err) =>
           console.error(err)
         );
-        const index = filteredTasks.findIndex((t) => t.id === playingTask.id);
+        const index = tasks.findIndex((t) => t.id === playingTask.id);
         const newTask = { ...playingTask };
         newTask.actualPomodoroNum += 1;
         replaceTask(index, newTask);
@@ -164,12 +164,12 @@ const PomodoroPlayerContainer = (): JSX.Element => {
     isNextPomodoro,
     playingTask,
     restCount,
-    filteredTasks,
     time,
     user,
     endPlayingPomodoro,
     replaceTask,
     setTaskInPlayer,
+    tasks,
   ]);
 
   return (

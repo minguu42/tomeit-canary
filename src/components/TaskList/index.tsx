@@ -5,6 +5,7 @@ import {
   useFilteredTasks,
   usePlayingTask,
   usePlayingTaskActions,
+  useTasks,
   useTasksActions,
 } from "models/task";
 import { patchData } from "lib/fetch";
@@ -42,6 +43,7 @@ export const TaskList = ({
 
 const TaskListContainer = (): JSX.Element => {
   const { deleteTask } = useTasksActions();
+  const tasks = useTasks();
   const filteredTasks = useFilteredTasks();
   const playingTask = usePlayingTask();
   const { setTaskInPlayer } = usePlayingTaskActions();
@@ -54,7 +56,7 @@ const TaskListContainer = (): JSX.Element => {
     };
     patchData(`/tasks/${task.id}`, reqBody, user)
       .then(() => {
-        const index = filteredTasks.findIndex((t) => t.id === task.id);
+        const index = tasks.findIndex((t) => t.id === task.id);
         deleteTask(index);
       })
       .catch((error) => console.error(error));
