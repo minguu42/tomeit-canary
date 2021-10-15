@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import AddIcon from "components/icons/AddIcon";
 import TimerIcon from "components/icons/TimerIcon";
@@ -12,7 +13,6 @@ import {
 import { formatDate } from "lib/format";
 import { postData } from "lib/fetch";
 import { useUser } from "lib/auth";
-import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
   title: string;
