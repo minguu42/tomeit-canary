@@ -1,6 +1,6 @@
 @use "styles/variables";
 
-.container {
+.form {
   display: flex;
   align-items: center;
   height: 56px;
@@ -25,6 +25,7 @@
 }
 
 .expectedNum {
+  max-width: 32px;
   height: 52px;
   color: var(--c-on-surface-medium);
   @include variables.subtitle1;

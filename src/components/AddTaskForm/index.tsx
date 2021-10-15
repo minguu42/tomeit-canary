@@ -20,7 +20,7 @@ type Inputs = {
   dueOn: Date | null;
 };
 
-const AddTaskFormContainer2 = (): JSX.Element => {
+const AddTaskFormContainer = (): JSX.Element => {
   const [dueOnDefaultValue, setDueOnDefaultValue] = useState<Date | undefined>(
     undefined
   );
@@ -63,7 +63,7 @@ const AddTaskFormContainer2 = (): JSX.Element => {
   }, [tasksFilter]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={s.container}>
+    <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
       <AddIcon fill="#212121" />
       <input
         title="タスク名"
@@ -102,4 +102,4 @@ const AddTaskFormContainer2 = (): JSX.Element => {
   );
 };
 
-export default AddTaskFormContainer2;
+export default AddTaskFormContainer;
