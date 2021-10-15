@@ -13,6 +13,7 @@ import {
 import { formatDate } from "lib/format";
 import { postData } from "lib/fetch";
 import { useUser } from "lib/auth";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
   title: string;
