@@ -79,7 +79,7 @@ export const PomodoroPlayer = ({
   </div>
 );
 
-const POMODORO_TIME = 15;
+const POMODORO_TIME = 1500;
 const SHORT_REST_TIME = 300;
 const LONG_REST_TIME = 900;
 const INIT_REST_COUNT = 4;
