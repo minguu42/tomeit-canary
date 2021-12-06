@@ -2,6 +2,8 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { Container, Flex, VStack, Text, Heading } from "@chakra-ui/react";
 
+import TopAppBar from "components/common/TopAppBar";
+
 const Landing = (): JSX.Element => (
   <>
     <Head>
@@ -12,6 +14,7 @@ const Landing = (): JSX.Element => (
       />
     </Head>
 
+    <TopAppBar />
     <Container maxW="container.xl">
       <Flex>
         <VStack alignItems="flex-start">
