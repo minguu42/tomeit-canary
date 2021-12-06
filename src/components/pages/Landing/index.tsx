@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { Container, Flex, VStack, Text, Heading } from "@chakra-ui/react";
 
-import TopAppBar from "components/common/TopAppBar";
+import LayoutWithDrawer from "components/common/LayoutWithDrawer";
 
 const Landing = (): JSX.Element => (
   <>
@@ -14,20 +14,21 @@ const Landing = (): JSX.Element => (
       />
     </Head>
 
-    <TopAppBar />
-    <Container maxW="container.xl">
-      <Flex>
-        <VStack alignItems="flex-start">
-          <Heading>やるべきことのみをやる</Heading>
-          <Text>
-            tomeit は必要なことだけに集中するためのタスク管理アプリです。
-            <br />
-            今やるべきことのみに集中し、淡々とタスクをこなしましょう！
-          </Text>
-        </VStack>
-        <h2>Be fun!</h2>
-      </Flex>
-    </Container>
+    <LayoutWithDrawer>
+      <Container maxW="container.xl">
+        <Flex>
+          <VStack alignItems="flex-start">
+            <Heading>やるべきことのみをやる</Heading>
+            <Text>
+              tomeit は必要なことだけに集中するためのタスク管理アプリです。
+              <br />
+              今やるべきことのみに集中し、淡々とタスクをこなしましょう！
+            </Text>
+          </VStack>
+          <h2>Be fun!</h2>
+        </Flex>
+      </Container>
+    </LayoutWithDrawer>
   </>
 );
 
