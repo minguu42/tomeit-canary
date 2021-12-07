@@ -7,8 +7,6 @@ module.exports = {
     "!**/.next/**",
   ],
   moduleNameMapper: {
-    "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-    "^.+\\.(css|sass|scss)$": "<rootDir>/src/__mocks__/styleMock.js",
     "^components/(.*)$": "<rootDir>/src/components/$1",
     "^lib/(.*)$": "<rootDir>/src/lib/$1",
     "^models/(.*)$": "<rootDir>/src/models/$1",
@@ -20,7 +18,6 @@ module.exports = {
   },
   transformIgnorePatterns: [
     "/node_modules/",
-    "^.+\\.module\\.(css|sass|scss)$",
   ],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
 };
