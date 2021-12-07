@@ -56,7 +56,12 @@ const LayoutWithDrawer = ({
       />
     </HStack>
     <Flex>
-      <Box d={{ base: "none", md: "block" }}>
+      <Box
+        d={{ base: "none", md: "block" }}
+        minH="100vh"
+        borderRight="1px"
+        borderColor="gray.200"
+      >
         {isOpen ? <Navigation /> : <></>}
       </Box>
       {children}
