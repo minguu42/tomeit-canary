@@ -1,7 +1,7 @@
 import { Heading, HStack, IconButton, Spacer } from "@chakra-ui/react";
 
 import DrawerMenu from "components/common/DrawerMenu";
-import { AccountCircleIcon, HistoryIcon } from "components/icons";
+import { AccountCircleIcon, HistoryIcon } from "components/common/icons";
 
 type Props = {
   onMdToggle: () => void;

@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { MenuIcon } from "components/icons";
+import { MenuIcon } from "components/common/icons";
 import Navigation from "./Navigation";
 
 type Props = {
