@@ -29,17 +29,7 @@ const LayoutWithDrawer = ({
 }: Props): JSX.Element => (
   <>
     <HStack px={4} bg="purple.500" h={14} spacing={4}>
-      <Box d={{ base: "block", md: "none" }}>
-        <DrawerMenu />
-      </Box>
-      <Box d={{ base: "none", md: "block" }}>
-        <IconButton
-          aria-label="ドロワーを切り替える"
-          colorScheme="purple"
-          icon={<MenuIcon />}
-          onClick={onToggle}
-        />
-      </Box>
+      <DrawerMenu onMdToggle={onToggle} />
       <Heading as="h2" fontSize="lg">
         tomeit
       </Heading>

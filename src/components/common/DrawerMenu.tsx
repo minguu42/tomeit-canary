@@ -1,4 +1,5 @@
 import {
+  Box,
   IconButton,
   Drawer,
   DrawerBody,
@@ -16,34 +17,61 @@ type Props = {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  onMdToggle: () => void;
 };
 
-const DrawerMenu = ({ isOpen, onOpen, onClose }: Props): JSX.Element => (
+type ContainerProps = {
+  onMdToggle: () => void;
+};
+
+const DrawerMenu = ({
+  isOpen,
+  onOpen,
+  onClose,
+  onMdToggle,
+}: Props): JSX.Element => (
   <>
-    <IconButton
-      aria-label="ドロワーを切り替える"
-      colorScheme="purple"
-      icon={<MenuIcon />}
-      onClick={onOpen}
-    />
-    <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-      <DrawerOverlay>
-        <DrawerContent maxW="256px">
-          <DrawerCloseButton />
-          <DrawerHeader>ヘッダ</DrawerHeader>
-          <DrawerBody>
-            <Navigation />
-          </DrawerBody>
-        </DrawerContent>
-      </DrawerOverlay>
-    </Drawer>
+    <Box d={{ base: "block", md: "none" }}>
+      <IconButton
+        aria-label="ドロワーを切り替える"
+        colorScheme="purple"
+        icon={<MenuIcon />}
+        onClick={onOpen}
+      />
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+        <DrawerOverlay>
+          <DrawerContent maxW="256px">
+            <DrawerCloseButton />
+            <DrawerHeader>ヘッダ</DrawerHeader>
+            <DrawerBody>
+              <Navigation />
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
+    </Box>
+    <Box d={{ base: "none", md: "block" }}>
+      <IconButton
+        aria-label="ドロワーを切り替える"
+        colorScheme="purple"
+        icon={<MenuIcon />}
+        onClick={onMdToggle}
+      />
+    </Box>
   </>
 );
 
-const DrawerMenuContainer = (): JSX.Element => {
+const DrawerMenuContainer = ({ onMdToggle }: ContainerProps): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  return <DrawerMenu isOpen={isOpen} onOpen={onOpen} onClose={onClose} />;
+  return (
+    <DrawerMenu
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
+      onMdToggle={onMdToggle}
+    />
+  );
 };
 
 export default DrawerMenuContainer;
