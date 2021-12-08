@@ -9,8 +9,8 @@ import {
   DrawerCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import { MdMenu } from "react-icons/md";
 
-import { MenuIcon } from "components/common/icons";
 import Navigation from "./Navigation";
 
 type Props = {
@@ -35,7 +35,8 @@ const DrawerMenu = ({
       <IconButton
         aria-label="ドロワーを切り替える"
         colorScheme="purple"
-        icon={<MenuIcon />}
+        icon={<MdMenu />}
+        fontSize="24px"
         onClick={onOpen}
       />
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
@@ -54,7 +55,8 @@ const DrawerMenu = ({
       <IconButton
         aria-label="ドロワーを切り替える"
         colorScheme="purple"
-        icon={<MenuIcon />}
+        icon={<MdMenu />}
+        fontSize="24px"
         onClick={onMdToggle}
       />
     </Box>

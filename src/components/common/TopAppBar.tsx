@@ -1,29 +1,26 @@
-import { Heading, HStack, IconButton, Spacer } from "@chakra-ui/react";
+import { Heading, HStack, IconButton, Spacer, Avatar } from "@chakra-ui/react";
+import { MdHistory } from "react-icons/md";
 
 import DrawerMenu from "components/common/DrawerMenu";
-import { AccountCircleIcon, HistoryIcon } from "components/common/icons";
 
 type Props = {
   onMdToggle: () => void;
 };
 
 const TopAppBar = ({ onMdToggle }: Props) => (
-  <HStack h="56px" px="16px" spacing="16px" bg="purple.500">
+  <HStack h="56px" px="16px" spacing="8px" bg="purple.500">
     <DrawerMenu onMdToggle={onMdToggle} />
-    <Heading as="h2" fontSize="lg">
+    <Heading as="h2" fontSize="lg" color="white">
       tomeit
     </Heading>
     <Spacer />
     <IconButton
+      fontSize="24px"
       aria-label="履歴ページを開く"
       colorScheme="purple"
-      icon={<HistoryIcon />}
+      icon={<MdHistory />}
     />
-    <IconButton
-      aria-label="アカウントメニューを開く"
-      colorScheme="purple"
-      icon={<AccountCircleIcon />}
-    />
+    <Avatar size="xs" />
   </HStack>
 );
 
