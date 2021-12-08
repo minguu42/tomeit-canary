@@ -1,6 +1,14 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import { Container, Flex, VStack, Text, Heading } from "@chakra-ui/react";
+import {
+  Container,
+  Flex,
+  VStack,
+  Button,
+  Text,
+  Heading,
+} from "@chakra-ui/react";
+import { FcGoogle } from "react-icons/fc";
 
 import LayoutWithDrawer from "components/common/LayoutWithDrawer";
 import Image from "components/common/Image";
@@ -25,6 +33,14 @@ const Landing = (): JSX.Element => (
               <br />
               今やるべきことのみに集中し、淡々とタスクをこなしましょう！
             </Text>
+            <Button
+              p="8px 16px"
+              fontWeight="normal"
+              variant="outline"
+              leftIcon={<FcGoogle />}
+            >
+              Sign in with Google
+            </Button>
           </VStack>
           <Image
             src="/work_from_home.png"
