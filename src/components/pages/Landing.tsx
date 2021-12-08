@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Container, Flex, VStack, Text, Heading } from "@chakra-ui/react";
 
 import LayoutWithDrawer from "components/common/LayoutWithDrawer";
-import Image from "../common/Image";
+import Image from "components/common/Image";
 
 const Landing = (): JSX.Element => (
   <>
