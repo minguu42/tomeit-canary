@@ -3,6 +3,7 @@ import Head from "next/head";
 import { Container, Flex, VStack, Text, Heading } from "@chakra-ui/react";
 
 import LayoutWithDrawer from "components/common/LayoutWithDrawer";
+import Image from "../common/Image";
 
 const Landing = (): JSX.Element => (
   <>
@@ -15,17 +16,24 @@ const Landing = (): JSX.Element => (
     </Head>
 
     <LayoutWithDrawer>
-      <Container maxW="container.xl">
-        <Flex>
-          <VStack alignItems="flex-start">
-            <Heading>やるべきことのみをやる</Heading>
+      <Container maxW="container.lg" pt={{ base: "12px", md: "56px" }}>
+        <Flex gridGap="24px" direction={{ base: "column", md: "row" }}>
+          <VStack alignItems="flex-start" spacing="24px">
+            <Heading mt="56px">やるべきことのみをやる</Heading>
             <Text>
               tomeit は必要なことだけに集中するためのタスク管理アプリです。
               <br />
               今やるべきことのみに集中し、淡々とタスクをこなしましょう！
             </Text>
           </VStack>
-          <h2>Be fun!</h2>
+          <Image
+            src="/work_from_home.png"
+            width={400}
+            height={300}
+            alt=""
+            w="auto"
+            h="auto"
+          />
         </Flex>
       </Container>
     </LayoutWithDrawer>
