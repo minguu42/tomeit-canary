@@ -1,7 +1,8 @@
-import { Heading, HStack, IconButton, Spacer, Avatar } from "@chakra-ui/react";
+import { Heading, HStack, Spacer, IconButton, Avatar } from "@chakra-ui/react";
 import { MdHistory } from "react-icons/md";
 
 import DrawerMenu from "components/common/DrawerMenu";
+import UserMenu from "components/models/user/UserMenu";
 
 type Props = {
   onMdToggle: () => void;
@@ -20,7 +21,7 @@ const TopAppBar = ({ onMdToggle }: Props) => (
       colorScheme="purple"
       icon={<MdHistory />}
     />
-    <Avatar size="xs" />
+    <UserMenu />
   </HStack>
 );
 
