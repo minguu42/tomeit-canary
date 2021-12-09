@@ -1,4 +1,4 @@
-import { Heading, HStack, Spacer, IconButton, Avatar } from "@chakra-ui/react";
+import { Heading, HStack, Spacer, IconButton } from "@chakra-ui/react";
 import { MdHistory } from "react-icons/md";
 
 import DrawerMenu from "components/common/DrawerMenu";
