@@ -1,8 +1,12 @@
 import NextLink from "next/link";
 import { Flex, Button, ButtonProps } from "@chakra-ui/react";
 
-const CustomLink = (props: ButtonProps): JSX.Element => (
-  <NextLink href="/" passHref>
+type CustomLinkProps = ButtonProps & {
+  url: string;
+};
+
+const CustomLink = ({ url, ...props }: CustomLinkProps): JSX.Element => (
+  <NextLink href={url} passHref>
     <Button
       as="a"
       h="56px"
@@ -18,9 +22,9 @@ const CustomLink = (props: ButtonProps): JSX.Element => (
 
 const Navigation = (): JSX.Element => (
   <Flex as="nav" w="224px" p="16px" direction="column">
-    <CustomLink>Today</CustomLink>
-    <CustomLink>Tomorrow</CustomLink>
-    <CustomLink>Someday</CustomLink>
+    <CustomLink url="/tasks/today">Today</CustomLink>
+    <CustomLink url="/tasks/tomorrow">Tomorrow</CustomLink>
+    <CustomLink url="/tasks/someday">Someday</CustomLink>
   </Flex>
 );
 
