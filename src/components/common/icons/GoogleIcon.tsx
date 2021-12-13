@@ -1,11 +1,12 @@
-import { Icon } from "@chakra-ui/react";
+import { Icon, IconProps } from "@chakra-ui/react";
 
-const GoogleIcon = (): JSX.Element => (
+const GoogleIcon = ({ ...props }: IconProps): JSX.Element => (
   <Icon
     width="18px"
     height="18px"
     viewBox="0 0 256 262"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <g>
       <path
