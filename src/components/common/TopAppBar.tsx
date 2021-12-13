@@ -1,22 +1,21 @@
 import {
-  Heading,
   HStack,
   Spacer,
   IconButton,
+  Heading,
   useColorMode,
   ColorMode,
 } from "@chakra-ui/react";
 
-import DrawerMenu from "components/common/DrawerMenu";
 import UserMenu from "components/models/user/UserMenu";
 import {
+  MenuIcon,
   HistoryIcon,
   LightModeIcon,
   DarkModeIcon,
 } from "components/common/icons";
 
 type ContainerProps = {
-  isOpen: boolean;
   onToggle: () => void;
 };
 
@@ -25,14 +24,18 @@ type Props = ContainerProps & {
   toggleColorMode: () => void;
 };
 
-const TopAppBar = ({ isOpen, onToggle, colorMode, toggleColorMode }: Props) => (
+const TopAppBar = ({ onToggle, colorMode, toggleColorMode }: Props) => (
   <HStack
     h="56px"
     px="16px"
     spacing="8px"
     bg={colorMode == "light" ? "gray.100" : "whiteAlpha.200"}
   >
-    <DrawerMenu isOpen={isOpen} onToggle={onToggle} />
+    <IconButton
+      aria-label="ドロワーを切り替える"
+      icon={<MenuIcon />}
+      onClick={onToggle}
+    />
     <Heading
       as="h2"
       fontSize="lg"
@@ -41,29 +44,20 @@ const TopAppBar = ({ isOpen, onToggle, colorMode, toggleColorMode }: Props) => (
       tomeit
     </Heading>
     <Spacer />
-    <IconButton
-      aria-label="履歴ページを開く"
-      icon={<HistoryIcon />}
-      fontSize="24px"
-    />
+    <IconButton aria-label="履歴ページを開く" icon={<HistoryIcon />} />
     <IconButton
       aria-label="カラーモードの切り替え"
       icon={colorMode ? <LightModeIcon /> : <DarkModeIcon />}
-      fontSize="24px"
       onClick={toggleColorMode}
     />
     <UserMenu />
   </HStack>
 );
 
-const TopAppBarContainer = ({
-  isOpen,
-  onToggle,
-}: ContainerProps): JSX.Element => {
+const TopAppBarContainer = ({ onToggle }: ContainerProps): JSX.Element => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <TopAppBar
-      isOpen={isOpen}
       onToggle={onToggle}
       colorMode={colorMode}
       toggleColorMode={toggleColorMode}
