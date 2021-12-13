@@ -5,7 +5,8 @@ import {
   InputLeftElement,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { MdAvTimer } from "react-icons/md";
+
+import { TimerIcon } from "components/common/icons";
 
 type TaskAddFormProps = {
   isMobile: boolean;
@@ -21,7 +22,7 @@ const TaskAddForm = ({ isMobile }: TaskAddFormProps): JSX.Element => (
     />
     <InputGroup maxW="68px" hidden={isMobile}>
       <InputLeftElement fontSize="24px" pointerEvents="none">
-        {<MdAvTimer />}
+        {<TimerIcon />}
       </InputLeftElement>
       <Input
         type="number"

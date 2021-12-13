@@ -6,10 +6,14 @@ import {
   useColorMode,
   ColorMode,
 } from "@chakra-ui/react";
-import { MdHistory, MdLightMode, MdDarkMode } from "react-icons/md";
 
 import DrawerMenu from "components/common/DrawerMenu";
 import UserMenu from "components/models/user/UserMenu";
+import {
+  HistoryIcon,
+  LightModeIcon,
+  DarkModeIcon,
+} from "components/common/icons";
 
 type ContainerProps = {
   onMdToggle: () => void;
@@ -38,12 +42,12 @@ const TopAppBar = ({ colorMode, toggleColorMode, onMdToggle }: Props) => (
     <Spacer />
     <IconButton
       aria-label="履歴ページを開く"
-      icon={<MdHistory />}
+      icon={<HistoryIcon />}
       fontSize="24px"
     />
     <IconButton
       aria-label="カラーモードの切り替え"
-      icon={colorMode ? <MdLightMode /> : <MdDarkMode />}
+      icon={colorMode ? <LightModeIcon /> : <DarkModeIcon />}
       fontSize="24px"
       onClick={toggleColorMode}
     />
