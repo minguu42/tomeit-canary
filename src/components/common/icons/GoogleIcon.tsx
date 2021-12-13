@@ -3,9 +3,9 @@ import { Icon, IconProps } from "@chakra-ui/react";
 const GoogleIcon = (props: IconProps): JSX.Element => (
   <Icon
     xmlns="http://www.w3.org/2000/svg"
+    width="24px"
+    height="24px"
     viewBox="0 0 256 262"
-    w="18px"
-    h="18px"
     {...props}
   >
     <g>

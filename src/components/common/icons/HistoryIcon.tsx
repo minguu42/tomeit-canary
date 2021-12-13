@@ -3,9 +3,9 @@ import { Icon, IconProps } from "@chakra-ui/react";
 const HistoryIcon = (props: IconProps): JSX.Element => (
   <Icon
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
     width="24px"
     height="24px"
+    viewBox="0 0 24 24"
     fill="currentColor"
     {...props}
   >
