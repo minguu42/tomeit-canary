@@ -16,7 +16,8 @@ import {
 } from "components/common/icons";
 
 type ContainerProps = {
-  onMdToggle: () => void;
+  isOpen: boolean;
+  onToggle: () => void;
 };
 
 type Props = ContainerProps & {
@@ -24,14 +25,14 @@ type Props = ContainerProps & {
   toggleColorMode: () => void;
 };
 
-const TopAppBar = ({ colorMode, toggleColorMode, onMdToggle }: Props) => (
+const TopAppBar = ({ isOpen, onToggle, colorMode, toggleColorMode }: Props) => (
   <HStack
     h="56px"
     px="16px"
     spacing="8px"
     bg={colorMode == "light" ? "gray.100" : "whiteAlpha.200"}
   >
-    <DrawerMenu onMdToggle={onMdToggle} />
+    <DrawerMenu isOpen={isOpen} onToggle={onToggle} />
     <Heading
       as="h2"
       fontSize="lg"
@@ -55,11 +56,15 @@ const TopAppBar = ({ colorMode, toggleColorMode, onMdToggle }: Props) => (
   </HStack>
 );
 
-const TopAppBarContainer = ({ onMdToggle }: ContainerProps): JSX.Element => {
+const TopAppBarContainer = ({
+  isOpen,
+  onToggle,
+}: ContainerProps): JSX.Element => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <TopAppBar
-      onMdToggle={onMdToggle}
+      isOpen={isOpen}
+      onToggle={onToggle}
       colorMode={colorMode}
       toggleColorMode={toggleColorMode}
     />
