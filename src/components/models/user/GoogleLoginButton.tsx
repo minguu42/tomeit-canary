@@ -1,10 +1,37 @@
-import {Button} from "@chakra-ui/react";
-import {FcGoogle} from "react-icons/fc";
+import { Center, Button, useColorMode, ColorMode } from "@chakra-ui/react";
 
-const GoogleLoginButton = (): JSX.Element => (
-  <Button p="8px 16px" leftIcon={<FcGoogle />} bg="whiteAlpha.200">
+import { GoogleIcon } from "components/common/icons";
+
+type Props = {
+  colorMode: ColorMode;
+};
+
+const GoogleLoginButton = ({ colorMode }: Props): JSX.Element => (
+  <Button
+    p="0 8px 0 0"
+    color={colorMode == "light" ? "blackAlpha.800" : "white"}
+    bgColor={colorMode == "light" ? "#FFFFFF" : "#4285F4"}
+    borderRadius="4px"
+    shadow="md"
+  >
+    <Center
+      mr="12px"
+      width="40px"
+      height="40px"
+      bgColor="#FFFFFF"
+      border="1px"
+      borderColor={colorMode == "light" ? "#FFFFFF" : "#4285F4"}
+      borderRadius="4px"
+    >
+      <GoogleIcon />
+    </Center>
     Sign in with Google
   </Button>
-)
+);
 
-export default GoogleLoginButton;
+const GoogleLoginButtonContainer = (): JSX.Element => {
+  const { colorMode } = useColorMode();
+  return <GoogleLoginButton colorMode={colorMode} />;
+};
+
+export default GoogleLoginButtonContainer;
