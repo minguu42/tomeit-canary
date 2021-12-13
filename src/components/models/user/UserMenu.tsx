@@ -12,7 +12,6 @@ const UserMenu = (): JSX.Element => (
   <Menu>
     <MenuButton
       as={IconButton}
-      colorScheme="purple"
       aria-label="ユーザアバター"
       icon={<Avatar size="xs" />}
     />

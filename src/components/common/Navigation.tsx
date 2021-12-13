@@ -13,7 +13,6 @@ const CustomLink = ({ url, ...props }: CustomLinkProps): JSX.Element => (
       p="16px"
       borderRadius="28px"
       justifyContent="flex-start"
-      colorScheme="purple"
       variant="ghost"
       {...props}
     />

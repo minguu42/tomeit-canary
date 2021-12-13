@@ -1,28 +1,65 @@
-import { Heading, HStack, Spacer, IconButton } from "@chakra-ui/react";
-import { MdHistory } from "react-icons/md";
+import {
+  Heading,
+  HStack,
+  Spacer,
+  IconButton,
+  useColorMode,
+  ColorMode,
+} from "@chakra-ui/react";
+import { MdHistory, MdLightMode, MdDarkMode } from "react-icons/md";
 
 import DrawerMenu from "components/common/DrawerMenu";
 import UserMenu from "components/models/user/UserMenu";
 
-type Props = {
+type ContainerProps = {
   onMdToggle: () => void;
 };
 
-const TopAppBar = ({ onMdToggle }: Props) => (
-  <HStack h="56px" px="16px" spacing="8px" bg="purple.500">
+type Props = ContainerProps & {
+  colorMode: ColorMode;
+  toggleColorMode: () => void;
+};
+
+const TopAppBar = ({ colorMode, toggleColorMode, onMdToggle }: Props) => (
+  <HStack
+    h="56px"
+    px="16px"
+    spacing="8px"
+    bg={colorMode == "light" ? "gray.100" : "whiteAlpha.200"}
+  >
     <DrawerMenu onMdToggle={onMdToggle} />
-    <Heading as="h2" fontSize="lg" color="white">
+    <Heading
+      as="h2"
+      fontSize="lg"
+      color={colorMode == "light" ? "black" : "white"}
+    >
       tomeit
     </Heading>
     <Spacer />
     <IconButton
-      fontSize="24px"
       aria-label="履歴ページを開く"
-      colorScheme="purple"
       icon={<MdHistory />}
+      fontSize="24px"
+    />
+    <IconButton
+      aria-label="カラーモードの切り替え"
+      icon={colorMode ? <MdLightMode /> : <MdDarkMode />}
+      fontSize="24px"
+      onClick={toggleColorMode}
     />
     <UserMenu />
   </HStack>
 );
 
-export default TopAppBar;
+const TopAppBarContainer = ({ onMdToggle }: ContainerProps): JSX.Element => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  return (
+    <TopAppBar
+      onMdToggle={onMdToggle}
+      colorMode={colorMode}
+      toggleColorMode={toggleColorMode}
+    />
+  );
+};
+
+export default TopAppBarContainer;

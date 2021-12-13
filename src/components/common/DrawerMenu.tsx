@@ -34,7 +34,6 @@ const DrawerMenu = ({
     <Box d={{ base: "block", md: "none" }}>
       <IconButton
         aria-label="ドロワーを切り替える"
-        colorScheme="purple"
         icon={<MdMenu />}
         fontSize="24px"
         onClick={onOpen}
@@ -54,7 +53,6 @@ const DrawerMenu = ({
     <Box d={{ base: "none", md: "block" }}>
       <IconButton
         aria-label="ドロワーを切り替える"
-        colorScheme="purple"
         icon={<MdMenu />}
         fontSize="24px"
         onClick={onMdToggle}
