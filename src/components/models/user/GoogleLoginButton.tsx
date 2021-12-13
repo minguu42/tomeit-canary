@@ -23,7 +23,7 @@ const GoogleLoginButton = ({ colorMode }: Props): JSX.Element => (
       borderColor={colorMode == "light" ? "#FFFFFF" : "#4285F4"}
       borderRadius="4px"
     >
-      <GoogleIcon />
+      <GoogleIcon boxSize="18px" />
     </Center>
     Sign in with Google
   </Button>
