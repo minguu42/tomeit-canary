@@ -29,7 +29,7 @@ const Landing = (): JSX.Element => (
             <GoogleLoginButton />
           </VStack>
           <Image
-            src="/work_from_home.png"
+            src="/images/work_from_home.png"
             width={400}
             height={300}
             alt=""
