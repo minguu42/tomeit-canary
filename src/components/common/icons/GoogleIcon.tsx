@@ -1,6 +1,6 @@
 import { Icon, IconProps } from "@chakra-ui/react";
 
-const GoogleIcon = ({ ...props }: IconProps): JSX.Element => (
+const GoogleIcon = (props: IconProps): JSX.Element => (
   <Icon
     width="18px"
     height="18px"
