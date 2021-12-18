@@ -46,10 +46,6 @@ lint-b:  ## govet, staticcheck による静的解析を実行する
 	go vet ./... && \
 	staticcheck ./...
 
-.PHONY: test-f
-test-f:  ## Jest でテストを実行する
-	@jest
-
 .PHONY: test-b
 test-b:  ## バックエンドのテストを実行する
 	@docker compose --env-file ./.env.development.local up -d db-test
