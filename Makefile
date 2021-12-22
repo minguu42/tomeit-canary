@@ -1,5 +1,9 @@
 .DEFAULT_GOAL := help
 
+.PHONY: storybook
+storybook:  ## Storybook のコンポーネントエクスプローラーを立ち上げる
+	@start-storybook -p 6006
+
 .PHONY: dev
 dev:  ## フロントエンドとバックエンドの開発用サーバを起動する
 	@docker compose --env-file ./.env.development.local up -d api
