@@ -17,7 +17,7 @@ const UserMenu = (): JSX.Element => (
       icon={<Avatar size="xs" />}
     />
     <MenuList>
-      <MenuItem color="red.400" icon={<LogoutIcon w="24px" h="24px" />}>
+      <MenuItem color="red.400" icon={<LogoutIcon />}>
         ログアウト
       </MenuItem>
     </MenuList>
