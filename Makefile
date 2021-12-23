@@ -1,5 +1,9 @@
 .DEFAULT_GOAL := help
 
+.PHONY: storybook
+storybook:  ## Storybook のコンポーネントエクスプローラーを立ち上げる
+	@start-storybook -p 6006
+
 .PHONY: dev
 dev:  ## フロントエンドとバックエンドの開発用サーバを起動する
 	@docker compose --env-file ./.env.development.local up -d api
@@ -29,7 +33,6 @@ start:  ## 本番サーバを起動する
 .PHONY: fmt-f
 fmt-f:  ## Prettier, stylelint による自動整形を実行する
 	@prettier --ignore-path ./.lintignore -l -w "**/*.{js,jsx,ts,tsx,scss,json,md}"
-	@stylelint --fix --ignore-path ./.lintignore "**/*.scss"
 
 .PHONY: fmt-b
 fmt-b:  ## gofmt, goimports による自動整形を実行する
@@ -40,17 +43,12 @@ fmt-b:  ## gofmt, goimports による自動整形を実行する
 .PHONY: lint-f
 lint-f:  ## ESLint, stylelint による静的解析を実行する
 	@next lint
-	@stylelint --ignore-path ./.lintignore "**/*.scss"
 
 .PHONY: lint-b
 lint-b:  ## govet, staticcheck による静的解析を実行する
 	@cd backend && \
 	go vet ./... && \
 	staticcheck ./...
-
-.PHONY: test-f
-test-f:  ## Jest でテストを実行する
-	@jest
 
 .PHONY: test-b
 test-b:  ## バックエンドのテストを実行する
