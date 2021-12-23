@@ -1,7 +1,7 @@
 import { VStack } from "@chakra-ui/react";
 
-import TaskListItem from "components/models/task/TaskListItem";
-import type { Task } from "models/task";
+import TaskListItem from "@/components/models/task/TaskListItem";
+import type { Task } from "@/models/task";
 
 type Props = {
   tasks: Task[];

@@ -12,7 +12,4 @@ const Template: Story<MobileProps> = (args) => <MobileDrawer {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   isOpen: true,
-  onToggle: () => {
-    return;
-  },
 };
