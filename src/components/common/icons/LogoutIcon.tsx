@@ -1,13 +1,12 @@
-import { Icon, IconProps } from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/react";
 
-const LogoutIcon = (props: IconProps): JSX.Element => (
+const LogoutIcon = (): JSX.Element => (
   <Icon
     xmlns="http://www.w3.org/2000/svg"
     width="24px"
     height="24px"
     viewBox="0 0 24 24"
     fill="currentColor"
-    {...props}
   >
     <g>
       <path d="M0,0h24v24H0V0z" fill="none" />

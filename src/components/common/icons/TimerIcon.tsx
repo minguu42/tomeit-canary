@@ -1,13 +1,12 @@
-import { Icon, IconProps } from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/react";
 
-const TimerIcon = (props: IconProps): JSX.Element => (
+const TimerIcon = (): JSX.Element => (
   <Icon
     xmlns="http://www.w3.org/2000/svg"
     width="24px"
     height="24px"
     viewBox="0 0 24 24"
     fill="currentColor"
-    {...props}
   >
     <g>
       <rect fill="none" height="24" width="24" />
