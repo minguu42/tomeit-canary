@@ -8,7 +8,7 @@ export type Props = {
 };
 
 export const TaskListItem = ({ task }: Props): JSX.Element => (
-  <Flex w="100%" p="8px 16px" borderBottom="1px" borderColor="gray.200">
+  <Flex alignItems="center" w="100%" p="8px 16px" borderBottom="1px" borderColor="gray.200">
     <IconButton
       aria-label="タスクを完了"
       icon={<CircleIcon />}
