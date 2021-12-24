@@ -56,3 +56,4 @@ setEnvVars.js
 ### Go Patch ###
 /vendor/
 /Godeps/
+.reg
