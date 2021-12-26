@@ -1,9 +1,5 @@
 .DEFAULT_GOAL := help
 
-.PHONY: storybook
-storybook:  ## Storybook のコンポーネントエクスプローラーを立ち上げる
-	@start-storybook -p 6006
-
 .PHONY: dev
 dev:  ## フロントエンドとバックエンドの開発用サーバを起動する
 	@docker compose --env-file ./.env.development.local up -d api
@@ -79,10 +75,18 @@ bench-b:  ## ベンチマークを測定する
 	@cd backend && \
 	go test -bench .
 
+.PHONY: storybook
+storybook:  ## Storybook を立ち上げる
+	@start-storybook -p 6006
+
+.PHONY: build-storybook
+build-storybook:  ## Storybook をビルドする
+	build-storybook
+
 .PHONY: down
 down:  ## 関連する Docker コンテナを停止し, 削除する
 	@docker compose --env-file ./.env.development.local down
 
 .PHONY: help
 help: ## ヘルプを表示する
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
