@@ -5,14 +5,23 @@
   background-repeat: no-repeat;
 }
 
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-html {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+button,
+[type="button"],
+[type="reset"],
+[type="submit"],
+[role="button"] {
+  color: inherit;
+  cursor: pointer;
 }
 
 nav,
