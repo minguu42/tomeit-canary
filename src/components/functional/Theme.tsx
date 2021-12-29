@@ -18,14 +18,14 @@ const ThemeScript = () => {
     if (storageTheme !== null) {
       return storageTheme;
     }
-    
+
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
     return mql.matches ? "dark" : "light";
   }
-  
+
   const theme = getTheme();
   const root = document.documentElement;
-  
+
   root.setAttribute("data-theme", theme);
 })()`;
   return <script dangerouslySetInnerHTML={{ __html: codeToRunOnClient }} />;
@@ -54,12 +54,20 @@ export const ThemeProvider = ({ children }: Props): JSX.Element => {
 };
 
 export const useTheme = () => {
-  const [theme, rawSetTheme] = useRecoilState(themeState);
+  const [theme, setTheme] = useRecoilState(themeState);
 
-  const setTheme = (theme: Theme) => {
-    rawSetTheme(theme);
-    window.localStorage.setItem(storageKey, theme);
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    window.localStorage.setItem(storageKey, newTheme);
+    const root = window.document.documentElement;
+
+    if (newTheme === "light") {
+      root.removeAttribute("data-theme");
+    } else {
+      root.setAttribute("data-theme", "dark");
+    }
   };
 
-  return [theme, setTheme];
+  return [theme, toggleTheme];
 };
