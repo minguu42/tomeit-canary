@@ -6,7 +6,7 @@ type Props = {
   handleLogin: () => void;
 };
 
-const GoogleLoginButton = ({ handleLogin }: Props): JSX.Element => (
+export const GoogleLoginButton = ({ handleLogin }: Props): JSX.Element => (
   <button className={s.button}>
     <div className={s.logoBackground}>
       <Image
@@ -22,4 +22,11 @@ const GoogleLoginButton = ({ handleLogin }: Props): JSX.Element => (
   </button>
 );
 
-export default GoogleLoginButton;
+const GoogleLoginButtonContainer = () => {
+  const handleLogin = () => {
+    console.log("test");
+  };
+  return <GoogleLoginButton handleLogin={handleLogin} />;
+};
+
+export default GoogleLoginButtonContainer;

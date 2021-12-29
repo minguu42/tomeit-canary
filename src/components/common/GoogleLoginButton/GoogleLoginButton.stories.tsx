@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import GoogleLoginButton from "./GoogleLoginButton";
+import { GoogleLoginButton } from "./GoogleLoginButton";
 
 export default {
   title: "GoogleLoginButton",
