@@ -1,0 +1,28 @@
+.container {
+  display: grid;
+  grid-template:
+    "catch       . image"
+    ".           . image" 24px
+    "description . image"
+    ".           . image" 104px
+    "button      . image"
+    / 506px 54px 1fr;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.catch {
+  grid-area: catch;
+}
+
+.description {
+  grid-area: description;
+}
+
+.buttonLayout {
+  grid-area: button;
+}
+
+.imageLayout {
+  grid-area: image;
+}
