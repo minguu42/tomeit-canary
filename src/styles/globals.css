@@ -1,9 +1,34 @@
 :root {
-  --c-surface: rgb(255 251 254);
+  --c-primary: #6750a4;
+  --c-primary-container: #eaddff;
+  --c-secondary: #625b71;
+  --c-secondary-container: #e8def8;
+  --c-tertiary: #7d5260;
+  --c-tertiary-container: #ffd8e4;
+  --c-surface: #fffbfe;
+  --c-surface-variant: #e7e0ec;
+  --c-background: #fffbfe;
+  --c-error: #b3261e;
+  --c-error-container: #f9dedc;
+  --c-on-primary: rgb(255 255 255);
+  --c-on-primary-container: rgb(33 0 94);
+  --c-on-secondary: rgb(255 255 255);
+  --c-on-secondary-container: rgb(30 25 43);
+  --c-on-tertiary: rgb(255 255 255);
+  --c-on-tertiary-container: rgb(55 11 30);
   --c-on-surface: rgb(28 27 31);
   --c-surface-hover: rgb(28 27 31 / 8%);
   --c-surface-focus: rgb(28 27 31 / 12%);
   --c-surface-press: rgb(28 27 31 / 12%);
+  --c-on-surface-variant: rgb(73 69 78);
+  --c-on-error: rgb(255 255 255);
+  --c-on-error-container: rgb(55 11 30);
+  --c-on-background: rgb(28 27 31);
+  --c-outline: #79747e;
+  --c-shadow: #000;
+  --c-inverse-surface: #313033;
+  --c-inverse-on-surface: rgb(244 239 244);
+  --c-inverse-primary: #d0bcff;
   --t-title-large-line-height: 1.75rem;
   --t-title-large-size: 1.375rem;
   --t-title-large-letter-spacing: 0;
@@ -11,11 +36,36 @@
 }
 
 :root[data-theme="dark"] {
-  --c-surface: rgb(28 27 31);
+  --c-primary: #d0bcff;
+  --c-primary-container: #4f378b;
+  --c-secondary: #ccc2dc;
+  --c-secondary-container: #4a4458;
+  --c-tertiary: #efb8c8;
+  --c-tertiary-container: #633b48;
+  --c-surface: #1c1b1f;
+  --c-surface-variant: #49454f;
+  --c-background: #1c1b1f;
+  --c-error: #f2b8b5;
+  --c-error-container: #8c1d18;
+  --c-on-primary: rgb(55 30 115);
+  --c-on-primary-container: rgb(234 221 255);
+  --c-on-secondary: rgb(51 45 65);
+  --c-on-secondary-container: rgb(232 222 248);
+  --c-on-tertiary: rgb(73 37 50);
+  --c-on-tertiary-container: rgb(255 216 228);
   --c-on-surface: rgb(230 225 229);
   --c-surface-hover: rgb(230 225 229 / 8%);
   --c-surface-focus: rgb(230 225 229 / 12%);
   --c-surface-press: rgb(230 225 229 / 12%);
+  --c-on-surface-variant: rgb(202 196 208);
+  --c-on-error: rgb(96 20 16);
+  --c-on-error-container: rgb(249 222 220);
+  --c-on-background: rgb(230 225 229);
+  --c-outline: #938f99;
+  --c-shadow: #000;
+  --c-inverse-surface: #e6e1e5;
+  --c-inverse-on-surface: rgb(49 48 51);
+  --c-inverse-primary: #6750a4;
 }
 
 * {
