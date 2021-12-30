@@ -29,6 +29,16 @@
   --c-inverse-surface: #313033;
   --c-inverse-on-surface: rgb(244 239 244);
   --c-inverse-primary: #d0bcff;
+  --s-elevation1: 0px 1px 2px rgba(0, 0, 0, 0.3),
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --s-elevation2: 0px 1px 2px rgba(0, 0, 0, 0.3),
+    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+  --s-elevation3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15),
+    0px 1px 3px rgba(0, 0, 0, 0.3);
+  --s-elevation4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15),
+    0px 2px 3px rgba(0, 0, 0, 0.3);
+  --s-elevation5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15),
+    0px 4px 4px rgba(0, 0, 0, 0.3);
   --t-title-large-line-height: 1.75rem;
   --t-title-large-size: 1.375rem;
   --t-title-large-letter-spacing: 0;
@@ -66,6 +76,16 @@
   --c-inverse-surface: #e6e1e5;
   --c-inverse-on-surface: rgb(49 48 51);
   --c-inverse-primary: #6750a4;
+  --s-elevation1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+    0px 1px 2px rgba(0, 0, 0, 0.3);
+  --s-elevation2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+    0px 1px 2px rgba(0, 0, 0, 0.3);
+  --s-elevation3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15),
+    0px 1px 3px rgba(0, 0, 0, 0.3);
+  --s-elevation4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15),
+    0px 2px 3px rgba(0, 0, 0, 0.3);
+  --s-elevation5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15),
+    0px 4px 4px rgba(0, 0, 0, 0.3);
 }
 
 * {
