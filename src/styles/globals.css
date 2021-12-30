@@ -1,3 +1,23 @@
+:root {
+  --c-surface: rgb(255 251 254);
+  --c-on-surface: rgb(28 27 31);
+  --c-surface-hover: rgb(28 27 31 / 8%);
+  --c-surface-focus: rgb(28 27 31 / 12%);
+  --c-surface-press: rgb(28 27 31 / 12%);
+  --t-title-large-line-height: 1.75rem;
+  --t-title-large-size: 1.375rem;
+  --t-title-large-letter-spacing: 0;
+  --t-title-large-weight: 400;
+}
+
+:root[data-theme="dark"] {
+  --c-surface: rgb(28 27 31);
+  --c-on-surface: rgb(230 225 229);
+  --c-surface-hover: rgb(230 225 229 / 8%);
+  --c-surface-focus: rgb(230 225 229 / 12%);
+  --c-surface-press: rgb(230 225 229 / 12%);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
