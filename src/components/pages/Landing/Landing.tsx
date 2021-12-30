@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import Head from "next/head";
 
+import TopAppBar from "@/components/common/TopAppBar";
 import GoogleLoginButton from "@/components/common/GoogleLoginButton/GoogleLoginButton";
 import s from "./Landing.module.css";
 
@@ -15,6 +16,7 @@ export const Landing: NextPage = () => (
       />
     </Head>
 
+    <TopAppBar />
     <main className={s.container}>
       <h1 className={s.catch}>やるべきことのみに集中する</h1>
       <p className={s.description}>
