@@ -9,7 +9,7 @@ const LightModeIcon = ({ className }: Props): JSX.Element => (
     width="24px"
     height="24px"
     viewBox="0 0 24 24"
-    fill="#000000"
+    fill="currentColor"
     className={className}
   >
     <rect fill="none" height="24" width="24" />

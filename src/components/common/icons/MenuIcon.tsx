@@ -8,7 +8,7 @@ const MenuIcon = ({ className }: Props): JSX.Element => (
     width="24px"
     height="24px"
     viewBox="0 0 24 24"
-    fill="#000000"
+    fill="currentColor"
     className={className}
   >
     <path d="M0 0h24v24H0V0z" fill="none" />
