@@ -29,20 +29,71 @@
   --c-inverse-surface: #313033;
   --c-inverse-on-surface: rgb(244 239 244);
   --c-inverse-primary: #d0bcff;
-  --s-elevation1: 0px 1px 2px rgba(0, 0, 0, 0.3),
-    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-  --s-elevation2: 0px 1px 2px rgba(0, 0, 0, 0.3),
-    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
-  --s-elevation3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15),
-    0px 1px 3px rgba(0, 0, 0, 0.3);
-  --s-elevation4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15),
-    0px 2px 3px rgba(0, 0, 0, 0.3);
-  --s-elevation5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15),
-    0px 4px 4px rgba(0, 0, 0, 0.3);
-  --t-title-large-line-height: 1.75rem;
-  --t-title-large-size: 1.375rem;
+  --s-elevation1: 0 1px 2px rgb(0 0 0 / 30%), 0 1px 3px 1px rgb(0 0 0 / 15%);
+  --s-elevation2: 0 1px 2px rgb(0 0 0 / 30%), 0 2px 6px 2px rgb(0 0 0 / 15%);
+  --s-elevation3: 0 4px 8px 3px rgb(0 0 0 / 15%), 0 1px 3px rgb(0 0 0 / 30%);
+  --s-elevation4: 0 6px 10px 4px rgb(0 0 0 / 15%), 0 2px 3px rgb(0 0 0 / 30%);
+  --s-elevation5: 0 8px 12px 6px rgb(0 0 0 / 15%), 0 4px 4px rgb(0 0 0 / 30%);
+  --t-display-large-line-height: 4.75rem;
+  --t-display-large-size: 3.375rem;
+  --t-display-large-letter-spacing: 0;
+  --t-display-large-weight: 400;
+  --t-display-medium-line-height: 3.75rem;
+  --t-display-medium-size: 2.6875rem;
+  --t-display-medium-letter-spacing: 0;
+  --t-display-medium-weight: 400;
+  --t-display-small-line-height: 3rem;
+  --t-display-small-size: 2.125rem;
+  --t-display-small-letter-spacing: 0;
+  --t-display-small-weight: 400;
+  --t-headline-large-line-height: 2.75rem;
+  --t-headline-large-size: 1.875rem;
+  --t-headline-large-letter-spacing: 0;
+  --t-headline-large-weight: 400;
+  --t-headline-medium-line-height: 2.375rem;
+  --t-headline-medium-size: 1.6875rem;
+  --t-headline-medium-letter-spacing: 0;
+  --t-headline-medium-weight: 400;
+  --t-headline-small-line-height: 2.125rem;
+  --t-headline-small-size: 1.4375rem;
+  --t-headline-small-letter-spacing: 0;
+  --t-headline-small-weight: 400;
+  --t-title-large-line-height: 1.875rem;
+  --t-title-large-size: 1.3125rem;
   --t-title-large-letter-spacing: 0;
   --t-title-large-weight: 400;
+  --t-title-medium-line-height: 1.5rem;
+  --t-title-medium-size: 1rem;
+  --t-title-medium-letter-spacing: -0.0187rem;
+  --t-title-medium-weight: 500;
+  --t-title-small-line-height: 1.25rem;
+  --t-title-small-size: 0.8125rem;
+  --t-title-small-letter-spacing: 0.0125rem;
+  --t-title-small-weight: 500;
+  --t-label-large-line-height: 1.25rem;
+  --t-label-large-size: 0.875rem;
+  --t-label-large-letter-spacing: -0.0156rem;
+  --t-label-large-weight: 500;
+  --t-label-medium-line-height: 1rem;
+  --t-label-medium-size: 0.75rem;
+  --t-label-medium-letter-spacing: 0.0094rem;
+  --t-label-medium-weight: 500;
+  --t-label-small-line-height: 1rem;
+  --t-label-small-size: 0.6875rem;
+  --t-label-small-letter-spacing: 0.0125rem;
+  --t-label-small-weight: 500;
+  --t-body-large-line-height: 1.5rem;
+  --t-body-large-size: 1rem;
+  --t-body-large-letter-spacing: 0.0125rem;
+  --t-body-large-weight: 400;
+  --t-body-medium-line-height: 1.25rem;
+  --t-body-medium-size: 0.875rem;
+  --t-body-medium-letter-spacing: -0.0063rem;
+  --t-body-medium-weight: 400;
+  --t-body-small-line-height: 1rem;
+  --t-body-small-size: 0.75rem;
+  --t-body-small-letter-spacing: 0.0063rem;
+  --t-body-small-weight: 400;
 }
 
 :root[data-theme="dark"] {
@@ -76,16 +127,11 @@
   --c-inverse-surface: #e6e1e5;
   --c-inverse-on-surface: rgb(49 48 51);
   --c-inverse-primary: #6750a4;
-  --s-elevation1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15),
-    0px 1px 2px rgba(0, 0, 0, 0.3);
-  --s-elevation2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
-    0px 1px 2px rgba(0, 0, 0, 0.3);
-  --s-elevation3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15),
-    0px 1px 3px rgba(0, 0, 0, 0.3);
-  --s-elevation4: 0px 6px 10px 4px rgba(0, 0, 0, 0.15),
-    0px 2px 3px rgba(0, 0, 0, 0.3);
-  --s-elevation5: 0px 8px 12px 6px rgba(0, 0, 0, 0.15),
-    0px 4px 4px rgba(0, 0, 0, 0.3);
+  --s-elevation1: 0 1px 3px 1px rgb(0 0 0 / 15%), 0 1px 2px rgb(0 0 0 / 30%);
+  --s-elevation2: 0 2px 6px 2px rgb(0 0 0 / 15%), 0 1px 2px rgb(0 0 0 / 30%);
+  --s-elevation3: 0 4px 8px 3px rgb(0 0 0 / 15%), 0 1px 3px rgb(0 0 0 / 30%);
+  --s-elevation4: 0 6px 10px 4px rgb(0 0 0 / 15%), 0 2px 3px rgb(0 0 0 / 30%);
+  --s-elevation5: 0 8px 12px 6px rgb(0 0 0 / 15%), 0 4px 4px rgb(0 0 0 / 30%);
 }
 
 * {
