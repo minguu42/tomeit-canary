@@ -1,9 +1,7 @@
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 
-const storageKey = "theme";
-
-type Theme = "light" | "dark";
+export type Theme = "light" | "dark";
 
 const themeState = atom<Theme>({
   key: "themeState",
@@ -59,15 +57,15 @@ export const useTheme = () => {
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
-    window.localStorage.setItem(storageKey, newTheme);
+    window.localStorage.setItem("theme", newTheme);
     const root = window.document.documentElement;
 
     if (newTheme === "light") {
-      root.removeAttribute("data-theme");
+      root.setAttribute("data-theme", "light");
     } else {
       root.setAttribute("data-theme", "dark");
     }
   };
 
-  return [theme, toggleTheme];
+  return { theme, toggleTheme };
 };
