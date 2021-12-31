@@ -1,22 +1,36 @@
 .container {
+  min-height: calc(100vh);
+  color: var(--c-on-background);
+  background-color: var(--c-background);
+}
+
+.inner {
   display: grid;
   grid-template:
-    "catch       . image"
+    "catch       . image" 56px
     ".           . image" 24px
-    "description . image"
-    ".           . image" 104px
+    "description . image" 56px
+    ".           . image" 52px
     "button      . image"
-    / 506px 54px 1fr;
+    / 540px 54px 1fr;
   max-width: 1200px;
   margin: 112px auto 0;
 }
 
 .catch {
   grid-area: catch;
+  font-size: var(--t-display-medium-size);
+  font-weight: var(--t-display-medium-weight);
+  line-height: var(--t-display-medium-line-height);
+  letter-spacing: var(--t-display-medium-letter-spacing);
 }
 
 .description {
   grid-area: description;
+  font-size: var(--t-body-large-size);
+  font-weight: var(--t-body-large-weight);
+  line-height: var(--t-body-large-line-height);
+  letter-spacing: var(--t-body-large-letter-spacing);
 }
 
 .buttonLayout {

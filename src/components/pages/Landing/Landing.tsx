@@ -7,7 +7,7 @@ import GoogleLoginButton from "@/components/common/GoogleLoginButton/GoogleLogin
 import s from "./Landing.module.css";
 
 export const Landing: NextPage = () => (
-  <>
+  <div className={s.container}>
     <Head>
       <title>tomeit</title>
       <meta
@@ -17,7 +17,7 @@ export const Landing: NextPage = () => (
     </Head>
 
     <TopAppBar />
-    <main className={s.container}>
+    <main className={s.inner}>
       <h1 className={s.catch}>やるべきことのみに集中する</h1>
       <p className={s.description}>
         tomeit
@@ -35,7 +35,7 @@ export const Landing: NextPage = () => (
         />
       </div>
     </main>
-  </>
+  </div>
 );
 
 export default Landing;
