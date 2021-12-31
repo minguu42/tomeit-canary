@@ -1,0 +1,30 @@
+.container {
+  width: 360px;
+  background-color: var(--c-surface);
+  border-radius: 0 16px 16px 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  padding-right: 12px;
+}
+
+.item {
+  width: 336px;
+  height: 56px;
+  padding: 0 24px 0 16px;
+  color: var(--c-on-surface-variant);
+}
+
+.item:active {
+  color: var(--c-on-secondary-container);
+  background-color: var(--c-secondary-container);
+}
+
+.labelText {
+  font-size: var(--t-label-large-size);
+  font-weight: var(--t-label-large-weight);
+  line-height: var(--t-label-large-line-height);
+  letter-spacing: var(--t-label-large-letter-spacing);
+}
