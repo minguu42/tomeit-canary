@@ -7,7 +7,8 @@ type Props = {
 };
 
 export const GoogleLoginButton = ({ handleLogin }: Props): JSX.Element => (
-  <button className={s.button}>
+  <button className={s.container}>
+    <div className={s.layer} />
     <div className={s.logoBackground}>
       <Image
         src="/images/google.png"
