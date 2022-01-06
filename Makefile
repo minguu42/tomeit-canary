@@ -2,8 +2,8 @@
 
 .PHONY: dev
 dev:  ## フロントエンドの開発用サーバを起動する
-	@next dev
 	@open http://localhost:3000/
+	@next dev
 
 .PHONY: docs
 docs: ## http://localhost:8000 で仕様書を表示するサーバを起動する
