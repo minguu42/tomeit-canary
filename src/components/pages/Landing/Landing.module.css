@@ -1,6 +1,6 @@
 .container {
   min-height: calc(100vh);
-  color: var(--c-on-background);
+  color: rgb(var(--c-on-background-rgb));
   background-color: var(--c-background);
 }
 
