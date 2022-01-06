@@ -2,8 +2,8 @@
 
 .PHONY: dev
 dev:  ## フロントエンドの開発用サーバを起動する
-	@next dev
 	@open http://localhost:3000/
+	@next dev
 
 .PHONY: docs
 docs: ## http://localhost:8000 で仕様書を表示するサーバを起動する
@@ -28,10 +28,9 @@ lint:  ## ESLint, stylelint による静的解析を実行する
 	@stylelint --ignore-path ./.lintignore "**/*.css"
 
 .PHONY: check
-check:  ## fmt-f, lint-f, test-f を実行する
-	@$(MAKE) fmt-f
-	@$(MAKE) lint-f
-	@$(MAKE) test-f
+check:  ## fmt, lint, test を実行する
+	@$(MAKE) fmt
+	@$(MAKE) lint
 
 .PHONY: storybook
 storybook:  ## Storybook を立ち上げる
@@ -65,9 +64,9 @@ test-backend:  ## バックエンドのテストを実行する
 
 .PHONY: check-backend
 check-backend:  ## fmt-b, lint-b, test-b を実行する
-	@$(MAKE) fmt-b
-	@$(MAKE) lint-b
-	@$(MAKE) test-b
+	@$(MAKE) fmt-backend
+	@$(MAKE) lint-backend
+	@$(MAKE) test-backend
 
 .PHONY: cover-backend
 cover-backend:  ## テストカバレッジを測定する

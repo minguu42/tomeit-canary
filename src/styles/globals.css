@@ -10,30 +10,27 @@
   --c-background: #fffbfe;
   --c-error: #b3261e;
   --c-error-container: #f9dedc;
-  --c-on-primary: rgb(255 255 255);
-  --c-on-primary-container: rgb(33 0 94);
-  --c-on-secondary: rgb(255 255 255);
-  --c-on-secondary-container: rgb(30 25 43);
-  --c-on-tertiary: rgb(255 255 255);
-  --c-on-tertiary-container: rgb(55 11 30);
-  --c-on-surface: rgb(28 27 31);
-  --c-surface-hover: rgb(28 27 31 / 8%);
-  --c-surface-focus: rgb(28 27 31 / 12%);
-  --c-surface-press: rgb(28 27 31 / 12%);
-  --c-on-surface-variant: rgb(73 69 78);
-  --c-on-error: rgb(255 255 255);
-  --c-on-error-container: rgb(55 11 30);
-  --c-on-background: rgb(28 27 31);
+  --c-on-primary-rgb: 255 255 255;
+  --c-on-primary-container-rgb: 33 0 94;
+  --c-on-secondary-rgb: 255 255 255;
+  --c-on-secondary-container-rgb: 30 25 43;
+  --c-on-tertiary-rgb: 255 255 255;
+  --c-on-tertiary-container-rgb: 55 11 30;
+  --c-on-surface-rgb: 28 27 31;
+  --c-on-surface-variant-rgb: 73 69 78;
+  --c-on-error-rgb: 255 255 255;
+  --c-on-error-container-rgb: 55 11 30;
+  --c-on-background-rgb: 28 27 31;
   --c-outline: #79747e;
   --c-shadow: #000;
   --c-inverse-surface: #313033;
-  --c-inverse-on-surface: rgb(244 239 244);
+  --c-inverse-on-surface-rgb: 244 239 244;
   --c-inverse-primary: #d0bcff;
-  --s-elevation1: 0 1px 2px rgb(0 0 0 / 30%), 0 1px 3px 1px rgb(0 0 0 / 15%);
-  --s-elevation2: 0 1px 2px rgb(0 0 0 / 30%), 0 2px 6px 2px rgb(0 0 0 / 15%);
-  --s-elevation3: 0 4px 8px 3px rgb(0 0 0 / 15%), 0 1px 3px rgb(0 0 0 / 30%);
-  --s-elevation4: 0 6px 10px 4px rgb(0 0 0 / 15%), 0 2px 3px rgb(0 0 0 / 30%);
-  --s-elevation5: 0 8px 12px 6px rgb(0 0 0 / 15%), 0 4px 4px rgb(0 0 0 / 30%);
+  --e-level1: 0 1px 2px rgb(0 0 0 / 30%), 0 1px 3px 1px rgb(0 0 0 / 15%);
+  --e-level2: 0 1px 2px rgb(0 0 0 / 30%), 0 2px 6px 2px rgb(0 0 0 / 15%);
+  --e-level3: 0 4px 8px 3px rgb(0 0 0 / 15%), 0 1px 3px rgb(0 0 0 / 30%);
+  --e-level4: 0 6px 10px 4px rgb(0 0 0 / 15%), 0 2px 3px rgb(0 0 0 / 30%);
+  --e-level5: 0 8px 12px 6px rgb(0 0 0 / 15%), 0 4px 4px rgb(0 0 0 / 30%);
   --t-display-large-line-height: 4.75rem;
   --t-display-large-size: 3.375rem;
   --t-display-large-letter-spacing: 0;
@@ -94,6 +91,10 @@
   --t-body-small-size: 0.75rem;
   --t-body-small-letter-spacing: 0.0063rem;
   --t-body-small-weight: 400;
+  --s-hover-state-layer-opacity: 8%;
+  --s-focus-state-layer-opacity: 12%;
+  --s-pressed-state-layer-opacity: 12%;
+  --s-dragged-state-layer-opacity: 16%;
 }
 
 :root[data-theme="dark"] {
@@ -108,30 +109,27 @@
   --c-background: #1c1b1f;
   --c-error: #f2b8b5;
   --c-error-container: #8c1d18;
-  --c-on-primary: rgb(55 30 115);
-  --c-on-primary-container: rgb(234 221 255);
-  --c-on-secondary: rgb(51 45 65);
-  --c-on-secondary-container: rgb(232 222 248);
-  --c-on-tertiary: rgb(73 37 50);
-  --c-on-tertiary-container: rgb(255 216 228);
-  --c-on-surface: rgb(230 225 229);
-  --c-surface-hover: rgb(230 225 229 / 8%);
-  --c-surface-focus: rgb(230 225 229 / 12%);
-  --c-surface-press: rgb(230 225 229 / 12%);
-  --c-on-surface-variant: rgb(202 196 208);
-  --c-on-error: rgb(96 20 16);
-  --c-on-error-container: rgb(249 222 220);
-  --c-on-background: rgb(230 225 229);
+  --c-on-primary-rgb: 55 30 115;
+  --c-on-primary-container-rgb: 234 221 255;
+  --c-on-secondary-rgb: 51 45 65;
+  --c-on-secondary-container-rgb: 232 222 248;
+  --c-on-tertiary-rgb: 73 37 50;
+  --c-on-tertiary-container-rgb: 255 216 228;
+  --c-on-surface-rgb: 230 225 229;
+  --c-on-surface-variant-rgb: 202 196 20;
+  --c-on-error-rgb: 96 20 16;
+  --c-on-error-container-rgb: 249 222 220;
+  --c-on-background-rgb: 230 225 229;
   --c-outline: #938f99;
   --c-shadow: #000;
   --c-inverse-surface: #e6e1e5;
-  --c-inverse-on-surface: rgb(49 48 51);
+  --c-inverse-on-surface-rgb: 49 48 51;
   --c-inverse-primary: #6750a4;
-  --s-elevation1: 0 1px 3px 1px rgb(0 0 0 / 15%), 0 1px 2px rgb(0 0 0 / 30%);
-  --s-elevation2: 0 2px 6px 2px rgb(0 0 0 / 15%), 0 1px 2px rgb(0 0 0 / 30%);
-  --s-elevation3: 0 4px 8px 3px rgb(0 0 0 / 15%), 0 1px 3px rgb(0 0 0 / 30%);
-  --s-elevation4: 0 6px 10px 4px rgb(0 0 0 / 15%), 0 2px 3px rgb(0 0 0 / 30%);
-  --s-elevation5: 0 8px 12px 6px rgb(0 0 0 / 15%), 0 4px 4px rgb(0 0 0 / 30%);
+  --e-level1: 0 1px 3px 1px rgb(0 0 0 / 15%), 0 1px 2px rgb(0 0 0 / 30%);
+  --e-level2: 0 2px 6px 2px rgb(0 0 0 / 15%), 0 1px 2px rgb(0 0 0 / 30%);
+  --e-level3: 0 4px 8px 3px rgb(0 0 0 / 15%), 0 1px 3px rgb(0 0 0 / 30%);
+  --e-level4: 0 6px 10px 4px rgb(0 0 0 / 15%), 0 2px 3px rgb(0 0 0 / 30%);
+  --e-level5: 0 8px 12px 6px rgb(0 0 0 / 15%), 0 4px 4px rgb(0 0 0 / 30%);
 }
 
 * {
@@ -151,6 +149,10 @@ a {
   text-decoration: none;
 }
 
+button {
+  border: none;
+}
+
 button,
 [type="button"],
 [type="reset"],
@@ -162,6 +164,7 @@ button,
 
 nav,
 ol,
-ul {
+ul,
+menu {
   list-style-type: none;
 }

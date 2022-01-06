@@ -1,38 +1,102 @@
 .container {
   display: flex;
+  gap: 4px;
   align-items: center;
   height: 64px;
-  padding: 8px 4px;
+  padding: 0 4px;
   background-color: var(--c-surface);
 }
 
-.iconButton {
-  width: 48px;
-  height: 48px;
-  color: var(--c-on-surface);
-  background-color: var(--c-surface);
-  border: none;
-}
-
-.iconButtonLayer {
+.navigationIcon {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: inherit;
-  height: inherit;
-  background-color: transparent;
+  width: 48px;
+  height: 48px;
+  color: rgb(var(--c-on-surface-rgb));
+  background-color: var(--c-surface);
+  border-radius: 14px;
 }
 
-.iconButtonLayer:hover {
-  background-color: var(--c-surface-hover);
+.navigationIconLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 14px;
+}
+
+.navigationIcon:hover > .navigationIconLayer {
+  background-color: rgb(
+    var(--c-on-surface-rgb) / var(--s-hover-state-layer-opacity)
+  );
+}
+
+.navigationIcon:focus > .navigationIconLayer {
+  background-color: rgb(
+    var(--c-on-surface-rgb) / var(--s-focus-state-layer-opacity)
+  );
+}
+
+.navigationIcon:active > .navigationIconLayer {
+  background-color: rgb(
+    var(--c-on-surface-rgb) / var(--s-pressed-state-layer-opacity)
+  );
 }
 
 .headline {
-  flex: 1 1 0;
-  margin-left: 4px;
   font-weight: var(--t-title-large-weight);
   line-height: var(--t-title-large-line-height);
-  color: var(--c-on-surface);
+  color: rgb(var(--c-on-surface-rgb));
   letter-spacing: var(--t-title-large-letter-spacing);
   size: var(--t-title-large-size);
+}
+
+.spacer {
+  flex: 1 1 0;
+}
+
+.trailingIcons {
+  display: flex;
+}
+
+.interactiveIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: rgb(var(--c-on-surface-variant-rgb));
+  background-color: transparent;
+  border-radius: 14px;
+}
+
+.interactiveIconLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 14px;
+}
+
+.interactiveIcon:hover > .interactiveIconLayer {
+  background-color: rgb(
+    var(--c-on-surface-variant-rgb) / var(--s-hover-state-layer-opacity)
+  );
+}
+
+.interactiveIcon:focus > .interactiveIconLayer {
+  background-color: rgb(
+    var(--c-on-surface-variant-rgb) / var(--s-focus-state-layer-opacity)
+  );
+}
+
+.interactiveIcon:active > .interactiveIconLayer {
+  background-color: rgb(
+    var(--c-on-surface-variant-rgb) / var(--s-pressed-state-layer-opacity)
+  );
 }
