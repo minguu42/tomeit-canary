@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 8px 4px;
+  background-color: var(--c-surface);
+}
+
+.iconButton {
+  width: 48px;
+  height: 48px;
+  color: var(--c-on-surface);
+  background-color: var(--c-surface);
+  border: none;
+}
+
+.iconButtonLayer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: inherit;
+  height: inherit;
+  background-color: transparent;
+}
+
+.iconButtonLayer:hover {
+  background-color: var(--c-surface-hover);
+}
+
+.headline {
+  flex: 1 1 0;
+  margin-left: 4px;
+  font-weight: var(--t-title-large-weight);
+  line-height: var(--t-title-large-line-height);
+  color: var(--c-on-surface);
+  letter-spacing: var(--t-title-large-letter-spacing);
+  size: var(--t-title-large-size);
+}
