@@ -1,27 +1,27 @@
-import { VFC, useState } from "react";
+import type { VFC } from "react";
 import Link from "next/link";
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 
 import { DarkModeIcon, LightModeIcon } from "@/components/common/icons";
 import s from "./NavigationDrawer.module.css";
 
-const isNavigationOpen = atom({
-  key: "isNavigationOpen",
+const navigationDrawerState = atom({
+  key: "navigationDrawerState",
   default: false,
 });
 
-export const useOpenNavigation = () => {
-  const setIsNavigationOpen = useSetRecoilState(isNavigationOpen);
-  return () => {
-    setIsNavigationOpen(true);
+export const useToggleNavigationDrawer = () => {
+  const setIsOpen = useSetRecoilState(navigationDrawerState);
+  return (): void => {
+    setIsOpen((prev) => !prev);
   };
 };
 
 const NavigationDrawer: VFC = () => {
-  const [isOpen, setIsOpen] = useRecoilState(isNavigationOpen);
+  const [isOpen, setIsOpen] = useRecoilState(navigationDrawerState);
 
   return isOpen ? (
-    <div className={s.hideInDesktop}>
+    <>
       <nav className={s.container}>
         <ul role="tablist">
           <li>
@@ -54,7 +54,7 @@ const NavigationDrawer: VFC = () => {
         }}
         className={s.scrim}
       />
-    </div>
+    </>
   ) : (
     <></>
   );
