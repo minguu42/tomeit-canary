@@ -1,24 +1,16 @@
 import type { VFC } from "react";
 import Link from "next/link";
-import { atom, useRecoilState, useSetRecoilState } from "recoil";
 
 import { DarkModeIcon, LightModeIcon } from "@/components/common/icons";
 import s from "./NavigationDrawer.module.css";
-
-const navigationDrawerState = atom({
-  key: "navigationDrawerState",
-  default: false,
-});
-
-export const useToggleNavigationDrawer = () => {
-  const setIsOpen = useSetRecoilState(navigationDrawerState);
-  return (): void => {
-    setIsOpen((prev) => !prev);
-  };
-};
+import {
+  useIsNavigationDrawerOpen,
+  useToggleNavigationDrawer,
+} from "@/lib/states";
 
 const NavigationDrawer: VFC = () => {
-  const [isOpen, setIsOpen] = useRecoilState(navigationDrawerState);
+  const isOpen = useIsNavigationDrawerOpen();
+  const toggleDrawer = useToggleNavigationDrawer();
 
   return isOpen ? (
     <>
@@ -48,12 +40,7 @@ const NavigationDrawer: VFC = () => {
           </li>
         </ul>
       </nav>
-      <button
-        onClick={() => {
-          setIsOpen(false);
-        }}
-        className={s.scrim}
-      />
+      <button onClick={toggleDrawer} className={s.scrim} />
     </>
   ) : (
     <></>

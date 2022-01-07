@@ -8,19 +8,19 @@ import {
 } from "@/components/common/icons";
 import s from "./TopAppBar.module.css";
 import { useTheme } from "@/components/functional/Theme";
-import { useOpenNavigation } from "@/components/common/NavigationDrawer/NavigationDrawer";
+import { useToggleNavigationDrawer } from "@/lib/states";
 
 const TopAppBar: VFC = () => {
   const headline = "tomeit";
   const { theme, toggleTheme } = useTheme();
-  const openNavigation = useOpenNavigation();
+  const toggleNavigationDrawer = useToggleNavigationDrawer();
   const logout = () => {
     window.alert("ログアウト");
   };
 
   return (
     <header className={s.container}>
-      <button onClick={openNavigation} className={s.navigationIcon}>
+      <button onClick={toggleNavigationDrawer} className={s.navigationIcon}>
         <div className={s.navigationIconLayer} />
         <MenuIcon />
       </button>
