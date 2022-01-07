@@ -8,13 +8,12 @@ import {
 } from "@/components/common/icons";
 import s from "./TopAppBar.module.css";
 import { useTheme } from "@/components/functional/Theme";
+import { useToggleNavigationDrawer } from "@/lib/states";
 
 const TopAppBar: VFC = () => {
   const headline = "tomeit";
   const { theme, toggleTheme } = useTheme();
-  const toggleNavigationDrawer = () => {
-    window.alert("toggleNavigationDrawer");
-  };
+  const toggleNavigationDrawer = useToggleNavigationDrawer();
   const logout = () => {
     window.alert("ログアウト");
   };

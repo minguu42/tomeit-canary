@@ -3,13 +3,17 @@ import Link from "next/link";
 
 import { DarkModeIcon, LightModeIcon } from "@/components/common/icons";
 import s from "./NavigationDrawer.module.css";
-import { useState } from "react";
+import {
+  useIsNavigationDrawerOpen,
+  useToggleNavigationDrawer,
+} from "@/lib/states";
 
 const NavigationDrawer: VFC = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const isOpen = useIsNavigationDrawerOpen();
+  const toggleDrawer = useToggleNavigationDrawer();
 
   return isOpen ? (
-    <div className={s.hideInDesktop}>
+    <>
       <nav className={s.container}>
         <ul role="tablist">
           <li>
@@ -36,13 +40,8 @@ const NavigationDrawer: VFC = () => {
           </li>
         </ul>
       </nav>
-      <button
-        onClick={() => {
-          setIsOpen(false);
-        }}
-        className={s.scrim}
-      />
-    </div>
+      <button onClick={toggleDrawer} className={s.scrim} />
+    </>
   ) : (
     <></>
   );
