@@ -6,10 +6,9 @@
 @media screen and (min-width: 905px) {
   .flexInDesktop {
     display: flex;
-    justify-content: center;
   }
 
-  .main {
+  .mainLayoutInDesktop {
     flex: 1 1 0;
   }
 }
