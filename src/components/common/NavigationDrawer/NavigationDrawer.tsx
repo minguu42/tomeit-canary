@@ -1,12 +1,24 @@
-import type { VFC } from "react";
+import { VFC, useState } from "react";
 import Link from "next/link";
+import { atom, useRecoilState, useSetRecoilState } from "recoil";
 
 import { DarkModeIcon, LightModeIcon } from "@/components/common/icons";
 import s from "./NavigationDrawer.module.css";
-import { useState } from "react";
+
+const isNavigationOpen = atom({
+  key: "isNavigationOpen",
+  default: false,
+});
+
+export const useOpenNavigation = () => {
+  const setIsNavigationOpen = useSetRecoilState(isNavigationOpen);
+  return () => {
+    setIsNavigationOpen(true);
+  };
+};
 
 const NavigationDrawer: VFC = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useRecoilState(isNavigationOpen);
 
   return isOpen ? (
     <div className={s.hideInDesktop}>
