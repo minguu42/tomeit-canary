@@ -1,0 +1,15 @@
+.background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--c-background);
+}
+
+.message {
+  font-size: var(--t-title-large-size);
+  font-weight: var(--t-title-large-weight);
+  line-height: var(--t-title-large-line-height);
+  color: rgb(var(--c-on-background-rgb));
+  letter-spacing: var(--t-title-large-letter-spacing);
+}
