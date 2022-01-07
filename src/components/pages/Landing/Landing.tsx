@@ -2,13 +2,11 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import Head from "next/head";
 
-import TopAppBar from "@/components/common/TopAppBar";
-import NavigationDrawer from "@/components/common/NavigationDrawer";
 import GoogleLoginButton from "@/components/common/GoogleLoginButton/GoogleLoginButton";
 import s from "./Landing.module.css";
 
 export const Landing: NextPage = () => (
-  <div className={s.container}>
+  <>
     <Head>
       <title>tomeit</title>
       <meta
@@ -17,9 +15,7 @@ export const Landing: NextPage = () => (
       />
     </Head>
 
-    <TopAppBar />
-    <NavigationDrawer />
-    <main className={s.inner}>
+    <main className={s.container}>
       <h1 className={s.catch}>やるべきことのみに集中する</h1>
       <p className={s.description}>
         tomeit
@@ -37,7 +33,7 @@ export const Landing: NextPage = () => (
         />
       </div>
     </main>
-  </div>
+  </>
 );
 
 export default Landing;

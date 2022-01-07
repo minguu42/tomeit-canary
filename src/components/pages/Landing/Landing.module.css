@@ -1,10 +1,4 @@
 .container {
-  min-height: calc(100vh);
-  color: rgb(var(--c-on-background-rgb));
-  background-color: var(--c-background);
-}
-
-.inner {
   display: grid;
   grid-template:
     "catch       . image" 56px
@@ -15,6 +9,8 @@
     / 540px 54px 1fr;
   max-width: 1200px;
   margin: 112px auto 0;
+  color: rgb(var(--c-on-background-rgb));
+  background-color: var(--c-background);
 }
 
 .catch {
