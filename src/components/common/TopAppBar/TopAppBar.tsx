@@ -7,7 +7,7 @@ import {
   LogoutIcon,
 } from "@/components/common/icons";
 import s from "./TopAppBar.module.css";
-import { useTheme } from "@/components/functional/Theme";
+import { useTheme } from "@/lib/theme";
 import { useToggleNavigationDrawer } from "@/lib/states";
 
 const TopAppBar: VFC = () => {
