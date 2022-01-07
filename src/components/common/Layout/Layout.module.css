@@ -1,0 +1,15 @@
+.background {
+  min-height: 100vh;
+  background-color: var(--c-background);
+}
+
+@media screen and (min-width: 905px) {
+  .flexInDesktop {
+    display: flex;
+    justify-content: center;
+  }
+
+  .main {
+    flex: 1 1 0;
+  }
+}

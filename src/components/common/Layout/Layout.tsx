@@ -1,13 +1,18 @@
 import TopAppBar from "@/components/common/TopAppBar";
+import NavigationDrawer from "@/components/common/NavigationDrawer";
+import s from "./Layout.module.css";
 
 type Props = {
   children: JSX.Element[];
 };
 
 export const Layout = ({ children }: Props): JSX.Element => (
-  <div>
+  <div className={s.background}>
     <TopAppBar />
-    {children.map((child) => child)}
+    <div className={s.flexInDesktop}>
+      <NavigationDrawer />
+      <div className={s.mainLayout}>{children.map((child) => child)}</div>
+    </div>
   </div>
 );
 
