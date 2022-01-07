@@ -2,12 +2,11 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import Head from "next/head";
 
-import Layout from "@/components/common/Layout";
 import GoogleLoginButton from "@/components/common/GoogleLoginButton/GoogleLoginButton";
 import s from "./Landing.module.css";
 
 export const Landing: NextPage = () => (
-  <Layout>
+  <>
     <Head>
       <title>tomeit</title>
       <meta
@@ -34,7 +33,7 @@ export const Landing: NextPage = () => (
         />
       </div>
     </main>
-  </Layout>
+  </>
 );
 
 export default Landing;
