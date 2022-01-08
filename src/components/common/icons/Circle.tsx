@@ -2,9 +2,10 @@ import type { VFC } from "react";
 
 type Props = {
   size?: number;
+  className?: string;
 };
 
-const CircleIcon: VFC<Props> = ({ size }) => (
+const Circle: VFC<Props> = ({ size, className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     enableBackground="new 0 0 24 24"
@@ -12,6 +13,7 @@ const CircleIcon: VFC<Props> = ({ size }) => (
     height={size ?? "24px"}
     viewBox="0 0 24 24"
     fill="currentColor"
+    className={className}
   >
     <g>
       <rect fill="none" height="24" width="24" />
@@ -22,4 +24,4 @@ const CircleIcon: VFC<Props> = ({ size }) => (
   </svg>
 );
 
-export default CircleIcon;
+export default Circle;
