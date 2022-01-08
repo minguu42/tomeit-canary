@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+.labelText {
+  font-size: var(--t-label-large-size);
+  font-weight: var(--t-label-large-weight);
+  line-height: var(--t-label-large-line-height);
+  letter-spacing: var(--t-label-large-letter-spacing);
+}
+
+.actualColor {
+  color: var(--c-primary);
+  fill: var(--c-primary);
+}
+
+.expectedColor {
+  color: rgb(var(--c-on-primary-container-rgb));
+  fill: rgb(var(--c-on-primary-container-rgb));
+}
+
+.separator {
+  margin: 0 1px 0 2px;
+  font-size: var(--t-label-large-size);
+  font-weight: var(--t-label-large-weight);
+  line-height: var(--t-label-large-line-height);
+  color: var(--c-outline);
+  letter-spacing: var(--t-label-large-letter-spacing);
+}
