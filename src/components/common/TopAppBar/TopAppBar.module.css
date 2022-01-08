@@ -47,11 +47,11 @@
 }
 
 .headline {
+  font-size: var(--t-title-large-size);
   font-weight: var(--t-title-large-weight);
   line-height: var(--t-title-large-line-height);
   color: rgb(var(--c-on-surface-rgb));
   letter-spacing: var(--t-title-large-letter-spacing);
-  size: var(--t-title-large-size);
 }
 
 .spacer {

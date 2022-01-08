@@ -6,11 +6,11 @@
 }
 
 .labelText {
+  font-size: var(--t-label-large-size);
   font-weight: var(--t-label-large-weight);
   line-height: var(--t-label-large-line-height);
   color: inherit;
   letter-spacing: var(--t-label-large-letter-spacing);
-  size: var(--t-label-large-size);
 }
 
 .indicator {
@@ -73,11 +73,11 @@
 }
 
 .badgeLabelText {
+  font-size: var(--t-label-large-size);
   font-weight: var(--t-label-large-weight);
   line-height: var(--t-label-large-line-height);
   color: rgb(var(--c-on-surface-variant-rgb));
   letter-spacing: var(--t-label-large-letter-spacing);
-  size: var(--t-label-large-size);
 }
 
 @media screen and (min-width: 0) and (max-width: 904px) {
