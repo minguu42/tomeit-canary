@@ -1,15 +1,10 @@
-import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
+import { Theme, useSetTheme } from "@/lib/theme";
 
-export type Theme = "light" | "dark";
-
-const themeState = atom<Theme>({
-  key: "themeState",
-  default: "light",
-});
-
-const ThemeScript = () => {
-  const codeToRunOnClient = `
+const ThemeScript = () => (
+  <script
+    dangerouslySetInnerHTML={{
+      __html: `
 (function() {
   function getTheme() {
     const storageTheme = window.localStorage.getItem("theme");
@@ -25,16 +20,17 @@ const ThemeScript = () => {
   const root = document.documentElement;
 
   root.setAttribute("data-theme", theme);
-})()`;
-  return <script dangerouslySetInnerHTML={{ __html: codeToRunOnClient }} />;
-};
+})()`,
+    }}
+  />
+);
 
 type Props = {
   children: JSX.Element;
 };
 
-export const ThemeProvider = ({ children }: Props): JSX.Element => {
-  const setTheme = useSetRecoilState(themeState);
+const ThemeProvider = ({ children }: Props): JSX.Element => {
+  const setTheme = useSetTheme();
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -51,21 +47,4 @@ export const ThemeProvider = ({ children }: Props): JSX.Element => {
   );
 };
 
-export const useTheme = () => {
-  const [theme, setTheme] = useRecoilState(themeState);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    window.localStorage.setItem("theme", newTheme);
-    const root = window.document.documentElement;
-
-    if (newTheme === "light") {
-      root.setAttribute("data-theme", "light");
-    } else {
-      root.setAttribute("data-theme", "dark");
-    }
-  };
-
-  return { theme, toggleTheme };
-};
+export default ThemeProvider;
