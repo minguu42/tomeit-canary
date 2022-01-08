@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 8px;
+  color: rgb(var(--c-on-background-rgb));
+  background-color: var(--c-background);
+  border-bottom: 1px solid var(--c-outline);
+}
+
+.iconButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--c-background);
+  border-radius: 14px;
+}
+
+.iconButtonLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 14px;
+}
+
+.iconButton:hover > .iconButtonLayer {
+  background-color: rgb(
+    var(--c-on-background-rgb) / var(--s-hover-state-layer-opacity)
+  );
+}
+
+.iconButton:focus > .iconButtonLayer {
+  background-color: rgb(
+    var(--c-on-background-rgb) / var(--s-focus-state-layer-opacity)
+  );
+}
+
+.iconButton:active > .iconButtonLayer {
+  background-color: rgb(
+    var(--c-on-background-rgb) / var(--s-pressed-state-layer-opacity)
+  );
+}
+
+.main {
+  flex: 1 1 0;
+  margin-left: 8px;
+}
+
+.title {
+  font-size: var(--t-title-medium-size);
+  font-weight: var(--t-title-medium-weight);
+  line-height: var(--t-title-medium-line-height);
+  color: var(--c-on-background-rgb);
+  letter-spacing: var(--t-title-medium-letter-spacing);
+}
+
+.dueOnCaption {
+  margin-right: 8px;
+  font-size: var(--t-label-large-size);
+  font-weight: var(--t-label-large-weight);
+  line-height: var(--t-label-large-line-height);
+  color: rgb(var(--c-on-surface-variant-rgb));
+  letter-spacing: var(--t-label-large-letter-spacing);
+}
