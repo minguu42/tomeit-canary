@@ -16,10 +16,10 @@ const PomodoroCaption: VFC<Props> = ({
   if (expectedPomodoroNum >= 1 && actualPomodoroNum >= 1) {
     return (
       <div className={s.container}>
-        <AlarmIcon size={16} className={s.actualColor} />
+        <AlarmOnIcon size={16} className={s.actualColor} />
         <p className={cn(s.labelText, s.actualColor)}>{actualPomodoroNum}</p>
         <p className={s.separator}>/</p>
-        <AlarmOnIcon size={16} className={s.expectedColor} />
+        <AlarmIcon size={16} className={s.expectedColor} />
         <p className={cn(s.labelText, s.expectedColor)}>
           {expectedPomodoroNum}
         </p>
@@ -47,14 +47,14 @@ const PomodoroCaption: VFC<Props> = ({
       <div className={s.container}>
         {actualPomodoroNum >= 6 ? (
           <>
-            <AlarmIcon size={16} className={s.actualColor} />
+            <AlarmOnIcon size={16} className={s.actualColor} />
             <p className={cn(s.labelText, s.actualColor)}>
               {actualPomodoroNum}
             </p>
           </>
         ) : (
           Array.from({ length: actualPomodoroNum }, (_, i) => i).map((v) => (
-            <AlarmIcon key={v} size={16} className={s.actualColor} />
+            <AlarmOnIcon key={v} size={16} className={s.actualColor} />
           ))
         )}
       </div>

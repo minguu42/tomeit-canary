@@ -12,13 +12,13 @@
 }
 
 .actualColor {
-  color: var(--c-primary);
-  fill: var(--c-primary);
+  color: rgb(var(--c-on-primary-container-rgb));
+  fill: rgb(var(--c-on-primary-container-rgb));
 }
 
 .expectedColor {
-  color: rgb(var(--c-on-primary-container-rgb));
-  fill: rgb(var(--c-on-primary-container-rgb));
+  color: var(--c-primary);
+  fill: var(--c-primary);
 }
 
 .separator {
