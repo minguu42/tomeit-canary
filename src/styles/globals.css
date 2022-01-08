@@ -116,7 +116,7 @@
   --c-on-tertiary-rgb: 73 37 50;
   --c-on-tertiary-container-rgb: 255 216 228;
   --c-on-surface-rgb: 230 225 229;
-  --c-on-surface-variant-rgb: 202 196 20;
+  --c-on-surface-variant-rgb: 202 196 208;
   --c-on-error-rgb: 96 20 16;
   --c-on-error-container-rgb: 249 222 220;
   --c-on-background-rgb: 230 225 229;
@@ -140,8 +140,7 @@
 }
 
 html {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 a {

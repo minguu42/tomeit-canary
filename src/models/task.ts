@@ -1,5 +1,5 @@
 import { atom, selector, useRecoilValue, useSetRecoilState } from "recoil";
-import { formatDate } from "../lib/format";
+import { formatDate } from "@/lib/format";
 
 export type Task = {
   id: number;
