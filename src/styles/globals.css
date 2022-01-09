@@ -1,5 +1,6 @@
 :root {
   --c-primary: #6750a4;
+  --c-primary-rgb: 103 80 164;
   --c-primary-container: #eaddff;
   --c-secondary: #625b71;
   --c-secondary-container: #e8def8;
@@ -99,6 +100,7 @@
 
 :root[data-theme="dark"] {
   --c-primary: #d0bcff;
+  --c-primary-rgb: 208 188 255;
   --c-primary-container: #4f378b;
   --c-secondary: #ccc2dc;
   --c-secondary-container: #4a4458;
@@ -152,11 +154,11 @@ button {
   border: none;
 }
 
-button,
-[type="button"],
-[type="reset"],
-[type="submit"],
-[role="button"] {
+button:not([disabled]),
+[type="button"]:not([disabled]),
+[type="reset"]:not([disabled]),
+[type="submit"]:not([disabled]),
+[role="button"]:not([disabled]) {
   color: inherit;
   cursor: pointer;
 }

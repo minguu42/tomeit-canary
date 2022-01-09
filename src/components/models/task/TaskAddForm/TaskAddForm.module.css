@@ -1,0 +1,108 @@
+.container {
+  color: rgb(var(--c-on-background-rgb));
+  background-color: var(--c-background);
+  border-bottom: 1px solid var(--c-outline);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.titleInput {
+  flex: 1 1 0;
+  height: 48px;
+  padding: 0 4px;
+  margin: 0 8px 0 20px;
+  font-size: var(--t-title-medium-size);
+  font-weight: var(--t-title-medium-weight);
+  line-height: var(--t-title-medium-line-height);
+  color: rgb(var(--c-on-background-rgb));
+  letter-spacing: var(--t-title-medium-letter-spacing);
+  background-color: transparent;
+  border-width: 0;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  padding: 0 20px 0 68px;
+}
+
+.expectedPomodoroNumInput {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  color: rgb(var(--c-on-background-rgb));
+  text-align: center;
+  background-color: transparent;
+  border-width: 0;
+}
+
+.dueOnInput {
+  width: 148px;
+  height: 36px;
+  margin-left: 8px;
+  font-size: 16px;
+  color: rgb(var(--c-on-background-rgb));
+  background-color: transparent;
+  border-width: 0;
+}
+
+:root[data-theme="dark"] .dueOnInput::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.spacer {
+  flex: 1 1 0;
+}
+
+.button {
+  position: relative;
+  min-width: 48px;
+  height: 40px;
+  padding: 0 12px;
+  font-size: var(--t-label-large-size);
+  font-weight: var(--t-label-large-weight);
+  line-height: var(--t-label-large-line-height);
+  color: var(--c-primary);
+  letter-spacing: var(--t-label-large-letter-spacing);
+  background-color: transparent;
+  border-radius: 20px;
+}
+
+.buttonDisabledColor {
+  color: rgb(var(--c-on-surface-rgb) / 38%);
+}
+
+.buttonLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 20px;
+}
+
+.hideButtonLayer {
+  display: none;
+}
+
+.button:hover > .buttonLayer {
+  background-color: rgb(
+    var(--c-primary-rgb) / var(--s-hover-state-layer-opacity)
+  );
+}
+
+.button:focus > .buttonLayer {
+  background-color: rgb(
+    var(--c-primary-rgb) / var(--s-focus-state-layer-opacity)
+  );
+}
+
+.button:active > .buttonLayer {
+  background-color: rgb(
+    var(--c-primary-rgb) / var(--s-pressed-state-layer-opacity)
+  );
+}

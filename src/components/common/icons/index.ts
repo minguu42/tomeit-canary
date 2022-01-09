@@ -1,3 +1,4 @@
+export { default as AddTaskIcon } from "./AddTask";
 export { default as AlarmIcon } from "./Alarm";
 export { default as AlarmOnIcon } from "./AlarmOn";
 export { default as CircleIcon } from "./Circle";
