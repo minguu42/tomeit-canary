@@ -49,7 +49,7 @@ dueOn: ${dueOn !== null ? formatDate(dueOn) : "null"}
         />
       </div>
       <div className={s.options}>
-        <AlarmIcon />
+        <AlarmIcon size={20} />
         <input
           type="number"
           value={expectedPomodoroNum}
@@ -73,7 +73,7 @@ dueOn: ${dueOn !== null ? formatDate(dueOn) : "null"}
           <div
             className={cn(s.buttonLayer, { [s.hideButtonLayer]: title === "" })}
           />
-          add
+          追加
         </button>
       </div>
     </form>

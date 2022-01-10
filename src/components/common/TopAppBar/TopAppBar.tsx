@@ -20,18 +20,30 @@ const TopAppBar: VFC = () => {
 
   return (
     <header className={s.container}>
-      <button onClick={toggleNavigationDrawer} className={s.navigationIcon}>
+      <button
+        onClick={toggleNavigationDrawer}
+        aria-label="ナビゲーションを開く"
+        className={s.navigationIcon}
+      >
         <div className={s.navigationIconLayer} />
         <MenuIcon />
       </button>
       <h2 className={s.headline}>{headline}</h2>
       <div className={s.spacer} />
       <div className={s.trailingIcons}>
-        <button onClick={toggleTheme} className={s.interactiveIcon}>
+        <button
+          onClick={toggleTheme}
+          aria-label="カラーテーマを切り替える"
+          className={s.interactiveIcon}
+        >
           <div className={s.interactiveIconLayer} />
           {theme === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
         </button>
-        <button onClick={logout} className={s.interactiveIcon}>
+        <button
+          onClick={logout}
+          aria-label="ログアウトする"
+          className={s.interactiveIcon}
+        >
           <div className={s.interactiveIconLayer} />
           <LogoutIcon />
         </button>
