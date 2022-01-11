@@ -8,7 +8,7 @@ import {
   LogoutIcon,
 } from "@/components/common/icons";
 import s from "./TopAppBar.module.css";
-import { useUser } from "@/lib/auth";
+import { logout, useUser } from "@/lib/auth";
 import { useTheme } from "@/lib/theme";
 import { useToggleNavigationDrawer } from "@/lib/states";
 
@@ -17,9 +17,6 @@ const TopAppBar: VFC = () => {
   const user = useUser();
   const { theme, toggleTheme } = useTheme();
   const toggleNavigationDrawer = useToggleNavigationDrawer();
-  const logout = () => {
-    window.alert("ログアウト");
-  };
 
   if (user === null) {
     return (
