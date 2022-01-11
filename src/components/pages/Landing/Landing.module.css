@@ -1,10 +1,10 @@
 .container {
   display: grid;
   grid-template:
-    "catch       . image" 56px
-    ".           . image" 24px
+    "catch       . image" 64px
+    ".           . image" 32px
     "description . image" 56px
-    ".           . image" 52px
+    ".           . image" 72px
     "button      . image"
     / 540px 54px 1fr;
   max-width: 1200px;
@@ -35,4 +35,29 @@
 
 .imageLayout {
   grid-area: image;
+}
+
+@media screen and (max-width: 905px) {
+  .container {
+    grid-template:
+      "catch"
+      "." 16px
+      "description"
+      "." 40px
+      "button"
+      "." 52px
+      "image";
+    padding: 8px 16px;
+    margin: 0;
+  }
+
+  .buttonLayout {
+    display: flex;
+    justify-content: center;
+  }
+
+  .imageLayout {
+    display: flex;
+    justify-content: center;
+  }
 }
