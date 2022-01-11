@@ -13,7 +13,7 @@ type Props = {
 const TaskListItem: VFC<Props> = ({ task }) => {
   return (
     <li className={s.container}>
-      <button className={s.iconButton}>
+      <button aria-label="タスクを完了する" className={s.iconButton}>
         <div className={s.iconButtonLayer} />
         <CircleIcon />
       </button>
@@ -25,7 +25,7 @@ const TaskListItem: VFC<Props> = ({ task }) => {
         />
       </div>
       {task.dueOn && <p className={s.dueOnCaption}>{formatDate(task.dueOn)}</p>}
-      <button className={s.iconButton}>
+      <button aria-label="ポモドーロを開始する" className={s.iconButton}>
         <div className={s.iconButtonLayer} />
         <PlayCircleIcon />
       </button>
