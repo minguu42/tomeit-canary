@@ -1,4 +1,5 @@
 import type { VFC } from "react";
+import cn from "classnames";
 
 import {
   MenuIcon,
@@ -7,17 +8,26 @@ import {
   LogoutIcon,
 } from "@/components/common/icons";
 import s from "./TopAppBar.module.css";
+import { useUser } from "@/lib/auth";
 import { useTheme } from "@/lib/theme";
 import { useToggleNavigationDrawer } from "@/lib/states";
 
 const TopAppBar: VFC = () => {
   const headline = "tomeit";
+  const user = useUser();
   const { theme, toggleTheme } = useTheme();
   const toggleNavigationDrawer = useToggleNavigationDrawer();
   const logout = () => {
     window.alert("ログアウト");
   };
 
+  if (user === null) {
+    return (
+      <header className={s.container}>
+        <h2 className={cn(s.headline, s.ml52)}>{headline}</h2>
+      </header>
+    );
+  }
   return (
     <header className={s.container}>
       <button
