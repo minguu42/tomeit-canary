@@ -10,7 +10,7 @@
   background-color: var(--c-surface);
   border: 1px solid #fff;
   border-radius: 2px;
-  box-shadow: var(--s-elevation1);
+  box-shadow: var(--e-level1);
 }
 
 [data-theme="dark"] .container {
@@ -25,11 +25,26 @@
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 1;
   border-radius: inherit;
 }
 
-.layer:hover {
-  background-color: var(--c-surface-hover);
+.container:hover > .layer {
+  background-color: rgb(
+    var(--c-on-surface-rgb) / var(--s-hover-state-layer-opacity)
+  );
+}
+
+.container:focus > .layer {
+  background-color: rgb(
+    var(--c-on-surface-rgb) / var(--s-focus-state-layer-opacity)
+  );
+}
+
+.container:active > .layer {
+  background-color: rgb(
+    var(--c-on-surface-rgb) / var(--s-pressed-state-layer-opacity)
+  );
 }
 
 .logoBackground {
