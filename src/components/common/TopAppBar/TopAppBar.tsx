@@ -6,7 +6,6 @@ import {
   LightModeIcon,
   DarkModeIcon,
   LogoutIcon,
-  AlarmIcon,
 } from "@/components/common/icons";
 import s from "./TopAppBar.module.css";
 import { logout, useUser } from "@/lib/auth";
