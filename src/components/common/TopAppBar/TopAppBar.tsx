@@ -6,6 +6,7 @@ import {
   LightModeIcon,
   DarkModeIcon,
   LogoutIcon,
+  AlarmIcon,
 } from "@/components/common/icons";
 import s from "./TopAppBar.module.css";
 import { logout, useUser } from "@/lib/auth";
@@ -21,10 +22,20 @@ const TopAppBar: VFC = () => {
   if (user === null) {
     return (
       <header className={s.container}>
-        <h2 className={cn(s.headline, s.ml52)}>{headline}</h2>
+        <h2 className={cn(s.headline, s.ml12)}>{headline}</h2>
+        <div className={s.spacer} />
+        <button
+          onClick={toggleTheme}
+          aria-label="カラーテーマを切り替える"
+          className={s.interactiveIcon}
+        >
+          <div className={s.interactiveIconLayer} />
+          {theme === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+        </button>
       </header>
     );
   }
+
   return (
     <header className={s.container}>
       <button
