@@ -50,24 +50,20 @@ export const useUser = (): UserState => {
   return useRecoilValue(userState);
 };
 
-export const useRequiredLogin = (): void => {
+export const useRequiredLogin = () => {
   const user = useUser();
   const router = useRouter();
 
   useEffect(() => {
-    if (user === null) {
-      void router.push("/");
-    }
+    if (user === null) void router.push("/");
   }, [router, user]);
 };
 
-export const useLoggedInAlready = (): void => {
+export const useLoggedInAlready = () => {
   const user = useUser();
   const router = useRouter();
 
   useEffect(() => {
-    if (user !== null) {
-      void router.push("/tasks/today");
-    }
+    if (user !== null) void router.push("/tasks");
   }, [router, user]);
 };
