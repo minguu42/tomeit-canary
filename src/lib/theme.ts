@@ -17,12 +17,7 @@ export const useTheme = () => {
     setTheme(newTheme);
     window.localStorage.setItem("theme", newTheme);
     const root = window.document.documentElement;
-
-    if (newTheme === "light") {
-      root.setAttribute("data-theme", "light");
-    } else {
-      root.setAttribute("data-theme", "dark");
-    }
+    root.setAttribute("data-theme", newTheme);
   };
 
   return { theme, toggleTheme };
