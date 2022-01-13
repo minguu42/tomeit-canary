@@ -66,6 +66,8 @@
 }
 
 :root[data-theme="light"] {
+  color-scheme: light;
+
   --c-primary: #6750a4;
   --c-primary-rgb: 103 80 164;
   --c-primary-container: #eaddff;
@@ -102,6 +104,8 @@
 }
 
 :root[data-theme="dark"] {
+  color-scheme: dark;
+
   --c-primary: #d0bcff;
   --c-primary-rgb: 208 188 255;
   --c-primary-container: #4f378b;
