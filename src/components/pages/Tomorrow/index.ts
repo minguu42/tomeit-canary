@@ -1,1 +1,1 @@
-export { default } from "./Tomorrow"
+export { default } from "./Tomorrow";
