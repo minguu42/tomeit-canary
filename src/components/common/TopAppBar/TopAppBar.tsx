@@ -9,19 +9,23 @@ import {
   LogoutIcon,
 } from "@/components/common/icons";
 import s from "./TopAppBar.module.css";
-import { logout, useUser } from "@/lib/auth";
+import { useUserAtom } from "@/globalStates/userAtom";
+import { logout } from "@/lib/auth";
 import { useTheme } from "@/lib/theme";
 import { useToggleNavigationDrawer } from "@/lib/states";
 
 const TopAppBar: VFC = () => {
   const [headline, setHeadline] = useState("tomeit");
   const router = useRouter();
-  const user = useUser();
+  const user = useUserAtom();
   const { theme, toggleTheme } = useTheme();
   const toggleNavigationDrawer = useToggleNavigationDrawer();
 
   useEffect(() => {
     switch (router.pathname) {
+      case "/":
+        setHeadline("tomeit");
+        break;
       case "/tasks/today":
         setHeadline("今日");
         break;

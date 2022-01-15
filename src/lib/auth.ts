@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  User,
   getAuth,
   signInWithRedirect,
   signOut,
@@ -10,15 +8,11 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 
-import { app } from "lib/firebase";
+import { useSetUserAtom, useUserAtom } from "@/globalStates/userAtom";
+import { app } from "@/lib/firebase";
 
-export type UserState = User | null;
-
-const userState = atom<UserState>({
-  key: "userState",
-  default: null,
-  dangerouslyAllowMutability: true,
-});
+const REDIRECT_TARGET_URL_AT_NOT_LOGIN = "/";
+const REDIRECT_TARGET_URL_AT_LOGIN = "/tasks/today";
 
 export const login = (): Promise<void> => {
   const provider = new GoogleAuthProvider();
@@ -33,7 +27,7 @@ export const logout = (): Promise<void> => {
 
 export const useAuth = (): boolean => {
   const [isLoading, setIsLoading] = useState(true);
-  const setUser = useSetRecoilState(userState);
+  const setUser = useSetUserAtom();
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -46,24 +40,20 @@ export const useAuth = (): boolean => {
   return isLoading;
 };
 
-export const useUser = (): UserState => {
-  return useRecoilValue(userState);
-};
-
 export const useRequiredLogin = () => {
-  const user = useUser();
+  const user = useUserAtom();
   const router = useRouter();
 
   useEffect(() => {
-    if (user === null) void router.push("/");
+    if (user === null) void router.push(REDIRECT_TARGET_URL_AT_NOT_LOGIN);
   }, [router, user]);
 };
 
 export const useLoggedInAlready = () => {
-  const user = useUser();
+  const user = useUserAtom();
   const router = useRouter();
 
   useEffect(() => {
-    if (user !== null) void router.push("/tasks/today");
+    if (user !== null) void router.push(REDIRECT_TARGET_URL_AT_LOGIN);
   }, [router, user]);
 };
