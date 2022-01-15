@@ -51,20 +51,20 @@
   background-color: rgb(var(--c-on-surface-variant-rgb) / 20%);
 }
 
-.indicator[aria-selected] {
+.indicator[aria-selected="true"] {
   color: rgb(var(--c-on-secondary-container-rgb));
   background-color: var(--c-secondary-container);
 }
 
-.indicator[aria-selected]:hover > .indicatorLayer {
+.indicator[aria-selected="true"]:hover > .indicatorLayer {
   background-color: rgb(var(--c-on-secondary-container-rgb) / 16%);
 }
 
-.indicator[aria-selected]:focus > .indicatorLayer {
+.indicator[aria-selected="true"]:focus > .indicatorLayer {
   background-color: rgb(var(--c-on-secondary-container-rgb) / 24%);
 }
 
-.indicator[aria-selected]:active > .indicatorLayer {
+.indicator[aria-selected="true"]:active > .indicatorLayer {
   background-color: rgb(var(--c-on-secondary-container-rgb) / 20%);
 }
 

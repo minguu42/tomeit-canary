@@ -1,19 +1,16 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 
+import PomodoroTimer from "@/components/models/pomodoro/PomodoroTimer";
 import TaskAddForm from "@/components/models/task/TaskAddForm";
 import TaskList from "@/components/models/task/TaskList";
-import PomodoroTimer from "@/components/models/pomodoro/PomodoroTimer";
-import s from "./Tasks.module.css";
-import { useRequiredLogin } from "@/lib/auth";
+import s from "./Someday.module.css";
 
-export const Tasks: NextPage = () => {
-  useRequiredLogin();
-
+export const Someday: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Tasks - tomeit</title>
+        <title>いつか - tomeit</title>
       </Head>
 
       <main className={s.container}>
@@ -27,4 +24,4 @@ export const Tasks: NextPage = () => {
   );
 };
 
-export default Tasks;
+export default Someday;

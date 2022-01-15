@@ -64,6 +64,6 @@ export const useLoggedInAlready = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (user !== null) void router.push("/tasks");
+    if (user !== null) void router.push("/tasks/today");
   }, [router, user]);
 };
