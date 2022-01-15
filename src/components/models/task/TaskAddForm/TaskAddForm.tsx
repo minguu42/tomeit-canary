@@ -3,12 +3,15 @@ import cn from "classnames";
 
 import s from "./TaskAddForm.module.css";
 import { AddTaskIcon, AlarmIcon } from "@/components/common/icons";
+import { useTasksActions } from "@/globalStates/tasksAtom";
+import { Task } from "@/models/task";
 import { formatDate } from "@/lib/format";
 
 const TaskAddForm: VFC = () => {
   const [title, setTitle] = useState("");
   const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
   const [dueOn, setDueOn] = useState<Date | null>(null);
+  const { addTask } = useTasksActions();
 
   const handleTitleChange: FormEventHandler<HTMLInputElement> = (event) => {
     setTitle(event.currentTarget.value);
@@ -26,11 +29,17 @@ const TaskAddForm: VFC = () => {
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
-    window.alert(`
-title: ${title}
-expectedPomodoroNum: ${expectedPomodoroNum}
-dueOn: ${dueOn !== null ? formatDate(dueOn) : "null"}
-`);
+    const task: Task = {
+      id: new Date().getMilliseconds(),
+      title: title,
+      expectedPomodoroNum: expectedPomodoroNum,
+      actualPomodoroNum: 0,
+      dueOn: dueOn,
+      isCompleted: false,
+      completedOn: null,
+    };
+    addTask(task);
+
     setTitle("");
     setExpectedPomodoroNum(0);
     setDueOn(null);
