@@ -1,4 +1,5 @@
-import type { VFC } from "react";
+import { VFC, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import cn from "classnames";
 
 import {
@@ -13,10 +14,25 @@ import { useTheme } from "@/lib/theme";
 import { useToggleNavigationDrawer } from "@/lib/states";
 
 const TopAppBar: VFC = () => {
-  const headline = "tomeit";
+  const [headline, setHeadline] = useState("tomeit");
+  const router = useRouter();
   const user = useUser();
   const { theme, toggleTheme } = useTheme();
   const toggleNavigationDrawer = useToggleNavigationDrawer();
+
+  useEffect(() => {
+    switch (router.pathname) {
+      case "/tasks/today":
+        setHeadline("今日");
+        break;
+      case "/tasks/tomorrow":
+        setHeadline("明日");
+        break;
+      case "/tasks/someday":
+        setHeadline("いつか");
+        break;
+    }
+  }, [router.pathname]);
 
   if (user === null) {
     return (
