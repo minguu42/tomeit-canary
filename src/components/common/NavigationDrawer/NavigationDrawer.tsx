@@ -9,12 +9,12 @@ import {
 } from "@/components/common/icons";
 import s from "./NavigationDrawer.module.css";
 import {
-  useIsNavigationDrawerOpen,
+  useNavigationDrawerAtom,
   useToggleNavigationDrawer,
-} from "@/lib/states";
+} from "@/globalStates/navigationDrawerAtom";
 
 const NavigationDrawer: VFC = () => {
-  const isOpen = useIsNavigationDrawerOpen();
+  const isOpen = useNavigationDrawerAtom();
   const toggleDrawer = useToggleNavigationDrawer();
   const router = useRouter();
 

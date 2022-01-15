@@ -11,8 +11,8 @@ import {
 import s from "./TopAppBar.module.css";
 import { useUserAtom } from "@/globalStates/userAtom";
 import { useThemeAtom } from "@/globalStates/themeAtom";
+import { useToggleNavigationDrawer } from "@/globalStates/navigationDrawerAtom";
 import { logout } from "@/lib/auth";
-import { useToggleNavigationDrawer } from "@/lib/states";
 
 const TopAppBar: VFC = () => {
   const [headline, setHeadline] = useState("tomeit");
