@@ -10,15 +10,15 @@ import {
 } from "@/components/common/icons";
 import s from "./TopAppBar.module.css";
 import { useUserAtom } from "@/globalStates/userAtom";
+import { useThemeAtom } from "@/globalStates/themeAtom";
 import { logout } from "@/lib/auth";
-import { useTheme } from "@/lib/theme";
 import { useToggleNavigationDrawer } from "@/lib/states";
 
 const TopAppBar: VFC = () => {
   const [headline, setHeadline] = useState("tomeit");
   const router = useRouter();
   const user = useUserAtom();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useThemeAtom();
   const toggleNavigationDrawer = useToggleNavigationDrawer();
 
   useEffect(() => {

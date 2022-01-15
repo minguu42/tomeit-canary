@@ -1,17 +1,22 @@
 import { useEffect } from "react";
-import { Theme, useSetTheme } from "@/lib/theme";
+
+import {
+  THEME_ATTRIBUTE_NAME,
+  ThemeAtom,
+  useSetThemeAtom,
+} from "@/globalStates/themeAtom";
 
 type Props = {
   children: JSX.Element;
 };
 
-const ThemeProvider = ({ children }: Props): JSX.Element => {
-  const setTheme = useSetTheme();
+const Theme = ({ children }: Props): JSX.Element => {
+  const setTheme = useSetThemeAtom();
 
   useEffect(() => {
     const root = window.document.documentElement;
-    const initialColorValue = root.getAttribute("data-theme");
-    setTheme(initialColorValue as Theme);
+    const initialColorValue = root.getAttribute(THEME_ATTRIBUTE_NAME);
+    setTheme(initialColorValue as ThemeAtom);
   }, [setTheme]);
 
   return (
@@ -26,4 +31,4 @@ const ThemeProvider = ({ children }: Props): JSX.Element => {
   );
 };
 
-export default ThemeProvider;
+export default Theme;
