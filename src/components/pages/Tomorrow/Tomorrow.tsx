@@ -19,7 +19,7 @@ export const Tomorrow: NextPage = () => {
         <PomodoroTimer />
         <div className={s.taskField}>
           <TaskAddForm />
-          <TaskList />
+          <TaskList filter="tomorrow" />
         </div>
       </main>
     </>

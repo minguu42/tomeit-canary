@@ -1,53 +1,44 @@
 import type { VFC } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
+import { useTasksAtom } from "@/globalStates/tasksAtom";
+import { formatDate } from "@/lib/format";
 
-const TaskList: VFC = () => {
-  const tasks = [
-    {
-      id: 1,
-      title: "タスク1",
-      expectedPomodoroNum: 4,
-      actualPomodoroNum: 2,
-      dueOn: new Date(),
-      isCompleted: false,
-      completedOn: null,
-    },
-    {
-      id: 2,
-      title: "ベリーベリーロングネームタスク ~ 宇宙を添えて ~",
-      expectedPomodoroNum: 0,
-      actualPomodoroNum: 6,
-      dueOn: null,
-      isCompleted: false,
-      completedOn: null,
-    },
-    {
-      id: 3,
-      title:
-        "ポケットモンスター ルビィ&サファイア ~ はじまりの海、おわりの大地 ~",
-      expectedPomodoroNum: 4,
-      actualPomodoroNum: 0,
-      dueOn: null,
-      isCompleted: false,
-      completedOn: null,
-    },
-    {
-      id: 4,
-      title: "持つもの、持たざるもの",
-      expectedPomodoroNum: 0,
-      actualPomodoroNum: 0,
-      dueOn: null,
-      isCompleted: false,
-      completedOn: null,
-    },
-  ];
+type Props = {
+  filter: "today" | "tomorrow" | "someday";
+};
+
+const TaskList: VFC<Props> = ({ filter }) => {
+  const tasks = useTasksAtom();
+
+  if (filter === "someday") {
+    return (
+      <ul>
+        {tasks
+          .filter((task) => !task.isCompleted)
+          .map((task) => (
+            <TaskListItem key={task.id} task={task} />
+          ))}
+      </ul>
+    );
+  }
+
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+  const filterDate = filter === "today" ? today : tomorrow;
+  const filteredTasks = tasks.filter(
+    (task) =>
+      task.dueOn !== null && formatDate(task.dueOn) === formatDate(filterDate)
+  );
 
   return (
     <ul>
-      {tasks.map((task) => (
-        <TaskListItem key={task.id} task={task} />
-      ))}
+      {filteredTasks
+        .filter((task) => !task.isCompleted)
+        .map((task) => (
+          <TaskListItem key={task.id} task={task} />
+        ))}
     </ul>
   );
 };
