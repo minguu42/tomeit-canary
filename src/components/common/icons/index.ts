@@ -4,6 +4,8 @@ export { default as AlarmOnIcon } from "./AlarmOn";
 export { default as CheckCircleIcon } from "./CheckCircle";
 export { default as CircleIcon } from "./Circle";
 export { default as DarkModeIcon } from "./DarkMode";
+export { default as DeleteIcon } from "./Delete";
+export { default as EditIcon } from "./Edit";
 export { default as EventIcon } from "./Event";
 export { default as LightModeIcon } from "./LightMode";
 export { default as LogoutIcon } from "./Logout";
