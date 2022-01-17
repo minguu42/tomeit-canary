@@ -1,0 +1,60 @@
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: rgb(var(--c-on-surface-rgb));
+  background-color: transparent;
+  border-radius: 14px;
+}
+
+.containerVariant {
+  color: rgb(var(--c-on-surface-variant-rgb));
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 14px;
+}
+
+.container:hover > .layer {
+  background-color: rgb(
+    var(--c-on-surface-rgb) / var(--s-hover-state-layer-opacity)
+  );
+}
+
+.container:focus > .layer {
+  background-color: rgb(
+    var(--c-on-surface-rgb) / var(--s-focus-state-layer-opacity)
+  );
+}
+
+.container:active > .layer {
+  background-color: rgb(
+    var(--c-on-surface-rgb) / var(--s-pressed-state-layer-opacity)
+  );
+}
+
+.container:hover > .layerVariant {
+  background-color: rgb(
+    var(--c-on-surface-variant-rgb) / var(--s-hover-state-layer-opacity)
+  );
+}
+
+.container:focus > .layerVariant {
+  background-color: rgb(
+    var(--c-on-surface-variant-rgb) / var(--s-focus-state-layer-opacity)
+  );
+}
+
+.container:active > .layerVariant {
+  background-color: rgb(
+    var(--c-on-surface-variant-rgb) / var(--s-pressed-state-layer-opacity)
+  );
+}
