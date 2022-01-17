@@ -8,22 +8,37 @@ import { formatDate } from "@/lib/format";
 
 type Props = {
   task: Task;
+  featuredTask: Task | null;
+  setFeaturedTask: (task: Task | null) => void;
 };
 
-const TaskListItem: VFC<Props> = ({ task }) => {
+const TaskListItem: VFC<Props> = ({ task, featuredTask, setFeaturedTask }) => {
+  const closeTaskSideSheet = () => {
+    setFeaturedTask(null);
+  };
+
   return (
     <li className={s.container}>
       <button aria-label="タスクを完了する" className={s.iconButton}>
         <div className={s.iconButtonLayer} />
         <CircleIcon />
       </button>
-      <div className={s.main}>
+      <button
+        onClick={
+          task === featuredTask
+            ? closeTaskSideSheet
+            : () => {
+                setFeaturedTask(task);
+              }
+        }
+        className={s.main}
+      >
         <p className={s.title}>{task.title}</p>
         <PomodoroCaption
           expectedPomodoroNum={task.expectedPomodoroNum}
           actualPomodoroNum={task.actualPomodoroNum}
         />
-      </div>
+      </button>
       {task.dueOn && <p className={s.dueOnCaption}>{formatDate(task.dueOn)}</p>}
       <button aria-label="ポモドーロを開始する" className={s.iconButton}>
         <div className={s.iconButtonLayer} />
