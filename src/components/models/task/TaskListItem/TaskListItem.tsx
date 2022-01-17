@@ -9,27 +9,31 @@ import { formatDate } from "@/lib/format";
 type Props = {
   task: Task;
   featuredTask: Task | null;
-  setFeaturedTask: (task: Task | null) => void;
+  completeTask: () => void;
+  openInTaskSideSheet: () => void;
+  closeTaskSideSheet: () => void;
 };
 
-const TaskListItem: VFC<Props> = ({ task, featuredTask, setFeaturedTask }) => {
-  const closeTaskSideSheet = () => {
-    setFeaturedTask(null);
-  };
-
+const TaskListItem: VFC<Props> = ({
+  task,
+  featuredTask,
+  completeTask,
+  openInTaskSideSheet,
+  closeTaskSideSheet,
+}) => {
   return (
     <li className={s.container}>
-      <button aria-label="タスクを完了する" className={s.iconButton}>
+      <button
+        onClick={completeTask}
+        aria-label="タスクを完了する"
+        className={s.iconButton}
+      >
         <div className={s.iconButtonLayer} />
         <CircleIcon />
       </button>
       <button
         onClick={
-          task === featuredTask
-            ? closeTaskSideSheet
-            : () => {
-                setFeaturedTask(task);
-              }
+          task === featuredTask ? closeTaskSideSheet : openInTaskSideSheet
         }
         className={s.main}
       >

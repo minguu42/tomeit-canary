@@ -1,7 +1,7 @@
 import type { VFC } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
-import { useTasksAtom } from "@/globalStates/tasksAtom";
+import { useTasksActions, useTasksAtom } from "@/globalStates/tasksAtom";
 import { Task } from "@/models/task";
 import { formatDate } from "@/lib/format";
 
@@ -13,22 +13,37 @@ type Props = {
 
 const TaskList: VFC<Props> = ({ filter, featuredTask, setFeaturedTask }) => {
   const tasks = useTasksAtom();
+  const { replaceTask } = useTasksActions();
 
-  let filterConditions = (task: Task) => !task.isCompleted;
+  const isNotTaskCompleted = (task: Task) => !task.isCompleted;
+  const isTaskDueOn = (task: Task, date: Date) =>
+    task.dueOn !== null && formatDate(task.dueOn) === formatDate(date);
+  let filterConditions = isNotTaskCompleted;
   if (filter === "today") {
     const today = new Date();
     filterConditions = (task: Task) =>
-      !task.isCompleted &&
-      task.dueOn !== null &&
-      formatDate(task.dueOn) === formatDate(today);
+      isNotTaskCompleted(task) && isTaskDueOn(task, today);
   } else if (filter === "tomorrow") {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     filterConditions = (task: Task) =>
-      !task.isCompleted &&
-      task.dueOn !== null &&
-      formatDate(task.dueOn) === formatDate(tomorrow);
+      isNotTaskCompleted(task) && isTaskDueOn(task, tomorrow);
   }
+
+  const completeTask = (task: Task) => {
+    const index = tasks.findIndex((t) => t.id === task.id);
+    if (index === -1) return;
+    const newTask: Task = { ...task, isCompleted: true };
+    replaceTask(index, newTask);
+  };
+
+  const openInTaskSideSheet = (task: Task) => {
+    setFeaturedTask(task);
+  };
+
+  const closeTaskSideSheet = () => {
+    setFeaturedTask(null);
+  };
 
   return (
     <ul>
@@ -37,7 +52,13 @@ const TaskList: VFC<Props> = ({ filter, featuredTask, setFeaturedTask }) => {
           key={task.id}
           task={task}
           featuredTask={featuredTask}
-          setFeaturedTask={setFeaturedTask}
+          completeTask={() => {
+            completeTask(task);
+          }}
+          openInTaskSideSheet={() => {
+            openInTaskSideSheet(task);
+          }}
+          closeTaskSideSheet={closeTaskSideSheet}
         />
       ))}
     </ul>
