@@ -167,6 +167,10 @@
   list-style-type: none;
 }
 
+:where(svg:not([fill])) {
+  fill: currentColor;
+}
+
 :where([aria-hidden="false"], [disabled]) {
   cursor: not-allowed;
 }
