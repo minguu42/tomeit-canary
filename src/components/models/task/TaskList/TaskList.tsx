@@ -9,11 +9,16 @@ type Props = {
   filter: "today" | "tomorrow" | "someday";
   featuredTask: Task | null;
   setFeaturedTask: (task: Task | null) => void;
+  onCompleteTaskButtonClick: (task: Task) => void;
 };
 
-const TaskList: VFC<Props> = ({ filter, featuredTask, setFeaturedTask }) => {
+const TaskList: VFC<Props> = ({
+  filter,
+  featuredTask,
+  setFeaturedTask,
+  onCompleteTaskButtonClick,
+}) => {
   const tasks = useTasksAtom();
-  const { replaceTask } = useTasksActions();
 
   const isNotTaskCompleted = (task: Task) => !task.isCompleted;
   const isTaskDueOn = (task: Task, date: Date) =>
@@ -29,13 +34,6 @@ const TaskList: VFC<Props> = ({ filter, featuredTask, setFeaturedTask }) => {
     filterConditions = (task: Task) =>
       isNotTaskCompleted(task) && isTaskDueOn(task, tomorrow);
   }
-
-  const completeTask = (task: Task) => {
-    const index = tasks.findIndex((t) => t.id === task.id);
-    if (index === -1) return;
-    const newTask: Task = { ...task, isCompleted: true };
-    replaceTask(index, newTask);
-  };
 
   const openInTaskSideSheet = (task: Task) => {
     setFeaturedTask(task);
@@ -53,7 +51,7 @@ const TaskList: VFC<Props> = ({ filter, featuredTask, setFeaturedTask }) => {
           task={task}
           featuredTask={featuredTask}
           completeTask={() => {
-            completeTask(task);
+            onCompleteTaskButtonClick(task);
           }}
           openInTaskSideSheet={() => {
             openInTaskSideSheet(task);

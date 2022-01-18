@@ -15,10 +15,16 @@ import { formatDateToJP } from "@/lib/format";
 
 type Props = {
   task: Task | null;
+  onDeleteTaskButtonClick: (task: Task) => void;
+  onCompleteTaskButtonClick: (task: Task) => void;
 };
 
-const TaskSideSheet: VFC<Props> = ({ task }) => {
-  if (task === null) {
+const TaskSideSheet: VFC<Props> = ({
+  task,
+  onDeleteTaskButtonClick,
+  onCompleteTaskButtonClick,
+}) => {
+  if (task === null || task.isCompleted) {
     return <></>;
   }
 
@@ -28,7 +34,7 @@ const TaskSideSheet: VFC<Props> = ({ task }) => {
         <IconButton
           icon={<CircleIcon />}
           onClick={() => {
-            alert("テスト");
+            onCompleteTaskButtonClick(task);
           }}
           label="タスクを完了する"
         />
@@ -63,7 +69,12 @@ const TaskSideSheet: VFC<Props> = ({ task }) => {
           </button>
         </li>
         <li>
-          <button className={s.actionListItem}>
+          <button
+            onClick={() => {
+              onDeleteTaskButtonClick(task);
+            }}
+            className={s.actionListItem}
+          >
             <div className={s.actionListItemLayer} />
             <DeleteIcon />
             <p className={s.actionName}>削除する</p>
