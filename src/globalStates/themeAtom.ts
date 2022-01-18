@@ -1,4 +1,4 @@
-import { atom, useSetRecoilState, useRecoilState } from "recoil";
+import { atom, useRecoilState, useSetRecoilState } from "recoil";
 
 export type ThemeAtom = "light" | "dark";
 
