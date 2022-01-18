@@ -1,4 +1,4 @@
-import type { VFC } from "react";
+import { VFC } from "react";
 import cn from "classnames";
 
 import { AlarmIcon, AlarmOnIcon } from "@/components/common/icons";

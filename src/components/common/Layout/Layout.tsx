@@ -1,4 +1,4 @@
-import type { VFC } from "react";
+import { VFC } from "react";
 
 import TopAppBar from "@/components/common/TopAppBar";
 import NavigationDrawer from "@/components/common/NavigationDrawer";

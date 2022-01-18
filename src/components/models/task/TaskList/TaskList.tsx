@@ -1,7 +1,7 @@
-import type { VFC } from "react";
+import { VFC } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
-import { useTasksActions, useTasksAtom } from "@/globalStates/tasksAtom";
+import { useTasksAtom } from "@/globalStates/tasksAtom";
 import { Task } from "@/models/task";
 import { formatDate } from "@/lib/format";
 

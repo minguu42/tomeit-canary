@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { VFC, useEffect } from "react";
 
 import {
   THEME_ATTRIBUTE_NAME,
@@ -10,7 +10,7 @@ type Props = {
   children: JSX.Element;
 };
 
-const Theme = ({ children }: Props): JSX.Element => {
+const Theme: VFC<Props> = ({ children }) => {
   const setTheme = useSetThemeAtom();
 
   useEffect(() => {
