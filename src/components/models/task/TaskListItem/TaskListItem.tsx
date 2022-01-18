@@ -1,4 +1,4 @@
-import type { VFC } from "react";
+import { VFC } from "react";
 
 import { CircleIcon, PlayCircleIcon } from "@/components/common/icons";
 import PomodoroCaption from "@/components/models/pomodoro/PomodoroCaption";

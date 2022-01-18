@@ -1,4 +1,4 @@
-import type { VFC } from "react";
+import { VFC } from "react";
 
 import s from "./Loading.module.css";
 

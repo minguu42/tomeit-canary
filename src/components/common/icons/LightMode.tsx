@@ -12,7 +12,6 @@ const LightMode: VFC<Props> = ({ size, className }) => (
     width={size || 24}
     height={size || 24}
     viewBox="0 0 24 24"
-    fill="currentColor"
     className={className}
   >
     <rect fill="none" height="24" width="24" />

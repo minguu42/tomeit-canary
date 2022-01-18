@@ -1,4 +1,4 @@
-import type { VFC } from "react";
+import { VFC } from "react";
 
 import Loading from "@/components/common/Loading";
 import { useAuth } from "lib/auth";

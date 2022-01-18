@@ -7,14 +7,13 @@
 .top {
   display: flex;
   align-items: center;
-  padding: 0 20px;
 }
 
 .titleInput {
   flex: 1 1 0;
   height: 48px;
   padding: 0 4px;
-  margin: 0 8px 0 20px;
+  margin: 0 8px 0 16px;
   font-size: var(--t-title-medium-size);
   font-weight: var(--t-title-medium-weight);
   line-height: var(--t-title-medium-line-height);
@@ -27,7 +26,7 @@
 .options {
   display: flex;
   align-items: center;
-  padding: 0 20px 0 68px;
+  padding: 0 20px 0 44px;
 }
 
 .expectedPomodoroNumInput {
@@ -41,7 +40,7 @@
 }
 
 .dueOnInput {
-  width: 148px;
+  width: 156px;
   height: 36px;
   margin-left: 8px;
   font-size: 16px;

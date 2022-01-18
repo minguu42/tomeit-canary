@@ -1,5 +1,5 @@
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import type { Task } from "@/models/task";
+import { Task } from "@/models/task";
 
 const tasksAtom = atom<Task[]>({
   key: "tasksAtom",

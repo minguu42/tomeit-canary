@@ -55,11 +55,15 @@
 }
 
 .title {
+  display: -webkit-box;
+  overflow: hidden;
   font-size: var(--t-title-medium-size);
   font-weight: var(--t-title-medium-weight);
   line-height: var(--t-title-medium-line-height);
   color: var(--c-on-background-rgb);
   letter-spacing: var(--t-title-medium-letter-spacing);
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .dueOnCaption {
