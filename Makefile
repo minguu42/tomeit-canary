@@ -1,9 +1,10 @@
 .DEFAULT_GOAL := help
+SCRIPT_PATH = $(PWD)/node_modules/.bin/
 
 .PHONY: dev
 dev:  ## フロントエンドの開発用サーバを起動する
 	@open http://localhost:3000/
-	@next dev
+	@$(SCRIPT_PATH)next dev
 
 .PHONY: docs
 docs: ## http://localhost:8000 で仕様書を表示するサーバを起動する
@@ -11,21 +12,21 @@ docs: ## http://localhost:8000 で仕様書を表示するサーバを起動す�
 
 .PHONY: build
 build:  ## ビルドする
-	@next build
+	@$(SCRIPT_PATH)next build
 
 .PHONY: start
 start:  ## 本番サーバを起動する
-	@next start
+	@$(SCRIPT_PATH)next start
 
 .PHONY: fmt
 fmt:  ## js, ts, jsx, tsx, css, json, md ファイルを自動整形する
-	@prettier --ignore-path .lintignore -l -w "{src/**/*,*}.{js,ts,jsx,tsx,css,json,md}"
-	@stylelint --fix --ignore-path .lintignore "src/**/*.css"
+	@$(SCRIPT_PATH)prettier --ignore-path .lintignore -l -w "{src/**/*,*}.{js,ts,jsx,tsx,css,json,md}"
+	@$(SCRIPT_PATH)stylelint --fix --ignore-path .lintignore "src/**/*.css"
 
 .PHONY: lint
 lint:  ## js, ts, jsx, tsx, css ファイルを静的解析する
-	@next lint
-	@stylelint --ignore-path .lintignore "src/**/*.css"
+	@$(SCRIPT_PATH)next lint
+	@$(SCRIPT_PATH)stylelint --ignore-path .lintignore "src/**/*.css"
 
 .PHONY: check
 check:  ## fmt, lint, test を実行する
@@ -34,11 +35,11 @@ check:  ## fmt, lint, test を実行する
 
 .PHONY: storybook
 storybook:  ## Storybook を立ち上げる
-	@start-storybook -p 6006
+	@$(SCRIPT_PATH)start-storybook -p 6006
 
 .PHONY: build-storybook
 build-storybook:  ## Storybook をビルドする
-	build-storybook
+	$(SCRIPT_PATH)build-storybook
 
 .PHONY: dev-backend
 dev-backend:  ## バックエンドの開発用サーバを起動する
