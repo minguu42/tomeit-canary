@@ -8,15 +8,17 @@ import { formatDate } from "@/lib/format";
 type Props = {
   filter: "today" | "tomorrow" | "someday";
   featuredTask: Task | null;
-  setFeaturedTask: (task: Task | null) => void;
   onCompleteTaskButtonClick: (task: Task) => void;
+  openTaskInSideSheet: (task: Task) => void;
+  closeTaskSideSheet: () => void;
 };
 
 const TaskList: VFC<Props> = ({
   filter,
   featuredTask,
-  setFeaturedTask,
   onCompleteTaskButtonClick,
+  openTaskInSideSheet,
+  closeTaskSideSheet,
 }) => {
   const tasks = useTasksAtom();
 
@@ -35,14 +37,6 @@ const TaskList: VFC<Props> = ({
       isNotTaskCompleted(task) && isTaskDueOn(task, tomorrow);
   }
 
-  const openInTaskSideSheet = (task: Task) => {
-    setFeaturedTask(task);
-  };
-
-  const closeTaskSideSheet = () => {
-    setFeaturedTask(null);
-  };
-
   return (
     <ul>
       {tasks.filter(filterConditions).map((task) => (
@@ -54,7 +48,7 @@ const TaskList: VFC<Props> = ({
             onCompleteTaskButtonClick(task);
           }}
           openInTaskSideSheet={() => {
-            openInTaskSideSheet(task);
+            openTaskInSideSheet(task);
           }}
           closeTaskSideSheet={closeTaskSideSheet}
         />
