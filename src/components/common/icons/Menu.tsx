@@ -11,7 +11,6 @@ const Menu: VFC<Props> = ({ size, className }) => (
     width={size || 24}
     height={size || 24}
     viewBox="0 0 24 24"
-    fill="currentColor"
     className={className}
   >
     <path d="M0 0h24v24H0V0z" fill="none" />
