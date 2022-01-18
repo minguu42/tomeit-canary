@@ -17,6 +17,7 @@
     "baseUrl": "./src",
     "paths": {
       "@/components/*": ["components/*"],
+      "@/globalStates/*": ["globalStates/*"],
       "@/lib/*": ["lib/*"],
       "@/models/*": ["models/*"],
       "@/pages/*": ["pages/*"],

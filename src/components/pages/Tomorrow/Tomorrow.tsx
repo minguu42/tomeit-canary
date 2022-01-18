@@ -6,9 +6,24 @@ import TaskAddForm from "@/components/models/task/TaskAddForm";
 import TaskList from "@/components/models/task/TaskList";
 import s from "./Tomorrow.module.css";
 import { useRequiredLogin } from "@/lib/auth";
+import { useTasksActions } from "@/globalStates/tasksAtom";
+import { useState } from "react";
+import { Task } from "@/models/task";
 
 export const Tomorrow: NextPage = () => {
   useRequiredLogin();
+  const { replaceTask } = useTasksActions();
+  const [featuredTask, setFeaturedTask] = useState<Task | null>(null);
+
+  const onCompleteTaskButtonClick = (task: Task): void => {
+    if (task === null) return;
+    const newTask: Task = { ...task, isCompleted: true };
+    replaceTask(task, newTask);
+    if (featuredTask !== null && task.id === featuredTask.id) {
+      setFeaturedTask(null);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -19,7 +34,12 @@ export const Tomorrow: NextPage = () => {
         <PomodoroTimer />
         <div className={s.taskField}>
           <TaskAddForm />
-          <TaskList />
+          <TaskList
+            filter="tomorrow"
+            featuredTask={featuredTask}
+            setFeaturedTask={setFeaturedTask}
+            onCompleteTaskButtonClick={onCompleteTaskButtonClick}
+          />
         </div>
       </main>
     </>

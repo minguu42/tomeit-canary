@@ -1,52 +1,63 @@
 import type { VFC } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
+import { useTasksActions, useTasksAtom } from "@/globalStates/tasksAtom";
+import { Task } from "@/models/task";
+import { formatDate } from "@/lib/format";
 
-const TaskList: VFC = () => {
-  const tasks = [
-    {
-      id: 1,
-      title: "タスク1",
-      expectedPomodoroNum: 4,
-      actualPomodoroNum: 2,
-      dueOn: new Date(),
-      isCompleted: false,
-      completedOn: null,
-    },
-    {
-      id: 2,
-      title: "ベリーベリーロングネームタスク ~ 宇宙を添えて ~",
-      expectedPomodoroNum: 0,
-      actualPomodoroNum: 6,
-      dueOn: null,
-      isCompleted: false,
-      completedOn: null,
-    },
-    {
-      id: 3,
-      title:
-        "ポケットモンスター ルビィ&サファイア ~ はじまりの海、おわりの大地 ~",
-      expectedPomodoroNum: 4,
-      actualPomodoroNum: 0,
-      dueOn: null,
-      isCompleted: false,
-      completedOn: null,
-    },
-    {
-      id: 4,
-      title: "持つもの、持たざるもの",
-      expectedPomodoroNum: 0,
-      actualPomodoroNum: 0,
-      dueOn: null,
-      isCompleted: false,
-      completedOn: null,
-    },
-  ];
+type Props = {
+  filter: "today" | "tomorrow" | "someday";
+  featuredTask: Task | null;
+  setFeaturedTask: (task: Task | null) => void;
+  onCompleteTaskButtonClick: (task: Task) => void;
+};
+
+const TaskList: VFC<Props> = ({
+  filter,
+  featuredTask,
+  setFeaturedTask,
+  onCompleteTaskButtonClick,
+}) => {
+  const tasks = useTasksAtom();
+
+  const isNotTaskCompleted = (task: Task) => !task.isCompleted;
+  const isTaskDueOn = (task: Task, date: Date) =>
+    task.dueOn !== null && formatDate(task.dueOn) === formatDate(date);
+  let filterConditions = isNotTaskCompleted;
+  if (filter === "today") {
+    const today = new Date();
+    filterConditions = (task: Task) =>
+      isNotTaskCompleted(task) && isTaskDueOn(task, today);
+  } else if (filter === "tomorrow") {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    filterConditions = (task: Task) =>
+      isNotTaskCompleted(task) && isTaskDueOn(task, tomorrow);
+  }
+
+  const openInTaskSideSheet = (task: Task) => {
+    setFeaturedTask(task);
+  };
+
+  const closeTaskSideSheet = () => {
+    setFeaturedTask(null);
+  };
 
   return (
     <ul>
-      {tasks.map((task) => (
-        <TaskListItem key={task.id} task={task} />
+      {tasks.filter(filterConditions).map((task) => (
+        <TaskListItem
+          key={task.id}
+          task={task}
+          featuredTask={featuredTask}
+          completeTask={() => {
+            onCompleteTaskButtonClick(task);
+          }}
+          openInTaskSideSheet={() => {
+            openInTaskSideSheet(task);
+          }}
+          closeTaskSideSheet={closeTaskSideSheet}
+        />
       ))}
     </ul>
   );

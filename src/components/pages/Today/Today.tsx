@@ -3,7 +3,6 @@ import Head from "next/head";
 
 import PomodoroTimer from "@/components/models/pomodoro/PomodoroTimer";
 import TaskAddForm from "@/components/models/task/TaskAddForm";
-import TaskList from "@/components/models/task/TaskList";
 import s from "./Today.module.css";
 import { useRequiredLogin } from "@/lib/auth";
 
@@ -20,7 +19,6 @@ export const Today: NextPage = () => {
         <PomodoroTimer />
         <div className={s.taskField}>
           <TaskAddForm />
-          <TaskList />
         </div>
       </main>
     </>
