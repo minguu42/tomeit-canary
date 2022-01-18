@@ -12,11 +12,31 @@ import {
   useNavigationDrawerAtom,
   useToggleNavigationDrawer,
 } from "@/globalStates/navigationDrawerAtom";
+import { useTasksAtom } from "@/globalStates/tasksAtom";
+import { formatDate } from "@/lib/format";
 
 const NavigationDrawer: VFC = () => {
   const isOpen = useNavigationDrawerAtom();
   const toggleDrawer = useToggleNavigationDrawer();
   const router = useRouter();
+
+  const tasks = useTasksAtom();
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+  const todayTaskNum = tasks.filter(
+    (task) =>
+      !task.isCompleted &&
+      task.dueOn &&
+      formatDate(task.dueOn) === formatDate(today)
+  ).length;
+  const tomorrowTaskNum = tasks.filter(
+    (task) =>
+      !task.isCompleted &&
+      task.dueOn &&
+      formatDate(task.dueOn) === formatDate(tomorrow)
+  ).length;
+  const somedayTaskNum = tasks.filter((task) => !task.isCompleted).length;
 
   if (!isOpen) return <></>;
 
@@ -33,9 +53,9 @@ const NavigationDrawer: VFC = () => {
               >
                 <div className={s.indicatorLayer} />
                 <WbSunnyIcon />
-                <p className={s.labelText}>Today</p>
+                <p className={s.labelText}>今日</p>
                 <div className={s.spacer} />
-                <p className={s.badgeLabelText}>24</p>
+                <p className={s.badgeLabelText}>{todayTaskNum}</p>
               </a>
             </Link>
           </li>
@@ -48,9 +68,9 @@ const NavigationDrawer: VFC = () => {
               >
                 <div className={s.indicatorLayer} />
                 <WbTwilightIcon />
-                <p className={s.labelText}>Tomorrow</p>
+                <p className={s.labelText}>明日</p>
                 <div className={s.spacer} />
-                <p className={s.badgeLabelText}>100+</p>
+                <p className={s.badgeLabelText}>{tomorrowTaskNum}</p>
               </a>
             </Link>
           </li>
@@ -63,9 +83,9 @@ const NavigationDrawer: VFC = () => {
               >
                 <div className={s.indicatorLayer} />
                 <EventIcon />
-                <p className={s.labelText}>Tomorrow</p>
+                <p className={s.labelText}>いつか</p>
                 <div className={s.spacer} />
-                <p className={s.badgeLabelText}>100+</p>
+                <p className={s.badgeLabelText}>{somedayTaskNum}</p>
               </a>
             </Link>
           </li>
