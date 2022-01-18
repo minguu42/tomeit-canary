@@ -13,8 +13,8 @@ export const useTasksAtom = (): Task[] => {
 type TasksActions = {
   initTasks: (tasks: Task[]) => void;
   addTask: (task: Task) => void;
-  replaceTask: (index: number, task: Task) => void;
-  deleteTask: (index: number) => void;
+  replaceTask: (task: Task, newTask: Task) => void;
+  deleteTask: (task: Task) => void;
 };
 
 export const useTasksActions = (): TasksActions => {
@@ -28,16 +28,24 @@ export const useTasksActions = (): TasksActions => {
     setTasks((prev) => [...prev, task]);
   };
 
-  const replaceTask = (index: number, newTask: Task): void => {
-    setTasks((prev) => [
-      ...prev.slice(0, index),
-      newTask,
-      ...prev.slice(index + 1),
-    ]);
+  const replaceTask = (task: Task, newTask: Task): void => {
+    setTasks((prev) => {
+      const index = prev.findIndex((t) => t.id === task.id);
+      if (index === -1) {
+        return [...prev];
+      }
+      return [...prev.slice(0, index), newTask, ...prev.slice(index + 1)];
+    });
   };
 
-  const deleteTask = (index: number): void => {
-    setTasks((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+  const deleteTask = (task: Task): void => {
+    setTasks((prev) => {
+      const index = prev.findIndex((t) => t.id === task.id);
+      if (index === -1) {
+        return [...prev];
+      }
+      return [...prev.slice(0, index), ...prev.slice(index + 1)];
+    });
   };
 
   return { initTasks, addTask, replaceTask, deleteTask };
