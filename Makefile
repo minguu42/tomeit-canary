@@ -18,14 +18,14 @@ start:  ## 本番サーバを起動する
 	@next start
 
 .PHONY: fmt
-fmt:  ## Prettier, stylelint による自動整形を実行する
-	@prettier --ignore-path ./.lintignore -l -w "**/*.{js,jsx,ts,tsx,css,json,md}"
-	@stylelint --fix --ignore-path ./.lintignore "**/*.css"
+fmt:  ## js, ts, jsx, tsx, css, json, md ファイルを自動整形する
+	@prettier --ignore-path .lintignore -l -w "{src/**/*,*}.{js,ts,jsx,tsx,css,json,md}"
+	@stylelint --fix --ignore-path .lintignore "src/**/*.css"
 
 .PHONY: lint
-lint:  ## ESLint, stylelint による静的解析を実行する
+lint:  ## js, ts, jsx, tsx, css ファイルを静的解析する
 	@next lint
-	@stylelint --ignore-path ./.lintignore "**/*.css"
+	@stylelint --ignore-path .lintignore "src/**/*.css"
 
 .PHONY: check
 check:  ## fmt, lint, test を実行する
