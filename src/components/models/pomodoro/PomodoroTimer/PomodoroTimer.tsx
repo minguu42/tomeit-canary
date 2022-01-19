@@ -1,22 +1,27 @@
-import { VFC, useState, useEffect } from "react";
+import { useEffect, useState, VFC } from "react";
 import cn from "classnames";
 
 import {
-  PlayCircleIcon,
-  StopCircleIcon,
   CheckCircleIcon,
   PauseCircleIcon,
+  PlayCircleIcon,
+  StopCircleIcon,
 } from "@/components/common/icons";
 import s from "./PomodoroTimer.module.css";
 import { formatTimerTime } from "@/lib/format";
+import { Task } from "@/models/task";
 
 const POMODORO_TIME = 15;
 const SHORT_REST_TIME = 300;
 const LONG_REST_TIME = 900;
 const INIT_REST_COUNT = 4;
 
-const PomodoroTimer: VFC = () => {
-  const taskTitle = "タスク1";
+type Props = {
+  playingTask: Task | null;
+  completePomodoro: () => void;
+};
+
+const PomodoroTimer: VFC<Props> = ({ playingTask, completePomodoro }) => {
   const [time, setTime] = useState(POMODORO_TIME);
   const [isActive, setIsActive] = useState(false);
   const [isNextPomodoro, setIsNextPomodoro] = useState(false);
@@ -50,13 +55,15 @@ const PomodoroTimer: VFC = () => {
       if (isNextPomodoro) {
         setTime(POMODORO_TIME);
       } else {
+        completePomodoro();
+
         setTime(restCount === 1 ? LONG_REST_TIME : SHORT_REST_TIME);
         setRestCount((prev) => (prev === 1 ? INIT_REST_COUNT : prev - 1));
       }
       setIsActive(false);
       setIsNextPomodoro((prev) => !prev);
     }
-  }, [time, isNextPomodoro, restCount]);
+  }, [time, isNextPomodoro, completePomodoro, restCount]);
 
   return (
     <div
@@ -66,7 +73,7 @@ const PomodoroTimer: VFC = () => {
       })}
     >
       <p className={s.timeText}>{formatTimerTime(time)}</p>
-      <p className={s.labelText}>{taskTitle}</p>
+      <p className={s.labelText}>{playingTask !== null && playingTask.title}</p>
       <div className={s.actionButtons}>
         {!isActive && (
           <>
