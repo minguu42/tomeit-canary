@@ -53,19 +53,19 @@
   border-radius: 16px;
 }
 
-.actionButton:hover > .actionButtonLayerInPomodoro {
+.actionButton:not([disabled]):hover > .actionButtonLayerInPomodoro {
   background-color: rgb(
     var(--c-on-primary-container-rgb) / var(--s-hover-state-layer-opacity)
   );
 }
 
-.actionButton:focus > .actionButtonLayerInPomodoro {
+.actionButton:not([disabled]):focus > .actionButtonLayerInPomodoro {
   background-color: rgb(
     var(--c-on-primary-container-rgb) / var(--s-focus-state-layer-opacity)
   );
 }
 
-.actionButton:active > .actionButtonLayerInPomodoro {
+.actionButton:not([disabled]):active > .actionButtonLayerInPomodoro {
   background-color: rgb(
     var(--c-on-primary-container-rgb) / var(--s-pressed-state-layer-opacity)
   );
@@ -80,19 +80,19 @@
   border-radius: 16px;
 }
 
-.actionButton:hover > .actionButtonLayerInRest {
+.actionButton:not([disabled]):hover > .actionButtonLayerInRest {
   background-color: rgb(
     var(--c-on-secondary-container-rgb) / var(--s-hover-state-layer-opacity)
   );
 }
 
-.actionButton:focus > .actionButtonLayerInRest {
+.actionButton:not([disabled]):focus > .actionButtonLayerInRest {
   background-color: rgb(
     var(--c-on-secondary-container-rgb) / var(--s-focus-state-layer-opacity)
   );
 }
 
-.actionButton:active > .actionButtonLayerInRest {
+.actionButton:not([disabled]):active > .actionButtonLayerInRest {
   background-color: rgb(
     var(--c-on-secondary-container-rgb) / var(--s-pressed-state-layer-opacity)
   );
