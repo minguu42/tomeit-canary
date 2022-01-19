@@ -1,4 +1,4 @@
-import { useEffect, useState, VFC } from "react";
+import { useEffect, VFC } from "react";
 import cn from "classnames";
 
 import {
@@ -9,16 +9,14 @@ import {
 } from "@/components/common/icons";
 import s from "./PomodoroTimer.module.css";
 import {
-  useIsPomodoroTimerActiveActions,
-  useIsPomodoroTimerActiveAtom,
-} from "@/globalStates/isPomodoroTimerActiveAtom";
+  usePomodoroTimerActions,
+  usePomodoroTimerAtom,
+  POMODORO_TIME,
+  SHORT_REST_TIME,
+  LONG_REST_TIME,
+} from "@/globalStates/pomodoroTimerAtom";
 import { Task } from "@/models/task";
 import { formatTimerTime } from "@/lib/format";
-
-const POMODORO_TIME = 15;
-const SHORT_REST_TIME = 300;
-const LONG_REST_TIME = 900;
-const INIT_REST_COUNT = 4;
 
 type Props = {
   playingTask: Task | null;
@@ -26,46 +24,23 @@ type Props = {
 };
 
 const PomodoroTimer: VFC<Props> = ({ playingTask, completePomodoro }) => {
-  const [time, setTime] = useState(POMODORO_TIME);
-  const isActive = useIsPomodoroTimerActiveAtom();
-  const { startPomodoroTimer, stopPomodoroTimer } =
-    useIsPomodoroTimerActiveActions();
-  const [isNextPomodoro, setIsNextPomodoro] = useState(false);
-  const [restCount, setRestCount] = useState(INIT_REST_COUNT);
-
-  const skipRest = () => {
-    setTime(0);
-  };
-
-  const resetTimer = () => {
-    setTime(POMODORO_TIME);
-  };
-
-  useEffect(() => {
-    if (!isActive) return;
-
-    const intervalID = setInterval(() => {
-      setTime((prev) => prev - 1);
-    }, 1000);
-    return () => {
-      clearInterval(intervalID);
-    };
-  }, [isActive]);
+  const { time, isActive, isNextPomodoro } = usePomodoroTimerAtom();
+  const {
+    startPomodoroTimer,
+    stopPomodoroTimer,
+    skipRestTime,
+    resetPomodoro,
+    updatePomodoroTimerWhenTimeEnd,
+  } = usePomodoroTimerActions();
 
   useEffect(() => {
     if (time === 0) {
-      if (isNextPomodoro) {
-        setTime(POMODORO_TIME);
-      } else {
+      if (!isNextPomodoro) {
         completePomodoro();
-
-        setTime(restCount === 1 ? LONG_REST_TIME : SHORT_REST_TIME);
-        setRestCount((prev) => (prev === 1 ? INIT_REST_COUNT : prev - 1));
       }
-      stopPomodoroTimer();
-      setIsNextPomodoro((prev) => !prev);
+      updatePomodoroTimerWhenTimeEnd();
     }
-  }, [time, isNextPomodoro, completePomodoro, restCount, stopPomodoroTimer]);
+  }, [completePomodoro, isNextPomodoro, time, updatePomodoroTimerWhenTimeEnd]);
 
   return (
     <div
@@ -96,7 +71,7 @@ const PomodoroTimer: VFC<Props> = ({ playingTask, completePomodoro }) => {
               time
             ) && (
               <button
-                onClick={resetTimer}
+                onClick={resetPomodoro}
                 aria-label="ポモドーロを中止する"
                 className={s.actionButton}
               >
@@ -109,7 +84,7 @@ const PomodoroTimer: VFC<Props> = ({ playingTask, completePomodoro }) => {
         {isActive &&
           (isNextPomodoro ? (
             <button
-              onClick={skipRest}
+              onClick={skipRestTime}
               aria-label="休憩をスキップする"
               className={s.actionButton}
             >
