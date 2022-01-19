@@ -1,7 +1,8 @@
-import { useEffect } from "react";
-import { atom, useRecoilState, useSetRecoilState } from "recoil";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
-export const POMODORO_TIME = 15;
+import { Task } from "@/models/task";
+
+export const POMODORO_TIME = 5;
 export const SHORT_REST_TIME = 300;
 export const LONG_REST_TIME = 900;
 const INIT_REST_COUNT = 4;
@@ -11,13 +12,16 @@ type PomodoroTimerAtom = {
   isActive: boolean;
   isNextPomodoro: boolean;
   restCount: number;
+  playingTask: Task | null;
 };
 
 type PomodoroTimerActions = {
-  startPomodoroTimer: () => void;
+  playPomodoro: (task: Task) => void;
   stopPomodoroTimer: () => void;
   skipRestTime: () => void;
   resetPomodoro: () => void;
+  setPlayingTask: (task: Task | null) => void;
+  tickTime: () => void;
   updatePomodoroTimerWhenTimeEnd: () => void;
 };
 
@@ -28,35 +32,19 @@ const pomodoroTimerAtom = atom<PomodoroTimerAtom>({
     isActive: false,
     isNextPomodoro: false,
     restCount: INIT_REST_COUNT,
+    playingTask: null,
   },
 });
 
-export const usePomodoroTimerAtom = (): PomodoroTimerAtom => {
-  const [atom, setAtom] = useRecoilState(pomodoroTimerAtom);
-
-  useEffect(() => {
-    if (!atom.isActive) return;
-
-    const intervalID = setInterval(() => {
-      setAtom((prev) => {
-        return { ...prev, time: prev.time - 1 };
-      });
-    }, 1000);
-
-    return () => {
-      clearInterval(intervalID);
-    };
-  }, [atom.isActive, setAtom]);
-
-  return atom;
-};
+export const usePomodoroTimerAtom = (): PomodoroTimerAtom =>
+  useRecoilValue(pomodoroTimerAtom);
 
 export const usePomodoroTimerActions = (): PomodoroTimerActions => {
   const setAtom = useSetRecoilState(pomodoroTimerAtom);
 
-  const startPomodoroTimer = () => {
+  const playPomodoro = (task: Task) => {
     setAtom((prev) => {
-      return { ...prev, isActive: true };
+      return { ...prev, isActive: true, playingTask: task };
     });
   };
 
@@ -84,6 +72,7 @@ export const usePomodoroTimerActions = (): PomodoroTimerActions => {
         isActive: false,
         restCount: nextRestCount,
         isNextPomodoro: !prev.isNextPomodoro,
+        playingTask: prev.playingTask,
       };
     });
   };
@@ -100,11 +89,25 @@ export const usePomodoroTimerActions = (): PomodoroTimerActions => {
     });
   };
 
+  const setPlayingTask = (task: Task | null) => {
+    setAtom((prev) => {
+      return { ...prev, playingTask: task };
+    });
+  };
+
+  const tickTime = () => {
+    setAtom((prev) => {
+      return { ...prev, time: prev.time - 1 };
+    });
+  };
+
   return {
-    startPomodoroTimer,
+    playPomodoro,
     stopPomodoroTimer,
     skipRestTime,
     resetPomodoro,
+    setPlayingTask,
+    tickTime,
     updatePomodoroTimerWhenTimeEnd,
   };
 };
