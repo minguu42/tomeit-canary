@@ -9,6 +9,7 @@ type Props = {
   filter: "today" | "tomorrow" | "someday";
   featuredTask: Task | null;
   onCompleteTaskButtonClick: (task: Task) => void;
+  onPlayPomodoroButtonClick: (task: Task) => void;
   openTaskInSideSheet: (task: Task) => void;
   closeTaskSideSheet: () => void;
 };
@@ -17,6 +18,7 @@ const TaskList: VFC<Props> = ({
   filter,
   featuredTask,
   onCompleteTaskButtonClick,
+  onPlayPomodoroButtonClick,
   openTaskInSideSheet,
   closeTaskSideSheet,
 }) => {
@@ -46,6 +48,9 @@ const TaskList: VFC<Props> = ({
           featuredTask={featuredTask}
           completeTask={() => {
             onCompleteTaskButtonClick(task);
+          }}
+          playPomodoro={() => {
+            onPlayPomodoroButtonClick(task);
           }}
           openInTaskSideSheet={() => {
             openTaskInSideSheet(task);

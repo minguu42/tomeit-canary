@@ -10,6 +10,7 @@ type Props = {
   task: Task;
   featuredTask: Task | null;
   completeTask: () => void;
+  playPomodoro: () => void;
   openInTaskSideSheet: () => void;
   closeTaskSideSheet: () => void;
 };
@@ -18,6 +19,7 @@ const TaskListItem: VFC<Props> = ({
   task,
   featuredTask,
   completeTask,
+  playPomodoro,
   openInTaskSideSheet,
   closeTaskSideSheet,
 }) => {
@@ -44,7 +46,11 @@ const TaskListItem: VFC<Props> = ({
         />
       </button>
       {task.dueOn && <p className={s.dueOnCaption}>{formatDate(task.dueOn)}</p>}
-      <button aria-label="ポモドーロを開始する" className={s.iconButton}>
+      <button
+        onClick={playPomodoro}
+        aria-label="ポモドーロを開始する"
+        className={s.iconButton}
+      >
         <div className={s.iconButtonLayer} />
         <PlayCircleIcon />
       </button>
