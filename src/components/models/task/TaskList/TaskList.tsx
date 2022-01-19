@@ -8,8 +8,8 @@ import { formatDate } from "@/lib/format";
 type Props = {
   filter: "today" | "tomorrow" | "someday";
   featuredTask: Task | null;
-  onCompleteTaskButtonClick: (task: Task) => void;
-  onPlayPomodoroButtonClick: (task: Task) => void;
+  completeTask: (task: Task) => void;
+  playPomodoro: (task: Task) => void;
   openTaskInSideSheet: (task: Task) => void;
   closeTaskSideSheet: () => void;
 };
@@ -17,8 +17,8 @@ type Props = {
 const TaskList: VFC<Props> = ({
   filter,
   featuredTask,
-  onCompleteTaskButtonClick,
-  onPlayPomodoroButtonClick,
+  completeTask,
+  playPomodoro,
   openTaskInSideSheet,
   closeTaskSideSheet,
 }) => {
@@ -46,11 +46,11 @@ const TaskList: VFC<Props> = ({
           key={task.id}
           task={task}
           featuredTask={featuredTask}
-          completeTask={() => {
-            onCompleteTaskButtonClick(task);
+          onCompleteTaskButtonClick={() => {
+            completeTask(task);
           }}
-          playPomodoro={() => {
-            onPlayPomodoroButtonClick(task);
+          onPlayPomodoroButtonClick={() => {
+            playPomodoro(task);
           }}
           openInTaskSideSheet={() => {
             openTaskInSideSheet(task);

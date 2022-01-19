@@ -10,8 +10,8 @@ import { formatDate } from "@/lib/format";
 type Props = {
   task: Task;
   featuredTask: Task | null;
-  completeTask: () => void;
-  playPomodoro: () => void;
+  onCompleteTaskButtonClick: () => void;
+  onPlayPomodoroButtonClick: () => void;
   openInTaskSideSheet: () => void;
   closeTaskSideSheet: () => void;
 };
@@ -19,8 +19,8 @@ type Props = {
 const TaskListItem: VFC<Props> = ({
   task,
   featuredTask,
-  completeTask,
-  playPomodoro,
+  onCompleteTaskButtonClick,
+  onPlayPomodoroButtonClick,
   openInTaskSideSheet,
   closeTaskSideSheet,
 }) => {
@@ -28,7 +28,7 @@ const TaskListItem: VFC<Props> = ({
     <li className={s.container}>
       <IconButton
         icon={<CircleIcon />}
-        onClick={completeTask}
+        onClick={onCompleteTaskButtonClick}
         label="タスクを完了する"
       />
       <button
@@ -46,7 +46,7 @@ const TaskListItem: VFC<Props> = ({
       {task.dueOn && <p className={s.dueOnCaption}>{formatDate(task.dueOn)}</p>}
       <IconButton
         icon={<PlayCircleIcon />}
-        onClick={playPomodoro}
+        onClick={onPlayPomodoroButtonClick}
         label="ポモドーロを開始する"
       />
     </li>
