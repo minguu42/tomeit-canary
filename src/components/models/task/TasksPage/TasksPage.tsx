@@ -7,6 +7,7 @@ import TaskList from "@/components/models/task/TaskList";
 import TaskSideSheet from "@/components/models/task/TaskSideSheet";
 import s from "./TasksPage.module.css";
 import { useTasksActions } from "@/globalStates/tasksAtom";
+import { useIsPomodoroTimerActiveActions } from "@/globalStates/isPomodoroTimerActiveAtom";
 import { Task } from "@/models/task";
 import { useRequiredLogin } from "@/lib/auth";
 
@@ -18,6 +19,7 @@ type Props = {
 const TasksPage: VFC<Props> = ({ title, filter }) => {
   useRequiredLogin();
   const { replaceTask, deleteTask } = useTasksActions();
+  const { startPomodoroTimer } = useIsPomodoroTimerActiveActions();
   const [playingTask, setPlayingTask] = useState<Task | null>(null);
   const [featuredTask, setFeaturedTask] = useState<Task | null>(null);
 
@@ -38,6 +40,7 @@ const TasksPage: VFC<Props> = ({ title, filter }) => {
 
   const onPlayPomodoroButtonClick = (task: Task): void => {
     setPlayingTask(task);
+    startPomodoroTimer();
   };
 
   const completePomodoro = (): void => {

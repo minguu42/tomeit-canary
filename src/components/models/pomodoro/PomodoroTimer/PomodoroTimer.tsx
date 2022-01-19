@@ -8,8 +8,12 @@ import {
   StopCircleIcon,
 } from "@/components/common/icons";
 import s from "./PomodoroTimer.module.css";
-import { formatTimerTime } from "@/lib/format";
+import {
+  useIsPomodoroTimerActiveActions,
+  useIsPomodoroTimerActiveAtom,
+} from "@/globalStates/isPomodoroTimerActiveAtom";
 import { Task } from "@/models/task";
+import { formatTimerTime } from "@/lib/format";
 
 const POMODORO_TIME = 15;
 const SHORT_REST_TIME = 300;
@@ -23,13 +27,11 @@ type Props = {
 
 const PomodoroTimer: VFC<Props> = ({ playingTask, completePomodoro }) => {
   const [time, setTime] = useState(POMODORO_TIME);
-  const [isActive, setIsActive] = useState(false);
+  const isActive = useIsPomodoroTimerActiveAtom();
+  const { startPomodoroTimer, stopPomodoroTimer } =
+    useIsPomodoroTimerActiveActions();
   const [isNextPomodoro, setIsNextPomodoro] = useState(false);
   const [restCount, setRestCount] = useState(INIT_REST_COUNT);
-
-  const toggleTimerState = () => {
-    setIsActive((prev) => !prev);
-  };
 
   const skipRest = () => {
     setTime(0);
@@ -60,10 +62,10 @@ const PomodoroTimer: VFC<Props> = ({ playingTask, completePomodoro }) => {
         setTime(restCount === 1 ? LONG_REST_TIME : SHORT_REST_TIME);
         setRestCount((prev) => (prev === 1 ? INIT_REST_COUNT : prev - 1));
       }
-      setIsActive(false);
+      stopPomodoroTimer();
       setIsNextPomodoro((prev) => !prev);
     }
-  }, [time, isNextPomodoro, completePomodoro, restCount]);
+  }, [time, isNextPomodoro, completePomodoro, restCount, stopPomodoroTimer]);
 
   return (
     <div
@@ -78,7 +80,7 @@ const PomodoroTimer: VFC<Props> = ({ playingTask, completePomodoro }) => {
         {!isActive && (
           <>
             <button
-              onClick={toggleTimerState}
+              onClick={startPomodoroTimer}
               aria-label="ポモドーロを開始する"
               className={s.actionButton}
             >
@@ -116,7 +118,7 @@ const PomodoroTimer: VFC<Props> = ({ playingTask, completePomodoro }) => {
             </button>
           ) : (
             <button
-              onClick={toggleTimerState}
+              onClick={stopPomodoroTimer}
               aria-label="タイマーを停止する"
               className={s.actionButton}
             >
