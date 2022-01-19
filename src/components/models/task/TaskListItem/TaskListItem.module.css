@@ -8,44 +8,6 @@
   border-bottom: 1px solid var(--c-outline);
 }
 
-.iconButton {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background-color: var(--c-background);
-  border-radius: 14px;
-}
-
-.iconButtonLayer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: 14px;
-}
-
-.iconButton:hover > .iconButtonLayer {
-  background-color: rgb(
-    var(--c-on-background-rgb) / var(--s-hover-state-layer-opacity)
-  );
-}
-
-.iconButton:focus > .iconButtonLayer {
-  background-color: rgb(
-    var(--c-on-background-rgb) / var(--s-focus-state-layer-opacity)
-  );
-}
-
-.iconButton:active > .iconButtonLayer {
-  background-color: rgb(
-    var(--c-on-background-rgb) / var(--s-pressed-state-layer-opacity)
-  );
-}
-
 .main {
   flex: 1 1 0;
   height: 100%;
