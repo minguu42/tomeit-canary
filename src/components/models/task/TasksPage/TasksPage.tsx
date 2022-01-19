@@ -7,7 +7,10 @@ import TaskList from "@/components/models/task/TaskList";
 import TaskSideSheet from "@/components/models/task/TaskSideSheet";
 import s from "./TasksPage.module.css";
 import { useTasksActions } from "@/globalStates/tasksAtom";
-import { usePomodoroTimerActions } from "@/globalStates/pomodoroTimerAtom";
+import {
+  usePomodoroTimerActions,
+  usePomodoroTimerAtom,
+} from "@/globalStates/pomodoroTimerAtom";
 import { Task } from "@/models/task";
 import { useRequiredLogin } from "@/lib/auth";
 
@@ -19,8 +22,8 @@ type Props = {
 const TasksPage: VFC<Props> = ({ title, filter }) => {
   useRequiredLogin();
   const { replaceTask, deleteTask } = useTasksActions();
-  const { startPomodoroTimer } = usePomodoroTimerActions();
-  const [playingTask, setPlayingTask] = useState<Task | null>(null);
+  const { playPomodoro, setPlayingTask } = usePomodoroTimerActions();
+  const { playingTask } = usePomodoroTimerAtom();
   const [featuredTask, setFeaturedTask] = useState<Task | null>(null);
 
   const onDeleteTaskButtonClick = (task: Task): void => {
@@ -30,27 +33,15 @@ const TasksPage: VFC<Props> = ({ title, filter }) => {
     }
   };
 
-  const onCompleteTaskButtonClick = (task: Task): void => {
+  const completeTask = (task: Task): void => {
     const newTask: Task = { ...task, isCompleted: true };
     replaceTask(task, newTask);
     if (featuredTask !== null && task.id === featuredTask.id) {
       setFeaturedTask(null);
     }
-  };
-
-  const onPlayPomodoroButtonClick = (task: Task): void => {
-    setPlayingTask(task);
-    startPomodoroTimer();
-  };
-
-  const completePomodoro = (): void => {
-    if (playingTask === null) return;
-    const newTask = {
-      ...playingTask,
-      actualPomodoroNum: playingTask.actualPomodoroNum + 1,
-    };
-    replaceTask(playingTask, newTask);
-    setPlayingTask(newTask);
+    if (playingTask !== null && task.id === playingTask.id) {
+      setPlayingTask(null);
+    }
   };
 
   const openTaskInSideSheet = (task: Task): void => {
@@ -69,17 +60,14 @@ const TasksPage: VFC<Props> = ({ title, filter }) => {
 
       <div className={s.container}>
         <main className={s.main}>
-          <PomodoroTimer
-            playingTask={playingTask}
-            completePomodoro={completePomodoro}
-          />
+          <PomodoroTimer />
           <div className={s.mt24} />
           <TaskAddForm />
           <TaskList
             filter={filter}
             featuredTask={featuredTask}
-            onCompleteTaskButtonClick={onCompleteTaskButtonClick}
-            onPlayPomodoroButtonClick={onPlayPomodoroButtonClick}
+            completeTask={completeTask}
+            playPomodoro={playPomodoro}
             openTaskInSideSheet={openTaskInSideSheet}
             closeTaskSideSheet={closeTaskSideSheet}
           />
@@ -87,7 +75,7 @@ const TasksPage: VFC<Props> = ({ title, filter }) => {
         <TaskSideSheet
           task={featuredTask}
           onDeleteTaskButtonClick={onDeleteTaskButtonClick}
-          onCompleteTaskButtonClick={onCompleteTaskButtonClick}
+          onCompleteTaskButtonClick={completeTask}
         />
       </div>
     </>
