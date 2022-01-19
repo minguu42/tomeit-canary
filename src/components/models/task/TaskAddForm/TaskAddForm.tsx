@@ -1,4 +1,4 @@
-import { VFC, FormEventHandler, SyntheticEvent, useState } from "react";
+import { FormEventHandler, SyntheticEvent, useState, VFC } from "react";
 import cn from "classnames";
 
 import s from "./TaskAddForm.module.css";
