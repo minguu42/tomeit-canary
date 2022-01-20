@@ -1,62 +1,79 @@
-import { VFC, useState, useEffect } from "react";
+import { useEffect, VFC } from "react";
 import cn from "classnames";
 
 import {
-  PlayCircleIcon,
-  StopCircleIcon,
   CheckCircleIcon,
   PauseCircleIcon,
+  PlayCircleIcon,
+  StopCircleIcon,
 } from "@/components/common/icons";
 import s from "./PomodoroTimer.module.css";
+import {
+  LONG_REST_TIME,
+  POMODORO_TIME,
+  SHORT_REST_TIME,
+  usePomodoroTimerActions,
+  usePomodoroTimerAtom,
+} from "@/globalStates/pomodoroTimerAtom";
 import { formatTimerTime } from "@/lib/format";
-
-const POMODORO_TIME = 15;
-const SHORT_REST_TIME = 300;
-const LONG_REST_TIME = 900;
-const INIT_REST_COUNT = 4;
+import { Task } from "@/models/task";
+import { useTasksActions } from "@/globalStates/tasksAtom";
 
 const PomodoroTimer: VFC = () => {
-  const taskTitle = "タスク1";
-  const [time, setTime] = useState(POMODORO_TIME);
-  const [isActive, setIsActive] = useState(false);
-  const [isNextPomodoro, setIsNextPomodoro] = useState(false);
-  const [restCount, setRestCount] = useState(INIT_REST_COUNT);
-
-  const toggleTimerState = () => {
-    setIsActive((prev) => !prev);
-  };
-
-  const skipRest = () => {
-    setTime(0);
-  };
-
-  const resetTimer = () => {
-    setTime(POMODORO_TIME);
-  };
+  const { time, isActive, isNextPomodoro, playingTask } =
+    usePomodoroTimerAtom();
+  const {
+    stopPomodoroTimer,
+    skipRestTime,
+    resetPomodoro,
+    playPomodoro,
+    setPlayingTask,
+    updatePomodoroTimerWhenTimeEnd,
+    tickTime,
+  } = usePomodoroTimerActions();
+  const { replaceTask } = useTasksActions();
 
   useEffect(() => {
     if (!isActive) return;
 
     const intervalID = setInterval(() => {
-      setTime((prev) => prev - 1);
+      tickTime();
     }, 1000);
+
     return () => {
       clearInterval(intervalID);
     };
-  }, [isActive]);
+  }, [isActive, tickTime]);
 
   useEffect(() => {
     if (time === 0) {
-      if (isNextPomodoro) {
-        setTime(POMODORO_TIME);
-      } else {
-        setTime(restCount === 1 ? LONG_REST_TIME : SHORT_REST_TIME);
-        setRestCount((prev) => (prev === 1 ? INIT_REST_COUNT : prev - 1));
+      if (!isNextPomodoro && playingTask !== null) {
+        const newTask: Task = {
+          ...playingTask,
+          actualPomodoroNum: playingTask.actualPomodoroNum + 1,
+        };
+        replaceTask(playingTask, newTask);
+        setPlayingTask(newTask);
       }
-      setIsActive(false);
-      setIsNextPomodoro((prev) => !prev);
+      updatePomodoroTimerWhenTimeEnd();
     }
-  }, [time, isNextPomodoro, restCount]);
+  }, [
+    isNextPomodoro,
+    playingTask,
+    replaceTask,
+    setPlayingTask,
+    time,
+    updatePomodoroTimerWhenTimeEnd,
+  ]);
+
+  const isNotStartPomodoroTimer =
+    !isActive &&
+    [POMODORO_TIME, SHORT_REST_TIME, LONG_REST_TIME].includes(time);
+  const isStoppingPomodoroTimer =
+    !isActive &&
+    ![POMODORO_TIME, SHORT_REST_TIME, LONG_REST_TIME].includes(time);
+  const isPlayingPomodoro = isActive && !isNextPomodoro;
+  const isDuringRest = isActive && isNextPomodoro;
 
   return (
     <div
@@ -66,13 +83,42 @@ const PomodoroTimer: VFC = () => {
       })}
     >
       <p className={s.timeText}>{formatTimerTime(time)}</p>
-      <p className={s.labelText}>{taskTitle}</p>
+      <p className={s.labelText}>{playingTask !== null && playingTask.title}</p>
       <div className={s.actionButtons}>
-        {!isActive && (
+        {isNotStartPomodoroTimer && (
+          <button
+            onClick={
+              playingTask === null
+                ? undefined
+                : () => {
+                    playPomodoro(playingTask);
+                  }
+            }
+            aria-label="ポモドーロを開始する"
+            disabled={playingTask === null}
+            className={s.actionButton}
+          >
+            <div
+              className={cn({
+                [s.actionButtonLayerInPomodoro]: !isNextPomodoro,
+                [s.actionButtonLayerInRest]: isNextPomodoro,
+              })}
+            />
+            <PlayCircleIcon size={48} />
+          </button>
+        )}
+        {isStoppingPomodoroTimer && (
           <>
             <button
-              onClick={toggleTimerState}
+              onClick={
+                playingTask === null
+                  ? undefined
+                  : () => {
+                      playPomodoro(playingTask);
+                    }
+              }
               aria-label="ポモドーロを開始する"
+              disabled={playingTask === null}
               className={s.actionButton}
             >
               <div
@@ -83,40 +129,36 @@ const PomodoroTimer: VFC = () => {
               />
               <PlayCircleIcon size={48} />
             </button>
-            {![POMODORO_TIME, SHORT_REST_TIME, LONG_REST_TIME].includes(
-              time
-            ) && (
-              <button
-                onClick={resetTimer}
-                aria-label="ポモドーロを中止する"
-                className={s.actionButton}
-              >
-                <div className={s.actionButtonLayerInPomodoro} />
-                <StopCircleIcon size={48} />
-              </button>
-            )}
-          </>
-        )}
-        {isActive &&
-          (isNextPomodoro ? (
             <button
-              onClick={skipRest}
-              aria-label="休憩をスキップする"
-              className={s.actionButton}
-            >
-              <div className={s.actionButtonLayerInRest} />
-              <CheckCircleIcon size={48} />
-            </button>
-          ) : (
-            <button
-              onClick={toggleTimerState}
-              aria-label="タイマーを停止する"
+              onClick={resetPomodoro}
+              aria-label="ポモドーロを中止する"
               className={s.actionButton}
             >
               <div className={s.actionButtonLayerInPomodoro} />
-              <PauseCircleIcon size={48} />
+              <StopCircleIcon size={48} />
             </button>
-          ))}
+          </>
+        )}
+        {isPlayingPomodoro && (
+          <button
+            onClick={stopPomodoroTimer}
+            aria-label="タイマーを停止する"
+            className={s.actionButton}
+          >
+            <div className={s.actionButtonLayerInPomodoro} />
+            <PauseCircleIcon size={48} />
+          </button>
+        )}
+        {isDuringRest && (
+          <button
+            onClick={skipRestTime}
+            aria-label="休憩をスキップする"
+            className={s.actionButton}
+          >
+            <div className={s.actionButtonLayerInRest} />
+            <CheckCircleIcon size={48} />
+          </button>
+        )}
       </div>
     </div>
   );

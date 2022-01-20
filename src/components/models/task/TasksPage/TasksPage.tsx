@@ -7,6 +7,10 @@ import TaskList from "@/components/models/task/TaskList";
 import TaskSideSheet from "@/components/models/task/TaskSideSheet";
 import s from "./TasksPage.module.css";
 import { useTasksActions } from "@/globalStates/tasksAtom";
+import {
+  usePomodoroTimerActions,
+  usePomodoroTimerAtom,
+} from "@/globalStates/pomodoroTimerAtom";
 import { Task } from "@/models/task";
 import { useRequiredLogin } from "@/lib/auth";
 
@@ -18,22 +22,25 @@ type Props = {
 const TasksPage: VFC<Props> = ({ title, filter }) => {
   useRequiredLogin();
   const { replaceTask, deleteTask } = useTasksActions();
+  const { playPomodoro, setPlayingTask } = usePomodoroTimerActions();
+  const { playingTask } = usePomodoroTimerAtom();
   const [featuredTask, setFeaturedTask] = useState<Task | null>(null);
 
   const onDeleteTaskButtonClick = (task: Task): void => {
-    if (task === null) return;
     deleteTask(task);
     if (featuredTask !== null && task.id === featuredTask.id) {
       setFeaturedTask(null);
     }
   };
 
-  const onCompleteTaskButtonClick = (task: Task): void => {
-    if (task === null) return;
+  const completeTask = (task: Task): void => {
     const newTask: Task = { ...task, isCompleted: true };
     replaceTask(task, newTask);
     if (featuredTask !== null && task.id === featuredTask.id) {
       setFeaturedTask(null);
+    }
+    if (playingTask !== null && task.id === playingTask.id) {
+      setPlayingTask(null);
     }
   };
 
@@ -59,7 +66,8 @@ const TasksPage: VFC<Props> = ({ title, filter }) => {
           <TaskList
             filter={filter}
             featuredTask={featuredTask}
-            onCompleteTaskButtonClick={onCompleteTaskButtonClick}
+            completeTask={completeTask}
+            playPomodoro={playPomodoro}
             openTaskInSideSheet={openTaskInSideSheet}
             closeTaskSideSheet={closeTaskSideSheet}
           />
@@ -67,7 +75,7 @@ const TasksPage: VFC<Props> = ({ title, filter }) => {
         <TaskSideSheet
           task={featuredTask}
           onDeleteTaskButtonClick={onDeleteTaskButtonClick}
-          onCompleteTaskButtonClick={onCompleteTaskButtonClick}
+          onCompleteTaskButtonClick={completeTask}
         />
       </div>
     </>
