@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "check-style": "prettier --check --ignore-path .lintignore '{src/**/*,*}.{js,ts,jsx,tsx,css,json,md}'",
+    "fmt": "prettier --ignore-path .lintignore -l -w '{src/**/*,*}.{js,ts,jsx,tsx,css,json,md}' && stylelint --fix --ignore-path .lintignore 'src/**/*.css'",
+    "lint": "next lint && stylelint --ignore-path .lintignore 'src/**/*.css'"
   },
   "dependencies": {
     "classnames": "^2.3.1",
