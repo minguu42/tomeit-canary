@@ -1,7 +1,11 @@
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { useCallback } from "react";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 export type ThemeAtom = "light" | "dark";
+
+type ThemeMutators = {
+  setTheme: (theme: ThemeAtom) => void;
+};
 
 const themeAtom = atom<ThemeAtom>({
   key: "themeAtom",
@@ -10,7 +14,7 @@ const themeAtom = atom<ThemeAtom>({
 
 export const useThemeAtom = (): ThemeAtom => useRecoilValue(themeAtom);
 
-export const useThemeMutators = () => {
+export const useThemeMutators = (): ThemeMutators => {
   const setAtom = useSetRecoilState(themeAtom);
 
   const setTheme = useCallback(
