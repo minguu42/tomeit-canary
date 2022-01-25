@@ -8,7 +8,7 @@ const themeAtom = atom<ThemeAtom>({
   default: "light",
 });
 
-export const useThemeAtom = () => useRecoilValue(themeAtom);
+export const useThemeAtom = (): ThemeAtom => useRecoilValue(themeAtom);
 
 export const useThemeMutators = () => {
   const setAtom = useSetRecoilState(themeAtom);
