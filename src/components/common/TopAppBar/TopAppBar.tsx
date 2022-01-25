@@ -1,24 +1,26 @@
-import { VFC, useState, useEffect } from "react";
+import { useEffect, useState, VFC } from "react";
 import { useRouter } from "next/router";
 import cn from "classnames";
 
 import {
-  MenuIcon,
-  LightModeIcon,
   DarkModeIcon,
+  LightModeIcon,
   LogoutIcon,
+  MenuIcon,
 } from "@/components/common/icons";
 import s from "./TopAppBar.module.css";
 import { useUserAtom } from "@/globalStates/userAtom";
 import { useThemeAtom } from "@/globalStates/themeAtom";
 import { useToggleNavigationDrawer } from "@/globalStates/navigationDrawerAtom";
 import { logout } from "@/lib/auth";
+import { useThemeActions } from "@/components/functional/Theme";
 
 const TopAppBar: VFC = () => {
   const [headline, setHeadline] = useState("tomeit");
   const router = useRouter();
   const user = useUserAtom();
-  const { theme, toggleTheme } = useThemeAtom();
+  const theme = useThemeAtom();
+  const { toggleTheme } = useThemeActions();
   const toggleNavigationDrawer = useToggleNavigationDrawer();
 
   useEffect(() => {
@@ -44,7 +46,9 @@ const TopAppBar: VFC = () => {
         <h2 className={cn(s.headline, s.ml12)}>{headline}</h2>
         <div className={s.spacer} />
         <button
-          onClick={toggleTheme}
+          onClick={() => {
+            toggleTheme(theme);
+          }}
           aria-label="カラーテーマを切り替える"
           className={s.interactiveIcon}
         >
@@ -69,7 +73,9 @@ const TopAppBar: VFC = () => {
       <div className={s.spacer} />
       <div className={s.trailingIcons}>
         <button
-          onClick={toggleTheme}
+          onClick={() => {
+            toggleTheme(theme);
+          }}
           aria-label="カラーテーマを切り替える"
           className={s.interactiveIcon}
         >
