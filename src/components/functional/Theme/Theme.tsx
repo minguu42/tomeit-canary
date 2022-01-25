@@ -1,23 +1,13 @@
-import { VFC, useEffect } from "react";
+import { VFC } from "react";
 
-import {
-  THEME_ATTRIBUTE_NAME,
-  ThemeAtom,
-  useSetThemeAtom,
-} from "@/globalStates/themeAtom";
+import { useTheme } from "@/components/functional/Theme";
 
 type Props = {
   children: JSX.Element;
 };
 
 const Theme: VFC<Props> = ({ children }) => {
-  const setTheme = useSetThemeAtom();
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    const initialColorValue = root.getAttribute(THEME_ATTRIBUTE_NAME);
-    setTheme(initialColorValue as ThemeAtom);
-  }, [setTheme]);
+  useTheme();
 
   return (
     <>
