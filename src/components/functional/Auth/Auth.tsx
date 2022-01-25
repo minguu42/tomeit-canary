@@ -1,7 +1,7 @@
 import { VFC } from "react";
 
 import Loading from "@/components/common/Loading";
-import { useAuth } from "lib/auth";
+import { useAuth } from "@/components/functional/Auth";
 
 type Props = {
   children: JSX.Element;
