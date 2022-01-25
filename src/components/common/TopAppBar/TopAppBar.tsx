@@ -8,12 +8,12 @@ import {
   LogoutIcon,
   MenuIcon,
 } from "@/components/common/icons";
+import { useThemeActions } from "@/components/functional/Theme";
 import s from "./TopAppBar.module.css";
 import { useUserAtom } from "@/globalStates/userAtom";
 import { useThemeAtom } from "@/globalStates/themeAtom";
-import { useToggleNavigationDrawer } from "@/globalStates/navigationDrawerAtom";
+import { useIsNavigationDrawerOpenMutators } from "@/globalStates/isNavigationDrawerOpenAtom";
 import { logout } from "@/lib/auth";
-import { useThemeActions } from "@/components/functional/Theme";
 
 const TopAppBar: VFC = () => {
   const [headline, setHeadline] = useState("tomeit");
@@ -21,7 +21,7 @@ const TopAppBar: VFC = () => {
   const user = useUserAtom();
   const theme = useThemeAtom();
   const { toggleTheme } = useThemeActions();
-  const toggleNavigationDrawer = useToggleNavigationDrawer();
+  const { toggleNavigationDrawer } = useIsNavigationDrawerOpenMutators();
 
   useEffect(() => {
     switch (router.pathname) {

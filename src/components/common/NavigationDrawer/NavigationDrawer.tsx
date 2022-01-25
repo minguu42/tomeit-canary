@@ -9,15 +9,15 @@ import {
 } from "@/components/common/icons";
 import s from "./NavigationDrawer.module.css";
 import {
-  useNavigationDrawerAtom,
-  useToggleNavigationDrawer,
-} from "@/globalStates/navigationDrawerAtom";
+  useIsNavigationDrawerOpenAtom,
+  useIsNavigationDrawerOpenMutators,
+} from "@/globalStates/isNavigationDrawerOpenAtom";
 import { useTasksAtom } from "@/globalStates/tasksAtom";
 import { formatDate } from "@/lib/format";
 
 const NavigationDrawer: VFC = () => {
-  const isOpen = useNavigationDrawerAtom();
-  const toggleDrawer = useToggleNavigationDrawer();
+  const isOpen = useIsNavigationDrawerOpenAtom();
+  const { toggleNavigationDrawer } = useIsNavigationDrawerOpenMutators();
   const router = useRouter();
 
   const tasks = useTasksAtom();
@@ -91,7 +91,7 @@ const NavigationDrawer: VFC = () => {
           </li>
         </ul>
       </nav>
-      <button onClick={toggleDrawer} className={s.scrim} />
+      <button onClick={toggleNavigationDrawer} className={s.scrim} />
     </>
   );
 };
