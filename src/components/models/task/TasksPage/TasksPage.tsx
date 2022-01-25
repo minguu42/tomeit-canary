@@ -5,6 +5,7 @@ import PomodoroTimer from "@/components/models/pomodoro/PomodoroTimer";
 import TaskAddForm from "@/components/models/task/TaskAddForm";
 import TaskList from "@/components/models/task/TaskList";
 import TaskSideSheet from "@/components/models/task/TaskSideSheet";
+import { useRequiredLogin } from "@/components/functional/Auth";
 import s from "./TasksPage.module.css";
 import { useTasksActions } from "@/globalStates/tasksAtom";
 import {
@@ -12,7 +13,6 @@ import {
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
 import { Task } from "@/models/task";
-import { useRequiredLogin } from "@/lib/auth";
 
 type Props = {
   title: string;
