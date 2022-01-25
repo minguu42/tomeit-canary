@@ -7,7 +7,7 @@ import TaskList from "@/components/models/task/TaskList";
 import TaskSideSheet from "@/components/models/task/TaskSideSheet";
 import { useRequiredLogin } from "@/components/functional/Auth";
 import s from "./TasksPage.module.css";
-import { useTasksActions } from "@/globalStates/tasksAtom";
+import { useTasksMutators } from "@/globalStates/tasksAtom";
 import {
   usePomodoroTimerActions,
   usePomodoroTimerAtom,
@@ -21,7 +21,7 @@ type Props = {
 
 const TasksPage: VFC<Props> = ({ title, filter }) => {
   useRequiredLogin();
-  const { replaceTask, deleteTask } = useTasksActions();
+  const { replaceTask, deleteTask } = useTasksMutators();
   const { playPomodoro, setPlayingTask } = usePomodoroTimerActions();
   const { playingTask } = usePomodoroTimerAtom();
   const [featuredTask, setFeaturedTask] = useState<Task | null>(null);

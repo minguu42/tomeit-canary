@@ -3,7 +3,7 @@ import cn from "classnames";
 
 import s from "./TaskAddForm.module.css";
 import { AddTaskIcon, AlarmIcon } from "@/components/common/icons";
-import { useTasksActions } from "@/globalStates/tasksAtom";
+import { useTasksMutators } from "@/globalStates/tasksAtom";
 import { Task } from "@/models/task";
 import { formatDate } from "@/lib/format";
 
@@ -11,7 +11,7 @@ const TaskAddForm: VFC = () => {
   const [title, setTitle] = useState("");
   const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
   const [dueOn, setDueOn] = useState<Date | null>(null);
-  const { addTask } = useTasksActions();
+  const { addTask } = useTasksMutators();
 
   const handleTitleChange: FormEventHandler<HTMLInputElement> = (event) => {
     setTitle(event.currentTarget.value);
