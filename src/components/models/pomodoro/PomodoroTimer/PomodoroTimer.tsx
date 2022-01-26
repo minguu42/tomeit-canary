@@ -15,9 +15,9 @@ import {
   usePomodoroTimerActions,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
+import { useTasksMutators } from "@/globalStates/tasksAtom";
 import { formatTimerTime } from "@/lib/format";
 import { Task } from "@/models/task";
-import { useTasksMutators } from "@/globalStates/tasksAtom";
 
 const PomodoroTimer: VFC = () => {
   const { time, isActive, isNextPomodoro, playingTask } =
