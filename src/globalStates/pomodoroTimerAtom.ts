@@ -2,7 +2,7 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Task } from "@/models/task";
 
-export const POMODORO_TIME = 5;
+export const POMODORO_TIME = 1500;
 export const SHORT_REST_TIME = 300;
 export const LONG_REST_TIME = 900;
 const INIT_REST_COUNT = 4;
