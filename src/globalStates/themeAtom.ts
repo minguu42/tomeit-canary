@@ -1,29 +1,28 @@
-import { atom, useRecoilState, useSetRecoilState } from "recoil";
+import { useCallback } from "react";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 export type ThemeAtom = "light" | "dark";
 
-export const THEME_ATTRIBUTE_NAME = "data-theme";
-const THEME_LOCAL_STORAGE_KEY = "theme";
+type ThemeMutators = {
+  setTheme: (theme: ThemeAtom) => void;
+};
 
 const themeAtom = atom<ThemeAtom>({
   key: "themeAtom",
   default: "light",
 });
 
-export const useSetThemeAtom = () => {
-  return useSetRecoilState(themeAtom);
-};
+export const useThemeAtom = (): ThemeAtom => useRecoilValue(themeAtom);
 
-export const useThemeAtom = () => {
-  const [theme, setTheme] = useRecoilState(themeAtom);
+export const useThemeMutators = (): ThemeMutators => {
+  const setAtom = useSetRecoilState(themeAtom);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    const root = window.document.documentElement;
-    root.setAttribute(THEME_ATTRIBUTE_NAME, newTheme);
-    window.localStorage.setItem(THEME_LOCAL_STORAGE_KEY, newTheme);
-  };
+  const setTheme = useCallback(
+    (theme: ThemeAtom) => {
+      setAtom(theme);
+    },
+    [setAtom]
+  );
 
-  return { theme, toggleTheme };
+  return { setTheme };
 };

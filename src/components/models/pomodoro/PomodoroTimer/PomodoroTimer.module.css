@@ -44,6 +44,11 @@
   border-radius: 16px;
 }
 
+.actionButton[disabled] {
+  color: rgb(var(--c-on-surface-rgb) / 38%);
+  background-color: rgb(var(--c-on-surface-rgb) / 12%);
+}
+
 .actionButtonLayerInPomodoro {
   position: absolute;
   top: 0;

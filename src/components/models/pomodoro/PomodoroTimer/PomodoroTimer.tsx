@@ -15,9 +15,9 @@ import {
   usePomodoroTimerActions,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
+import { useTasksMutators } from "@/globalStates/tasksAtom";
 import { formatTimerTime } from "@/lib/format";
 import { Task } from "@/models/task";
-import { useTasksActions } from "@/globalStates/tasksAtom";
 
 const PomodoroTimer: VFC = () => {
   const { time, isActive, isNextPomodoro, playingTask } =
@@ -31,7 +31,7 @@ const PomodoroTimer: VFC = () => {
     updatePomodoroTimerWhenTimeEnd,
     tickTime,
   } = usePomodoroTimerActions();
-  const { replaceTask } = useTasksActions();
+  const { replaceTask } = useTasksMutators();
 
   useEffect(() => {
     if (!isActive) return;
