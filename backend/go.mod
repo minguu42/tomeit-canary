@@ -1,4 +1,4 @@
-module github.com/minguu42/tomeit-api
+module github.com/minguu42/tomeit
 
 go 1.17
 
@@ -7,7 +7,6 @@ go 1.17
 require (
 	firebase.google.com/go/v4 v4.6.0
 	github.com/go-chi/chi/v5 v5.0.3
-	github.com/go-chi/cors v1.2.0
 	github.com/go-chi/render v1.0.1
 	github.com/google/go-cmp v0.5.4
 	google.golang.org/api v0.40.0
