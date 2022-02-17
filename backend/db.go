@@ -10,8 +10,8 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-type dbInterface interface {
-	userDBInterface
+type DBInterface interface {
+	UserDBInterface
 	taskDBInterface
 	pomodoroDBInterface
 }
