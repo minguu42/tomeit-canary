@@ -13,6 +13,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"github.com/google/go-cmp/cmp/cmpopts"
+	"github.com/minguu42/tomeit/middlewares"
 )
 
 var (
@@ -24,7 +25,7 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	firebaseApp := &firebaseAppMock{}
+	firebaseAppMock := &firebaseAppMock{}
 
 	testDB = OpenDB("test:password@tcp(localhost:13306)/db_test?charset=utf8mb4&parseTime=true")
 	defer CloseDB(testDB)
@@ -32,7 +33,7 @@ func TestMain(m *testing.M) {
 	r := chi.NewRouter()
 
 	r.Use(render.SetContentType(render.ContentTypeJSON))
-	r.Use(UserCtx(testDB, firebaseApp))
+	r.Use(middlewares.Auth(testDB, firebaseAppMock))
 
 	Route(r, testDB)
 
