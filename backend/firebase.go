@@ -10,8 +10,8 @@ import (
 	"google.golang.org/api/option"
 )
 
-type firebaseAppInterface interface {
-	verifyIDToken(ctx context.Context, idToken string) (*auth.Token, error)
+type FirebaseAppInterface interface {
+	VerifyIDToken(ctx context.Context, idToken string) (*auth.Token, error)
 }
 
 type FirebaseApp struct {
@@ -26,7 +26,7 @@ func InitFirebaseApp() (*FirebaseApp, error) {
 	return &FirebaseApp{app}, nil
 }
 
-func (app *FirebaseApp) verifyIDToken(ctx context.Context, idToken string) (*auth.Token, error) {
+func (app *FirebaseApp) VerifyIDToken(ctx context.Context, idToken string) (*auth.Token, error) {
 	client, err := app.Auth(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("app.Auth failed: %w", err)
@@ -42,7 +42,7 @@ func (app *FirebaseApp) verifyIDToken(ctx context.Context, idToken string) (*aut
 
 type firebaseAppMock struct{}
 
-func (app *firebaseAppMock) verifyIDToken(_ context.Context, _ string) (*auth.Token, error) {
+func (app *firebaseAppMock) VerifyIDToken(_ context.Context, _ string) (*auth.Token, error) {
 	token := auth.Token{
 		UID: "someUserUID",
 	}
