@@ -5,13 +5,13 @@ import (
 	"time"
 )
 
-type userDBInterface interface {
-	createUser(digestUID string) (*User, error)
-	getUserByDigestUID(digestUID string) (*User, error)
+type UserDBInterface interface {
+	CreateUser(digestUID string) (*User, error)
+	GetUserByDigestUID(digestUID string) (*User, error)
 	decrementRestCount(user *User) error
 }
 
-func (db *DB) createUser(digestUID string) (*User, error) {
+func (db *DB) CreateUser(digestUID string) (*User, error) {
 	createdAt := time.Now()
 
 	user := User{
@@ -27,7 +27,7 @@ func (db *DB) createUser(digestUID string) (*User, error) {
 	return &user, nil
 }
 
-func (db *DB) getUserByDigestUID(digestUID string) (*User, error) {
+func (db *DB) GetUserByDigestUID(digestUID string) (*User, error) {
 	var user User
 
 	if err := db.Where("digest_uid", digestUID).First(&user).Error; err != nil {
