@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/minguu42/tomeit"
-	"github.com/minguu42/tomeit/logging"
+	"github.com/minguu42/tomeit/logger"
 )
 
 type key int
@@ -23,7 +23,7 @@ func Auth(db tomeit.DBInterface, firebaseApp tomeit.FirebaseAppInterface) func(h
 
 			token, err := firebaseApp.VerifyIDToken(ctx, idToken)
 			if err != nil {
-				logging.Error.Println("firebaseApp.VerifyIDToken failed:", err)
+				logger.Error.Println("firebaseApp.VerifyIDToken failed:", err)
 				// TODO: エラーレスポンスを生成する
 				return
 			}
@@ -32,7 +32,7 @@ func Auth(db tomeit.DBInterface, firebaseApp tomeit.FirebaseAppInterface) func(h
 			if user == nil || err != nil {
 				user, err = db.CreateUser(hash(token.UID))
 				if err != nil {
-					logging.Error.Println("db.CreateUser failed:", err)
+					logger.Error.Println("db.CreateUser failed:", err)
 					// TODO: エラーレスポンスを生成する
 					return
 				}
