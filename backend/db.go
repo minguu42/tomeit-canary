@@ -1,13 +1,13 @@
 package tomeit
 
 import (
-	"log"
-	"os"
+	"database/sql"
+	"fmt"
 	"time"
 
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
+	_ "github.com/doug-martin/goqu/v9/dialect/mysql"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/minguu42/tomeit/logger"
 )
 
 type DBInterface interface {
@@ -17,56 +17,36 @@ type DBInterface interface {
 }
 
 type DB struct {
-	*gorm.DB
+	sqlDB *sql.DB
 }
 
-func OpenDB(dsn string) *DB {
-	newLogger := logger.New(
-		log.New(os.Stdout, "\r\n", log.LstdFlags),
-		logger.Config{
-			IgnoreRecordNotFoundError: true,
-		},
-	)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
-		DisableAutomaticPing: true,
-		Logger:               newLogger,
-	})
+func OpenDB(dsn string) (*DB, error) {
+	sqlDB, err := sql.Open("mysql", dsn)
 	if err != nil {
-		log.Fatal("Open db failed:", err)
-	}
-
-	sqlDB, err := db.DB()
-	if err != nil {
-		log.Fatal("db.DB failed:", err)
+		return nil, err
 	}
 
 	isDBReady := false
 	failureTimes := 0
 	for !isDBReady {
 		err := sqlDB.Ping()
-		if err == nil {
+		switch {
+		case err == nil:
 			isDBReady = true
-		} else {
-			log.Println("Ping db failed. try again.")
-			time.Sleep(time.Second * 15)
+		case failureTimes <= 6:
+			logger.Info.Println("sqlDB.Ping failed. try again in 5 seconds.")
+			time.Sleep(time.Second * 5)
 			failureTimes += 1
-		}
-
-		if failureTimes >= 2 {
-			log.Fatalln("Ping db failed:", err)
+		default:
+			return nil, fmt.Errorf("sqlDB.Ping failed: %w", err)
 		}
 	}
 
-	return &DB{db}
+	return &DB{sqlDB: sqlDB}, nil
 }
 
 func CloseDB(db *DB) {
-	sqlDB, err := db.DB.DB()
-	if err != nil {
-		log.Fatal("db.DB failed:", err)
-	}
-
-	if err := sqlDB.Close(); err != nil {
-		log.Fatal("sqlDB.Close failed:", err)
+	if err := db.sqlDB.Close(); err != nil {
+		logger.Error.Fatalln("sqlDB.Close failed:", err)
 	}
 }
