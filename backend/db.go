@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/doug-martin/goqu/v9"
 	_ "github.com/doug-martin/goqu/v9/dialect/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/minguu42/tomeit/logger"
@@ -17,11 +18,12 @@ type DBInterface interface {
 }
 
 type DB struct {
-	sqlDB *sql.DB
+	db      *sql.DB
+	dialect *goqu.DialectWrapper
 }
 
 func OpenDB(dsn string) (*DB, error) {
-	sqlDB, err := sql.Open("mysql", dsn)
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		return nil, err
 	}
@@ -29,24 +31,25 @@ func OpenDB(dsn string) (*DB, error) {
 	isDBReady := false
 	failureTimes := 0
 	for !isDBReady {
-		err := sqlDB.Ping()
+		err := db.Ping()
 		switch {
 		case err == nil:
 			isDBReady = true
 		case failureTimes <= 6:
-			logger.Info.Println("sqlDB.Ping failed. try again in 5 seconds.")
+			logger.Info.Println("db.Ping failed. try again in 5 seconds.")
 			time.Sleep(time.Second * 5)
 			failureTimes += 1
 		default:
-			return nil, fmt.Errorf("sqlDB.Ping failed: %w", err)
+			return nil, fmt.Errorf("db.Ping failed: %w", err)
 		}
 	}
 
-	return &DB{sqlDB: sqlDB}, nil
+	dialect := goqu.Dialect("mysql")
+	return &DB{db: db, dialect: &dialect}, nil
 }
 
 func CloseDB(db *DB) {
-	if err := db.sqlDB.Close(); err != nil {
-		logger.Error.Fatalln("sqlDB.Close failed:", err)
+	if err := db.db.Close(); err != nil {
+		logger.Error.Fatalln("db.Close failed:", err)
 	}
 }
