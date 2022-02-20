@@ -1,4 +1,4 @@
-package middlewares
+package tomeit
 
 import (
 	"context"
@@ -6,7 +6,6 @@ import (
 	"encoding/hex"
 	"net/http"
 
-	"github.com/minguu42/tomeit"
 	"github.com/minguu42/tomeit/logger"
 )
 
@@ -14,7 +13,7 @@ type key int
 
 var userKey key
 
-func Auth(db tomeit.DBInterface, firebaseApp tomeit.FirebaseAppInterface) func(handler http.Handler) http.Handler {
+func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			idToken := r.Header.Get("Authorization")

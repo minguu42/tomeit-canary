@@ -11,8 +11,8 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
-type DBInterface interface {
-	UserDBInterface
+type dbInterface interface {
+	userDBInterface
 	taskDBInterface
 	pomodoroDBInterface
 }
