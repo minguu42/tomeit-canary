@@ -58,7 +58,7 @@ INSERT INTO pomodoros (id, user_id, task_id, created_at) VALUES
 (2, 1, 1, '2021-09-01 06:07:08')
 `
 
-	testDB.Exec(createPomodoros)
+	testDB.db.Exec(createPomodoros)
 }
 
 func TestGetPomodoros(t *testing.T) {

@@ -4,8 +4,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/minguu42/tomeit/middlewares"
-
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/minguu42/tomeit"
@@ -20,13 +18,16 @@ func main() {
 		logger.Error.Fatalln("tomeit.InitFirebaseApp failed:", err)
 	}
 
-	db := tomeit.OpenDB(os.Getenv("DSN"))
+	db, err := tomeit.OpenDB(os.Getenv("DSN"))
+	if err != nil {
+		logger.Error.Fatalln("tomeit.OpenDB failed:", err)
+	}
 	defer tomeit.CloseDB(db)
 
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
-	r.Use(middlewares.Auth(db, firebaseApp))
+	r.Use(tomeit.Auth(db, firebaseApp))
 	r.Use(middleware.Recoverer)
 	//r.Use(render.SetContentType(render.ContentTypeJSON))
 	//r.Use(cors.Handler(cors.Options{

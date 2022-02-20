@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
-
 	"github.com/go-chi/render"
 )
 
@@ -18,7 +17,7 @@ type pomodoroResponse struct {
 	CreatedAt string        `json:"createdAt"`
 }
 
-func newPomodoroResponse(p *Pomodoro, db DBInterface) *pomodoroResponse {
+func newPomodoroResponse(p *Pomodoro, db dbInterface) *pomodoroResponse {
 	r := pomodoroResponse{
 		ID:        p.ID,
 		Task:      newTaskResponse(&p.Task, db),
@@ -42,7 +41,7 @@ func (p *postPomodorosRequest) Bind(r *http.Request) error {
 	return nil
 }
 
-func postPomodoros(db DBInterface) http.HandlerFunc {
+func postPomodoros(db dbInterface) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		reqBody := &postPomodorosRequest{}
 		if err := render.Bind(r, reqBody); err != nil {
@@ -87,7 +86,7 @@ func postPomodoros(db DBInterface) http.HandlerFunc {
 	}
 }
 
-func deletePomodoro(db DBInterface) http.HandlerFunc {
+func deletePomodoro(db dbInterface) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		pomodoroID, err := strconv.ParseInt(chi.URLParam(r, "pomodoroID"), 10, 64)
 		if err != nil {
@@ -124,7 +123,7 @@ type pomodorosResponse struct {
 	Pomodoros []*pomodoroResponse `json:"pomodoros"`
 }
 
-func newPomodorosResponse(pomodoroRecords []Pomodoro, db DBInterface) *pomodorosResponse {
+func newPomodorosResponse(pomodoroRecords []Pomodoro, db dbInterface) *pomodorosResponse {
 	var ps []*pomodoroResponse
 	for _, p := range pomodoroRecords {
 		ps = append(ps, newPomodoroResponse(&p, db))
@@ -136,7 +135,7 @@ func (ps *pomodorosResponse) Render(w http.ResponseWriter, r *http.Request) erro
 	return nil
 }
 
-func getPomodoros(db DBInterface) http.HandlerFunc {
+func getPomodoros(db dbInterface) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var options getPomodorosOptions
 		createdOnStr := r.URL.Query().Get("createdOn")

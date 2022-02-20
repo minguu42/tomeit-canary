@@ -8,7 +8,7 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
-type UserDBInterface interface {
+type userDBInterface interface {
 	CreateUser(digestUID string) (*User, error)
 	GetUserByDigestUID(digestUID string) (*User, error)
 	decrementRestCount(user *User) error
@@ -58,17 +58,6 @@ func (db *DB) GetUserByDigestUID(digestUID string) (*User, error) {
 }
 
 func (db *DB) decrementRestCount(user *User) error {
-	restCount := user.RestCount
-
-	if restCount == 1 {
-		restCount = 4
-	} else {
-		restCount -= 1
-	}
-
-	if err := db.Model(user).Update("rest_count", restCount).Error; err != nil {
-		return fmt.Errorf("db.Update failed: %w", err)
-	}
-
+	// TODO: 要実装
 	return nil
 }

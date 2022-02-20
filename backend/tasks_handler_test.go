@@ -61,7 +61,7 @@ INSERT INTO tasks (id, user_id, title, expected_pomodoro_num, due_on, is_complet
 (1, 1, 'タスク1', 0, '2021-01-01 00:00:00', false, NULL, '2021-01-01 00:00:00', '2021-01-01 00:00:00'),
 (2, 1, 'タスク2', 2, '2021-12-31 00:00:00', true, '2021-08-31 12:34:56', '2021-01-01 00:00:00', '2021-08-31 12:34:56')
 `
-	testDB.Exec(createTasks)
+	testDB.db.Exec(createTasks)
 }
 
 func TestGetTasks(t *testing.T) {

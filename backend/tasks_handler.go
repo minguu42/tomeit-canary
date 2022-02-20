@@ -25,7 +25,7 @@ type taskResponse struct {
 	UpdatedAt           string `json:"updatedAt"`
 }
 
-func newTaskResponse(t *Task, db DBInterface) *taskResponse {
+func newTaskResponse(t *Task, db dbInterface) *taskResponse {
 	c, err := db.getActualPomodoroNumByID(t.ID)
 	if err != nil {
 		c = 0
@@ -75,7 +75,7 @@ func (p *postTasksRequest) Bind(r *http.Request) error {
 	return nil
 }
 
-func postTasks(db DBInterface) http.HandlerFunc {
+func postTasks(db dbInterface) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		reqBody := &postTasksRequest{}
 		if err := render.Bind(r, reqBody); err != nil {
@@ -126,7 +126,7 @@ func (p *patchTaskRequest) Bind(r *http.Request) error {
 	return nil
 }
 
-func patchTask(db DBInterface) http.HandlerFunc {
+func patchTask(db dbInterface) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		taskID, err := strconv.ParseInt(chi.URLParam(r, "taskID"), 10, 64)
 		if err != nil {
@@ -200,7 +200,7 @@ func (p *putTaskRequest) Bind(r *http.Request) error {
 	return nil
 }
 
-func putTask(db DBInterface) http.HandlerFunc {
+func putTask(db dbInterface) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		taskID, err := strconv.ParseInt(chi.URLParam(r, "taskID"), 10, 64)
 		if err != nil {
@@ -262,7 +262,7 @@ type tasksResponse struct {
 	Tasks []taskResponse `json:"tasks"`
 }
 
-func newTasksResponse(tasks []Task, db DBInterface) *tasksResponse {
+func newTasksResponse(tasks []Task, db dbInterface) *tasksResponse {
 	var ts []taskResponse
 	for _, t := range tasks {
 		ts = append(ts, *newTaskResponse(&t, db))
@@ -274,7 +274,7 @@ func (ts *tasksResponse) Render(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
-func getTasks(db DBInterface) http.HandlerFunc {
+func getTasks(db dbInterface) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var options getTasksOptions
 
@@ -310,7 +310,7 @@ func getTasks(db DBInterface) http.HandlerFunc {
 	}
 }
 
-func deleteTask(db DBInterface) http.HandlerFunc {
+func deleteTask(db dbInterface) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		taskID, err := strconv.ParseInt(chi.URLParam(r, "taskID"), 10, 64)
 		if err != nil {
