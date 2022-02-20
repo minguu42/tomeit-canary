@@ -5,11 +5,11 @@ import (
 )
 
 type User struct {
-	ID        int
-	DigestUID string
-	RestCount int
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID        int       `db:"id"`
+	DigestUID string    `db:"digest_uid"`
+	RestCount int       `db:"rest_count"`
+	CreatedAt time.Time `db:"created_at"`
+	UpdatedAt time.Time `db:"updated_at"`
 }
 
 func (u User) hasTask(t *Task) bool {
