@@ -3,6 +3,7 @@ package tomeit
 import (
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -11,27 +12,28 @@ import (
 	"testing"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/render"
-	"github.com/google/go-cmp/cmp/cmpopts"
 )
 
 var (
-	testClient              *http.Client
-	testUrl                 string
-	testDB                  *DB
-	taskResponseCmpOpts     = cmpopts.IgnoreFields(taskResponse{}, "CompletedOn", "CreatedAt", "UpdatedAt")
-	pomodoroResponseCmpOpts = cmpopts.IgnoreFields(pomodoroResponse{}, "Task.CompletedOn", "Task.CreatedAt", "Task.UpdatedAt", "CreatedAt")
+	testClient *http.Client
+	testUrl    string
+	testDB     *DB
+	//taskResponseCmpOpts     = cmpopts.IgnoreFields(taskResponse{}, "CompletedOn", "CreatedAt", "UpdatedAt")
+	//pomodoroResponseCmpOpts = cmpopts.IgnoreFields(pomodoroResponse{}, "Task.CompletedOn", "Task.CreatedAt", "Task.UpdatedAt", "CreatedAt")
 )
 
 func TestMain(m *testing.M) {
 	firebaseAppMock := &firebaseAppMock{}
 
-	testDB, _ = OpenDB("test:password@tcp(localhost:13306)/db_test?charset=utf8mb4&parseTime=true")
+	var err error
+	testDB, err = OpenDB("test:password@tcp(localhost:13306)/db_test?charset=utf8mb4&parseTime=true")
+	if err != nil {
+		log.Fatalln("OpenDB failed:", err)
+	}
 	defer CloseDB(testDB)
 
 	r := chi.NewRouter()
 
-	r.Use(render.SetContentType(render.ContentTypeJSON))
 	r.Use(Auth(testDB, firebaseAppMock))
 
 	Route(r, testDB)
@@ -80,7 +82,6 @@ func doTestRequest(tb testing.TB, method, path string, params *map[string]string
 	if err != nil {
 		tb.Fatal("Create request failed:", err)
 	}
-
 	if params != nil {
 		ps := req.URL.Query()
 		for k, v := range *params {
@@ -129,6 +130,12 @@ func doTestRequest(tb testing.TB, method, path string, params *map[string]string
 		return resp, respBody
 	case "restCountResponse":
 		var respBody restCountResponse
+		if err := json.Unmarshal(bytes, &respBody); err != nil {
+			return resp, nil
+		}
+		return resp, respBody
+	case "healthResponse":
+		var respBody healthResponse
 		if err := json.Unmarshal(bytes, &respBody); err != nil {
 			return resp, nil
 		}
