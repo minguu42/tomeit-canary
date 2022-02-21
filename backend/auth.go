@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"net/http"
+	"strings"
 
 	"github.com/minguu42/tomeit/logger"
 )
@@ -16,7 +17,13 @@ var userKey key
 func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			idToken := r.Header.Get("Authorization")
+			authorization := strings.Split(r.Header.Get("Authorization"), " ")
+			if authorization[0] != "Bearer" {
+				logger.Error.Println("JWT is required.")
+				// TODO: エラーレスポンスを生成する
+				return
+			}
+			idToken := authorization[1]
 
 			ctx := r.Context()
 
