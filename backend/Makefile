@@ -19,6 +19,11 @@ lint:  ## Go ファイルを静的解析する
 	@go vet ./...
 	@staticcheck ./...
 
+.PHONY: test
+test: ## Go ファイルをテストする
+	@docker compose --env-file ../.env.development.local -f ../docker-compose.yaml up -d db-test
+	@go test
+
 .PHONY: down
 down:  ## 関連する Docker コンテナを停止し, 削除する
 	@docker compose --env-file ../.env.development.local -f ../docker-compose.yaml down
