@@ -45,7 +45,7 @@ func (db *DB) CreateUser(digestUID string) (*User, error) {
 func (db *DB) GetUserByDigestUID(digestUID string) (*User, error) {
 	var user User
 
-	sql, _, err := db.dialect.From("user").Select(&User{}).Where(goqu.Ex{"digest_uid": digestUID}).ToSQL()
+	sql, _, err := db.dialect.From("users").Select("id", "digest_uid", "rest_count", "created_at", "updated_at").Where(goqu.Ex{"digest_uid": digestUID}).ToSQL()
 	if err != nil {
 		return nil, fmt.Errorf("ds.ToSQL failed: %w", err)
 	}
