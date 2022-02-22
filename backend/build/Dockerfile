@@ -1,8 +1,9 @@
-FROM golang:1.16
+FROM golang:1.17.7-bullseye
 
-WORKDIR /go/src/app
-COPY ./backend .
+WORKDIR /app
+COPY . .
 
-RUN go get -d -v ./...
+RUN go mod tidy && \
+    go install github.com/cosmtrek/air@v1.27.10
 
-CMD ["go", "run", "./cmd/server"]
+CMD ["air", "-c", "./build/.air.toml"]
