@@ -1,17 +1,15 @@
 package tomeit
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"time"
 )
 
 type User struct {
-	ID        int
-	DigestUID string
-	RestCount int
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID        int       `db:"id"`
+	DigestUID string    `db:"digest_uid"`
+	RestCount int       `db:"rest_count"`
+	CreatedAt time.Time `db:"created_at"`
+	UpdatedAt time.Time `db:"updated_at"`
 }
 
 func (u User) hasTask(t *Task) bool {
@@ -28,10 +26,4 @@ func (u User) hasPomodoro(p *Pomodoro) bool {
 	} else {
 		return false
 	}
-}
-
-func hash(token string) string {
-	bytes := sha256.Sum256([]byte(token))
-	digestToken := hex.EncodeToString(bytes[:])
-	return digestToken
 }

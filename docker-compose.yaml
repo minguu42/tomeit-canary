@@ -1,9 +1,10 @@
 version: "3"
+
 services:
   api:
     build:
-      context: .
-      dockerfile: backend/build/Dockerfile
+      context: ./backend
+      dockerfile: build/Dockerfile
     environment:
       - PORT
       - DSN
@@ -13,13 +14,13 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./backend:/go/src/app
+      - ./backend:/app
     ports:
       - ${PORT}:${PORT}
     depends_on:
       - db-dev
   db-dev:
-    image: mysql:8.0
+    image: mysql:8.0.28-debian
     environment:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_DATABASE
@@ -31,7 +32,7 @@ services:
       - data-dev:/var/lib/mysql
       - ./backend/build/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
   db-test:
-    image: mysql:8.0
+    image: mysql:8.0.28-debian
     environment:
       MYSQL_ROOT_PASSWORD: passsword
       MYSQL_DATABASE: db_test
@@ -44,7 +45,7 @@ services:
     volumes:
       - data-test:/var/lib/mysql
   docs:
-    image: swaggerapi/swagger-ui
+    image: swaggerapi/swagger-ui:3.18.3
     container_name: tomeit-api-docs
     environment:
       API_URL: openapi.yaml

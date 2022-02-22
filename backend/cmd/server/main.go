@@ -1,24 +1,33 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/minguu42/tomeit"
+	"github.com/minguu42/tomeit/logger"
 )
 
 func main() {
-	//firebaseApp := tomeit.InitFirebaseApp()
+	logger.InitLogger()
 
-	//db := tomeit.OpenDB(os.Getenv("DSN"))
-	//defer tomeit.CloseDB(db)
+	firebaseApp, err := tomeit.InitFirebaseApp()
+	if err != nil {
+		logger.Error.Fatalln("tomeit.InitFirebaseApp failed:", err)
+	}
+
+	db, err := tomeit.OpenDB(os.Getenv("DSN"))
+	if err != nil {
+		logger.Error.Fatalln("tomeit.OpenDB failed:", err)
+	}
+	defer tomeit.CloseDB(db)
 
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
+	r.Use(tomeit.Auth(db, firebaseApp))
 	r.Use(middleware.Recoverer)
 	//r.Use(render.SetContentType(render.ContentTypeJSON))
 	//r.Use(cors.Handler(cors.Options{
@@ -28,16 +37,15 @@ func main() {
 	//	ExposedHeaders:   []string{"Link"},
 	//	AllowCredentials: true,
 	//}))
-	//r.Use(tomeit.UserCtx(db, firebaseApp))
 
-	tomeit.Route(r) // tomeit.Route(r, db)
+	tomeit.Route(r, db)
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		log.Fatal("$PORT must be set")
+		logger.Error.Fatalln("$PORT must be set")
 	}
 
 	if err := http.ListenAndServe(":"+port, r); err != nil {
-		log.Fatal("ListenAndServe failed:", err)
+		logger.Error.Fatalln("http.ListenAndServe failed:", err)
 	}
 }
