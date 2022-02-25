@@ -7,13 +7,7 @@ info:
 
 servers:
   - url: http://localhost:8080/v0
-    description: ローカルの開発用 API サーバ
-
-tags:
-  - name: tasks
-    description: タスク関連 API
-  - name: pomodoros
-    description: ポモドーロ関連 API
+    description: 開発用ローカルサーバ
 
 paths:
   /tasks:
@@ -21,8 +15,6 @@ paths:
       tags:
         - tasks
       summary: タスク作成 API
-      parameters:
-        - $ref: "#/components/parameters/idToken"
       requestBody:
         required: true
         content:
@@ -40,7 +32,7 @@ paths:
                   example: 4
                 dueOn:
                   type: string
-                  example: "2021-12-31T00:00:00Z"
+                  format: date-time
       responses:
         "201":
           description: 成功
@@ -57,13 +49,14 @@ paths:
           $ref: "#/components/responses/BadRequestError"
         "401":
           $ref: "#/components/responses/AuthenticationError"
+      security:
+        - bearerAuth: [ ]
     get:
       tags:
         - tasks
       summary: タスク一覧取得 API
       description: 作成日時の昇順で最大30件まで取得する.
       parameters:
-        - $ref: "#/components/parameters/idToken"
         - name: isCompleted
           description: タスクが完了したかどうかで絞り込みを行う. 省略可能.
           in: "query"
@@ -75,7 +68,7 @@ paths:
           in: "query"
           schema:
             type: string
-            example: "2021-01-01T00:00:00Z"
+            format: date-time
       responses:
         "200":
           description: 成功
@@ -85,6 +78,8 @@ paths:
                 $ref: "#/components/schemas/Tasks"
         "401":
           $ref: "#/components/responses/AuthenticationError"
+      security:
+        - beaerAuth: [ ]
   /tasks/{taskID}:
     patch:
       summary: タスク一部更新 API
@@ -92,7 +87,6 @@ paths:
         - tasks
       description: 現時点では isCompleted の値のみ変更できる.
       parameters:
-        - $ref: "#/components/parameters/idToken"
         - $ref: "#/components/parameters/taskID"
       requestBody:
         required: true
@@ -119,12 +113,13 @@ paths:
           $ref: "#/components/responses/AuthorizationError"
         "404":
           $ref: "#/components/responses/NotFoundError"
+      security:
+        - beaerAuth: [ ]
     put:
       summary: タスク更新 API
       tags:
         - tasks
       parameters:
-        - $ref: "#/components/parameters/idToken"
         - $ref: "#/components/parameters/taskID"
       requestBody:
         required: true
@@ -146,7 +141,7 @@ paths:
                   example: 2
                 dueOn:
                   type: string
-                  example: "2021-01-01T00:00:00Z"
+                  format: date-time
                 isCompleted:
                   type: boolean
                   example: false
@@ -165,12 +160,13 @@ paths:
           $ref: "#/components/responses/AuthorizationError"
         "404":
           $ref: "#/components/responses/NotFoundError"
+      security:
+        - beaerAuth: [ ]
     delete:
       summary: タスク削除 API
       tags:
         - tasks
       parameters:
-        - $ref: "#/components/parameters/idToken"
         - $ref: "#/components/parameters/taskID"
       responses:
         "204":
@@ -181,13 +177,13 @@ paths:
           $ref: "#/components/responses/AuthorizationError"
         "404":
           $ref: "#/components/responses/NotFoundError"
+      security:
+        - beaerAuth: [ ]
   /pomodoros:
     post:
       summary: ポモドーロ記録作成 API
       tags:
         - pomodoros
-      parameters:
-        - $ref: "#/components/parameters/idToken"
       requestBody:
         required: true
         content:
@@ -216,19 +212,20 @@ paths:
           $ref: "#/components/responses/BadRequestError"
         "401":
           $ref: "#/components/responses/AuthenticationError"
+      security:
+        - beaerAuth: [ ]
     get:
       summary: ポモドーロ記録一覧取得 API
       tags:
         - pomodoros
       description: 作成日時の昇順で最大30件まで取得する.
       parameters:
-        - $ref: "#/components/parameters/idToken"
         - name: createdOn
           in: "query"
           description: 作成日付で絞り込む
           schema:
             type: string
-            example: "2021-01-01T00:00:00Z"
+            format: date-time
       responses:
         "200":
           description: 成功
@@ -240,13 +237,14 @@ paths:
           $ref: "#/components/responses/BadRequestError"
         "401":
           $ref: "#/components/responses/AuthenticationError"
+      security:
+        - beaerAuth: [ ]
   /pomodoros/{pomodoroID}:
     delete:
       summary: ポモドーロ記録削除 API
       tags:
         - pomodoros
       parameters:
-        - $ref: "#/components/parameters/idToken"
         - $ref: "#/components/parameters/pomodoroID"
       responses:
         "204":
@@ -257,13 +255,13 @@ paths:
           $ref: "#/components/responses/AuthorizationError"
         "404":
           $ref: "#/components/responses/NotFoundError"
+      security:
+        - beaerAuth: [ ]
   /pomodoros/rest-count:
     get:
       summary: 次の長い休憩までのカウント取得 API
       tags:
         - pomodoros
-      parameters:
-        - $ref: "#/components/parameters/idToken"
       responses:
         "200":
           description: 成功
@@ -277,6 +275,16 @@ paths:
                     example: 3
         "401":
           $ref: "#/components/responses/AuthenticationError"
+      security:
+        - beaerAuth: [ ]
+  /helth:
+    get:
+      tags:
+        - monitoring
+      summary: ヘルスチェック API
+      responses:
+        "200":
+          description: 成功
 
 components:
   schemas:
@@ -319,7 +327,7 @@ components:
 
             省略可. 存在しない場合は ""（空の文字列）を返す.
           type: string
-          example: "2021-01-01T00:00:00Z"
+          format: date-time
         isCompleted:
           description: 完了したかどうか
           type: boolean
@@ -329,15 +337,15 @@ components:
 
             タスクが完了済みでない場合は ""（空の文字列）を返す.
           type: string
-          example: "2021-01-01T00:00:00Z"
+          format: date-time
         createdAt:
           description: 作成日時
           type: string
-          example: "2021-01-01T00:00:00Z"
+          format: date-time
         updatedAt:
           description: 更新日時
           type: string
-          example: "2021-01-01T00:00:00Z"
+          format: date-time
     Tasks:
       type: object
       required:
@@ -365,7 +373,7 @@ components:
         createdAt:
           description: 作成日時
           type: string
-          example: "2021-01-01T00:00:00Z"
+          format: date-time
     Pomodoros:
       type: object
       required:
@@ -468,13 +476,6 @@ components:
                 type: string
                 example: some error messages
   parameters:
-    idToken:
-      name: Authorization
-      in: header
-      description: ユーザ識別用の Firebase ID トークン
-      required: true
-      schema:
-        type: string
     taskID:
       name: taskID
       in: path
@@ -491,3 +492,16 @@ components:
       schema:
         type: integer
         minimum: 1
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+tags:
+  - name: tasks
+    description: タスク関連 API
+  - name: pomodoros
+    description: ポモドーロ関連 API
+  - name: monitoring
+    description: モニタリング関連 API
