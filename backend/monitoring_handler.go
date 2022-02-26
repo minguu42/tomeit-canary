@@ -2,8 +2,6 @@ package tomeit
 
 import (
 	"net/http"
-
-	"github.com/minguu42/tomeit/logger"
 )
 
 type healthResponse struct {
@@ -15,10 +13,6 @@ func getHealth(w http.ResponseWriter, _ *http.Request) {
 	body := healthResponse{
 		Status: "OK",
 	}
-	if err := writeResponse(w, http.StatusOK, body); err != nil {
-		logger.Error.Println("writeResponse failed:", err)
-		// TODO: エラーレスポンスの作成
-		return
-	}
+	_ = writeResponse(w, http.StatusOK, body)
 	return
 }
