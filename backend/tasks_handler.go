@@ -2,6 +2,7 @@ package tomeit
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 	"time"
@@ -14,19 +15,16 @@ func postTasks(db dbInterface) http.HandlerFunc {
 		var req postTasksRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			logger.Error.Println("decoder.Decode failed:", err)
-			// TODO: エラーレスポンスを作成する
+			_ = writeResponse(w, http.StatusBadRequest, newErrInvalidRequest(err))
 			return
 		}
 		if req.Title == "" {
-			logger.Info.Println("missing required title field")
-			w.WriteHeader(http.StatusBadRequest)
-			// TODO: エラーレスポンスを生成する
+			_ = writeResponse(w, http.StatusBadRequest, newErrInvalidRequest(errors.New("missing required title field")))
 			return
 		}
 		dueOn, err := time.Parse(time.RFC3339, req.DueOn)
 		if err != nil && req.DueOn != "" {
-			logger.Info.Println("dueOn field format is wrong")
-			w.WriteHeader(http.StatusBadRequest)
+			_ = writeResponse(w, http.StatusBadRequest, newErrInvalidRequest(errors.New("dueOn field format is wrong")))
 			return
 		}
 
@@ -35,8 +33,7 @@ func postTasks(db dbInterface) http.HandlerFunc {
 		task, err := db.createTask(user.ID, req.Title, req.ExpectedPomodoroNum, dueOn)
 		if err != nil {
 			logger.Error.Println("db.createTask failed:", err)
-			w.WriteHeader(http.StatusBadRequest)
-			// TODO: エラーレスポンスを生成する
+			_ = writeResponse(w, http.StatusBadRequest, newErrInvalidRequest(err))
 			return
 		}
 
@@ -47,7 +44,7 @@ func postTasks(db dbInterface) http.HandlerFunc {
 		w.Header().Set("Location", scheme+r.Host+r.URL.Path+"/"+strconv.Itoa(task.ID))
 		if err := writeResponse(w, http.StatusCreated, newTaskResponse(task, db)); err != nil {
 			logger.Error.Println("writeResponse failed:", err)
-			// TODO: エラーレスポンスを生成する
+			_ = writeResponse(w, http.StatusUnprocessableEntity, newErrRender(err))
 			return
 		}
 	}
