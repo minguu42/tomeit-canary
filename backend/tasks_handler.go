@@ -14,8 +14,7 @@ func postTasks(db dbInterface) http.HandlerFunc {
 		var req postTasksRequest
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			logger.Error.Println("decoder.Decode failed:", err)
-			w.WriteHeader(http.StatusBadRequest)
-			// TODO: エラーレスポンスを生成する
+			// TODO: エラーレスポンスを作成する
 			return
 		}
 		if req.Title == "" {
@@ -46,10 +45,9 @@ func postTasks(db dbInterface) http.HandlerFunc {
 			scheme = "https://"
 		}
 		w.Header().Set("Location", scheme+r.Host+r.URL.Path+"/"+strconv.Itoa(task.ID))
-		w.WriteHeader(201)
-		if err := json.NewEncoder(w).Encode(newTaskResponse(task, db)); err != nil {
-			logger.Error.Println("encoder.Encode failed:", err)
-			// TODO: エラーレスポンスの生成
+		if err := writeResponse(w, http.StatusCreated, newTaskResponse(task, db)); err != nil {
+			logger.Error.Println("writeResponse failed:", err)
+			// TODO: エラーレスポンスを生成する
 			return
 		}
 	}
