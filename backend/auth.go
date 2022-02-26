@@ -10,9 +10,7 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
-type key int
-
-var userKey key
+type userKey struct{}
 
 func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
@@ -22,13 +20,11 @@ func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Ha
 				return
 			}
 
-			authorization := strings.Split(r.Header.Get("Authorization"), " ")
-			if authorization[0] != "Bearer" {
-				logger.Error.Println("JWT is required.")
+			if !strings.HasPrefix(r.Header.Get("Authorization"), "Bearer ") {
 				// TODO: エラーレスポンスを生成する
 				return
 			}
-			idToken := authorization[1]
+			idToken := strings.Split(r.Header.Get("Authorization"), " ")[1]
 
 			ctx := r.Context()
 
@@ -49,7 +45,7 @@ func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Ha
 				}
 			}
 
-			next.ServeHTTP(w, r.WithContext(context.WithValue(ctx, userKey, user)))
+			next.ServeHTTP(w, r.WithContext(context.WithValue(ctx, userKey{}, user)))
 		})
 	}
 }
