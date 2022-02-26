@@ -1,54 +1,59 @@
 package tomeit
 
-//func (p *postTasksRequest) Bind(r *http.Request) error {
-//	if p.Title == "" {
-//		return errors.New("missing required title field")
-//	}
-//	if _, err := time.Parse(time.RFC3339, p.DueOn); err != nil && p.DueOn != "" {
-//		return errors.New("dueOn field format is wrong")
-//	}
-//	return nil
-//}
+import (
+	"encoding/json"
+	"net/http"
+	"strconv"
+	"time"
 
-//func postTasks(db dbInterface) http.HandlerFunc {
-//	return func(w http.ResponseWriter, r *http.Request) {
-//		reqBody := &postTasksRequest{}
-//		if err := render.Bind(r, reqBody); err != nil {
-//			log.Println("render.Bind failed:", err)
-//			_ = render.Render(w, r, badRequestError(err))
-//			return
-//		}
-//
-//		var dueOn *time.Time
-//		tmpDueOn, err := time.Parse(time.RFC3339, reqBody.DueOn)
-//		if err == nil {
-//			dueOn = &tmpDueOn
-//		} else {
-//			dueOn = nil
-//		}
-//
-//		user := r.Context().Value(userKey).(*User)
-//
-//		task, err := db.createTask(user.ID, reqBody.Title, reqBody.ExpectedPomodoroNum, dueOn)
-//		if err != nil {
-//			log.Println("db.createTask failed:", err)
-//			_ = render.Render(w, r, badRequestError(err))
-//			return
-//		}
-//
-//		scheme := "http://"
-//		if r.TLS != nil {
-//			scheme = "https://"
-//		}
-//		w.Header().Set("Location", scheme+r.Host+r.URL.Path+"/"+strconv.Itoa(task.ID))
-//		w.WriteHeader(201)
-//		if err = render.Render(w, r, newTaskResponse(task, db)); err != nil {
-//			log.Println("render.Render failed:", err)
-//			_ = render.Render(w, r, internalServerError(err))
-//			return
-//		}
-//	}
-//}
+	"github.com/minguu42/tomeit/logger"
+)
+
+func postTasks(db dbInterface) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req postTasksRequest
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			logger.Error.Println("decoder.Decode failed:", err)
+			w.WriteHeader(http.StatusBadRequest)
+			// TODO: エラーレスポンスを生成する
+			return
+		}
+		if req.Title == "" {
+			logger.Info.Println("missing required title field")
+			w.WriteHeader(http.StatusBadRequest)
+			// TODO: エラーレスポンスを生成する
+			return
+		}
+		dueOn, err := time.Parse(time.RFC3339, req.DueOn)
+		if err != nil && req.DueOn != "" {
+			logger.Info.Println("dueOn field format is wrong")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		user := r.Context().Value(userKey{}).(*User)
+
+		task, err := db.createTask(user.ID, req.Title, req.ExpectedPomodoroNum, dueOn)
+		if err != nil {
+			logger.Error.Println("db.createTask failed:", err)
+			w.WriteHeader(http.StatusBadRequest)
+			// TODO: エラーレスポンスを生成する
+			return
+		}
+
+		scheme := "http://"
+		if r.TLS != nil {
+			scheme = "https://"
+		}
+		w.Header().Set("Location", scheme+r.Host+r.URL.Path+"/"+strconv.Itoa(task.ID))
+		w.WriteHeader(201)
+		if err := json.NewEncoder(w).Encode(newTaskResponse(task, db)); err != nil {
+			logger.Error.Println("encoder.Encode failed:", err)
+			// TODO: エラーレスポンスの生成
+			return
+		}
+	}
+}
 
 //func (p *patchTaskRequest) Bind(r *http.Request) error {
 //	if p.IsCompleted != "true" && p.IsCompleted != "false" {
