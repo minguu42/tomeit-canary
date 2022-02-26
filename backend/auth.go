@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"errors"
 	"net/http"
 	"strings"
 
@@ -20,18 +21,17 @@ func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Ha
 				return
 			}
 
+			ctx := r.Context()
+
 			if !strings.HasPrefix(r.Header.Get("Authorization"), "Bearer ") {
-				// TODO: エラーレスポンスを生成する
+				_ = writeResponse(w, http.StatusBadRequest, newErrInvalidRequest(errors.New("authorization header format is invalid")))
 				return
 			}
 			idToken := strings.Split(r.Header.Get("Authorization"), " ")[1]
-
-			ctx := r.Context()
-
 			token, err := firebaseApp.VerifyIDToken(ctx, idToken)
 			if err != nil {
 				logger.Error.Println("firebaseApp.VerifyIDToken failed:", err)
-				// TODO: エラーレスポンスを生成する
+				_ = writeResponse(w, http.StatusUnauthorized, newErrAuthentication(err))
 				return
 			}
 
@@ -40,7 +40,7 @@ func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Ha
 				user, err = db.CreateUser(hash(token.UID))
 				if err != nil {
 					logger.Error.Println("db.CreateUser failed:", err)
-					// TODO: エラーレスポンスを生成する
+					_ = writeResponse(w, http.StatusInternalServerError, newErrInternalServer(err))
 					return
 				}
 			}
