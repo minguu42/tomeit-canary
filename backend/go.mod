@@ -8,7 +8,6 @@ require (
 	firebase.google.com/go/v4 v4.6.0
 	github.com/doug-martin/goqu/v9 v9.18.0
 	github.com/go-chi/chi/v5 v5.0.3
-	github.com/go-chi/render v1.0.1
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/google/go-cmp v0.5.4
 	google.golang.org/api v0.40.0

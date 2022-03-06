@@ -2,19 +2,18 @@ package tomeit
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"net/http"
 )
 
-// writeResponseBody はレスポンスボディに JSON データを書き込む
-func writeResponseBody(w http.ResponseWriter, body interface{}) {
+// writeResponse はレスポンスのヘッダにステータスコード、ボディに JSON データを書き込む
+func writeResponse(w http.ResponseWriter, statusCode int, body interface{}) error {
+	w.WriteHeader(statusCode)
 	w.Header().Set("Content-Type", "application/json")
-
-	output, err := json.MarshalIndent(body, "", "  ")
-	if err != nil {
-		log.Fatal("構造体から JSON への書き換えの失敗") // TODO: エラー処理
+	encoder := json.NewEncoder(w)
+	encoder.SetIndent("", "  ")
+	if err := encoder.Encode(body); err != nil {
+		return fmt.Errorf("encoder.Encode failed: %w", err)
 	}
-	if _, err := w.Write(output); err != nil {
-		log.Fatal("レスポンスボディへの書き込みの失敗") // TODO: エラー処理
-	}
+	return nil
 }

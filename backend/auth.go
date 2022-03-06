@@ -4,15 +4,14 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"errors"
 	"net/http"
 	"strings"
 
 	"github.com/minguu42/tomeit/logger"
 )
 
-type key int
-
-var userKey key
+type userKey struct{}
 
 func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
@@ -22,20 +21,17 @@ func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Ha
 				return
 			}
 
-			authorization := strings.Split(r.Header.Get("Authorization"), " ")
-			if authorization[0] != "Bearer" {
-				logger.Error.Println("JWT is required.")
-				// TODO: エラーレスポンスを生成する
-				return
-			}
-			idToken := authorization[1]
-
 			ctx := r.Context()
 
+			if !strings.HasPrefix(r.Header.Get("Authorization"), "Bearer ") {
+				_ = writeResponse(w, http.StatusBadRequest, newErrInvalidRequest(errors.New("authorization header format is invalid")))
+				return
+			}
+			idToken := strings.Split(r.Header.Get("Authorization"), " ")[1]
 			token, err := firebaseApp.VerifyIDToken(ctx, idToken)
 			if err != nil {
 				logger.Error.Println("firebaseApp.VerifyIDToken failed:", err)
-				// TODO: エラーレスポンスを生成する
+				_ = writeResponse(w, http.StatusUnauthorized, newErrAuthentication(err))
 				return
 			}
 
@@ -44,12 +40,12 @@ func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Ha
 				user, err = db.CreateUser(hash(token.UID))
 				if err != nil {
 					logger.Error.Println("db.CreateUser failed:", err)
-					// TODO: エラーレスポンスを生成する
+					_ = writeResponse(w, http.StatusInternalServerError, newErrInternalServer(err))
 					return
 				}
 			}
 
-			next.ServeHTTP(w, r.WithContext(context.WithValue(ctx, userKey, user)))
+			next.ServeHTTP(w, r.WithContext(context.WithValue(ctx, userKey{}, user)))
 		})
 	}
 }

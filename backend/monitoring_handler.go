@@ -13,7 +13,6 @@ func getHealth(w http.ResponseWriter, _ *http.Request) {
 	body := healthResponse{
 		Status: "OK",
 	}
-
-	writeResponseBody(w, body)
+	_ = writeResponse(w, http.StatusOK, body)
 	return
 }
