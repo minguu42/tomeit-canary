@@ -14,7 +14,7 @@ paths:
     post:
       tags:
         - tasks
-      summary: タスク作成 API
+      summary: 新しいタスクを作成する
       requestBody:
         required: true
         content:
@@ -29,10 +29,11 @@ paths:
                   example: タスク1
                 expectedPomodoroNum:
                   type: integer
-                  example: 4
+                  default: 0
                 dueOn:
                   type: string
                   format: date-time
+                  default: ""
       responses:
         "201":
           description: 成功
@@ -54,17 +55,17 @@ paths:
     get:
       tags:
         - tasks
-      summary: タスク一覧取得 API
+      summary: タスク一覧を取得する
       description: 作成日時の昇順で最大30件まで取得する.
       parameters:
         - name: isCompleted
-          description: タスクが完了したかどうかで絞り込みを行う. 省略可能.
+          description: タスクが完了したかどうかで絞り込みを行う。
           in: "query"
           schema:
             type: string
-            example: "false"
+            format: boolean
         - name: completedOn
-          description: タスクを完了した日付で絞り込む. 省略可能.
+          description: タスクを完了した日付で絞り込む。
           in: "query"
           schema:
             type: string
@@ -82,7 +83,7 @@ paths:
         - beaerAuth: [ ]
   /tasks/{taskID}:
     put:
-      summary: タスク更新 API
+      summary: 特定のタスクを更新する
       tags:
         - tasks
       parameters:
@@ -129,7 +130,7 @@ paths:
       security:
         - beaerAuth: [ ]
     delete:
-      summary: タスク削除 API
+      summary: 特定のタスクを削除する
       tags:
         - tasks
       parameters:
@@ -147,7 +148,7 @@ paths:
         - beaerAuth: [ ]
   /pomodoros:
     post:
-      summary: ポモドーロ記録作成 API
+      summary: 新しいポモドーロ記録を作成する
       tags:
         - pomodoros
       requestBody:
@@ -181,7 +182,7 @@ paths:
       security:
         - beaerAuth: [ ]
     get:
-      summary: ポモドーロ記録一覧取得 API
+      summary: ポモドーロ記録一覧を取得する
       tags:
         - pomodoros
       description: 作成日時の昇順で最大30件まで取得する.
@@ -207,7 +208,7 @@ paths:
         - beaerAuth: [ ]
   /pomodoros/{pomodoroID}:
     delete:
-      summary: ポモドーロ記録削除 API
+      summary: 特定のポモドーロ記録を削除する
       tags:
         - pomodoros
       parameters:
@@ -225,7 +226,7 @@ paths:
         - beaerAuth: [ ]
   /pomodoros/rest-count:
     get:
-      summary: 次の長い休憩までのカウント取得 API
+      summary: 次の長い休憩までのカウントを取得する
       tags:
         - pomodoros
       responses:
@@ -247,10 +248,18 @@ paths:
     get:
       tags:
         - monitoring
-      summary: ヘルスチェック API
+      summary: サーバの状態を確認する
       responses:
         "200":
           description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: OK
 
 components:
   schemas:
@@ -281,17 +290,17 @@ components:
           type: integer
           minimum: 0
           maximum: 6
-          example: 4
+          default: 4
         actualPomodoroNum:
           description: 完了したポモドーロ数
           type: integer
           minimum: 0
-          example: 2
+          default: 0
         dueOn:
           description: |
             期限日付
 
-            省略可. 存在しない場合は ""（空の文字列）を返す.
+            存在しない場合は ""（空の文字列）を返す。
           type: string
           format: date-time
         isCompleted:
@@ -301,7 +310,7 @@ components:
           description: |
             完了した日付
 
-            タスクが完了済みでない場合は ""（空の文字列）を返す.
+            タスクが完了済みでない場合は ""（空の文字列）を返す。
           type: string
           format: date-time
         createdAt:
@@ -459,7 +468,7 @@ components:
         type: integer
         minimum: 1
   securitySchemes:
-    bearerAuth:
+    firebaseAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
