@@ -14,5 +14,4 @@ func getHealth(w http.ResponseWriter, _ *http.Request) {
 		Status: "OK",
 	}
 	_ = writeResponse(w, http.StatusOK, body)
-	return
 }
