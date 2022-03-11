@@ -116,24 +116,24 @@ func doTestRequest(tb testing.TB, method, path string, params *map[string]string
 			return resp, nil
 		}
 		return resp, respBody
-	case "pomodoroResponse":
-		var respBody pomodoroResponse
-		if err := json.Unmarshal(bytes, &respBody); err != nil {
-			return resp, nil
-		}
-		return resp, respBody
-	case "pomodorosResponse":
-		var respBody pomodorosResponse
-		if err := json.Unmarshal(bytes, &respBody); err != nil {
-			return resp, nil
-		}
-		return resp, respBody
-	case "restCountResponse":
-		var respBody restCountResponse
-		if err := json.Unmarshal(bytes, &respBody); err != nil {
-			return resp, nil
-		}
-		return resp, respBody
+	//case "pomodoroResponse":
+	//	var respBody pomodoroResponse
+	//	if err := json.Unmarshal(bytes, &respBody); err != nil {
+	//		return resp, nil
+	//	}
+	//	return resp, respBody
+	//case "pomodorosResponse":
+	//	var respBody pomodorosResponse
+	//	if err := json.Unmarshal(bytes, &respBody); err != nil {
+	//		return resp, nil
+	//	}
+	//	return resp, respBody
+	//case "restCountResponse":
+	//	var respBody restCountResponse
+	//	if err := json.Unmarshal(bytes, &respBody); err != nil {
+	//		return resp, nil
+	//	}
+	//	return resp, respBody
 	case "healthResponse":
 		var respBody healthResponse
 		if err := json.Unmarshal(bytes, &respBody); err != nil {
