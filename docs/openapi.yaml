@@ -50,7 +50,7 @@ paths:
         "401":
           $ref: "#/components/responses/AuthenticationError"
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
     get:
       tags:
         - tasks
@@ -79,7 +79,7 @@ paths:
         "401":
           $ref: "#/components/responses/AuthenticationError"
       security:
-        - beaerAuth: [ ]
+        - beaerAuth: []
   /tasks/{taskID}:
     put:
       summary: 特定のタスクを更新する
@@ -127,7 +127,7 @@ paths:
         "404":
           $ref: "#/components/responses/NotFoundError"
       security:
-        - beaerAuth: [ ]
+        - beaerAuth: []
     delete:
       summary: 特定のタスクを削除する
       tags:
@@ -144,7 +144,7 @@ paths:
         "404":
           $ref: "#/components/responses/NotFoundError"
       security:
-        - beaerAuth: [ ]
+        - beaerAuth: []
   /pomodoros:
     post:
       summary: 新しいポモドーロ記録を作成する
@@ -179,7 +179,7 @@ paths:
         "401":
           $ref: "#/components/responses/AuthenticationError"
       security:
-        - beaerAuth: [ ]
+        - beaerAuth: []
     get:
       summary: ポモドーロ記録一覧を取得する
       tags:
@@ -204,7 +204,7 @@ paths:
         "401":
           $ref: "#/components/responses/AuthenticationError"
       security:
-        - beaerAuth: [ ]
+        - beaerAuth: []
   /pomodoros/{pomodoroID}:
     delete:
       summary: 特定のポモドーロ記録を削除する
@@ -222,7 +222,7 @@ paths:
         "404":
           $ref: "#/components/responses/NotFoundError"
       security:
-        - beaerAuth: [ ]
+        - beaerAuth: []
   /pomodoros/rest-count:
     get:
       summary: 次の長い休憩までのカウントを取得する
@@ -242,7 +242,7 @@ paths:
         "401":
           $ref: "#/components/responses/AuthenticationError"
       security:
-        - beaerAuth: [ ]
+        - beaerAuth: []
   /helth:
     get:
       tags:

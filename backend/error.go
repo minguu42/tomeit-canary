@@ -28,14 +28,14 @@ func newErrAuthentication(err error) *ErrResponse {
 	}
 }
 
-func newErrNotFound(err error) *ErrResponse {
-	return &ErrResponse{
-		Err:        err,
-		StatusCode: http.StatusNotFound,
-		StatusText: "指定されたリソースが存在しません。",
-		ErrorText:  err.Error(),
-	}
-}
+//func newErrNotFound(err error) *ErrResponse {
+//	return &ErrResponse{
+//		Err:        err,
+//		StatusCode: http.StatusNotFound,
+//		StatusText: "指定されたリソースが存在しません。",
+//		ErrorText:  err.Error(),
+//	}
+//}
 
 func newErrRender(err error) *ErrResponse {
 	return &ErrResponse{
