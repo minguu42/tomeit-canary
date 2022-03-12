@@ -21,20 +21,20 @@ type (
 		ExpectedPomodoroNum int    `json:"expectedPomodoroNum,omitempty"`
 		DueOn               string `json:"dueOn,omitempty"`
 	}
-	getTasksRequest struct {
-		isCompleted string
-		completedOn string
-	}
-	putTaskRequest struct {
-		taskID              int
-		Title               string `json:"title"`
-		ExpectedPomodoroNum int    `json:"expectedPomodoroNum"`
-		DueOn               string `json:"dueOn"`
-		IsCompleted         bool   `json:"isCompleted"`
-	}
-	deleteTaskRequest struct {
-		taskID int
-	}
+	//getTasksRequest struct {
+	//	isCompleted string
+	//	completedOn string
+	//}
+	//putTaskRequest struct {
+	//	taskID              int
+	//	Title               string `json:"title"`
+	//	ExpectedPomodoroNum int    `json:"expectedPomodoroNum"`
+	//	DueOn               string `json:"dueOn"`
+	//	IsCompleted         bool   `json:"isCompleted"`
+	//}
+	//deleteTaskRequest struct {
+	//	taskID int
+	//}
 
 	taskResponse struct {
 		ID                  int    `json:"id"`
@@ -82,10 +82,10 @@ func newTaskResponse(t *Task, db dbInterface) *taskResponse {
 	return &r
 }
 
-func newTasksResponse(tasks []*Task, db dbInterface) *tasksResponse {
-	var ts []*taskResponse
-	for _, t := range tasks {
-		ts = append(ts, newTaskResponse(t, db))
-	}
-	return &tasksResponse{Tasks: ts}
-}
+//func newTasksResponse(tasks []*Task, db dbInterface) *tasksResponse {
+//	var ts []*taskResponse
+//	for _, t := range tasks {
+//		ts = append(ts, newTaskResponse(t, db))
+//	}
+//	return &tasksResponse{Tasks: ts}
+//}

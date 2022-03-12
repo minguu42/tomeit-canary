@@ -12,18 +12,18 @@ type User struct {
 	UpdatedAt time.Time `db:"updated_at"`
 }
 
-func (u User) hasTask(t *Task) bool {
-	if u.ID == t.UserID {
-		return true
-	} else {
-		return false
-	}
-}
-
-func (u User) hasPomodoro(p *Pomodoro) bool {
-	if u.ID == p.UserID {
-		return true
-	} else {
-		return false
-	}
-}
+//func (u User) hasTask(t *Task) bool {
+//	if u.ID == t.UserID {
+//		return true
+//	} else {
+//		return false
+//	}
+//}
+//
+//func (u User) hasPomodoro(p *Pomodoro) bool {
+//	if u.ID == p.UserID {
+//		return true
+//	} else {
+//		return false
+//	}
+//}
