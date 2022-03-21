@@ -19,15 +19,12 @@ CREATE TABLE IF NOT EXISTS tasks (
     is_completed             BOOLEAN      DEFAULT FALSE NOT NULL,
     completed_on             TIMESTAMP,
     created_at               TIMESTAMP    DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at               TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    updated_at               TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS pomodoros (
     id           INT       PRIMARY KEY AUTO_INCREMENT,
     user_id      INT       NOT NULL,
     task_id      INT       NOT NULL,
-    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (task_id) REFERENCES tasks(id)
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
