@@ -35,11 +35,11 @@ func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Ha
 				return
 			}
 
-			user, err := db.GetUserByDigestUID(hash(token.UID))
+			user, err := db.getUserByDigestUID(hash(token.UID))
 			if user == nil || err != nil {
-				user, err = db.CreateUser(hash(token.UID))
+				user, err = db.createUser(hash(token.UID))
 				if err != nil {
-					logger.Error.Println("db.CreateUser failed:", err)
+					logger.Error.Println("db.createUser failed:", err)
 					_ = writeResponse(w, http.StatusInternalServerError, newErrInternalServer(err))
 					return
 				}
