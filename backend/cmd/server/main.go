@@ -13,7 +13,7 @@ import (
 
 func main() {
 	if err := _main(); err != nil {
-		logger.Error.Fatalln("_main:", err)
+		logger.Error.Fatalln("_main failed:", err)
 	}
 }
 
@@ -41,32 +41,23 @@ func _main() error {
 
 	firebaseApp, err := tomeit.InitFirebaseApp()
 	if err != nil {
-		logger.Error.Fatalln("tomeit.InitFirebaseApp:", err)
+		logger.Error.Fatalln("tomeit.InitFirebaseApp failed:", err)
 	}
 
 	db, err := tomeit.OpenDB(dsn)
 	if err != nil {
-		logger.Error.Fatalln("tomeit.OpenDB:", err)
+		logger.Error.Fatalln("tomeit.OpenDB failed:", err)
 	}
 	defer tomeit.CloseDB(db)
 
 	r := chi.NewRouter()
-
 	r.Use(middleware.Logger)
 	r.Use(tomeit.Auth(db, firebaseApp))
 	r.Use(middleware.Recoverer)
-	//r.Use(cors.Handler(cors.Options{
-	//	AllowedOrigins:   strings.Split(allowOrigins, ","),
-	//	AllowedMethods:   []string{"GET", "POST", "PUT", "PATCH", "OPTIONS"},
-	//	AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-	//	ExposedHeaders:   []string{"Link"},
-	//	AllowCredentials: true,
-	//}))
-
 	tomeit.Route(r, db)
 
 	if err := http.ListenAndServe(":"+port, r); err != nil {
-		logger.Error.Fatalln("http.ListenAndServe:", err)
+		logger.Error.Fatalln("http.ListenAndServe failed:", err)
 	}
 	return nil
 }
