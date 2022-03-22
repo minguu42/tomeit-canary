@@ -38,17 +38,12 @@ type (
 	}
 )
 
-func newTaskResponse(t *Task, db dbInterface) *taskResponse {
-	actualPomodoroNum, err := db.getActualPomodoroNumByID(t.ID)
-	if err != nil {
-		actualPomodoroNum = 0
-	}
-
+func newTaskResponse(t *Task, _ dbInterface) *taskResponse {
+	// TODO: actualPomodoroNum の正しい値を取得する
 	dueOn := ""
 	if !t.DueOn.IsZero() {
 		dueOn = t.DueOn.Format(time.RFC3339)
 	}
-
 	completedOn := ""
 	if !t.CompletedOn.IsZero() {
 		completedOn = t.CompletedOn.Format(time.RFC3339)
@@ -58,7 +53,7 @@ func newTaskResponse(t *Task, db dbInterface) *taskResponse {
 		ID:                  t.ID,
 		Title:               t.Title,
 		ExpectedPomodoroNum: t.ExpectedPomodoroNum,
-		ActualPomodoroNum:   actualPomodoroNum,
+		ActualPomodoroNum:   0,
 		DueOn:               dueOn,
 		IsCompleted:         t.IsCompleted,
 		CompletedOn:         completedOn,
