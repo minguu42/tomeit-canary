@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// writeResponse はレスポンスのヘッダにステータスコード、ボディに JSON データを書き込む
+// writeResponse はレスポンスのヘッダにステータスコード、ボディに JSON データを書き込む。
 func writeResponse(w http.ResponseWriter, statusCode int, body interface{}) error {
 	w.WriteHeader(statusCode)
 	w.Header().Set("Content-Type", "application/json")
