@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"net/http"
 	"os"
 
@@ -11,16 +12,41 @@ import (
 )
 
 func main() {
+	if err := _main(); err != nil {
+		logger.Error.Fatalln("_main:", err)
+	}
+}
+
+func _main() error {
+	var (
+		port                  = "8080"
+		dsn                   = os.Getenv("DSN")
+		googleCredentialsJSON = os.Getenv("GOOGLE_CREDENTIALS_JSON")
+		allowOrigins          = os.Getenv("ALLOW_ORIGINS")
+	)
+	if envPort := os.Getenv("PORT"); envPort != "" {
+		port = envPort
+	}
+	if dsn == "" {
+		return errors.New("environment variable DSN does not exist")
+	}
+	if googleCredentialsJSON == "" {
+		return errors.New("environment variable GOOGLE_CREDENTIALS_JSON does not exist")
+	}
+	if allowOrigins == "" {
+		return errors.New("environment variable ALLOW_ORIGINS does not exist")
+	}
+
 	logger.InitLogger()
 
 	firebaseApp, err := tomeit.InitFirebaseApp()
 	if err != nil {
-		logger.Error.Fatalln("tomeit.InitFirebaseApp failed:", err)
+		logger.Error.Fatalln("tomeit.InitFirebaseApp:", err)
 	}
 
-	db, err := tomeit.OpenDB(os.Getenv("DSN"))
+	db, err := tomeit.OpenDB(dsn)
 	if err != nil {
-		logger.Error.Fatalln("tomeit.OpenDB failed:", err)
+		logger.Error.Fatalln("tomeit.OpenDB:", err)
 	}
 	defer tomeit.CloseDB(db)
 
@@ -29,9 +55,8 @@ func main() {
 	r.Use(middleware.Logger)
 	r.Use(tomeit.Auth(db, firebaseApp))
 	r.Use(middleware.Recoverer)
-	//r.Use(render.SetContentType(render.ContentTypeJSON))
 	//r.Use(cors.Handler(cors.Options{
-	//	AllowedOrigins:   strings.Split(os.Getenv("ALLOW_ORIGINS"), ","),
+	//	AllowedOrigins:   strings.Split(allowOrigins, ","),
 	//	AllowedMethods:   []string{"GET", "POST", "PUT", "PATCH", "OPTIONS"},
 	//	AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 	//	ExposedHeaders:   []string{"Link"},
@@ -40,12 +65,8 @@ func main() {
 
 	tomeit.Route(r, db)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		logger.Error.Fatalln("$PORT must be set")
-	}
-
 	if err := http.ListenAndServe(":"+port, r); err != nil {
-		logger.Error.Fatalln("http.ListenAndServe failed:", err)
+		logger.Error.Fatalln("http.ListenAndServe:", err)
 	}
+	return nil
 }
