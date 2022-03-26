@@ -33,14 +33,11 @@ func TestMain(m *testing.M) {
 	defer CloseDB(testDB)
 
 	r := chi.NewRouter()
-
 	r.Use(Auth(testDB, firebaseAppMock))
-
 	Route(r, testDB)
 
 	ts := httptest.NewServer(r)
 	defer ts.Close()
-
 	testUrl = ts.URL
 	testClient = &http.Client{}
 
@@ -80,7 +77,7 @@ func teardownTestDB() {
 func doTestRequest(tb testing.TB, method, path string, params *map[string]string, body io.Reader, respBodyType string) (*http.Response, interface{}) {
 	req, err := http.NewRequest(method, testUrl+path, body)
 	if err != nil {
-		tb.Fatal("Create request failed:", err)
+		tb.Fatal("http.NewRequest failed:", err)
 	}
 	if params != nil {
 		ps := req.URL.Query()
@@ -92,15 +89,13 @@ func doTestRequest(tb testing.TB, method, path string, params *map[string]string
 
 	resp, err := testClient.Do(req)
 	if err != nil {
-		tb.Fatal("Do request failed:", err)
+		tb.Fatal("testClient.Do failed:", err)
 	}
+	defer resp.Body.Close()
 
 	bytes, err := io.ReadAll(resp.Body)
 	if err != nil {
-		tb.Fatal("Read respBody failed:", err)
-	}
-	if err := resp.Body.Close(); err != nil {
-		tb.Fatal("Close respBody failed:", err)
+		tb.Fatal("io.ReadAll failed:", err)
 	}
 
 	switch respBodyType {
@@ -116,26 +111,8 @@ func doTestRequest(tb testing.TB, method, path string, params *map[string]string
 			return resp, nil
 		}
 		return resp, respBody
-	//case "pomodoroResponse":
-	//	var respBody pomodoroResponse
-	//	if err := json.Unmarshal(bytes, &respBody); err != nil {
-	//		return resp, nil
-	//	}
-	//	return resp, respBody
-	//case "pomodorosResponse":
-	//	var respBody pomodorosResponse
-	//	if err := json.Unmarshal(bytes, &respBody); err != nil {
-	//		return resp, nil
-	//	}
-	//	return resp, respBody
-	//case "restCountResponse":
-	//	var respBody restCountResponse
-	//	if err := json.Unmarshal(bytes, &respBody); err != nil {
-	//		return resp, nil
-	//	}
-	//	return resp, respBody
-	case "healthResponse":
-		var respBody healthResponse
+	case "healthzResponse":
+		var respBody healthzResponse
 		if err := json.Unmarshal(bytes, &respBody); err != nil {
 			return resp, nil
 		}
@@ -143,10 +120,4 @@ func doTestRequest(tb testing.TB, method, path string, params *map[string]string
 	}
 
 	return resp, nil
-}
-
-func checkStatusCode(tb testing.TB, response *http.Response, want int) {
-	if response.StatusCode != want {
-		tb.Fatalf("Status code should be %v, but %v", want, response.StatusCode)
-	}
 }
