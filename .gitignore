@@ -57,6 +57,3 @@ setEnvVars.js
 /vendor/
 /Godeps/
 .reg
-
-### Goland
-.idea/

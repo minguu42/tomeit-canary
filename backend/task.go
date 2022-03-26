@@ -21,20 +21,6 @@ type (
 		ExpectedPomodoroNum int    `json:"expectedPomodoroNum,omitempty"`
 		DueOn               string `json:"dueOn,omitempty"`
 	}
-	//getTasksRequest struct {
-	//	isCompleted string
-	//	completedOn string
-	//}
-	//putTaskRequest struct {
-	//	taskID              int
-	//	Title               string `json:"title"`
-	//	ExpectedPomodoroNum int    `json:"expectedPomodoroNum"`
-	//	DueOn               string `json:"dueOn"`
-	//	IsCompleted         bool   `json:"isCompleted"`
-	//}
-	//deleteTaskRequest struct {
-	//	taskID int
-	//}
 
 	taskResponse struct {
 		ID                  int    `json:"id"`
@@ -52,17 +38,12 @@ type (
 	}
 )
 
-func newTaskResponse(t *Task, db dbInterface) *taskResponse {
-	actualPomodoroNum, err := db.getActualPomodoroNumByID(t.ID)
-	if err != nil {
-		actualPomodoroNum = 0
-	}
-
+func newTaskResponse(t *Task, _ dbInterface) *taskResponse {
+	// TODO: actualPomodoroNum の正しい値を取得する
 	dueOn := ""
 	if !t.DueOn.IsZero() {
 		dueOn = t.DueOn.Format(time.RFC3339)
 	}
-
 	completedOn := ""
 	if !t.CompletedOn.IsZero() {
 		completedOn = t.CompletedOn.Format(time.RFC3339)
@@ -72,7 +53,7 @@ func newTaskResponse(t *Task, db dbInterface) *taskResponse {
 		ID:                  t.ID,
 		Title:               t.Title,
 		ExpectedPomodoroNum: t.ExpectedPomodoroNum,
-		ActualPomodoroNum:   actualPomodoroNum,
+		ActualPomodoroNum:   0,
 		DueOn:               dueOn,
 		IsCompleted:         t.IsCompleted,
 		CompletedOn:         completedOn,
@@ -81,11 +62,3 @@ func newTaskResponse(t *Task, db dbInterface) *taskResponse {
 	}
 	return &r
 }
-
-//func newTasksResponse(tasks []*Task, db dbInterface) *tasksResponse {
-//	var ts []*taskResponse
-//	for _, t := range tasks {
-//		ts = append(ts, newTaskResponse(t, db))
-//	}
-//	return &tasksResponse{Tasks: ts}
-//}
