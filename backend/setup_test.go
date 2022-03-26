@@ -6,9 +6,6 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
-	"os"
-	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/go-chi/chi/v5"
@@ -18,8 +15,6 @@ var (
 	testClient *http.Client
 	testUrl    string
 	testDB     *DB
-	//taskResponseCmpOpts     = cmpopts.IgnoreFields(taskResponse{}, "CompletedOn", "CreatedAt", "UpdatedAt")
-	//pomodoroResponseCmpOpts = cmpopts.IgnoreFields(pomodoroResponse{}, "Task.CompletedOn", "Task.CreatedAt", "Task.UpdatedAt", "CreatedAt")
 )
 
 func TestMain(m *testing.M) {
@@ -44,35 +39,34 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-func setupTestDB(tb testing.TB) {
-	file, err := os.ReadFile(filepath.Join(".", "build", "create_tables.sql"))
-	if err != nil {
-		tb.Fatal("os.ReadFile failed:", err)
-	}
-	queries := strings.Split(string(file), ";")
-
-	for _, query := range queries {
-		if query == "" {
-			break
-		}
-
-		testDB.db.Exec(query)
-	}
-
-	const createTestUser = `INSERT INTO users (digest_uid) VALUES ('a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a')`
-
-	testDB.db.Exec(createTestUser)
-}
-
-func teardownTestDB() {
-	const dropPomodorosTable = `DROP TABLE IF EXISTS pomodoros`
-	const dropTasksTable = `DROP TABLE IF EXISTS tasks`
-	const dropUsersTable = `DROP TABLE IF EXISTS users`
-
-	testDB.db.Exec(dropPomodorosTable)
-	testDB.db.Exec(dropTasksTable)
-	testDB.db.Exec(dropUsersTable)
-}
+//func setupTestDB(tb testing.TB) {
+//	file, err := os.ReadFile(filepath.Join(".", "build", "create_tables.sql"))
+//	if err != nil {
+//		tb.Fatal("os.ReadFile failed:", err)
+//	}
+//	queries := strings.Split(string(file), ";")
+//
+//	for _, query := range queries {
+//		if query == "" {
+//			break
+//		}
+//		testDB.db.Exec(query)
+//	}
+//
+//	const createTestUser = `INSERT INTO users (digest_uid) VALUES ('a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a')`
+//
+//	testDB.db.Exec(createTestUser)
+//}
+//
+//func teardownTestDB() {
+//	const dropPomodorosTable = `DROP TABLE IF EXISTS pomodoros`
+//	const dropTasksTable = `DROP TABLE IF EXISTS tasks`
+//	const dropUsersTable = `DROP TABLE IF EXISTS users`
+//
+//	testDB.db.Exec(dropPomodorosTable)
+//	testDB.db.Exec(dropTasksTable)
+//	testDB.db.Exec(dropUsersTable)
+//}
 
 func doTestRequest(tb testing.TB, method, path string, params *map[string]string, body io.Reader, respBodyType string) (*http.Response, interface{}) {
 	req, err := http.NewRequest(method, testUrl+path, body)
@@ -99,18 +93,6 @@ func doTestRequest(tb testing.TB, method, path string, params *map[string]string
 	}
 
 	switch respBodyType {
-	case "taskResponse":
-		var respBody taskResponse
-		if err := json.Unmarshal(bytes, &respBody); err != nil {
-			return resp, nil
-		}
-		return resp, respBody
-	case "tasksResponse":
-		var respBody tasksResponse
-		if err := json.Unmarshal(bytes, &respBody); err != nil {
-			return resp, nil
-		}
-		return resp, respBody
 	case "healthzResponse":
 		var respBody healthzResponse
 		if err := json.Unmarshal(bytes, &respBody); err != nil {

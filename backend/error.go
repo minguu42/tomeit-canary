@@ -37,15 +37,6 @@ func newErrAuthentication(err error) *ErrResponse {
 //	}
 //}
 
-func newErrRender(err error) *ErrResponse {
-	return &ErrResponse{
-		Err:        err,
-		StatusCode: http.StatusUnprocessableEntity,
-		StatusText: "レスポンスの生成に失敗しました。",
-		ErrorText:  err.Error(),
-	}
-}
-
 func newErrInternalServer(err error) *ErrResponse {
 	return &ErrResponse{
 		Err:        err,
