@@ -1,7 +1,7 @@
 openapi: 3.0.0
 
 info:
-  title: tomeit API
+  title: Tomeit API
   version: 0.1.0
 
 servers:
@@ -26,7 +26,7 @@ paths:
                 title:
                   type: string
                   example: タスク1
-                expectedPomodoroNum:
+                estimatedPomoNum:
                   type: integer
                   default: 0
                 dueOn:
@@ -46,19 +46,19 @@ paths:
               schema:
                 $ref: "#/components/schemas/Task"
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          $ref: "#/components/responses/ErrBadRequest"
         "401":
-          $ref: "#/components/responses/AuthenticationError"
+          $ref: "#/components/responses/ErrUnauthorized"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
     get:
       tags:
         - tasks
       summary: タスク一覧を取得する
-      description: 作成日時の昇順で最大30件まで取得する.
+      description: 作成日時の昇順で最大30件まで取得する。
       parameters:
         - name: isCompleted
-          description: タスクが完了したかどうかで絞り込みを行う。
+          description: タスクが完了したかで絞り込む。
           in: "query"
           schema:
             type: string
@@ -77,57 +77,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/Tasks"
         "401":
-          $ref: "#/components/responses/AuthenticationError"
+          $ref: "#/components/responses/ErrUnauthorized"
       security:
-        - beaerAuth: []
+        - beaerAuth: [ ]
   /tasks/{taskID}:
-    put:
-      summary: 特定のタスクを更新する
-      tags:
-        - tasks
-      parameters:
-        - $ref: "#/components/parameters/taskID"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - title
-                - expectedPomodoroNum
-                - dueOn
-                - isCompleted
-              properties:
-                title:
-                  type: string
-                  example: タスク1
-                expectedPomodoroNum:
-                  type: integer
-                  example: 2
-                dueOn:
-                  type: string
-                  format: date-time
-                isCompleted:
-                  type: boolean
-                  example: false
-      responses:
-        "200":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Task"
-        "400":
-          $ref: "#/components/responses/BadRequestError"
-        "401":
-          $ref: "#/components/responses/AuthenticationError"
-        "403":
-          $ref: "#/components/responses/AuthorizationError"
-        "404":
-          $ref: "#/components/responses/NotFoundError"
-      security:
-        - beaerAuth: []
     delete:
       summary: 特定のタスクを削除する
       tags:
@@ -138,112 +91,14 @@ paths:
         "204":
           description: 成功
         "401":
-          $ref: "#/components/responses/AuthenticationError"
+          $ref: "#/components/responses/ErrUnauthorized"
         "403":
-          $ref: "#/components/responses/AuthorizationError"
+          $ref: "#/components/responses/ErrForbidden"
         "404":
-          $ref: "#/components/responses/NotFoundError"
+          $ref: "#/components/responses/ErrNotFound"
       security:
-        - beaerAuth: []
-  /pomodoros:
-    post:
-      summary: 新しいポモドーロ記録を作成する
-      tags:
-        - pomodoros
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - taskID
-              properties:
-                taskID:
-                  type: integer
-                  example: 1
-      responses:
-        "201":
-          description: 成功
-          headers:
-            Location:
-              schema:
-                type: string
-                example: https://api.tomeit.com/v0/pomodoros/1
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Pomodoro"
-        "400":
-          $ref: "#/components/responses/BadRequestError"
-        "401":
-          $ref: "#/components/responses/AuthenticationError"
-      security:
-        - beaerAuth: []
-    get:
-      summary: ポモドーロ記録一覧を取得する
-      tags:
-        - pomodoros
-      description: 作成日時の昇順で最大30件まで取得する.
-      parameters:
-        - name: createdOn
-          in: "query"
-          description: 作成日付で絞り込む
-          schema:
-            type: string
-            format: date-time
-      responses:
-        "200":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Pomodoros"
-        "400":
-          $ref: "#/components/responses/BadRequestError"
-        "401":
-          $ref: "#/components/responses/AuthenticationError"
-      security:
-        - beaerAuth: []
-  /pomodoros/{pomodoroID}:
-    delete:
-      summary: 特定のポモドーロ記録を削除する
-      tags:
-        - pomodoros
-      parameters:
-        - $ref: "#/components/parameters/pomodoroID"
-      responses:
-        "204":
-          description: 成功
-        "401":
-          $ref: "#/components/responses/AuthenticationError"
-        "403":
-          $ref: "#/components/responses/AuthorizationError"
-        "404":
-          $ref: "#/components/responses/NotFoundError"
-      security:
-        - beaerAuth: []
-  /pomodoros/rest-count:
-    get:
-      summary: 次の長い休憩までのカウントを取得する
-      tags:
-        - pomodoros
-      responses:
-        "200":
-          description: 成功
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  restCount:
-                    type: integer
-                    example: 3
-        "401":
-          $ref: "#/components/responses/AuthenticationError"
-      security:
-        - beaerAuth: []
-  /helth:
+        - beaerAuth: [ ]
+  /helthz:
     get:
       tags:
         - monitoring
@@ -267,10 +122,9 @@ components:
       required:
         - id
         - title
-        - expectedPomodoroNum
-        - actualPomodoroNum
+        - estimatedPomoNum
+        - completedPomoNum
         - dueOn
-        - isCompleted
         - completedOn
         - createdAt
         - updatedAt
@@ -284,14 +138,14 @@ components:
           description: タイトル
           type: string
           example: タスク1
-        expectedPomodoroNum:
-          description: 予測ポモドーロ数
+        estimatedPomoNum:
+          description: 推定されるポモドーロ数
           type: integer
           minimum: 0
           maximum: 6
           default: 4
-        actualPomodoroNum:
-          description: 完了したポモドーロ数
+        completedPomoNum:
+          description: 実際に完了したポモドーロ数
           type: integer
           minimum: 0
           default: 0
@@ -302,16 +156,14 @@ components:
             存在しない場合は ""（空の文字列）を返す。
           type: string
           format: date-time
-        isCompleted:
-          description: 完了したかどうか
-          type: boolean
         completedOn:
           description: |
             完了した日付
 
-            タスクが完了済みでない場合は ""（空の文字列）を返す。
+            完了していない場合は ""（空の文字列）を返す。
           type: string
           format: date-time
+          example: ""
         createdAt:
           description: 作成日時
           type: string
@@ -359,7 +211,7 @@ components:
           items:
             $ref: "#/components/schemas/Pomodoro"
   responses:
-    BadRequestError:
+    ErrBadRequest:
       description: リクエストが間違っている
       content:
         application/json:
@@ -372,13 +224,13 @@ components:
               status:
                 description: ユーザ向けの大まかなエラーの説明
                 type: string
-                example: リクエストに何らかの間違いがあります。
+                example: リクエストに何らかの間違いがあります。内容を確かめてからもう一度お試しください。
               error:
-                description: 開発者向けの具体的なエラーの説明
+                description: 開発者向けの詳細なエラーの説明
                 type: string
                 example: some error messages
-    AuthenticationError:
-      description: 認証が必要である
+    ErrUnauthorized:
+      description: ユーザの認証に失敗した
       content:
         application/json:
           schema:
@@ -390,12 +242,12 @@ components:
               status:
                 description: ユーザ向けの大まかなエラーの説明
                 type: string
-                example: ログインする必要があります。
+                example: ユーザの認証に失敗しました。ログイン後にもう一度お試しください。
               error:
-                description: 開発者向けの具体的なエラーの説明
+                description: 開発者向けの詳細なエラーの説明
                 type: string
                 example: some error messages
-    AuthorizationError:
+    ErrForbidden:
       description: リソースへのアクセス権限がない
       content:
         application/json:
@@ -410,10 +262,10 @@ components:
                 type: string
                 example: 指定されたリソースに対してアクセス権限がありません。
               error:
-                description: 開発者向けの具体的なエラーの説明
+                description: 開発者向けの詳細なエラーの説明
                 type: string
                 example: some error messages
-    NotFoundError:
+    ErrNotFound:
       description: リソースが存在しない
       content:
         application/json:
@@ -428,11 +280,11 @@ components:
                 type: string
                 example: 指定されたリソースが存在しません。
               error:
-                description: 開発者向けの具体的なエラーの説明
+                description: 開発者向けの詳細なエラーの説明
                 type: string
                 example: some error messages
-    InternalServerError:
-      description: サーバ側で何らかのエラーが発生した
+    ErrInternalServerError:
+      description: サーバで何らかのエラーが発生した
       content:
         application/json:
           schema:
@@ -444,9 +296,9 @@ components:
               status:
                 description: ユーザ向けの大まかなエラーの説明
                 type: string
-                example: サーバ側で何らかのエラーが発生しました。
+                example: サーバで何らかのエラーが発生しました。時間を置いてからもう一度お試しください。
               error:
-                description: 開発者向けの具体的なエラーの説明
+                description: 開発者向けの詳細なエラーの説明
                 type: string
                 example: some error messages
   parameters:
@@ -475,7 +327,5 @@ components:
 tags:
   - name: tasks
     description: タスク関連 API
-  - name: pomodoros
-    description: ポモドーロ関連 API
   - name: monitoring
     description: モニタリング関連 API
