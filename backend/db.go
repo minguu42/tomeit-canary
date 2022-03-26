@@ -13,8 +13,6 @@ import (
 
 type dbInterface interface {
 	userDBInterface
-	taskDBInterface
-	//pomodoroDBInterface
 }
 
 type DB struct {

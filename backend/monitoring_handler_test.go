@@ -1,28 +1,29 @@
 package tomeit
 
 import (
+	"net/http"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 )
 
-func TestGetHealth(t *testing.T) {
-	setupTestDB(t)
-	t.Cleanup(teardownTestDB)
-	t.Run("ヘルスチェックを行う", func(t *testing.T) {
-		resp, body := doTestRequest(t, "GET", "/v0/health", nil, nil, "healthResponse")
+func TestGetHealthz(t *testing.T) {
+	t.Run("サーバが動いていることを確かめる", func(t *testing.T) {
+		resp, body := doTestRequest(t, "GET", "/v0/healthz", nil, nil, "healthzResponse")
 
-		checkStatusCode(t, resp, 200)
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
+		}
 
-		got, ok := body.(healthResponse)
+		got, ok := body.(healthzResponse)
 		if !ok {
 			t.Fatal("Type Assertion failed.")
 		}
-		want := healthResponse{
+		want := healthzResponse{
 			Status: "OK",
 		}
 		if diff := cmp.Diff(got, want, nil); diff != "" {
-			t.Errorf("getHealth response mismatch (-got +want):\n%s", diff)
+			t.Errorf("getHealthz response mismatch (-got +want):\n%s", diff)
 		}
 	})
 }

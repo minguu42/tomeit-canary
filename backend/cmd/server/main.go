@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"os"
 
@@ -41,12 +42,12 @@ func _main() error {
 
 	firebaseApp, err := tomeit.InitFirebaseApp()
 	if err != nil {
-		logger.Error.Fatalln("tomeit.InitFirebaseApp failed:", err)
+		return fmt.Errorf("tomeit.InitFirebaseApp failed: %w", err)
 	}
 
 	db, err := tomeit.OpenDB(dsn)
 	if err != nil {
-		logger.Error.Fatalln("tomeit.OpenDB failed:", err)
+		return fmt.Errorf("tomeit.OpenDB failed: %w", err)
 	}
 	defer tomeit.CloseDB(db)
 
@@ -57,7 +58,7 @@ func _main() error {
 	tomeit.Route(r, db)
 
 	if err := http.ListenAndServe(":"+port, r); err != nil {
-		logger.Error.Fatalln("http.ListenAndServe failed:", err)
+		return fmt.Errorf("http.ListenAndServe failed: %w", err)
 	}
 	return nil
 }
