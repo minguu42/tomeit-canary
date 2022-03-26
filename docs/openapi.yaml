@@ -98,7 +98,7 @@ paths:
           $ref: "#/components/responses/ErrNotFound"
       security:
         - beaerAuth: [ ]
-  /helthz:
+  /healthz:
     get:
       tags:
         - monitoring
