@@ -16,7 +16,7 @@ type userKey struct{}
 func Auth(db dbInterface, firebaseApp firebaseAppInterface) func(handler http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if r.URL.Path == "/v0/health" {
+			if r.URL.Path == "/v0/healthz" {
 				next.ServeHTTP(w, r)
 				return
 			}
