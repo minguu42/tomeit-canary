@@ -10,14 +10,14 @@ type errResponse struct {
 	ErrorText  string `json:"error,omitempty"`
 }
 
-//func newErrBadRequest(err error) *errResponse {
-//	return &errResponse{
-//		Err:        err,
-//		StatusCode: http.StatusBadRequest,
-//		StatusText: "リクエストに何らかの間違いがあります。内容を確かめてからもう一度お試しください。",
-//		ErrorText:  err.Error(),
-//	}
-//}
+func newErrBadRequest(err error) *errResponse {
+	return &errResponse{
+		Err:        err,
+		StatusCode: http.StatusBadRequest,
+		StatusText: "リクエストに何らかの間違いがあります。内容を確かめてからもう一度お試しください。",
+		ErrorText:  err.Error(),
+	}
+}
 
 func newErrUnauthorized(err error) *errResponse {
 	return &errResponse{
