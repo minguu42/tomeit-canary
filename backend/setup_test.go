@@ -14,7 +14,7 @@ import (
 var (
 	testClient *http.Client
 	testUrl    string
-	testDB     *DB
+	testDB     *db
 )
 
 func TestMain(m *testing.M) {
@@ -57,7 +57,7 @@ func TestMain(m *testing.M) {
 //
 //	testDB.db.Exec(createTestUser)
 //}
-//
+
 //func teardownTestDB() {
 //	const dropPomodorosTable = `DROP TABLE IF EXISTS pomodoros`
 //	const dropTasksTable = `DROP TABLE IF EXISTS tasks`
