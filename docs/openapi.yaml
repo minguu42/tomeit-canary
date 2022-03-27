@@ -32,7 +32,6 @@ paths:
                 dueOn:
                   type: string
                   format: date-time
-                  default: ""
       responses:
         "201":
           description: 成功
@@ -260,7 +259,7 @@ components:
               status:
                 description: ユーザ向けの大まかなエラーの説明
                 type: string
-                example: 指定されたリソースに対してアクセス権限がありません。
+                example: 指定したリソースへのアクセスが許可されていません。
               error:
                 description: 開発者向けの詳細なエラーの説明
                 type: string
@@ -278,7 +277,7 @@ components:
               status:
                 description: ユーザ向けの大まかなエラーの説明
                 type: string
-                example: 指定されたリソースが存在しません。
+                example: 指定したリソースが存在しません。
               error:
                 description: 開発者向けの詳細なエラーの説明
                 type: string
