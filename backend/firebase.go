@@ -10,7 +10,7 @@ import (
 	"google.golang.org/api/option"
 )
 
-type firebaseAppInterface interface {
+type authenticator interface {
 	VerifyIDToken(ctx context.Context, idToken string) (*auth.Token, error)
 }
 
