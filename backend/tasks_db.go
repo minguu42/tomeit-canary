@@ -8,10 +8,10 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
-func (db *db) createTask(title string, estimatedPomoNum int, dueOn time.Time) (*task, error) {
+func (db *db) createTask(user *User, title string, estimatedPomoNum int, dueOn *time.Time) (*task, error) {
 	createdAt := time.Now()
 
-	sql, _, err := db.dialect.Insert("tasks").Cols("title", "estimated_pomo_num", "due_on", "created_at", "updated_at").Vals(goqu.Vals{title, estimatedPomoNum, dueOn, createdAt, createdAt}).ToSQL()
+	sql, _, err := db.dialect.Insert("tasks").Cols("title", "user_id", "estimated_pomo_num", "due_on", "created_at", "updated_at").Vals(goqu.Vals{title, user.ID, estimatedPomoNum, dueOn, createdAt, createdAt}).ToSQL()
 	if err != nil {
 		return nil, fmt.Errorf("ds.ToSQL failed: %w", err)
 	}
@@ -28,10 +28,11 @@ func (db *db) createTask(title string, estimatedPomoNum int, dueOn time.Time) (*
 
 	task := task{
 		id:               int(id),
+		user:             user,
 		title:            title,
 		estimatedPomoNum: estimatedPomoNum,
 		dueOn:            dueOn,
-		completedOn:      time.Time{},
+		completedOn:      nil,
 		createdAt:        createdAt,
 		updatedAt:        createdAt,
 	}
