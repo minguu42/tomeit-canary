@@ -30,6 +30,10 @@ type (
 		CreatedAt        time.Time `json:"createdAt"`
 		UpdatedAt        time.Time `json:"updatedAt"`
 	}
+
+	tasksResponse struct {
+		Tasks []*taskResponse `json:"tasks"`
+	}
 )
 
 // newTaskResponse は task で taskResponse を初期化する。
