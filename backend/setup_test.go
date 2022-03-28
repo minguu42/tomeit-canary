@@ -6,9 +6,14 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 
+	"github.com/doug-martin/goqu/v9"
 	"github.com/go-chi/chi/v5"
+	"github.com/minguu42/tomeit/logger"
 )
 
 var (
@@ -18,6 +23,7 @@ var (
 )
 
 func TestMain(m *testing.M) {
+	logger.InitLogger()
 	firebaseAppMock := &firebaseAppMock{}
 
 	var err error
@@ -39,34 +45,34 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-//func setupTestDB(tb testing.TB) {
-//	file, err := os.ReadFile(filepath.Join(".", "build", "create_tables.sql"))
-//	if err != nil {
-//		tb.Fatal("os.ReadFile failed:", err)
-//	}
-//	queries := strings.Split(string(file), ";")
-//
-//	for _, query := range queries {
-//		if query == "" {
-//			break
-//		}
-//		testDB.db.Exec(query)
-//	}
-//
-//	const createTestUser = `INSERT INTO users (digest_uid) VALUES ('a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a')`
-//
-//	testDB.db.Exec(createTestUser)
-//}
+func setupTestDB(tb testing.TB) {
+	file, err := os.ReadFile(filepath.Join(".", "build", "create_tables.sql"))
+	if err != nil {
+		tb.Fatal("os.ReadFile failed:", err)
+	}
+	queries := strings.Split(string(file), ";")
 
-//func teardownTestDB() {
-//	const dropPomodorosTable = `DROP TABLE IF EXISTS pomodoros`
-//	const dropTasksTable = `DROP TABLE IF EXISTS tasks`
-//	const dropUsersTable = `DROP TABLE IF EXISTS users`
-//
-//	testDB.db.Exec(dropPomodorosTable)
-//	testDB.db.Exec(dropTasksTable)
-//	testDB.db.Exec(dropUsersTable)
-//}
+	for _, query := range queries {
+		if query == "" {
+			break
+		}
+		_, _ = testDB.db.Exec(query)
+	}
+
+	sql, _, _ := goqu.Insert("users").Cols("digest_uid").Vals(goqu.Vals{"a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a"}).ToSQL()
+
+	_, _ = testDB.db.Exec(sql)
+}
+
+func teardownTestDB() {
+	const dropPomodorosTable = `DROP TABLE IF EXISTS pomodoros`
+	const dropTasksTable = `DROP TABLE IF EXISTS tasks`
+	const dropUsersTable = `DROP TABLE IF EXISTS users`
+
+	_, _ = testDB.db.Exec(dropPomodorosTable)
+	_, _ = testDB.db.Exec(dropTasksTable)
+	_, _ = testDB.db.Exec(dropUsersTable)
+}
 
 func doTestRequest(tb testing.TB, method, path string, params *map[string]string, body io.Reader, respBodyType string) (*http.Response, interface{}) {
 	req, err := http.NewRequest(method, testUrl+path, body)
@@ -80,6 +86,7 @@ func doTestRequest(tb testing.TB, method, path string, params *map[string]string
 		}
 		req.URL.RawQuery = ps.Encode()
 	}
+	req.Header.Set("Authorization", "Bearer someJWT")
 
 	resp, err := testClient.Do(req)
 	if err != nil {
@@ -93,6 +100,12 @@ func doTestRequest(tb testing.TB, method, path string, params *map[string]string
 	}
 
 	switch respBodyType {
+	case "taskResponse":
+		var respBody taskResponse
+		if err := json.Unmarshal(bytes, &respBody); err != nil {
+			return resp, nil
+		}
+		return resp, respBody
 	case "healthzResponse":
 		var respBody healthzResponse
 		if err := json.Unmarshal(bytes, &respBody); err != nil {
