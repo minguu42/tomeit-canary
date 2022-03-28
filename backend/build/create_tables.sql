@@ -15,8 +15,8 @@ CREATE TABLE IF NOT EXISTS tasks (
     user_id                  INT          NOT NULL,
     title                    VARCHAR(120) NOT NULL,
     estimated_pomo_num       INT          DEFAULT 0 NOT NULL CHECK (0 <= estimated_pomo_num AND estimated_pomo_num <= 6),
-    due_on                   TIMESTAMP    NOT NULL,
-    completed_on             TIMESTAMP    NOT NULL,
+    due_on                   TIMESTAMP,
+    completed_on             TIMESTAMP,
     created_at               TIMESTAMP    DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at               TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL
 );

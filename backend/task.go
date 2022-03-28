@@ -8,8 +8,8 @@ type (
 		user             *User
 		title            string
 		estimatedPomoNum int
-		dueOn            time.Time
-		completedOn      time.Time
+		dueOn            *time.Time
+		completedOn      *time.Time
 		createdAt        time.Time
 		updatedAt        time.Time
 	}
@@ -35,13 +35,13 @@ type (
 // newTaskResponse は task で taskResponse を初期化する。
 // TODO: CompletedPomoNum が適切な値になるように実装する
 func newTaskResponse(t *task) *taskResponse {
-	dueOn := t.dueOn.Format(time.RFC3339)
-	if t.dueOn.IsZero() {
-		dueOn = ""
+	dueOn := ""
+	if t.dueOn != nil {
+		dueOn = t.dueOn.Format(time.RFC3339)
 	}
-	completedOn := t.dueOn.Format(time.RFC3339)
-	if t.completedOn.IsZero() {
-		completedOn = ""
+	completedOn := ""
+	if t.completedOn != nil {
+		completedOn = t.completedOn.Format(time.RFC3339)
 	}
 
 	return &taskResponse{
