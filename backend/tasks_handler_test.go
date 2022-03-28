@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
-
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
