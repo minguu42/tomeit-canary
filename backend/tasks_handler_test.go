@@ -6,6 +6,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/doug-martin/goqu/v9"
+
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
@@ -77,6 +79,52 @@ func TestPostTasks(t *testing.T) {
 
 		if resp.StatusCode != http.StatusBadRequest {
 			t.Errorf("Status code should be %v, but %v", http.StatusBadRequest, resp.StatusCode)
+		}
+	})
+}
+
+func setupTestGetTasks() {
+	sql1, _, _ := goqu.Insert("tasks").Cols("user_id", "title", "estimated_pomo_num", "due_on", "completed_on").Vals(goqu.Vals{1, "タスク1", 0, nil, nil}).ToSQL()
+	sql2, _, _ := goqu.Insert("tasks").Cols("user_id", "title", "estimated_pomo_num", "due_on", "completed_on").Vals(goqu.Vals{1, "タスク2", 4, "2022-01-02T15:04:05Z", nil}).ToSQL()
+
+	_, _ = testDB.db.Exec(sql1)
+	_, _ = testDB.db.Exec(sql2)
+}
+
+func TestGetTasks(t *testing.T) {
+	setupTestDB(t)
+	t.Cleanup(teardownTestDB)
+	t.Run("タスク一覧を取得する", func(t *testing.T) {
+		resp, body := doTestRequest(t, "GET", "/v0/tasks", nil, nil, "tasksResponse")
+
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
+		}
+
+		got, ok := body.(tasksResponse)
+		if !ok {
+			t.Fatal("Type Assertion failed.")
+		}
+		want := tasksResponse{Tasks: []*taskResponse{
+			{
+				ID:               1,
+				Title:            "タスク1",
+				EstimatedPomoNum: 0,
+				CompletedPomoNum: 0,
+				DueOn:            "",
+				CompletedOn:      "",
+			},
+			{
+				ID:               2,
+				Title:            "タスク2",
+				EstimatedPomoNum: 4,
+				CompletedPomoNum: 0,
+				DueOn:            "2022-01-02T15:04:05Z",
+				CompletedOn:      "",
+			},
+		}}
+		if diff := cmp.Diff(got, want, opt); diff != "" {
+			t.Errorf("getTasks response mismatch (-got +want):\n%s", diff)
 		}
 	})
 }
