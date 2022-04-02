@@ -11,43 +11,37 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
-type dbInterface interface {
-	userDBInterface
-}
-
-type DB struct {
+type db struct {
 	db      *sql.DB
 	dialect *goqu.DialectWrapper
 }
 
-func OpenDB(dsn string) (*DB, error) {
-	db, err := sql.Open("mysql", dsn)
+func OpenDB(dsn string) (*db, error) {
+	sqlDB, err := sql.Open("mysql", dsn)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("sql.Open failed: %w", err)
 	}
 
 	isDBReady := false
 	failureTimes := 0
 	for !isDBReady {
-		err := db.Ping()
+		err := sqlDB.Ping()
 		switch {
 		case err == nil:
 			isDBReady = true
 		case failureTimes <= 6:
-			logger.Info.Println("db.Ping failed. try again in 5 seconds.")
+			logger.Info.Println("sqlDB.Ping failed. try again in 5 seconds.")
 			time.Sleep(time.Second * 5)
 			failureTimes += 1
 		default:
-			return nil, fmt.Errorf("db.Ping failed: %w", err)
+			return nil, fmt.Errorf("sqlDB.Ping failed: %w", err)
 		}
 	}
 
 	dialect := goqu.Dialect("mysql")
-	return &DB{db: db, dialect: &dialect}, nil
+	return &db{db: sqlDB, dialect: &dialect}, nil
 }
 
-func CloseDB(db *DB) {
-	if err := db.db.Close(); err != nil {
-		logger.Error.Fatalln("db.Close failed:", err)
-	}
+func CloseDB(db *db) error {
+	return db.db.Close()
 }

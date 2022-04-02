@@ -14,9 +14,8 @@ CREATE TABLE IF NOT EXISTS tasks (
     id                       INT          PRIMARY KEY AUTO_INCREMENT,
     user_id                  INT          NOT NULL,
     title                    VARCHAR(120) NOT NULL,
-    expected_pomodoro_num    INT          DEFAULT 0 NOT NULL CHECK (0 <= expected_pomodoro_num AND expected_pomodoro_num <= 6),
+    estimated_pomo_num       INT          DEFAULT 0 NOT NULL CHECK (0 <= estimated_pomo_num AND estimated_pomo_num <= 6),
     due_on                   TIMESTAMP,
-    is_completed             BOOLEAN      DEFAULT FALSE NOT NULL,
     completed_on             TIMESTAMP,
     created_at               TIMESTAMP    DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at               TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL

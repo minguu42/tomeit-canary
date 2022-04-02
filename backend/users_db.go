@@ -8,12 +8,7 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
-type userDBInterface interface {
-	createUser(digestUID string) (*User, error)
-	getUserByDigestUID(digestUID string) (*User, error)
-}
-
-func (db *DB) createUser(digestUID string) (*User, error) {
+func (db *db) createUser(digestUID string) (*User, error) {
 	createdAt := time.Now()
 
 	sql, _, err := db.dialect.Insert("users").Cols("digest_uid", "created_at", "updated_at").Vals(goqu.Vals{digestUID, createdAt, createdAt}).ToSQL()
@@ -41,7 +36,7 @@ func (db *DB) createUser(digestUID string) (*User, error) {
 	return &user, nil
 }
 
-func (db *DB) getUserByDigestUID(digestUID string) (*User, error) {
+func (db *db) getUserByDigestUID(digestUID string) (*User, error) {
 	var user User
 
 	sql, _, err := db.dialect.From("users").Select("id", "digest_uid", "rest_count", "created_at", "updated_at").Where(goqu.Ex{"digest_uid": digestUID}).ToSQL()

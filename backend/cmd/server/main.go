@@ -12,6 +12,10 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
+func init() {
+	logger.InitLogger(true, true, true)
+}
+
 func main() {
 	if err := _main(); err != nil {
 		logger.Error.Fatalln("_main failed:", err)
@@ -21,12 +25,15 @@ func main() {
 func _main() error {
 	var (
 		port                  = "8080"
+		allowOrigins          = "http://localhost:3000"
 		dsn                   = os.Getenv("DSN")
 		googleCredentialsJSON = os.Getenv("GOOGLE_CREDENTIALS_JSON")
-		allowOrigins          = os.Getenv("ALLOW_ORIGINS")
 	)
 	if envPort := os.Getenv("PORT"); envPort != "" {
 		port = envPort
+	}
+	if envAllowOrigins := os.Getenv("ALLOW_ORIGINS"); envAllowOrigins != "" {
+		allowOrigins = envAllowOrigins
 	}
 	if dsn == "" {
 		return errors.New("environment variable DSN does not exist")
@@ -34,11 +41,6 @@ func _main() error {
 	if googleCredentialsJSON == "" {
 		return errors.New("environment variable GOOGLE_CREDENTIALS_JSON does not exist")
 	}
-	if allowOrigins == "" {
-		return errors.New("environment variable ALLOW_ORIGINS does not exist")
-	}
-
-	logger.InitLogger()
 
 	firebaseApp, err := tomeit.InitFirebaseApp()
 	if err != nil {
@@ -55,6 +57,7 @@ func _main() error {
 	r.Use(middleware.Logger)
 	r.Use(tomeit.Auth(db, firebaseApp))
 	r.Use(middleware.Recoverer)
+	logger.Debug.Println("TODO: CORS", allowOrigins)
 	tomeit.Route(r, db)
 
 	if err := http.ListenAndServe(":"+port, r); err != nil {
