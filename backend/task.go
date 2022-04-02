@@ -19,6 +19,10 @@ type (
 		EstimatedPomoNum int    `json:"estimatedPomoNum"`
 		DueOn            string `json:"dueOn"`
 	}
+	getTasksRequest struct {
+		isCompleted bool
+		completedOn time.Time
+	}
 
 	taskResponse struct {
 		ID               int       `json:"id"`
