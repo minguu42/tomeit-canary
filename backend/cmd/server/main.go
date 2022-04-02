@@ -13,7 +13,7 @@ import (
 )
 
 func init() {
-	logger.InitLogger()
+	logger.InitLogger(true, true, true)
 }
 
 func main() {

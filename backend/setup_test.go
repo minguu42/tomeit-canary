@@ -23,7 +23,7 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	logger.InitLogger()
+	logger.InitLogger(false, false, false)
 	firebaseAppMock := &firebaseAppMock{}
 
 	var err error
