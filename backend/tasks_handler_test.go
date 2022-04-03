@@ -142,7 +142,7 @@ func TestGetTasks(t *testing.T) {
 	setupTestDB(t)
 	setupTestGetTasks(t)
 	t.Cleanup(teardownTestDB)
-	t.Run("タスク一覧を取得する", func(t *testing.T) {
+	t.Run("タスクの一覧を取得する", func(t *testing.T) {
 		resp, err := doTestRequest(method, path, nil, nil, &got)
 		if err != nil {
 			t.Fatalf("doTestRequest failed: %v", err)
@@ -222,7 +222,7 @@ func TestGetTasks(t *testing.T) {
 			t.Errorf("getTasks response mismatch (-got +want):\n%s", diff)
 		}
 	})
-	t.Run("完了済みタスク一覧を取得する", func(t *testing.T) {
+	t.Run("完了済みタスクの一覧を取得する", func(t *testing.T) {
 		params := map[string]string{
 			"isCompleted": "true",
 		}
@@ -279,6 +279,91 @@ func TestGetTasks(t *testing.T) {
 		}}
 		if diff := cmp.Diff(got, want, opt); diff != "" {
 			t.Errorf("getTasks response mismatch (-got +want):\n%s", diff)
+		}
+	})
+	t.Run("特定の日に完了したタスクの一覧を取得する", func(t *testing.T) {
+		params := map[string]string{
+			"completedOn": "2022-01-02T00:00:00Z",
+		}
+		resp, err := doTestRequest(method, path, params, nil, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
+		}
+
+		want := tasksResponse{Tasks: []*taskResponse{
+			{
+				ID:               4,
+				Title:            "タスク4",
+				EstimatedPomoNum: 0,
+				CompletedPomoNum: 0,
+				DueOn:            "",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+				CreatedAt:        time.Time{},
+				UpdatedAt:        time.Time{},
+			},
+			{
+				ID:               6,
+				Title:            "タスク6",
+				EstimatedPomoNum: 4,
+				CompletedPomoNum: 0,
+				DueOn:            "",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+				CreatedAt:        time.Time{},
+				UpdatedAt:        time.Time{},
+			},
+			{
+				ID:               7,
+				Title:            "タスク7",
+				EstimatedPomoNum: 0,
+				CompletedPomoNum: 0,
+				DueOn:            "2022-01-01T15:04:05Z",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+				CreatedAt:        time.Time{},
+				UpdatedAt:        time.Time{},
+			},
+			{
+				ID:               8,
+				Title:            "タスク8",
+				EstimatedPomoNum: 4,
+				CompletedPomoNum: 0,
+				DueOn:            "2022-01-01T15:04:05Z",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+				CreatedAt:        time.Time{},
+				UpdatedAt:        time.Time{},
+			},
+		}}
+		if diff := cmp.Diff(got, want, opt); diff != "" {
+			t.Errorf("getTasks response mismatch (-got +want):\n%s", diff)
+		}
+	})
+	t.Run("isCompleted の値が間違っている", func(t *testing.T) {
+		params := map[string]string{
+			"isCompleted": "Wrong",
+		}
+		resp, err := doTestRequest(method, path, params, nil, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusBadRequest {
+			t.Errorf("Status code should be %v, but %v", http.StatusBadRequest, resp.StatusCode)
+		}
+	})
+	t.Run("completedOn の値が間違っている", func(t *testing.T) {
+		params := map[string]string{
+			"completedOn": "2022-01-02",
+		}
+		resp, err := doTestRequest(method, path, params, nil, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusBadRequest {
+			t.Errorf("Status code should be %v, but %v", http.StatusBadRequest, resp.StatusCode)
 		}
 	})
 }
