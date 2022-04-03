@@ -38,3 +38,40 @@ func (db *db) createTask(user *User, title string, estimatedPomoNum int, dueOn *
 	}
 	return &task, nil
 }
+
+func (db *db) getTasksByUserID(user *User, opt *getTasksRequest) ([]*task, error) {
+	ds := db.dialect.From("tasks").Select(&task{}).Where(goqu.Ex{"user_id": user.ID})
+	if opt.isCompleted != nil {
+		if *opt.isCompleted {
+			ds = ds.Where(goqu.C("completed_on").IsNotNull())
+		} else {
+			ds = ds.Where(goqu.C("completed_on").IsNull())
+		}
+	}
+	if opt.completedOn != nil {
+		start := time.Date(opt.completedOn.Year(), opt.completedOn.Month(), opt.completedOn.Day(), 0, 0, 0, 0, time.UTC)
+		end := time.Date(opt.completedOn.Year(), opt.completedOn.Month(), opt.completedOn.Day(), 23, 59, 59, 0, time.UTC)
+		ds = ds.Where(goqu.Ex{"completed_on": goqu.Op{"between": goqu.Range(start, end)}})
+	}
+	sql, _, err := ds.ToSQL()
+	if err != nil {
+		return nil, fmt.Errorf("ds.ToSQL failed: %w", err)
+	}
+
+	rows, err := db.db.Query(sql)
+	if err != nil {
+		return nil, fmt.Errorf("db.Query failed: %w", err)
+	}
+	defer rows.Close()
+
+	tasks := make([]*task, 0, 30)
+	for rows.Next() {
+		var task task
+		if err := rows.Scan(&task.id, &task.userID, &task.title, &task.estimatedPomoNum, &task.dueOn, &task.completedOn, &task.createdAt, &task.updatedAt); err != nil {
+			return nil, fmt.Errorf("rows.Scan failed: %w", err)
+		}
+		tasks = append(tasks, &task)
+	}
+
+	return tasks, nil
+}

@@ -4,20 +4,25 @@ import "time"
 
 type (
 	task struct {
-		id               int
+		id               int        `db:"id"`
+		userID           int        `db:"user_id"`
+		title            string     `db:"title"`
+		estimatedPomoNum int        `db:"estimated_pomo_num"`
+		dueOn            *time.Time `db:"due_on"`
+		completedOn      *time.Time `db:"completed_on"`
+		createdAt        time.Time  `db:"created_at"`
+		updatedAt        time.Time  `db:"updated_at"`
 		user             *User
-		title            string
-		estimatedPomoNum int
-		dueOn            *time.Time
-		completedOn      *time.Time
-		createdAt        time.Time
-		updatedAt        time.Time
 	}
 
 	postTasksRequest struct {
 		Title            string `json:"title"`
 		EstimatedPomoNum int    `json:"estimatedPomoNum"`
 		DueOn            string `json:"dueOn"`
+	}
+	getTasksRequest struct {
+		isCompleted *bool
+		completedOn *time.Time
 	}
 
 	taskResponse struct {
@@ -29,6 +34,9 @@ type (
 		CompletedOn      string    `json:"completedOn"`
 		CreatedAt        time.Time `json:"createdAt"`
 		UpdatedAt        time.Time `json:"updatedAt"`
+	}
+	tasksResponse struct {
+		Tasks []*taskResponse `json:"tasks"`
 	}
 )
 
@@ -54,4 +62,14 @@ func newTaskResponse(t *task) *taskResponse {
 		CreatedAt:        t.createdAt,
 		UpdatedAt:        t.updatedAt,
 	}
+}
+
+// newTasksResponse は task のスライスで tasksResponse を初期化する。
+func newTasksResponse(ts []*task) *tasksResponse {
+	tasks := make([]*taskResponse, 0, len(ts))
+	for _, t := range ts {
+		task := newTaskResponse(t)
+		tasks = append(tasks, task)
+	}
+	return &tasksResponse{Tasks: tasks}
 }
