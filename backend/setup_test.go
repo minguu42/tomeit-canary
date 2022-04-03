@@ -2,6 +2,7 @@ package tomeit
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -74,14 +75,14 @@ func teardownTestDB() {
 	_, _ = testDB.db.Exec(dropUsersTable)
 }
 
-func doTestRequest(tb testing.TB, method, path string, params *map[string]string, body io.Reader, respBodyType string) (*http.Response, interface{}) {
+func doTestRequest(method, path string, params map[string]string, body io.Reader, respBody interface{}) (*http.Response, error) {
 	req, err := http.NewRequest(method, testUrl+path, body)
 	if err != nil {
-		tb.Fatal("http.NewRequest failed:", err)
+		return nil, fmt.Errorf("http.NewRequest failed: %w", err)
 	}
 	if params != nil {
 		ps := req.URL.Query()
-		for k, v := range *params {
+		for k, v := range params {
 			ps.Add(k, v)
 		}
 		req.URL.RawQuery = ps.Encode()
@@ -90,35 +91,17 @@ func doTestRequest(tb testing.TB, method, path string, params *map[string]string
 
 	resp, err := testClient.Do(req)
 	if err != nil {
-		tb.Fatal("testClient.Do failed:", err)
+		return nil, fmt.Errorf("testClient.Do failed: %w", err)
 	}
 	defer resp.Body.Close()
 
 	bytes, err := io.ReadAll(resp.Body)
 	if err != nil {
-		tb.Fatal("io.ReadAll failed:", err)
+		return nil, fmt.Errorf("io.ReadAll failed: %w", err)
 	}
 
-	switch respBodyType {
-	case "taskResponse":
-		var respBody taskResponse
-		if err := json.Unmarshal(bytes, &respBody); err != nil {
-			return resp, nil
-		}
-		return resp, respBody
-	case "tasksResponse":
-		var respBody tasksResponse
-		if err := json.Unmarshal(bytes, &respBody); err != nil {
-			return resp, nil
-		}
-		return resp, respBody
-	case "healthzResponse":
-		var respBody healthzResponse
-		if err := json.Unmarshal(bytes, &respBody); err != nil {
-			return resp, nil
-		}
-		return resp, respBody
+	if err := json.Unmarshal(bytes, respBody); err != nil {
+		return resp, fmt.Errorf("json.Unmarshal failed: %w", err)
 	}
-
 	return resp, nil
 }

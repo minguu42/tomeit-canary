@@ -15,20 +15,24 @@ import (
 var opt = cmpopts.IgnoreTypes(time.Time{})
 
 func TestPostTasks(t *testing.T) {
+	var (
+		method = http.MethodPost
+		path   = "/v0/tasks"
+		got    taskResponse
+	)
 	setupTestDB(t)
 	t.Cleanup(teardownTestDB)
 	t.Run("タスクを作成する（title）", func(t *testing.T) {
 		reqBody := strings.NewReader(`{"title": "タスク1"}`)
-		resp, body := doTestRequest(t, "POST", "/v0/tasks", nil, reqBody, "taskResponse")
+		resp, err := doTestRequest(method, path, nil, reqBody, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
 
 		if resp.StatusCode != http.StatusCreated {
 			t.Errorf("Status code should be %v, but %v", http.StatusCreated, resp.StatusCode)
 		}
 
-		got, ok := body.(taskResponse)
-		if !ok {
-			t.Fatal("Type Assertion failed.")
-		}
 		want := taskResponse{
 			ID:               1,
 			Title:            "タスク1",
@@ -42,17 +46,22 @@ func TestPostTasks(t *testing.T) {
 		}
 	})
 	t.Run("タスクを作成する（title, estimatedPomoNum, dueOn）", func(t *testing.T) {
-		reqBody := strings.NewReader(`{"title": "タスク2", "estimatedPomoNum": 4, "dueOn": "2022-01-02T21:22:23Z"}`)
-		resp, body := doTestRequest(t, "POST", "/v0/tasks", nil, reqBody, "taskResponse")
+		reqBody := strings.NewReader(`
+{
+  "title": "タスク2",
+  "estimatedPomoNum": 4,
+  "dueOn": "2022-01-02T21:22:23Z"
+}
+`)
+		resp, err := doTestRequest(method, path, nil, reqBody, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
 
 		if resp.StatusCode != http.StatusCreated {
 			t.Errorf("Status code should be %v, but %v", http.StatusCreated, resp.StatusCode)
 		}
 
-		got, ok := body.(taskResponse)
-		if !ok {
-			t.Fatal("Type Assertion failed.")
-		}
 		want := taskResponse{
 			ID:               2,
 			Title:            "タスク2",
@@ -66,16 +75,32 @@ func TestPostTasks(t *testing.T) {
 		}
 	})
 	t.Run("タスクの作成に失敗する（title がない）", func(t *testing.T) {
-		reqBody := strings.NewReader(`{"estimatedPomoNum": 4, "dueOn": "2022-01-02T21:22:23Z"}`)
-		resp, _ := doTestRequest(t, "POST", "/v0/tasks", nil, reqBody, "taskResponse")
+		reqBody := strings.NewReader(`
+{
+  "estimatedPomoNum": 4,
+  "dueOn": "2022-01-02T21:22:23Z"
+}
+`)
+		resp, err := doTestRequest(method, path, nil, reqBody, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
 
 		if resp.StatusCode != http.StatusBadRequest {
 			t.Errorf("Status code should be %v, but %v", http.StatusBadRequest, resp.StatusCode)
 		}
 	})
 	t.Run("タスクの作成に失敗する（dueOn の形式が RFC3339 でない）", func(t *testing.T) {
-		reqBody := strings.NewReader(`{"title": "タスク3", "dueOn": "2022-01-02"}`)
-		resp, _ := doTestRequest(t, "POST", "/v0/tasks", nil, reqBody, "taskResponse")
+		reqBody := strings.NewReader(`
+{
+  "title": "タスク3",
+  "dueOn": "2022-01-02"
+}
+`)
+		resp, err := doTestRequest(method, path, nil, reqBody, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
 
 		if resp.StatusCode != http.StatusBadRequest {
 			t.Errorf("Status code should be %v, but %v", http.StatusBadRequest, resp.StatusCode)
@@ -109,22 +134,24 @@ func setupTestGetTasks(tb testing.TB) {
 }
 
 func TestGetTasks(t *testing.T) {
-	method := http.MethodGet
-	path := "/v0/tasks"
+	var (
+		method = http.MethodGet
+		path   = "/v0/tasks"
+		got    tasksResponse
+	)
 	setupTestDB(t)
 	setupTestGetTasks(t)
 	t.Cleanup(teardownTestDB)
 	t.Run("タスク一覧を取得する", func(t *testing.T) {
-		resp, body := doTestRequest(t, method, path, nil, nil, "tasksResponse")
+		resp, err := doTestRequest(method, path, nil, nil, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
 
 		if resp.StatusCode != http.StatusOK {
 			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
 		}
 
-		got, ok := body.(tasksResponse)
-		if !ok {
-			t.Fatal("Type Assertion failed.")
-		}
 		want := tasksResponse{Tasks: []*taskResponse{
 			{
 				ID:               1,
@@ -199,16 +226,15 @@ func TestGetTasks(t *testing.T) {
 		params := map[string]string{
 			"isCompleted": "true",
 		}
-		resp, body := doTestRequest(t, method, path, &params, nil, "tasksResponse")
+		resp, err := doTestRequest(method, path, params, nil, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
 
 		if resp.StatusCode != http.StatusOK {
 			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
 		}
 
-		got, ok := body.(tasksResponse)
-		if !ok {
-			t.Fatal("Type Assertion failed.")
-		}
 		want := tasksResponse{Tasks: []*taskResponse{
 			{
 				ID:               4,
