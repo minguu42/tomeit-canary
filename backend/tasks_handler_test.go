@@ -84,32 +84,38 @@ func TestPostTasks(t *testing.T) {
 }
 
 func setupTestGetTasks(tb testing.TB) {
-	sql1, _, err := goqu.Dialect("mysql").Insert("tasks").Cols("user_id", "title", "estimated_pomo_num", "due_on", "completed_on").Vals(goqu.Vals{1, "タスク1", 0, nil, nil}).ToSQL()
+	dueOn, _ := time.Parse(time.RFC3339, "2022-01-01T15:04:05Z")
+	completedOn, _ := time.Parse(time.RFC3339, "2022-01-02T15:04:05Z")
+	sql, _, err := goqu.Dialect("mysql").Insert("tasks").
+		Cols("id", "user_id", "title", "estimated_pomo_num", "due_on", "completed_on").
+		Vals(
+			goqu.Vals{1, 1, "タスク1", 0, nil, nil},
+			goqu.Vals{2, 1, "タスク2", 4, nil, nil},
+			goqu.Vals{3, 1, "タスク3", 0, dueOn, nil},
+			goqu.Vals{4, 1, "タスク4", 0, nil, completedOn},
+			goqu.Vals{5, 1, "タスク5", 4, dueOn, nil},
+			goqu.Vals{6, 1, "タスク6", 4, nil, completedOn},
+			goqu.Vals{7, 1, "タスク7", 0, dueOn, completedOn},
+			goqu.Vals{8, 1, "タスク8", 4, dueOn, completedOn},
+		).ToSQL()
 	if err != nil {
-		tb.Fatalf("goqu.Insert failed: %v", err)
-	}
-	dueOn, _ := time.Parse(time.RFC3339, "2022-01-02T15:04:05Z")
-	sql2, _, err := goqu.Dialect("mysql").Insert("tasks").Cols("user_id", "title", "estimated_pomo_num", "due_on", "completed_on").Vals(goqu.Vals{1, "タスク2", 4, dueOn, nil}).ToSQL()
-	if err != nil {
-		tb.Fatalf("goqu.Insert failed: %v", err)
+		tb.Fatalf("ds.ToSQL failed: %v", err)
 	}
 
-	_, err = testDB.db.Exec(sql1)
-	if err != nil {
-		tb.Fatalf("db.Exec failed: %v", err)
-	}
-	_, err = testDB.db.Exec(sql2)
+	_, err = testDB.db.Exec(sql)
 	if err != nil {
 		tb.Fatalf("db.Exec failed: %v", err)
 	}
 }
 
 func TestGetTasks(t *testing.T) {
+	method := http.MethodGet
+	path := "/v0/tasks"
 	setupTestDB(t)
 	setupTestGetTasks(t)
 	t.Cleanup(teardownTestDB)
 	t.Run("タスク一覧を取得する", func(t *testing.T) {
-		resp, body := doTestRequest(t, "GET", "/v0/tasks", nil, nil, "tasksResponse")
+		resp, body := doTestRequest(t, method, path, nil, nil, "tasksResponse")
 
 		if resp.StatusCode != http.StatusOK {
 			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
@@ -133,8 +139,116 @@ func TestGetTasks(t *testing.T) {
 				Title:            "タスク2",
 				EstimatedPomoNum: 4,
 				CompletedPomoNum: 0,
-				DueOn:            "2022-01-02T15:04:05Z",
+				DueOn:            "",
 				CompletedOn:      "",
+			},
+			{
+				ID:               3,
+				Title:            "タスク3",
+				EstimatedPomoNum: 0,
+				CompletedPomoNum: 0,
+				DueOn:            "2022-01-01T15:04:05Z",
+				CompletedOn:      "",
+			},
+			{
+				ID:               4,
+				Title:            "タスク4",
+				EstimatedPomoNum: 0,
+				CompletedPomoNum: 0,
+				DueOn:            "",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+			},
+			{
+				ID:               5,
+				Title:            "タスク5",
+				EstimatedPomoNum: 4,
+				CompletedPomoNum: 0,
+				DueOn:            "2022-01-01T15:04:05Z",
+				CompletedOn:      "",
+			},
+			{
+				ID:               6,
+				Title:            "タスク6",
+				EstimatedPomoNum: 4,
+				CompletedPomoNum: 0,
+				DueOn:            "",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+			},
+			{
+				ID:               7,
+				Title:            "タスク7",
+				EstimatedPomoNum: 0,
+				CompletedPomoNum: 0,
+				DueOn:            "2022-01-01T15:04:05Z",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+			},
+			{
+				ID:               8,
+				Title:            "タスク8",
+				EstimatedPomoNum: 4,
+				CompletedPomoNum: 0,
+				DueOn:            "2022-01-01T15:04:05Z",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+			},
+		}}
+		if diff := cmp.Diff(got, want, opt); diff != "" {
+			t.Errorf("getTasks response mismatch (-got +want):\n%s", diff)
+		}
+	})
+	t.Run("完了済みタスク一覧を取得する", func(t *testing.T) {
+		params := map[string]string{
+			"isCompleted": "true",
+		}
+		resp, body := doTestRequest(t, method, path, &params, nil, "tasksResponse")
+
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
+		}
+
+		got, ok := body.(tasksResponse)
+		if !ok {
+			t.Fatal("Type Assertion failed.")
+		}
+		want := tasksResponse{Tasks: []*taskResponse{
+			{
+				ID:               4,
+				Title:            "タスク4",
+				EstimatedPomoNum: 0,
+				CompletedPomoNum: 0,
+				DueOn:            "",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+				CreatedAt:        time.Time{},
+				UpdatedAt:        time.Time{},
+			},
+			{
+				ID:               6,
+				Title:            "タスク6",
+				EstimatedPomoNum: 4,
+				CompletedPomoNum: 0,
+				DueOn:            "",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+				CreatedAt:        time.Time{},
+				UpdatedAt:        time.Time{},
+			},
+			{
+				ID:               7,
+				Title:            "タスク7",
+				EstimatedPomoNum: 0,
+				CompletedPomoNum: 0,
+				DueOn:            "2022-01-01T15:04:05Z",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+				CreatedAt:        time.Time{},
+				UpdatedAt:        time.Time{},
+			},
+			{
+				ID:               8,
+				Title:            "タスク8",
+				EstimatedPomoNum: 4,
+				CompletedPomoNum: 0,
+				DueOn:            "2022-01-01T15:04:05Z",
+				CompletedOn:      "2022-01-02T15:04:05Z",
+				CreatedAt:        time.Time{},
+				UpdatedAt:        time.Time{},
 			},
 		}}
 		if diff := cmp.Diff(got, want, opt); diff != "" {
