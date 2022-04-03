@@ -4,14 +4,15 @@ import "time"
 
 type (
 	task struct {
-		id               int
+		id               int        `db:"id"`
+		userID           int        `db:"user_id"`
+		title            string     `db:"title"`
+		estimatedPomoNum int        `db:"estimated_pomo_num"`
+		dueOn            *time.Time `db:"due_on"`
+		completedOn      *time.Time `db:"completed_on"`
+		createdAt        time.Time  `db:"created_at"`
+		updatedAt        time.Time  `db:"updated_at"`
 		user             *User
-		title            string
-		estimatedPomoNum int
-		dueOn            *time.Time
-		completedOn      *time.Time
-		createdAt        time.Time
-		updatedAt        time.Time
 	}
 
 	postTasksRequest struct {
@@ -20,8 +21,8 @@ type (
 		DueOn            string `json:"dueOn"`
 	}
 	getTasksRequest struct {
-		isCompleted bool
-		completedOn time.Time
+		isCompleted *bool
+		completedOn *time.Time
 	}
 
 	taskResponse struct {
