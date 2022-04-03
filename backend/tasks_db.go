@@ -49,7 +49,9 @@ func (db *db) getTasksByUserID(user *User, opt *getTasksRequest) ([]*task, error
 		}
 	}
 	if opt.completedOn != nil {
-		ds = ds.Where(goqu.Ex{"completed_on": *opt.completedOn})
+		start := time.Date(opt.completedOn.Year(), opt.completedOn.Month(), opt.completedOn.Day(), 0, 0, 0, 0, time.UTC)
+		end := time.Date(opt.completedOn.Year(), opt.completedOn.Month(), opt.completedOn.Day(), 23, 59, 59, 0, time.UTC)
+		ds = ds.Where(goqu.Ex{"completed_on": goqu.Op{"between": goqu.Range(start, end)}})
 	}
 	sql, _, err := ds.ToSQL()
 	if err != nil {
