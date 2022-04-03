@@ -63,3 +63,13 @@ func newTaskResponse(t *task) *taskResponse {
 		UpdatedAt:        t.updatedAt,
 	}
 }
+
+// newTasksResponse は task のスライスで tasksResponse を初期化する。
+func newTasksResponse(ts []*task) *tasksResponse {
+	tasks := make([]*taskResponse, 0, len(ts))
+	for _, t := range ts {
+		task := newTaskResponse(t)
+		tasks = append(tasks, task)
+	}
+	return &tasksResponse{Tasks: tasks}
+}
