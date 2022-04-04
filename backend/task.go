@@ -4,7 +4,7 @@ import "time"
 
 type (
 	task struct {
-		id               int        `db:"id"`
+		id               int        `db:"id" goqu:"skipinsert"`
 		userID           int        `db:"user_id"`
 		title            string     `db:"title"`
 		estimatedPomoNum int        `db:"estimated_pomo_num"`
@@ -12,7 +12,6 @@ type (
 		completedOn      *time.Time `db:"completed_on"`
 		createdAt        time.Time  `db:"created_at"`
 		updatedAt        time.Time  `db:"updated_at"`
-		user             *User
 	}
 
 	postTasksRequest struct {

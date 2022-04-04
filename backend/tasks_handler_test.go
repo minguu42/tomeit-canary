@@ -127,7 +127,7 @@ func setupTestGetTasks(tb testing.TB) {
 		tb.Fatalf("ds.ToSQL failed: %v", err)
 	}
 
-	_, err = testDB.db.Exec(sql)
+	_, err = db.Exec(sql)
 	if err != nil {
 		tb.Fatalf("db.Exec failed: %v", err)
 	}

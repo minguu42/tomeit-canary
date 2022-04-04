@@ -17,31 +17,24 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
-var (
-	testClient *http.Client
-	testUrl    string
-	testDB     *db
-)
+var testUrl string
 
 func TestMain(m *testing.M) {
 	logger.InitLogger(false, false, false)
 	firebaseAppMock := &firebaseAppMock{}
 
-	var err error
-	testDB, err = OpenDB("test:password@tcp(localhost:13306)/db_test?charset=utf8mb4&parseTime=true")
-	if err != nil {
-		log.Fatalln("OpenDB failed:", err)
+	if err := OpenDB("mysql", "test:password@tcp(localhost:13306)/db_test?charset=utf8mb4&parseTime=true"); err != nil {
+		log.Fatalf("OpenDB failed: %v", err)
 	}
-	defer CloseDB(testDB)
+	defer CloseDB()
 
 	r := chi.NewRouter()
-	r.Use(Auth(testDB, firebaseAppMock))
-	Route(r, testDB)
+	r.Use(Auth(firebaseAppMock))
+	Route(r)
 
 	ts := httptest.NewServer(r)
 	defer ts.Close()
 	testUrl = ts.URL
-	testClient = &http.Client{}
 
 	m.Run()
 }
@@ -57,12 +50,12 @@ func setupTestDB(tb testing.TB) {
 		if query == "" {
 			break
 		}
-		_, _ = testDB.db.Exec(query)
+		_, _ = db.Exec(query)
 	}
 
 	sql, _, _ := goqu.Insert("users").Cols("digest_uid").Vals(goqu.Vals{"a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a"}).ToSQL()
 
-	_, _ = testDB.db.Exec(sql)
+	_, _ = db.Exec(sql)
 }
 
 func teardownTestDB() {
@@ -70,9 +63,9 @@ func teardownTestDB() {
 	const dropTasksTable = `DROP TABLE IF EXISTS tasks`
 	const dropUsersTable = `DROP TABLE IF EXISTS users`
 
-	_, _ = testDB.db.Exec(dropPomodorosTable)
-	_, _ = testDB.db.Exec(dropTasksTable)
-	_, _ = testDB.db.Exec(dropUsersTable)
+	_, _ = db.Exec(dropPomodorosTable)
+	_, _ = db.Exec(dropTasksTable)
+	_, _ = db.Exec(dropUsersTable)
 }
 
 func doTestRequest(method, path string, params map[string]string, body io.Reader, respBody interface{}) (*http.Response, error) {
@@ -89,9 +82,9 @@ func doTestRequest(method, path string, params map[string]string, body io.Reader
 	}
 	req.Header.Set("Authorization", "Bearer someJWT")
 
-	resp, err := testClient.Do(req)
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("testClient.Do failed: %w", err)
+		return nil, fmt.Errorf("DefaultClient.Do failed: %w", err)
 	}
 	defer resp.Body.Close()
 

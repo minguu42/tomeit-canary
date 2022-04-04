@@ -10,93 +10,88 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
-func postTasks(db *db) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		var postTasksRequest postTasksRequest
-		if err := json.NewDecoder(r.Body).Decode(&postTasksRequest); err != nil {
-			logger.Error.Println("decoder.Decode failed:", err)
+// postTasks は POST /tasks エンドポイントに対応するハンドラ関数である。
+func postTasks(w http.ResponseWriter, r *http.Request) {
+	var request postTasksRequest
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		logger.Error.Printf("decoder.Decode failed: %v", err)
+		_ = writeErrResponse(w, newErrBadRequest(err))
+		return
+	}
+
+	if request.Title == "" {
+		_ = writeErrResponse(w, newErrBadRequest(errors.New("title is required")))
+	}
+	var dueOn *time.Time
+	if request.DueOn != "" {
+		tmpDueOn, err := time.Parse(time.RFC3339, request.DueOn)
+		if err != nil {
+			logger.Error.Printf("time.Parse failed: %v", err)
 			_ = writeErrResponse(w, newErrBadRequest(err))
 			return
 		}
+		dueOn = &tmpDueOn
+	}
 
-		if postTasksRequest.Title == "" {
-			_ = writeErrResponse(w, newErrBadRequest(errors.New("property title is required")))
-			return
-		}
-		var dueOn *time.Time
-		if postTasksRequest.DueOn != "" {
-			tmpDueOn, err := time.Parse(time.RFC3339, postTasksRequest.DueOn)
-			if err != nil {
-				logger.Error.Println("time.Parse failed:", err)
-				_ = writeErrResponse(w, newErrBadRequest(err))
-				return
-			}
-			dueOn = &tmpDueOn
-		}
+	ctx := r.Context()
+	user := ctx.Value(userKey{}).(*user)
 
-		user := r.Context().Value(userKey{}).(*User)
+	task, err := createTask(r.Context(), user.ID, request.Title, request.EstimatedPomoNum, dueOn)
+	if err != nil {
+		logger.Error.Println("createTask failed:", err)
+		_ = writeErrResponse(w, newErrInternalServerError(err))
+		return
+	}
 
-		task, err := db.createTask(user, postTasksRequest.Title, postTasksRequest.EstimatedPomoNum, dueOn)
-		if err != nil {
-			logger.Error.Println("Database.createTask failed:", err)
-			_ = writeErrResponse(w, newErrInternalServerError(err))
-			return
-		}
-
-		scheme := "http://"
-		if r.TLS != nil {
-			scheme = "https://"
-		}
-		w.Header().Set("Location", scheme+r.Host+r.URL.Path+"/"+strconv.Itoa(task.id))
-		if err := writeResponse(w, http.StatusCreated, newTaskResponse(task)); err != nil {
-			logger.Error.Println("writeResponse failed:", err)
-			_ = writeErrResponse(w, newErrInternalServerError(err))
-			return
-		}
+	scheme := "http://"
+	if r.TLS != nil {
+		scheme = "http://"
+	}
+	w.Header().Set("Location", scheme+r.Host+r.URL.Path+"/"+strconv.Itoa(task.id))
+	if err := writeResponse(w, http.StatusCreated, newTaskResponse(task)); err != nil {
+		logger.Error.Printf("writeResponse failed: %v", err)
+		_ = writeErrResponse(w, newErrInternalServerError(err))
+		return
 	}
 }
 
-func getTasks(db *db) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		var request getTasksRequest
-		for k, v := range r.URL.Query() {
-			switch k {
-			case "isCompleted":
-				var isCompleted *bool
-				if isCompletedBool, err := strconv.ParseBool(v[0]); err == nil {
-					isCompleted = &isCompletedBool
-				} else {
-					logger.Error.Printf("strconv.ParseBool failed: %v", err)
-					_ = writeErrResponse(w, newErrBadRequest(err))
-					return
-				}
-				request.isCompleted = isCompleted
-			case "completedOn":
-				var completedOn *time.Time
-				if completedOnTime, err := time.Parse(time.RFC3339, v[0]); err == nil {
-					completedOn = &completedOnTime
-				} else {
-					logger.Error.Printf("time.Parse failed: %v", err)
-					_ = writeErrResponse(w, newErrBadRequest(err))
-					return
-				}
-				request.completedOn = completedOn
+// getTasks は GET /tasks エンドポイントに対応するハンドラ関数である。
+func getTasks(w http.ResponseWriter, r *http.Request) {
+	var request getTasksRequest
+	for k, v := range r.URL.Query() {
+		switch k {
+		case "isCompleted":
+			if isCompleted, err := strconv.ParseBool(v[0]); err == nil {
+				request.isCompleted = &isCompleted
+			} else {
+				logger.Error.Printf("strconv.ParseBool failed: %v", err)
+				_ = writeErrResponse(w, newErrBadRequest(err))
+				return
+			}
+		case "completedOn":
+			if completedOn, err := time.Parse(time.RFC3339, v[0]); err == nil {
+				request.completedOn = &completedOn
+			} else {
+				logger.Error.Printf("time.Parse failed: %v", err)
+				_ = writeErrResponse(w, newErrBadRequest(err))
+				return
 			}
 		}
+	}
 
-		user := r.Context().Value(userKey{}).(*User)
+	ctx := r.Context()
+	user := ctx.Value(userKey{}).(*user)
 
-		tasks, err := db.getTasksByUserID(user, &request)
-		if err != nil {
-			logger.Error.Printf("db.getTasksByUserID failed: %v", err)
-			_ = writeErrResponse(w, newErrInternalServerError(err))
-			return
-		}
+	tasks, err := getTasksByUserID(ctx, user.ID, &request)
+	if err != nil {
+		logger.Error.Printf("getTasksByUserID failed: %v", err)
+		_ = writeErrResponse(w, newErrInternalServerError(err))
+		return
+	}
 
-		if err := writeResponse(w, http.StatusOK, newTasksResponse(tasks)); err != nil {
-			logger.Error.Printf("writeResponse failed: %v", err)
-			_ = writeErrResponse(w, newErrInternalServerError(err))
-			return
-		}
+	if err := writeResponse(w, http.StatusOK, newTasksResponse(tasks)); err != nil {
+		logger.Error.Printf("writeResponse failed: %v", err)
+		_ = writeErrResponse(w, newErrInternalServerError(err))
+		return
 	}
 }

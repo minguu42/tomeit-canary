@@ -13,7 +13,7 @@ import (
 
 type userKey struct{}
 
-func Auth(db *db, authenticator authenticator) func(handler http.Handler) http.Handler {
+func Auth(authenticator authenticator) func(handler http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if r.URL.Path == "/v0/healthz" {
@@ -35,9 +35,9 @@ func Auth(db *db, authenticator authenticator) func(handler http.Handler) http.H
 				return
 			}
 
-			user, err := db.getUserByDigestUID(hash(token.UID))
+			user, err := getUserByDigestUID(ctx, hash(token.UID))
 			if user == nil || err != nil {
-				user, err = db.createUser(hash(token.UID))
+				user, err = createUser(ctx, hash(token.UID))
 				if err != nil {
 					logger.Error.Println("db.createUser failed:", err)
 					_ = writeErrResponse(w, newErrInternalServerError(err))
