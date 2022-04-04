@@ -11,37 +11,31 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
-type db struct {
+var (
+	dialect goqu.DialectWrapper
 	db      *sql.DB
-	dialect *goqu.DialectWrapper
-}
+)
 
-func OpenDB(dsn string) (*db, error) {
-	sqlDB, err := sql.Open("mysql", dsn)
+func OpenDB(driverName, dsn string) error {
+	dialect = goqu.Dialect(driverName)
+
+	var err error
+	db, err = sql.Open(driverName, dsn)
 	if err != nil {
-		return nil, fmt.Errorf("sql.Open failed: %w", err)
+		return fmt.Errorf("sql.Open failed: %w", err)
 	}
 
-	isDBReady := false
-	failureTimes := 0
-	for !isDBReady {
-		err := sqlDB.Ping()
-		switch {
-		case err == nil:
-			isDBReady = true
-		case failureTimes <= 6:
-			logger.Info.Println("sqlDB.Ping failed. try again in 5 seconds.")
-			time.Sleep(time.Second * 5)
-			failureTimes += 1
-		default:
-			return nil, fmt.Errorf("sqlDB.Ping failed: %w", err)
+	for count := 0; count < 6; count++ {
+		err = db.Ping()
+		if err == nil {
+			return nil
 		}
+		logger.Info.Println("db.Ping failed. try again in 5 seconds.")
+		time.Sleep(time.Second * 5)
 	}
-
-	dialect := goqu.Dialect("mysql")
-	return &db{db: sqlDB, dialect: &dialect}, nil
+	return fmt.Errorf("db.Ping failed: %w", err)
 }
 
-func CloseDB(db *db) error {
-	return db.db.Close()
+func CloseDB() error {
+	return db.Close()
 }
