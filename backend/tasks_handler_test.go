@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
-
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
@@ -96,7 +95,7 @@ func TestPostTasks(t *testing.T) {
   "title": "タスク3",
   "dueOn": "2022-01-02"
 }
-`)
+	`)
 		resp, err := doTestRequest(method, path, nil, reqBody, &got)
 		if err != nil {
 			t.Fatalf("doTestRequest failed: %v", err)
@@ -127,7 +126,7 @@ func setupTestGetTasks(tb testing.TB) {
 		tb.Fatalf("ds.ToSQL failed: %v", err)
 	}
 
-	_, err = testDB.db.Exec(sql)
+	_, err = db.Exec(sql)
 	if err != nil {
 		tb.Fatalf("db.Exec failed: %v", err)
 	}

@@ -1,6 +1,7 @@
 package tomeit
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -8,16 +9,26 @@ import (
 	"github.com/minguu42/tomeit/logger"
 )
 
-func (db *db) createTask(user *User, title string, estimatedPomoNum int, dueOn *time.Time) (*task, error) {
+// createTask は task を作成し、返す。
+func createTask(ctx context.Context, userID int, title string, estimatedPomoNum int, dueOn *time.Time) (*task, error) {
 	createdAt := time.Now()
-
-	sql, _, err := db.dialect.Insert("tasks").Cols("title", "user_id", "estimated_pomo_num", "due_on", "created_at", "updated_at").Vals(goqu.Vals{title, user.ID, estimatedPomoNum, dueOn, createdAt, createdAt}).ToSQL()
+	sql, _, err := dialect.Insert("tasks").Rows(
+		task{
+			UserID:           userID,
+			Title:            title,
+			EstimatedPomoNum: estimatedPomoNum,
+			DueOn:            dueOn,
+			CreatedAt:        createdAt,
+			UpdatedAt:        createdAt,
+		},
+	).ToSQL()
 	if err != nil {
 		return nil, fmt.Errorf("ds.ToSQL failed: %w", err)
 	}
-	result, err := db.db.Exec(sql)
+
+	result, err := db.ExecContext(ctx, sql)
 	if err != nil {
-		return nil, fmt.Errorf("Database.Exec failed: %w", err)
+		return nil, fmt.Errorf("db.ExecContext failed: %w", err)
 	}
 	logger.Debug.Println(sql)
 
@@ -26,21 +37,21 @@ func (db *db) createTask(user *User, title string, estimatedPomoNum int, dueOn *
 		return nil, fmt.Errorf("result.LastInsertId failed: %w", err)
 	}
 
-	task := task{
-		id:               int(id),
-		user:             user,
-		title:            title,
-		estimatedPomoNum: estimatedPomoNum,
-		dueOn:            dueOn,
-		completedOn:      nil,
-		createdAt:        createdAt,
-		updatedAt:        createdAt,
-	}
-	return &task, nil
+	return &task{
+		ID:               int(id),
+		UserID:           userID,
+		Title:            title,
+		EstimatedPomoNum: estimatedPomoNum,
+		DueOn:            dueOn,
+		CompletedOn:      nil,
+		CreatedAt:        createdAt,
+		UpdatedAt:        createdAt,
+	}, nil
 }
 
-func (db *db) getTasksByUserID(user *User, opt *getTasksRequest) ([]*task, error) {
-	ds := db.dialect.From("tasks").Select(&task{}).Where(goqu.Ex{"user_id": user.ID})
+// getTasksByUserID は task の一覧を取得し、返す。
+func getTasksByUserID(ctx context.Context, userID int, opt *getTasksRequest) ([]*task, error) {
+	ds := dialect.From("tasks").Select(&task{}).Where(goqu.Ex{"user_id": userID})
 	if opt.isCompleted != nil {
 		if *opt.isCompleted {
 			ds = ds.Where(goqu.C("completed_on").IsNotNull())
@@ -58,19 +69,20 @@ func (db *db) getTasksByUserID(user *User, opt *getTasksRequest) ([]*task, error
 		return nil, fmt.Errorf("ds.ToSQL failed: %w", err)
 	}
 
-	rows, err := db.db.Query(sql)
+	rows, err := db.QueryContext(ctx, sql)
 	if err != nil {
-		return nil, fmt.Errorf("db.Query failed: %w", err)
+		return nil, fmt.Errorf("db.QueryContext failed: %w", err)
 	}
 	defer rows.Close()
+	logger.Debug.Println(sql)
 
 	tasks := make([]*task, 0, 30)
 	for rows.Next() {
-		var task task
-		if err := rows.Scan(&task.id, &task.userID, &task.title, &task.estimatedPomoNum, &task.dueOn, &task.completedOn, &task.createdAt, &task.updatedAt); err != nil {
+		var t task
+		if err := rows.Scan(&t.CompletedOn, &t.CreatedAt, &t.DueOn, &t.EstimatedPomoNum, &t.ID, &t.Title, &t.UpdatedAt, &t.UserID); err != nil {
 			return nil, fmt.Errorf("rows.Scan failed: %w", err)
 		}
-		tasks = append(tasks, &task)
+		tasks = append(tasks, &t)
 	}
 
 	return tasks, nil

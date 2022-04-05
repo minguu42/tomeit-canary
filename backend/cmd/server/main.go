@@ -25,15 +25,15 @@ func main() {
 func _main() error {
 	var (
 		port                  = "8080"
-		allowOrigins          = "http://localhost:3000"
+		driverName            = "mysql"
 		dsn                   = os.Getenv("DSN")
 		googleCredentialsJSON = os.Getenv("GOOGLE_CREDENTIALS_JSON")
 	)
 	if envPort := os.Getenv("PORT"); envPort != "" {
 		port = envPort
 	}
-	if envAllowOrigins := os.Getenv("ALLOW_ORIGINS"); envAllowOrigins != "" {
-		allowOrigins = envAllowOrigins
+	if envDriverName := os.Getenv("DRIVER_NAME"); envDriverName != "" {
+		driverName = envDriverName
 	}
 	if dsn == "" {
 		return errors.New("environment variable DSN does not exist")
@@ -47,18 +47,17 @@ func _main() error {
 		return fmt.Errorf("tomeit.InitFirebaseApp failed: %w", err)
 	}
 
-	db, err := tomeit.OpenDB(dsn)
-	if err != nil {
+	if err := tomeit.OpenDB(driverName, dsn); err != nil {
 		return fmt.Errorf("tomeit.OpenDB failed: %w", err)
 	}
-	defer tomeit.CloseDB(db)
+	defer tomeit.CloseDB()
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	r.Use(tomeit.Auth(db, firebaseApp))
+	r.Use(tomeit.Auth(firebaseApp))
 	r.Use(middleware.Recoverer)
-	logger.Debug.Println("TODO: CORS", allowOrigins)
-	tomeit.Route(r, db)
+	// TODO: CORS ミドルウェアを追加する
+	tomeit.Route(r)
 
 	if err := http.ListenAndServe(":"+port, r); err != nil {
 		return fmt.Errorf("http.ListenAndServe failed: %w", err)
