@@ -79,7 +79,7 @@ func getTasksByUserID(ctx context.Context, userID int, opt *getTasksRequest) ([]
 	tasks := make([]*task, 0, 30)
 	for rows.Next() {
 		var t task
-		if err := rows.Scan(&t.ID, &t.UserID, &t.Title, &t.EstimatedPomoNum, &t.DueOn, &t.CompletedOn, &t.CreatedAt, &t.UpdatedAt); err != nil {
+		if err := rows.Scan(&t.CompletedOn, &t.CreatedAt, &t.DueOn, &t.EstimatedPomoNum, &t.ID, &t.Title, &t.UpdatedAt, &t.UserID); err != nil {
 			return nil, fmt.Errorf("rows.Scan failed: %w", err)
 		}
 		tasks = append(tasks, &t)

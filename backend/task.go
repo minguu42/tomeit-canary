@@ -4,9 +4,9 @@ import "time"
 
 type (
 	task struct {
-		ID               int        `db:"ID" goqu:"skipinsert"`
+		ID               int        `db:"id" goqu:"skipinsert"`
 		UserID           int        `db:"user_id"`
-		Title            string     `db:"Title"`
+		Title            string     `db:"title"`
 		EstimatedPomoNum int        `db:"estimated_pomo_num"`
 		DueOn            *time.Time `db:"due_on"`
 		CompletedOn      *time.Time `db:"completed_on" goqu:"skipinsert"`
