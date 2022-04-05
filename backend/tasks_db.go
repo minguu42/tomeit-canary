@@ -14,12 +14,12 @@ func createTask(ctx context.Context, userID int, title string, estimatedPomoNum 
 	createdAt := time.Now()
 	sql, _, err := dialect.Insert("tasks").Rows(
 		task{
-			userID:           userID,
-			title:            title,
-			estimatedPomoNum: estimatedPomoNum,
-			dueOn:            dueOn,
-			createdAt:        createdAt,
-			updatedAt:        createdAt,
+			UserID:           userID,
+			Title:            title,
+			EstimatedPomoNum: estimatedPomoNum,
+			DueOn:            dueOn,
+			CreatedAt:        createdAt,
+			UpdatedAt:        createdAt,
 		},
 	).ToSQL()
 	if err != nil {
@@ -38,14 +38,14 @@ func createTask(ctx context.Context, userID int, title string, estimatedPomoNum 
 	}
 
 	return &task{
-		id:               int(id),
-		userID:           userID,
-		title:            title,
-		estimatedPomoNum: estimatedPomoNum,
-		dueOn:            dueOn,
-		completedOn:      nil,
-		createdAt:        createdAt,
-		updatedAt:        createdAt,
+		ID:               int(id),
+		UserID:           userID,
+		Title:            title,
+		EstimatedPomoNum: estimatedPomoNum,
+		DueOn:            dueOn,
+		CompletedOn:      nil,
+		CreatedAt:        createdAt,
+		UpdatedAt:        createdAt,
 	}, nil
 }
 
@@ -79,7 +79,7 @@ func getTasksByUserID(ctx context.Context, userID int, opt *getTasksRequest) ([]
 	tasks := make([]*task, 0, 30)
 	for rows.Next() {
 		var t task
-		if err := rows.Scan(&t.id, &t.userID, &t.title, &t.estimatedPomoNum, &t.dueOn, &t.completedOn, &t.createdAt, &t.updatedAt); err != nil {
+		if err := rows.Scan(&t.ID, &t.UserID, &t.Title, &t.EstimatedPomoNum, &t.DueOn, &t.CompletedOn, &t.CreatedAt, &t.UpdatedAt); err != nil {
 			return nil, fmt.Errorf("rows.Scan failed: %w", err)
 		}
 		tasks = append(tasks, &t)
