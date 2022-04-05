@@ -51,7 +51,7 @@ func getUserByDigestUID(ctx context.Context, digestUID string) (*user, error) {
 	}
 
 	var u user
-	if err := db.QueryRowContext(ctx, sql).Scan(&u.ID, &u.DigestUID, &u.RestCount, &u.CreatedAt, &u.UpdatedAt); err != nil {
+	if err := db.QueryRowContext(ctx, sql).Scan(&u.CreatedAt, &u.DigestUID, &u.ID, &u.RestCount, &u.UpdatedAt); err != nil {
 		return nil, fmt.Errorf("db.QueryRowContext failed: %w", err)
 	}
 	logger.Debug.Println(sql)
