@@ -1,12 +1,12 @@
 package tomeit
 
 import (
-	"github.com/doug-martin/goqu/v9"
 	"net/http"
 	"strings"
 	"testing"
 	"time"
 
+	"github.com/doug-martin/goqu/v9"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
