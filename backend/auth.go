@@ -39,7 +39,7 @@ func Auth(authenticator authenticator) func(handler http.Handler) http.Handler {
 			if user == nil || err != nil {
 				user, err = createUser(ctx, hash(token.UID))
 				if err != nil {
-					logger.Error.Println("db.createUser failed:", err)
+					logger.Error.Println("createUser failed:", err)
 					_ = writeErrResponse(w, newErrInternalServerError(err))
 					return
 				}
