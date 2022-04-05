@@ -20,7 +20,9 @@ func postTasks(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if request.Title == "" {
+		logger.Error.Printf("title is required")
 		_ = writeErrResponse(w, newErrBadRequest(errors.New("title is required")))
+		return
 	}
 	var dueOn *time.Time
 	if request.DueOn != "" {
