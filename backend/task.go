@@ -4,14 +4,14 @@ import "time"
 
 type (
 	task struct {
-		id               int        `db:"id" goqu:"skipinsert"`
-		userID           int        `db:"user_id"`
-		title            string     `db:"title"`
-		estimatedPomoNum int        `db:"estimated_pomo_num"`
-		dueOn            *time.Time `db:"due_on"`
-		completedOn      *time.Time `db:"completed_on"`
-		createdAt        time.Time  `db:"created_at"`
-		updatedAt        time.Time  `db:"updated_at"`
+		ID               int        `db:"ID" goqu:"skipinsert"`
+		UserID           int        `db:"user_id"`
+		Title            string     `db:"Title"`
+		EstimatedPomoNum int        `db:"estimated_pomo_num"`
+		DueOn            *time.Time `db:"due_on"`
+		CompletedOn      *time.Time `db:"completed_on" goqu:"skipinsert"`
+		CreatedAt        time.Time  `db:"created_at"`
+		UpdatedAt        time.Time  `db:"updated_at"`
 	}
 
 	postTasksRequest struct {
@@ -43,23 +43,23 @@ type (
 // TODO: CompletedPomoNum が適切な値になるように実装する
 func newTaskResponse(t *task) *taskResponse {
 	dueOn := ""
-	if t.dueOn != nil {
-		dueOn = t.dueOn.Format(time.RFC3339)
+	if t.DueOn != nil {
+		dueOn = t.DueOn.Format(time.RFC3339)
 	}
 	completedOn := ""
-	if t.completedOn != nil {
-		completedOn = t.completedOn.Format(time.RFC3339)
+	if t.CompletedOn != nil {
+		completedOn = t.CompletedOn.Format(time.RFC3339)
 	}
 
 	return &taskResponse{
-		ID:               t.id,
-		Title:            t.title,
-		EstimatedPomoNum: t.estimatedPomoNum,
+		ID:               t.ID,
+		Title:            t.Title,
+		EstimatedPomoNum: t.EstimatedPomoNum,
 		CompletedPomoNum: 0,
 		DueOn:            dueOn,
 		CompletedOn:      completedOn,
-		CreatedAt:        t.createdAt,
-		UpdatedAt:        t.updatedAt,
+		CreatedAt:        t.CreatedAt,
+		UpdatedAt:        t.UpdatedAt,
 	}
 }
 
