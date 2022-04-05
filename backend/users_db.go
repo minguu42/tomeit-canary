@@ -25,7 +25,7 @@ func createUser(ctx context.Context, digestUID string) (*user, error) {
 
 	result, err := db.ExecContext(ctx, sql)
 	if err != nil {
-		return nil, fmt.Errorf("db.Exec failed: %w", err)
+		return nil, fmt.Errorf("db.ExecContext failed: %w", err)
 	}
 	logger.Debug.Println(sql)
 
