@@ -47,7 +47,7 @@ func postTasks(w http.ResponseWriter, r *http.Request) {
 	if r.TLS != nil {
 		scheme = "http://"
 	}
-	w.Header().Set("Location", scheme+r.Host+r.URL.Path+"/"+strconv.Itoa(task.id))
+	w.Header().Set("Location", scheme+r.Host+r.URL.Path+"/"+strconv.Itoa(task.ID))
 	if err := writeResponse(w, http.StatusCreated, newTaskResponse(task)); err != nil {
 		logger.Error.Printf("writeResponse failed: %v", err)
 		_ = writeErrResponse(w, newErrInternalServerError(err))
