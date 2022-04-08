@@ -5,10 +5,9 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
+	"log"
 	"net/http"
 	"strings"
-
-	"github.com/minguu42/tomeit/logger"
 )
 
 type userKey struct{}
@@ -24,13 +23,14 @@ func Auth(authenticator authenticator) func(handler http.Handler) http.Handler {
 			ctx := r.Context()
 
 			if !strings.HasPrefix(r.Header.Get("Authorization"), "Bearer ") {
+				log.Printf("header Authorization is invalid")
 				_ = writeErrResponse(w, newErrUnauthorized(errors.New("header Authorization format is invalid")))
 				return
 			}
 			idToken := strings.Split(r.Header.Get("Authorization"), " ")[1]
 			token, err := authenticator.VerifyIDToken(ctx, idToken)
 			if err != nil {
-				logger.Error.Println("authenticator.VerifyIDToken failed:", err)
+				log.Printf("authenticator.VerifyIDToken failed: %v", err)
 				_ = writeErrResponse(w, newErrUnauthorized(err))
 				return
 			}
@@ -39,7 +39,7 @@ func Auth(authenticator authenticator) func(handler http.Handler) http.Handler {
 			if user == nil || err != nil {
 				user, err = createUser(ctx, hash(token.UID))
 				if err != nil {
-					logger.Error.Println("createUser failed:", err)
+					log.Printf("createUser failed: %v", err)
 					_ = writeErrResponse(w, newErrInternalServerError(err))
 					return
 				}

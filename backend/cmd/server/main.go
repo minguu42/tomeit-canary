@@ -3,22 +3,22 @@ package main
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/minguu42/tomeit"
-	"github.com/minguu42/tomeit/logger"
 )
 
 func init() {
-	logger.InitLogger(true, true, true)
+	tomeit.InitLogger(true)
 }
 
 func main() {
 	if err := _main(); err != nil {
-		logger.Error.Fatalln("_main failed:", err)
+		log.Fatalf("_main failed: %v", err)
 	}
 }
 

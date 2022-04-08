@@ -3,12 +3,12 @@ package tomeit
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
 	_ "github.com/doug-martin/goqu/v9/dialect/mysql"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/minguu42/tomeit/logger"
 )
 
 var (
@@ -30,7 +30,7 @@ func OpenDB(driverName, dsn string) error {
 		if err == nil {
 			return nil
 		}
-		logger.Info.Println("db.Ping failed. try again in 5 seconds.")
+		log.Println("db.Ping failed. try again in 5 seconds.")
 		time.Sleep(time.Second * 5)
 	}
 	return fmt.Errorf("db.Ping failed: %w", err)
