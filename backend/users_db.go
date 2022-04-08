@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
-	"github.com/minguu42/tomeit/logger"
 )
 
 // createUser は user を作成し、返す。
@@ -27,7 +26,6 @@ func createUser(ctx context.Context, digestUID string) (*user, error) {
 	if err != nil {
 		return nil, fmt.Errorf("db.ExecContext failed: %w", err)
 	}
-	logger.Debug.Println(sql)
 
 	id, err := result.LastInsertId()
 	if err != nil {
@@ -54,7 +52,6 @@ func getUserByDigestUID(ctx context.Context, digestUID string) (*user, error) {
 	if err := db.QueryRowContext(ctx, sql).Scan(&u.CreatedAt, &u.DigestUID, &u.ID, &u.RestCount, &u.UpdatedAt); err != nil {
 		return nil, fmt.Errorf("db.QueryRowContext failed: %w", err)
 	}
-	logger.Debug.Println(sql)
 
 	return &u, nil
 }

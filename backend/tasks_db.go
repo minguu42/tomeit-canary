@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
-	"github.com/minguu42/tomeit/logger"
 )
 
 // createTask は task を作成し、返す。
@@ -30,7 +29,6 @@ func createTask(ctx context.Context, userID int, title string, estimatedPomoNum 
 	if err != nil {
 		return nil, fmt.Errorf("db.ExecContext failed: %w", err)
 	}
-	logger.Debug.Println(sql)
 
 	id, err := result.LastInsertId()
 	if err != nil {
@@ -74,7 +72,6 @@ func getTasksByUserID(ctx context.Context, userID int, opt *getTasksRequest) ([]
 		return nil, fmt.Errorf("db.QueryContext failed: %w", err)
 	}
 	defer rows.Close()
-	logger.Debug.Println(sql)
 
 	tasks := make([]*task, 0, 30)
 	for rows.Next() {
