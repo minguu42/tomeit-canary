@@ -47,6 +47,21 @@ func createTask(ctx context.Context, userID int, title string, estimatedPomoNum 
 	}, nil
 }
 
+// getTaskByID は task を取得し、返す。
+func getTaskByID(ctx context.Context, id int) (*task, error) {
+	sql, _, err := dialect.From("tasks").Select(&task{}).Where(goqu.Ex{"id": id}).ToSQL()
+	if err != nil {
+		return nil, fmt.Errorf("ds.ToSQL failed: %w", err)
+	}
+
+	var t task
+	if err := db.QueryRowContext(ctx, sql).Scan(&t.CompletedOn, &t.CreatedAt, &t.DueOn, &t.EstimatedPomoNum, &t.ID, &t.Title, &t.UpdatedAt, &t.UserID); err != nil {
+		return nil, fmt.Errorf("rows.Scan failed: %w", err)
+	}
+
+	return &t, nil
+}
+
 // getTasksByUserID は task の一覧を取得し、返す。
 func getTasksByUserID(ctx context.Context, userID int, opt *getTasksRequest) ([]*task, error) {
 	ds := dialect.From("tasks").Select(&task{}).Where(goqu.Ex{"user_id": userID})
