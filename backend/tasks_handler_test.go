@@ -366,3 +366,23 @@ func TestGetTasks(t *testing.T) {
 		}
 	})
 }
+
+func TestDeleteTask(t *testing.T) {
+	var (
+		method = http.MethodDelete
+		path   = "/v0/tasks/"
+	)
+	setupTestDB(t)
+	setupTestGetTasks(t)
+	t.Cleanup(teardownTestDB)
+	t.Run("タスク1を削除する", func(t *testing.T) {
+		resp, err := doTestRequest(method, path+"1", nil, nil, nil)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusNoContent {
+			t.Errorf("Status code should be %v, but %v", http.StatusNoContent, resp.StatusCode)
+		}
+	})
+}
