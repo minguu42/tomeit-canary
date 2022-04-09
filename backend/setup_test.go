@@ -44,7 +44,6 @@ func setupTestDB(tb testing.TB) {
 		tb.Fatal("os.ReadFile failed:", err)
 	}
 	queries := strings.Split(string(file), ";")
-
 	for _, query := range queries {
 		if query == "" {
 			break
@@ -52,9 +51,14 @@ func setupTestDB(tb testing.TB) {
 		_, _ = db.Exec(query)
 	}
 
-	sql, _, _ := goqu.Insert("users").Cols("digest_uid").Vals(goqu.Vals{"a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a"}).ToSQL()
+	sql, _, err := dialect.Insert("users").Cols("digest_uid").Vals(
+		goqu.Vals{"a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a"},
+		goqu.Vals{"b29699122faef2224c89e684557b0d0a435fc95fb822a1d6e69638467903fff6"},
+	).ToSQL()
 
-	_, _ = db.Exec(sql)
+	if _, err = db.Exec(sql); err != nil {
+		tb.Fatalf("db.Exec failed: %v", err)
+	}
 }
 
 func teardownTestDB() {
