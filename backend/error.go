@@ -28,23 +28,23 @@ func newErrUnauthorized(err error) *errResponse {
 	}
 }
 
-//func newErrForbidden(err error) *errResponse {
-//	return &errResponse{
-//		Err:        err,
-//		StatusCode: http.StatusForbidden,
-//		StatusText: "指定したリソースへのアクセスが許可されていません。",
-//		ErrorText:  err.Error(),
-//	}
-//}
+func newErrForbidden(err error) *errResponse {
+	return &errResponse{
+		Err:        err,
+		StatusCode: http.StatusForbidden,
+		StatusText: "指定したリソースへのアクセスが許可されていません。",
+		ErrorText:  err.Error(),
+	}
+}
 
-//func newErrNotFound(err error) *errResponse {
-//	return &errResponse{
-//		Err:        err,
-//		StatusCode: http.StatusNotFound,
-//		StatusText: "指定したリソースが存在しません。",
-//		ErrorText:  err.Error(),
-//	}
-//}
+func newErrNotFound(err error) *errResponse {
+	return &errResponse{
+		Err:        err,
+		StatusCode: http.StatusNotFound,
+		StatusText: "指定したリソースが存在しません。",
+		ErrorText:  err.Error(),
+	}
+}
 
 func newErrInternalServerError(err error) *errResponse {
 	return &errResponse{
