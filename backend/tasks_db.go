@@ -84,3 +84,19 @@ func getTasksByUserID(ctx context.Context, userID int, opt *getTasksRequest) ([]
 
 	return tasks, nil
 }
+
+// deleteTaskByID は task を削除する。
+func deleteTaskByID(ctx context.Context, taskID, userID int) error {
+	sql, _, err := dialect.Delete("tasks").Where(goqu.Ex{
+		"id":      taskID,
+		"user_id": userID,
+	}).ToSQL()
+	if err != nil {
+		return fmt.Errorf("ds.ToSQL failed: %w", err)
+	}
+
+	if _, err := db.ExecContext(ctx, sql); err != nil {
+		return fmt.Errorf("db.ExecContext failed: %v", err)
+	}
+	return nil
+}
