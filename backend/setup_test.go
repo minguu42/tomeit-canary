@@ -85,15 +85,19 @@ func doTestRequest(method, path string, params map[string]string, body io.Reader
 	if err != nil {
 		return nil, fmt.Errorf("DefaultClient.Do failed: %w", err)
 	}
-	defer resp.Body.Close()
+
+	if respBody == nil {
+		return resp, nil
+	}
 
 	bytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("io.ReadAll failed: %w", err)
 	}
+	defer resp.Body.Close()
 
 	if err := json.Unmarshal(bytes, respBody); err != nil {
-		return resp, fmt.Errorf("json.Unmarshal failed: %w", err)
+		return nil, fmt.Errorf("json.Unmarshal failed: %w", err)
 	}
 	return resp, nil
 }
