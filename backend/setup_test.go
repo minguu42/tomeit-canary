@@ -14,13 +14,12 @@ import (
 
 	"github.com/doug-martin/goqu/v9"
 	"github.com/go-chi/chi/v5"
-	"github.com/minguu42/tomeit/logger"
 )
 
 var testUrl string
 
 func TestMain(m *testing.M) {
-	logger.InitLogger(false, false, false)
+	InitLogger(false)
 	firebaseAppMock := &firebaseAppMock{}
 
 	if err := OpenDB("mysql", "test:password@tcp(localhost:13306)/db_test?charset=utf8mb4&parseTime=true"); err != nil {
