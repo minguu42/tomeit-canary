@@ -123,7 +123,7 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 
 	if user.ID != task.UserID {
 		log.Printf("Access to the specified resource is not allowed")
-		_ = writeErrResponse(w, newErrForbidden(err))
+		_ = writeErrResponse(w, newErrForbidden(errors.New("access to the specified resource is not allowed")))
 		return
 	}
 
