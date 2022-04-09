@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/go-chi/chi/v5"
 )
 
 // postTasks は POST /tasks エンドポイントに対応するハンドラ関数である。
@@ -95,4 +97,27 @@ func getTasks(w http.ResponseWriter, r *http.Request) {
 		_ = writeErrResponse(w, newErrInternalServerError(err))
 		return
 	}
+}
+
+// deleteTask は DELETE /tasks/{taskID} エンドポイントに対応するハンドラ関数である。
+func deleteTask(w http.ResponseWriter, r *http.Request) {
+	var request deleteTaskRequest
+	taskID, err := strconv.Atoi(chi.URLParam(r, "taskID"))
+	if err != nil {
+		log.Printf("strconv.Atoi failed: %v", err)
+		_ = writeErrResponse(w, newErrBadRequest(err))
+		return
+	}
+	request.taskID = taskID
+
+	ctx := r.Context()
+	user := ctx.Value(userKey{}).(*user)
+
+	if err := deleteTaskByID(ctx, request.taskID, user.ID); err != nil {
+		log.Printf("deleteTaskByID failed: %v", err)
+		_ = writeErrResponse(w, newErrInternalServerError(err))
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
