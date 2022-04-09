@@ -121,6 +121,14 @@ func setupTestGetTasks(tb testing.TB) {
 			goqu.Vals{6, 1, "タスク6", 4, nil, completedOn},
 			goqu.Vals{7, 1, "タスク7", 0, dueOn, completedOn},
 			goqu.Vals{8, 1, "タスク8", 4, dueOn, completedOn},
+			goqu.Vals{9, 2, "タスク9", 0, nil, nil},
+			goqu.Vals{10, 2, "タスク10", 4, nil, nil},
+			goqu.Vals{11, 2, "タスク11", 0, dueOn, nil},
+			goqu.Vals{12, 2, "タスク12", 0, nil, completedOn},
+			goqu.Vals{13, 2, "タスク13", 4, dueOn, nil},
+			goqu.Vals{14, 2, "タスク14", 4, nil, completedOn},
+			goqu.Vals{15, 2, "タスク15", 0, dueOn, completedOn},
+			goqu.Vals{16, 2, "タスク16", 4, dueOn, completedOn},
 		).ToSQL()
 	if err != nil {
 		tb.Fatalf("ds.ToSQL failed: %v", err)
@@ -383,6 +391,26 @@ func TestDeleteTask(t *testing.T) {
 
 		if resp.StatusCode != http.StatusNoContent {
 			t.Errorf("Status code should be %v, but %v", http.StatusNoContent, resp.StatusCode)
+		}
+	})
+	t.Run("指定したリソースへのアクセスが許可されていない", func(t *testing.T) {
+		resp, err := doTestRequest(method, path+"9", nil, nil, nil)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusForbidden {
+			t.Errorf("Status code should be %v, but %v", http.StatusForbidden, resp.StatusCode)
+		}
+	})
+	t.Run("指定した ID のタスクが存在しない", func(t *testing.T) {
+		resp, err := doTestRequest(method, path+"17", nil, nil, nil)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusNotFound {
+			t.Errorf("Status code should be %v, but %v", http.StatusNotFound, resp.StatusCode)
 		}
 	})
 }
