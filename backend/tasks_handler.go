@@ -1,6 +1,7 @@
 package tomeit
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"log"
@@ -112,6 +113,19 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	user := ctx.Value(userKey{}).(*user)
+
+	task, err := getTaskByID(ctx, request.taskID)
+	if errors.Is(err, sql.ErrNoRows) {
+		log.Print("the task does not exist")
+		_ = writeErrResponse(w, newErrNotFound(err))
+		return
+	}
+
+	if user.ID != task.UserID {
+		log.Printf("Access to the specified resource is not allowed")
+		_ = writeErrResponse(w, newErrForbidden(err))
+		return
+	}
 
 	if err := deleteTaskByID(ctx, request.taskID, user.ID); err != nil {
 		log.Printf("deleteTaskByID failed: %v", err)
