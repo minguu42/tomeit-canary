@@ -393,6 +393,16 @@ func TestDeleteTask(t *testing.T) {
 			t.Errorf("Status code should be %v, but %v", http.StatusNoContent, resp.StatusCode)
 		}
 	})
+	t.Run("タスク ID が数字ではない", func(t *testing.T) {
+		resp, err := doTestRequest(method, path+"壱", nil, nil, nil)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusBadRequest {
+			t.Errorf("Status code should be %v, but %v", http.StatusBadRequest, resp.StatusCode)
+		}
+	})
 	t.Run("指定したリソースへのアクセスが許可されていない", func(t *testing.T) {
 		resp, err := doTestRequest(method, path+"9", nil, nil, nil)
 		if err != nil {
