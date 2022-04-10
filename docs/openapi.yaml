@@ -49,7 +49,7 @@ paths:
         "401":
           $ref: "#/components/responses/ErrUnauthorized"
       security:
-        - bearerAuth: [ ]
+        - bearerAuth: []
     get:
       tags:
         - tasks
@@ -78,17 +78,34 @@ paths:
         "401":
           $ref: "#/components/responses/ErrUnauthorized"
       security:
-        - beaerAuth: [ ]
+        - beaerAuth: []
   /tasks/{taskID}:
-    delete:
-      summary: 特定のタスクを削除する
+    patch:
+      summary: 指定したタスクを更新する
       tags:
         - tasks
-      parameters:
-        - $ref: "#/components/parameters/taskID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                estimatedPomoNum:
+                  type: integer
+                dueOn:
+                  type: string
+                  format: date-time
+                completedOn:
+                  type: string
+                  format: date-time
       responses:
-        "204":
+        "200":
           description: 成功
+        "400":
+          $ref: "#/components/responses/ErrBadRequest"
         "401":
           $ref: "#/components/responses/ErrUnauthorized"
         "403":
@@ -96,7 +113,26 @@ paths:
         "404":
           $ref: "#/components/responses/ErrNotFound"
       security:
-        - beaerAuth: [ ]
+        - bearAuth: []
+    delete:
+      summary: 指定したタスクを削除する
+      tags:
+        - tasks
+      parameters:
+        - $ref: "#/components/parameters/taskID"
+      responses:
+        "204":
+          description: 成功
+        "400":
+          $ref: "#/components/responses/ErrBadRequest"
+        "401":
+          $ref: "#/components/responses/ErrUnauthorized"
+        "403":
+          $ref: "#/components/responses/ErrForbidden"
+        "404":
+          $ref: "#/components/responses/ErrNotFound"
+      security:
+        - beaerAuth: []
   /healthz:
     get:
       tags:
