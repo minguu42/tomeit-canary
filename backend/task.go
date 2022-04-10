@@ -23,6 +23,9 @@ type (
 		isCompleted *bool
 		completedOn *time.Time
 	}
+	deleteTaskRequest struct {
+		taskID int
+	}
 
 	taskResponse struct {
 		ID               int       `json:"id"`

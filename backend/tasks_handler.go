@@ -1,12 +1,15 @@
 package tomeit
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"log"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/go-chi/chi/v5"
 )
 
 // postTasks は POST /tasks エンドポイントに対応するハンドラ関数である。
@@ -95,4 +98,40 @@ func getTasks(w http.ResponseWriter, r *http.Request) {
 		_ = writeErrResponse(w, newErrInternalServerError(err))
 		return
 	}
+}
+
+// deleteTask は DELETE /tasks/{taskID} エンドポイントに対応するハンドラ関数である。
+func deleteTask(w http.ResponseWriter, r *http.Request) {
+	var request deleteTaskRequest
+	taskID, err := strconv.Atoi(chi.URLParam(r, "taskID"))
+	if err != nil {
+		log.Printf("strconv.Atoi failed: %v", err)
+		_ = writeErrResponse(w, newErrBadRequest(err))
+		return
+	}
+	request.taskID = taskID
+
+	ctx := r.Context()
+	user := ctx.Value(userKey{}).(*user)
+
+	task, err := getTaskByID(ctx, request.taskID)
+	if errors.Is(err, sql.ErrNoRows) {
+		log.Print("the task does not exist")
+		_ = writeErrResponse(w, newErrNotFound(err))
+		return
+	}
+
+	if user.ID != task.UserID {
+		log.Printf("Access to the specified resource is not allowed")
+		_ = writeErrResponse(w, newErrForbidden(errors.New("access to the specified resource is not allowed")))
+		return
+	}
+
+	if err := deleteTaskByID(ctx, request.taskID, user.ID); err != nil {
+		log.Printf("deleteTaskByID failed: %v", err)
+		_ = writeErrResponse(w, newErrInternalServerError(err))
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }

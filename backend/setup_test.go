@@ -44,7 +44,6 @@ func setupTestDB(tb testing.TB) {
 		tb.Fatal("os.ReadFile failed:", err)
 	}
 	queries := strings.Split(string(file), ";")
-
 	for _, query := range queries {
 		if query == "" {
 			break
@@ -52,9 +51,17 @@ func setupTestDB(tb testing.TB) {
 		_, _ = db.Exec(query)
 	}
 
-	sql, _, _ := goqu.Insert("users").Cols("digest_uid").Vals(goqu.Vals{"a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a"}).ToSQL()
+	sql, _, err := dialect.Insert("users").Cols("digest_uid").Vals(
+		goqu.Vals{"a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a"},
+		goqu.Vals{"b29699122faef2224c89e684557b0d0a435fc95fb822a1d6e69638467903fff6"},
+	).ToSQL()
+	if err != nil {
+		tb.Fatalf("ds.ToSQL failed: %v", err)
+	}
 
-	_, _ = db.Exec(sql)
+	if _, err = db.Exec(sql); err != nil {
+		tb.Fatalf("db.Exec failed: %v", err)
+	}
 }
 
 func teardownTestDB() {
@@ -85,15 +92,11 @@ func doTestRequest(method, path string, params map[string]string, body io.Reader
 	if err != nil {
 		return nil, fmt.Errorf("DefaultClient.Do failed: %w", err)
 	}
-	defer resp.Body.Close()
 
-	bytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("io.ReadAll failed: %w", err)
-	}
-
-	if err := json.Unmarshal(bytes, respBody); err != nil {
-		return resp, fmt.Errorf("json.Unmarshal failed: %w", err)
+	if respBody != nil {
+		if err := json.NewDecoder(resp.Body).Decode(respBody); err != nil {
+			return nil, fmt.Errorf("decoder.Decode failed: %w", err)
+		}
 	}
 	return resp, nil
 }
