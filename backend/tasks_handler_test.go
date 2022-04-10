@@ -375,6 +375,63 @@ func TestGetTasks(t *testing.T) {
 	})
 }
 
+func TestPatchTask(t *testing.T) {
+	var (
+		method = http.MethodPatch
+		path   = "/v0/tasks/"
+		got    taskResponse
+	)
+	setupTestDB(t)
+	setupTestGetTasks(t)
+	t.Cleanup(teardownTestDB)
+	t.Run("タスク1を更新する（title）", func(t *testing.T) {
+		body := strings.NewReader(`{"title": "更新済みタスク"}`)
+		resp, err := doTestRequest(method, path+"1", nil, body, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
+		}
+
+		want := taskResponse{
+			ID:               1,
+			Title:            "更新済みタスク",
+			EstimatedPomoNum: 0,
+			CompletedPomoNum: 0,
+			DueOn:            "",
+			CompletedOn:      "",
+		}
+		if diff := cmp.Diff(got, want, opt); diff != "" {
+			t.Errorf("patchTask response mismatch (-got +want):\n%s", diff)
+		}
+	})
+	t.Run("タスク2を更新する（estimatedPomoNum）", func(t *testing.T) {
+		body := strings.NewReader(`{"estimatedPomoNum": 2"}`)
+		resp, err := doTestRequest(method, path+"2", nil, body, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
+		}
+
+		want := taskResponse{
+			ID:               2,
+			Title:            "タスク2",
+			EstimatedPomoNum: 2,
+			CompletedPomoNum: 0,
+			DueOn:            "",
+			CompletedOn:      "",
+		}
+		if diff := cmp.Diff(got, want, opt); diff != "" {
+			t.Errorf("patchTask response mismatch (-got +want):\n%s", diff)
+		}
+	})
+}
+
 func TestDeleteTask(t *testing.T) {
 	var (
 		method = http.MethodDelete
