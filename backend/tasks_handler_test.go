@@ -408,7 +408,7 @@ func TestPatchTask(t *testing.T) {
 		}
 	})
 	t.Run("タスク2を更新する（estimatedPomoNum）", func(t *testing.T) {
-		body := strings.NewReader(`{"estimatedPomoNum": 2"}`)
+		body := strings.NewReader(`{"estimatedPomoNum": 2}`)
 		resp, err := doTestRequest(method, path+"2", nil, body, &got)
 		if err != nil {
 			t.Fatalf("doTestRequest failed: %v", err)
