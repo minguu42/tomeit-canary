@@ -8,6 +8,7 @@ func Route(r chi.Router) {
 		r.Route("/tasks", func(r chi.Router) {
 			r.Post("/", postTasks)
 			r.Get("/", getTasks)
+			r.Patch("/{taskID}", patchTask)
 			r.Delete("/{taskID}", deleteTask)
 		})
 

@@ -375,6 +375,96 @@ func TestGetTasks(t *testing.T) {
 	})
 }
 
+func TestPatchTask(t *testing.T) {
+	var (
+		method = http.MethodPatch
+		path   = "/v0/tasks/"
+		got    taskResponse
+	)
+	setupTestDB(t)
+	setupTestGetTasks(t)
+	t.Cleanup(teardownTestDB)
+	t.Run("タスク1を更新する（title）", func(t *testing.T) {
+		body := strings.NewReader(`{"title": "更新済みタスク"}`)
+		resp, err := doTestRequest(method, path+"1", nil, body, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
+		}
+
+		want := taskResponse{
+			ID:               1,
+			Title:            "更新済みタスク",
+			EstimatedPomoNum: 0,
+			CompletedPomoNum: 0,
+			DueOn:            "",
+			CompletedOn:      "",
+		}
+		if diff := cmp.Diff(got, want, opt); diff != "" {
+			t.Errorf("patchTask response mismatch (-got +want):\n%s", diff)
+		}
+	})
+	t.Run("タスク2を更新する（estimatedPomoNum）", func(t *testing.T) {
+		body := strings.NewReader(`{"estimatedPomoNum": 2}`)
+		resp, err := doTestRequest(method, path+"2", nil, body, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("Status code should be %v, but %v", http.StatusOK, resp.StatusCode)
+		}
+
+		want := taskResponse{
+			ID:               2,
+			Title:            "タスク2",
+			EstimatedPomoNum: 2,
+			CompletedPomoNum: 0,
+			DueOn:            "",
+			CompletedOn:      "",
+		}
+		if diff := cmp.Diff(got, want, opt); diff != "" {
+			t.Errorf("patchTask response mismatch (-got +want):\n%s", diff)
+		}
+	})
+	t.Run("taskID が数字ではないので 400 エラーが返す", func(t *testing.T) {
+		body := strings.NewReader(`{"title": "更新済みタスク"}`)
+		resp, err := doTestRequest(method, path+"壱", nil, body, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusBadRequest {
+			t.Errorf("Status code should be %v, but %v", http.StatusBadRequest, resp.StatusCode)
+		}
+	})
+	t.Run("指定したタスクが自身のタスクではないので 403 エラーが返す", func(t *testing.T) {
+		body := strings.NewReader(`{"title": "更新済みタスク"}`)
+		resp, err := doTestRequest(method, path+"9", nil, body, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusForbidden {
+			t.Errorf("Status code should be %v, but %v", http.StatusForbidden, resp.StatusCode)
+		}
+	})
+	t.Run("指定したタスクが存在しないので 404 エラーを返す", func(t *testing.T) {
+		body := strings.NewReader(`{"title": "更新済みタスク"}`)
+		resp, err := doTestRequest(method, path+"17", nil, body, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusNotFound {
+			t.Errorf("Status code should be %v, but %v", http.StatusNotFound, resp.StatusCode)
+		}
+	})
+}
+
 func TestDeleteTask(t *testing.T) {
 	var (
 		method = http.MethodDelete
@@ -391,6 +481,16 @@ func TestDeleteTask(t *testing.T) {
 
 		if resp.StatusCode != http.StatusNoContent {
 			t.Errorf("Status code should be %v, but %v", http.StatusNoContent, resp.StatusCode)
+		}
+	})
+	t.Run("タスク ID が数字ではない", func(t *testing.T) {
+		resp, err := doTestRequest(method, path+"壱", nil, nil, nil)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusBadRequest {
+			t.Errorf("Status code should be %v, but %v", http.StatusBadRequest, resp.StatusCode)
 		}
 	})
 	t.Run("指定したリソースへのアクセスが許可されていない", func(t *testing.T) {
