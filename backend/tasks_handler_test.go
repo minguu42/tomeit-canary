@@ -430,6 +430,39 @@ func TestPatchTask(t *testing.T) {
 			t.Errorf("patchTask response mismatch (-got +want):\n%s", diff)
 		}
 	})
+	t.Run("taskID が数字ではないので 400 エラーが返す", func(t *testing.T) {
+		body := strings.NewReader(`{"title": "更新済みタスク"}`)
+		resp, err := doTestRequest(method, path+"壱", nil, body, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusBadRequest {
+			t.Errorf("Status code should be %v, but %v", http.StatusBadRequest, resp.StatusCode)
+		}
+	})
+	t.Run("指定したタスクが自身のタスクではないので 403 エラーが返す", func(t *testing.T) {
+		body := strings.NewReader(`{"title": "更新済みタスク"}`)
+		resp, err := doTestRequest(method, path+"9", nil, body, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusForbidden {
+			t.Errorf("Status code should be %v, but %v", http.StatusForbidden, resp.StatusCode)
+		}
+	})
+	t.Run("指定したタスクが存在しないので 404 エラーを返す", func(t *testing.T) {
+		body := strings.NewReader(`{"title": "更新済みタスク"}`)
+		resp, err := doTestRequest(method, path+"17", nil, body, &got)
+		if err != nil {
+			t.Fatalf("doTestRequest failed: %v", err)
+		}
+
+		if resp.StatusCode != http.StatusNotFound {
+			t.Errorf("Status code should be %v, but %v", http.StatusNotFound, resp.StatusCode)
+		}
+	})
 }
 
 func TestDeleteTask(t *testing.T) {
