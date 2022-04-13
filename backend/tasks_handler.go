@@ -100,6 +100,75 @@ func getTasks(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// patchTask は PATCH /tasks/{taskID} エンドポイントに対応するハンドラ関数である。
+func patchTask(w http.ResponseWriter, r *http.Request) {
+	var request patchTaskRequest
+	taskID, err := strconv.Atoi(chi.URLParam(r, "taskID"))
+	if err != nil {
+		log.Printf("strconv.Atoi failed: %v", err)
+		_ = writeErrResponse(w, newErrBadRequest(err))
+		return
+	}
+	request.taskID = taskID
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		log.Printf("decoder.Decode failed: %v", err)
+		_ = writeErrResponse(w, newErrBadRequest(err))
+		return
+	}
+
+	ctx := r.Context()
+	user := ctx.Value(userKey{}).(*user)
+
+	task, err := getTaskByID(ctx, request.taskID)
+	if errors.Is(err, sql.ErrNoRows) {
+		log.Print("the task does not exist")
+		_ = writeErrResponse(w, newErrNotFound(err))
+		return
+	}
+	if !user.hasTask(task) {
+		log.Printf("Access to the specified resource is not allowed")
+		_ = writeErrResponse(w, newErrForbidden(errors.New("access to the specified resource is not allowed")))
+		return
+	}
+
+	if request.Title != "" {
+		task.Title = request.Title
+	}
+	if request.EstimatedPomoNum != nil {
+		task.EstimatedPomoNum = *request.EstimatedPomoNum
+	}
+	if request.DueOn != nil {
+		dueOn, err := time.Parse(time.RFC3339, *request.DueOn)
+		if err != nil {
+			log.Printf("time.Parse failed: %v", err)
+			_ = writeErrResponse(w, newErrBadRequest(err))
+			return
+		}
+		task.DueOn = &dueOn
+	}
+	if request.CompletedOn != nil {
+		completedOn, err := time.Parse(time.RFC3339, *request.CompletedOn)
+		if err != nil {
+			log.Printf("time.Parse failed: %v", err)
+			_ = writeErrResponse(w, newErrBadRequest(err))
+			return
+		}
+		task.CompletedOn = &completedOn
+	}
+
+	if err := updateTaskByID(ctx, task); err != nil {
+		log.Printf("updateTaskByID failed: %v", err)
+		_ = writeErrResponse(w, newErrInternalServerError(err))
+		return
+	}
+
+	if err := writeResponse(w, http.StatusOK, newTaskResponse(task)); err != nil {
+		log.Printf("writeResponse failed: %v", err)
+		_ = writeErrResponse(w, newErrInternalServerError(err))
+		return
+	}
+}
+
 // deleteTask は DELETE /tasks/{taskID} エンドポイントに対応するハンドラ関数である。
 func deleteTask(w http.ResponseWriter, r *http.Request) {
 	var request deleteTaskRequest

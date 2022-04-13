@@ -100,6 +100,19 @@ func getTasksByUserID(ctx context.Context, userID int, opt *getTasksRequest) ([]
 	return tasks, nil
 }
 
+// updateTaskByID は task の任意の値を更新する。
+func updateTaskByID(ctx context.Context, task *task) error {
+	sql, _, err := dialect.Update("tasks").Set(task).Where(goqu.Ex{"id": task.ID}).ToSQL()
+	if err != nil {
+		return fmt.Errorf("ds.ToSQL failed: %w", err)
+	}
+
+	if _, err := db.ExecContext(ctx, sql); err != nil {
+		return fmt.Errorf("db.ExecContext failed: %w", err)
+	}
+	return nil
+}
+
 // deleteTaskByID は task を削除する。
 func deleteTaskByID(ctx context.Context, taskID, userID int) error {
 	sql, _, err := dialect.Delete("tasks").Where(goqu.Ex{

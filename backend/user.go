@@ -9,3 +9,10 @@ type user struct {
 	CreatedAt time.Time `db:"created_at"`
 	UpdatedAt time.Time `db:"updated_at"`
 }
+
+func (u *user) hasTask(t *task) bool {
+	if u.ID == 0 || t.UserID == 0 {
+		return false
+	}
+	return u.ID == t.UserID
+}

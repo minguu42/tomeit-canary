@@ -4,14 +4,14 @@ import "time"
 
 type (
 	task struct {
-		ID               int        `db:"id" goqu:"skipinsert"`
-		UserID           int        `db:"user_id"`
+		ID               int        `db:"id"      goqu:"skipinsert,skipupdate"`
+		UserID           int        `db:"user_id" goqu:"skipupdate"`
 		Title            string     `db:"title"`
 		EstimatedPomoNum int        `db:"estimated_pomo_num"`
 		DueOn            *time.Time `db:"due_on"`
 		CompletedOn      *time.Time `db:"completed_on" goqu:"skipinsert"`
-		CreatedAt        time.Time  `db:"created_at"`
-		UpdatedAt        time.Time  `db:"updated_at"`
+		CreatedAt        time.Time  `db:"created_at"   goqu:"skipupdate"`
+		UpdatedAt        time.Time  `db:"updated_at"   goqu:"skipupdate"`
 	}
 
 	postTasksRequest struct {
@@ -22,6 +22,13 @@ type (
 	getTasksRequest struct {
 		isCompleted *bool
 		completedOn *time.Time
+	}
+	patchTaskRequest struct {
+		taskID           int
+		Title            string  `json:"title"`
+		EstimatedPomoNum *int    `json:"estimatedPomoNum"`
+		DueOn            *string `json:"dueOn"`
+		CompletedOn      *string `json:"completedOn"`
 	}
 	deleteTaskRequest struct {
 		taskID int
