@@ -6,9 +6,11 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/minguu42/tomeit"
 )
 
@@ -26,6 +28,7 @@ func _main() error {
 	var (
 		port                  = "8080"
 		driverName            = "mysql"
+		allowedOrigins        = "https://*,http://*"
 		dsn                   = os.Getenv("DSN")
 		googleCredentialsJSON = os.Getenv("GOOGLE_CREDENTIALS_JSON")
 	)
@@ -34,6 +37,9 @@ func _main() error {
 	}
 	if envDriverName := os.Getenv("DRIVER_NAME"); envDriverName != "" {
 		driverName = envDriverName
+	}
+	if envAllowedOrigins := os.Getenv("ALLOWED_ORIGINS"); envAllowedOrigins != "" {
+		allowedOrigins = envAllowedOrigins
 	}
 	if dsn == "" {
 		return errors.New("environment variable DSN does not exist")
@@ -54,9 +60,15 @@ func _main() error {
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   strings.Split(allowedOrigins, ","),
+		AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	}))
 	r.Use(tomeit.Auth(firebaseApp))
 	r.Use(middleware.Recoverer)
-	// TODO: CORS ミドルウェアを追加する
 	tomeit.Route(r)
 
 	if err := http.ListenAndServe(":"+port, r); err != nil {
