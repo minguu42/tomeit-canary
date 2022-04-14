@@ -3,7 +3,7 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { User } from "firebase/auth";
 
 import { Task } from "@/models/task";
-import { postTasks } from "@/lib/fetch";
+import {fetchTasks, postTasks} from "@/lib/fetch";
 
 type TasksMutators = {
   initTasks: (tasks: Task[]) => void;
@@ -36,6 +36,7 @@ export const useTasksMutators = (): TasksMutators => {
         .getIdToken(true)
         .then((idToken) => {
           postTasks(idToken);
+          fetchTasks(idToken);
         })
         .catch((error) => {
           console.error(error);
