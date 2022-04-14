@@ -6,7 +6,7 @@ import { login } from "@/lib/auth";
 
 export const GoogleLoginButton: VFC = () => {
   return (
-    <button onClick={login} className={s.container}>
+    <button onClick={() => void login()} className={s.container}>
       <div className={s.layer} />
       <div className={s.logoBackground}>
         <Image

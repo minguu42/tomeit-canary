@@ -83,7 +83,9 @@ const TopAppBar: VFC = () => {
           {theme === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
         </button>
         <button
-          onClick={logout}
+          onClick={() => {
+            void logout();
+          }}
           aria-label="ログアウトする"
           className={s.interactiveIcon}
         >
