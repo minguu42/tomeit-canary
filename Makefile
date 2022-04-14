@@ -1,21 +1,25 @@
 .DEFAULT_GOAL := help
 
 .PHONY: dev
-dev:  ## http://localhost:3000 で開発用サーバを起動し、そのページを開く
+dev:  ## http://localhost:3000 で開発用 Web サーバを起動する
 	@open http://localhost:3000/
 	@npm run dev
 
+.PHONY: dev-backend
+dev-backend:  ## 開発用 API サーバを起動する
+	@docker compose up api
+
 .PHONY: docs
-docs: ## http://localhost:8000 でドキュメント用サーバを起動し、そのページを開く
+docs: ## http://localhost:8000 でドキュメント用サーバを起動する
 	@open http://localhost:8000/
-	@docker compose --env-file ./.env.development.local up -d docs
+	@docker compose up -d docs
 
 .PHONY: build
-build:  ## ビルドする
+build:  ## Next.js アプリをビルドする
 	@npm run build
 
 .PHONY: start
-start:  ## 本番サーバを起動する
+start:  ## 本番用 Web サーバを起動する
 	@npm run start
 
 .PHONY: fmt
@@ -28,8 +32,8 @@ lint:  ## js, ts, jsx, tsx, css ファイルを静的解析する
 
 .PHONY: down
 down:  ## 関連する Docker コンテナを停止し, 削除する
-	@docker compose --env-file ./.env.development.local down
+	@docker compose down
 
 .PHONY: help
 help: ## ヘルプを表示する
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
