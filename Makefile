@@ -5,6 +5,10 @@ dev:  ## http://localhost:3000 で開発用サーバを起動し、そのペー�
 	@open http://localhost:3000/
 	@npm run dev
 
+.PHONY: dev-backend
+dev-backend:  ## 開発用 API サーバを起動する
+	@docker compose --env-file ./.env.development.local up api
+
 .PHONY: docs
 docs: ## http://localhost:8000 でドキュメント用サーバを起動し、そのページを開く
 	@open http://localhost:8000/
