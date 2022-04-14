@@ -6,12 +6,14 @@ import { AddTaskIcon, AlarmIcon } from "@/components/common/icons";
 import { useTasksMutators } from "@/globalStates/tasksAtom";
 import { Task } from "@/models/task";
 import { formatDate } from "@/lib/format";
+import { useUserAtom } from "@/globalStates/userAtom";
 
 const TaskAddForm: VFC = () => {
   const [title, setTitle] = useState("");
   const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
   const [dueOn, setDueOn] = useState<Date | null>(null);
   const { addTask } = useTasksMutators();
+  const user = useUserAtom();
 
   const handleTitleChange: FormEventHandler<HTMLInputElement> = (event) => {
     setTitle(event.currentTarget.value);
@@ -38,7 +40,9 @@ const TaskAddForm: VFC = () => {
       isCompleted: false,
       completedOn: null,
     };
-    addTask(task);
+    if (user != null) {
+      addTask(user, task);
+    }
 
     setTitle("");
     setExpectedPomodoroNum(0);
