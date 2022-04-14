@@ -2,8 +2,7 @@
 
 ### Common ###
 # Local env files
-.env.development.local
-.env.production.local
+.env
 
 ### Frontend - Next.js ###
 # Dependencies
