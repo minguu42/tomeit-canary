@@ -1,6 +1,7 @@
 import { User } from "firebase/auth";
 
 import { isTaskResponse, TaskResponse } from "@/models/task";
+import { formatDateStringToRFC3339 } from "@/lib/format";
 
 const TOMEIT_API_URL = "http://localhost:8080/v0";
 
@@ -36,7 +37,7 @@ export const postTasks = async (
     body: JSON.stringify({
       title: title,
       estimatedPomoNum: estimatedPomoNum,
-      dueOn: dueOn,
+      dueOn: dueOn == "" ? "" : formatDateStringToRFC3339(dueOn),
     }),
   });
   const data: unknown = await response.json();
