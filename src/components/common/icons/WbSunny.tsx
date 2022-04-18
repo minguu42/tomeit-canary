@@ -1,11 +1,11 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 type Props = {
   size?: number;
   className?: string;
 };
 
-const WbSunny: VFC<Props> = ({ size, className }) => (
+const WbSunny: FC<Props> = ({ size, className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size ?? "24px"}
