@@ -24,7 +24,7 @@ const TaskList: FC<Props> = ({
 }) => {
   const tasks = useTasksAtom();
 
-  const isNotTaskCompleted = (task: Task) => !task.isCompleted;
+  const isNotTaskCompleted = (task: Task) => task.completedOn == null;
   const isTaskDueOn = (task: Task, date: Date) =>
     task.dueOn !== null && formatDate(task.dueOn) === formatDate(date);
   let filterConditions = isNotTaskCompleted;
