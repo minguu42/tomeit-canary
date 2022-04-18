@@ -1,4 +1,4 @@
-import { FormEventHandler, SyntheticEvent, useState, VFC } from "react";
+import { FC, useState, FormEventHandler, SyntheticEvent } from "react";
 import cn from "classnames";
 
 import s from "./TaskAddForm.module.css";
@@ -8,7 +8,7 @@ import { Task } from "@/models/task";
 import { formatDate } from "@/lib/format";
 import { useUserAtom } from "@/globalStates/userAtom";
 
-const TaskAddForm: VFC = () => {
+const TaskAddForm: FC = () => {
   const [title, setTitle] = useState("");
   const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
   const [dueOn, setDueOn] = useState<Date | null>(null);
