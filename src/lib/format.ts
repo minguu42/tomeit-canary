@@ -21,14 +21,6 @@ export const formatDateToJP = (date: Date): string => {
   });
 };
 
-export const formatToLocalPomodoroDuring = (date: Date): string => {
-  const completedHour = String(date.getHours()).padStart(2, "0");
-  const completedMinutes = String(date.getMinutes()).padStart(2, "0");
-
-  date.setMinutes(date.getMinutes() - 25);
-  const startHour = String(date.getHours()).padStart(2, "0");
-  const startMinutes = String(date.getMinutes()).padStart(2, "0");
-  date.setMinutes(date.getMinutes() + 25);
-
-  return `${startHour}：${startMinutes} - ${completedHour}：${completedMinutes}`;
+export const formatDateStringToRFC3339 = (date: string): string => {
+  return date + "T00:00:00Z";
 };
