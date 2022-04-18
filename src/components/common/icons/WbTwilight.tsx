@@ -1,11 +1,11 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 type Props = {
   size?: number;
   className?: string;
 };
 
-const WbTwilight: VFC<Props> = ({ size, className }) => (
+const WbTwilight: FC<Props> = ({ size, className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     enableBackground="new 0 0 24 24"

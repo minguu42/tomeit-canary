@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 import { CircleIcon, PlayCircleIcon } from "@/components/common/icons";
 import PomodoroCaption from "@/components/models/pomodoro/PomodoroCaption";
@@ -16,7 +16,7 @@ type Props = {
   closeTaskSideSheet: () => void;
 };
 
-const TaskListItem: VFC<Props> = ({
+const TaskListItem: FC<Props> = ({
   task,
   featuredTask,
   onCompleteTaskButtonClick,
@@ -39,8 +39,8 @@ const TaskListItem: VFC<Props> = ({
       >
         <p className={s.title}>{task.title}</p>
         <PomodoroCaption
-          expectedPomodoroNum={task.expectedPomodoroNum}
-          actualPomodoroNum={task.actualPomodoroNum}
+          expectedPomodoroNum={task.estimatedPomoNum}
+          actualPomodoroNum={task.completedPomoNum}
         />
       </button>
       {task.dueOn && <p className={s.dueOnCaption}>{formatDate(task.dueOn)}</p>}

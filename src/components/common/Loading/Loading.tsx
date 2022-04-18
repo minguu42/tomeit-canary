@@ -1,8 +1,8 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 import s from "./Loading.module.css";
 
-const Loading: VFC = () => {
+const Loading: FC = () => {
   return (
     <div className={s.background}>
       <h1 className={s.message}>Loading ...</h1>

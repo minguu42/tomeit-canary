@@ -1,10 +1,10 @@
-import { VFC } from "react";
+import { FC } from "react";
 import Image from "next/image";
 
 import s from "./GoogleLoginButton.module.css";
 import { login } from "@/lib/auth";
 
-export const GoogleLoginButton: VFC = () => {
+export const GoogleLoginButton: FC = () => {
   return (
     <button onClick={() => void login()} className={s.container}>
       <div className={s.layer} />

@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 import cn from "classnames";
 
 import s from "./IconButton.module.css";
@@ -10,7 +10,7 @@ type Props = {
   type?: "variant";
 };
 
-const IconButton: VFC<Props> = ({ icon, label, onClick, type }) => {
+const IconButton: FC<Props> = ({ icon, label, onClick, type }) => {
   return (
     <button
       onClick={onClick}

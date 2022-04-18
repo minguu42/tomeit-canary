@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
 import { useTasksAtom } from "@/globalStates/tasksAtom";
@@ -14,7 +14,7 @@ type Props = {
   closeTaskSideSheet: () => void;
 };
 
-const TaskList: VFC<Props> = ({
+const TaskList: FC<Props> = ({
   filter,
   featuredTask,
   completeTask,
@@ -24,7 +24,7 @@ const TaskList: VFC<Props> = ({
 }) => {
   const tasks = useTasksAtom();
 
-  const isNotTaskCompleted = (task: Task) => !task.isCompleted;
+  const isNotTaskCompleted = (task: Task) => task.completedOn == null;
   const isTaskDueOn = (task: Task, date: Date) =>
     task.dueOn !== null && formatDate(task.dueOn) === formatDate(date);
   let filterConditions = isNotTaskCompleted;

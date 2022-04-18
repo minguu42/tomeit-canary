@@ -1,4 +1,4 @@
-import { useEffect, VFC } from "react";
+import { FC, useEffect } from "react";
 import cn from "classnames";
 
 import {
@@ -19,7 +19,7 @@ import { useTasksMutators } from "@/globalStates/tasksAtom";
 import { formatTimerTime } from "@/lib/format";
 import { Task } from "@/models/task";
 
-const PomodoroTimer: VFC = () => {
+const PomodoroTimer: FC = () => {
   const { time, isActive, isNextPomodoro, playingTask } =
     usePomodoroTimerAtom();
   const {
@@ -50,7 +50,7 @@ const PomodoroTimer: VFC = () => {
       if (!isNextPomodoro && playingTask !== null) {
         const newTask: Task = {
           ...playingTask,
-          actualPomodoroNum: playingTask.actualPomodoroNum + 1,
+          completedPomoNum: playingTask.completedPomoNum + 1,
         };
         replaceTask(playingTask, newTask);
         setPlayingTask(newTask);

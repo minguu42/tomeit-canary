@@ -1,4 +1,4 @@
-import { useState, VFC } from "react";
+import { FC, useState } from "react";
 import Head from "next/head";
 
 import PomodoroTimer from "@/components/models/pomodoro/PomodoroTimer";
@@ -6,7 +6,7 @@ import TaskAddForm from "@/components/models/task/TaskAddForm";
 import TaskList from "@/components/models/task/TaskList";
 import TaskSideSheet from "@/components/models/task/TaskSideSheet";
 import { useRequiredLogin } from "@/components/functional/Auth";
-import s from "./TasksPage.module.css";
+import s from "./TaskPage.module.css";
 import { useTasksMutators } from "@/globalStates/tasksAtom";
 import {
   usePomodoroTimerActions,
@@ -19,7 +19,7 @@ type Props = {
   filter: "today" | "tomorrow" | "someday";
 };
 
-const TasksPage: VFC<Props> = ({ title, filter }) => {
+const TaskPage: FC<Props> = ({ title, filter }) => {
   useRequiredLogin();
   const { replaceTask, deleteTask } = useTasksMutators();
   const { playPomodoro, setPlayingTask } = usePomodoroTimerActions();
@@ -34,7 +34,7 @@ const TasksPage: VFC<Props> = ({ title, filter }) => {
   };
 
   const completeTask = (task: Task): void => {
-    const newTask: Task = { ...task, isCompleted: true };
+    const newTask: Task = { ...task, completedOn: new Date() };
     replaceTask(task, newTask);
     if (featuredTask !== null && task.id === featuredTask.id) {
       setFeaturedTask(null);
@@ -82,4 +82,4 @@ const TasksPage: VFC<Props> = ({ title, filter }) => {
   );
 };
 
-export default TasksPage;
+export default TaskPage;

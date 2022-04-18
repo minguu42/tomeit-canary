@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 import { useTheme } from "@/components/functional/Theme";
 
@@ -6,7 +6,7 @@ type Props = {
   children: JSX.Element;
 };
 
-const Theme: VFC<Props> = ({ children }) => {
+const Theme: FC<Props> = ({ children }) => {
   useTheme();
 
   return (

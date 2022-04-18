@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 import TopAppBar from "@/components/common/TopAppBar";
 import NavigationDrawer from "@/components/common/NavigationDrawer";
@@ -8,7 +8,7 @@ type Props = {
   children: JSX.Element;
 };
 
-export const Layout: VFC<Props> = ({ children }) => {
+export const Layout: FC<Props> = ({ children }) => {
   return (
     <div className={s.background}>
       <TopAppBar />

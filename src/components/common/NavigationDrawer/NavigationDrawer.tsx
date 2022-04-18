@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -15,7 +15,7 @@ import {
 import { useTasksAtom } from "@/globalStates/tasksAtom";
 import { formatDate } from "@/lib/format";
 
-const NavigationDrawer: VFC = () => {
+const NavigationDrawer: FC = () => {
   const isOpen = useIsNavigationDrawerOpenAtom();
   const { toggleNavigationDrawer } = useIsNavigationDrawerOpenMutators();
   const router = useRouter();
@@ -26,17 +26,19 @@ const NavigationDrawer: VFC = () => {
   tomorrow.setDate(today.getDate() + 1);
   const todayTaskNum = tasks.filter(
     (task) =>
-      !task.isCompleted &&
+      task.completedOn === null &&
       task.dueOn &&
       formatDate(task.dueOn) === formatDate(today)
   ).length;
   const tomorrowTaskNum = tasks.filter(
     (task) =>
-      !task.isCompleted &&
+      task.completedOn === null &&
       task.dueOn &&
       formatDate(task.dueOn) === formatDate(tomorrow)
   ).length;
-  const somedayTaskNum = tasks.filter((task) => !task.isCompleted).length;
+  const somedayTaskNum = tasks.filter(
+    (task) => task.completedOn === null
+  ).length;
 
   if (!isOpen) return <></>;
 

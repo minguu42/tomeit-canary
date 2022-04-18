@@ -1,53 +1,20 @@
-import { FormEventHandler, SyntheticEvent, useState, VFC } from "react";
+import { FC } from "react";
 import cn from "classnames";
 
 import s from "./TaskAddForm.module.css";
 import { AddTaskIcon, AlarmIcon } from "@/components/common/icons";
-import { useTasksMutators } from "@/globalStates/tasksAtom";
-import { Task } from "@/models/task";
-import { formatDate } from "@/lib/format";
-import { useUserAtom } from "@/globalStates/userAtom";
+import { useTaskAddForm } from "@/components/models/task/TaskAddForm/TaskAddForm.hooks";
 
-const TaskAddForm: VFC = () => {
-  const [title, setTitle] = useState("");
-  const [expectedPomodoroNum, setExpectedPomodoroNum] = useState(0);
-  const [dueOn, setDueOn] = useState<Date | null>(null);
-  const { addTask } = useTasksMutators();
-  const user = useUserAtom();
-
-  const handleTitleChange: FormEventHandler<HTMLInputElement> = (event) => {
-    setTitle(event.currentTarget.value);
-  };
-
-  const handleExpectedPomodoroNumChange: FormEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    setExpectedPomodoroNum(Number(event.currentTarget.value));
-  };
-
-  const handleDueOnChange: FormEventHandler<HTMLInputElement> = (event) => {
-    setDueOn(new Date(event.currentTarget.value));
-  };
-
-  const handleSubmit = (event: SyntheticEvent) => {
-    event.preventDefault();
-    const task: Task = {
-      id: new Date().getMilliseconds(),
-      title: title,
-      expectedPomodoroNum: expectedPomodoroNum,
-      actualPomodoroNum: 0,
-      dueOn: dueOn,
-      isCompleted: false,
-      completedOn: null,
-    };
-    if (user != null) {
-      addTask(user, task);
-    }
-
-    setTitle("");
-    setExpectedPomodoroNum(0);
-    setDueOn(null);
-  };
+const TaskAddForm: FC = () => {
+  const {
+    title,
+    estimatedPomoNum,
+    dueOn,
+    handleTitleChange,
+    handleEstimatedPomoNumChange,
+    handleDueOnChange,
+    handleSubmit,
+  } = useTaskAddForm();
 
   return (
     <form onSubmit={handleSubmit} className={s.container}>
@@ -65,15 +32,15 @@ const TaskAddForm: VFC = () => {
         <AlarmIcon size={20} />
         <input
           type="number"
-          value={expectedPomodoroNum}
-          onChange={handleExpectedPomodoroNumChange}
+          value={estimatedPomoNum}
+          onChange={handleEstimatedPomoNumChange}
           min={0}
           max={6}
           className={s.expectedPomodoroNumInput}
         />
         <input
           type="date"
-          value={dueOn !== null ? formatDate(dueOn) : ""}
+          value={dueOn}
           onChange={handleDueOnChange}
           className={s.dueOnInput}
         />

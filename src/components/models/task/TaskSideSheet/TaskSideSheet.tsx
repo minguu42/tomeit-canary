@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 import {
   AlarmIcon,
@@ -19,12 +19,12 @@ type Props = {
   onCompleteTaskButtonClick: (task: Task) => void;
 };
 
-const TaskSideSheet: VFC<Props> = ({
+const TaskSideSheet: FC<Props> = ({
   task,
   onDeleteTaskButtonClick,
   onCompleteTaskButtonClick,
 }) => {
-  if (task === null || task.isCompleted) {
+  if (task === null || task.completedOn !== null) {
     return <></>;
   }
 
@@ -44,12 +44,12 @@ const TaskSideSheet: VFC<Props> = ({
         <li className={s.fieldListItem}>
           <AlarmOnIcon />
           <p className={s.fieldName}>実行ポモドーロ数</p>
-          <p className={s.fieldValue}>{task.actualPomodoroNum}</p>
+          <p className={s.fieldValue}>{task.completedPomoNum}</p>
         </li>
         <li className={s.fieldListItem}>
           <AlarmIcon />
           <p className={s.fieldName}>期待ポモドーロ数</p>
-          <p className={s.fieldValue}>{task.expectedPomodoroNum}</p>
+          <p className={s.fieldValue}>{task.estimatedPomoNum}</p>
         </li>
         {task.dueOn && (
           <li className={s.fieldListItem}>
