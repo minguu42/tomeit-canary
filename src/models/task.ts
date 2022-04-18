@@ -1,10 +1,9 @@
 export type Task = {
   id: number;
   title: string;
-  expectedPomodoroNum: number;
-  actualPomodoroNum: number;
+  estimatedPomoNum: number;
+  completedPomoNum: number;
   dueOn: Date | null;
-  isCompleted: boolean;
   completedOn: Date | null;
   createdAt?: Date;
   updatedAt?: Date;
@@ -13,10 +12,9 @@ export type Task = {
 export type TaskResponse = {
   id: number;
   title: string;
-  expectedPomodoroNum: number;
-  actualPomodoroNum: number;
+  estimatedPomoNum: number;
+  completedPomoNum: number;
   dueOn: string;
-  isCompleted: boolean;
   completedOn: string;
   createdAt: string;
   updatedAt: string;
@@ -32,10 +30,9 @@ export const isTaskResponse = (arg: unknown): arg is TaskResponse => {
   return (
     typeof t?.id === "number" &&
     typeof t?.title === "string" &&
-    typeof t?.expectedPomodoroNum === "number" &&
-    typeof t?.actualPomodoroNum === "number" &&
+    typeof t?.estimatedPomoNum === "number" &&
+    typeof t?.completedPomoNum === "number" &&
     typeof t?.dueOn === "string" &&
-    typeof t?.isCompleted === "boolean" &&
     typeof t?.completedOn === "string" &&
     typeof t?.createdAt === "string" &&
     typeof t?.updatedAt === "string"
@@ -52,10 +49,9 @@ export const newTask = (taskResponse: TaskResponse): Task => {
   return {
     id: taskResponse.id,
     title: taskResponse.title,
-    expectedPomodoroNum: taskResponse.expectedPomodoroNum,
-    actualPomodoroNum: taskResponse.actualPomodoroNum,
+    estimatedPomoNum: taskResponse.estimatedPomoNum,
+    completedPomoNum: taskResponse.completedPomoNum,
     dueOn: taskResponse.dueOn !== "" ? new Date(taskResponse.dueOn) : null,
-    isCompleted: taskResponse.isCompleted,
     completedOn:
       taskResponse.completedOn !== ""
         ? new Date(taskResponse.completedOn)

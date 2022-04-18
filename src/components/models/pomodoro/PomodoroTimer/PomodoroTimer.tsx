@@ -50,7 +50,7 @@ const PomodoroTimer: FC = () => {
       if (!isNextPomodoro && playingTask !== null) {
         const newTask: Task = {
           ...playingTask,
-          actualPomodoroNum: playingTask.actualPomodoroNum + 1,
+          completedPomoNum: playingTask.completedPomoNum + 1,
         };
         replaceTask(playingTask, newTask);
         setPlayingTask(newTask);

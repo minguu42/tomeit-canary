@@ -39,8 +39,8 @@ const TaskListItem: FC<Props> = ({
       >
         <p className={s.title}>{task.title}</p>
         <PomodoroCaption
-          expectedPomodoroNum={task.expectedPomodoroNum}
-          actualPomodoroNum={task.actualPomodoroNum}
+          expectedPomodoroNum={task.estimatedPomoNum}
+          actualPomodoroNum={task.completedPomoNum}
         />
       </button>
       {task.dueOn && <p className={s.dueOnCaption}>{formatDate(task.dueOn)}</p>}
