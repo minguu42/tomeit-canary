@@ -55,7 +55,7 @@
 ## 参考
 
 - エラーハンドリング
-  - [Goエラーハンドリング戦略](https://zenn.dev/nobonobo/articles/0b722c9c2b18d5)
-  - [今 Go のエラーハンドリングを無難にしておく方法 (2021.09現在)](https://zenn.dev/nekoshita/articles/097e00c6d3d1c9)
+  - [Go エラーハンドリング戦略](https://zenn.dev/nobonobo/articles/0b722c9c2b18d5)
+  - [今 Go のエラーハンドリングを無難にしておく方法 (2021.09 現在)](https://zenn.dev/nekoshita/articles/097e00c6d3d1c9)
 - ロギング
-  - [Go のロギングライブラリ 2021年冬](https://moriyoshi.hatenablog.com/entry/2021/12/14/183703)
+  - [Go のロギングライブラリ 2021 年冬](https://moriyoshi.hatenablog.com/entry/2021/12/14/183703)

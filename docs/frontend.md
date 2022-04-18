@@ -14,14 +14,14 @@
 ## コンポーネントのディレクトリ構成
 
 - コンポーネントは `src/components` 直下の `pages`、`models`、`common`、`functional` ディレクトリに分類し、管理する。
-- `pages` ... **1つのページを表す**コンポーネントを格納する。`src/pages` ではルーティングのみを行い、`components/pages` では実際のコンテンツを記述する。
+- `pages` ... **1 つのページを表す**コンポーネントを格納する。`src/pages` ではルーティングのみを行い、`components/pages` では実際のコンテンツを記述する。
 - `models` ... **モデルに関心を持つ**コンポーネントを格納する。
 - `common` ... **ページを横断する**、もしくは**モデルに関心を持たず見た目を伴う**コンポーネントを格納する。
 - `functional` ... **見た目を伴わず、機能だけを持つ**コンポーネントを格納する。
 
 ### なぜ？
 
-コンポーネントのディレクトリ構成を考える上で重視している点は以下の2点である。
+コンポーネントのディレクトリ構成を考える上で重視している点は以下の 2 点である。
 
 1. **コンポーネントの分類 (どこに分類するか、どこにあるか) が明確であること**
 2. **コンポーネントの責務 (何のコンポーネントか、何をするのか) が明確であること**
@@ -65,8 +65,8 @@ UI デザインとして Material Design 3 を参考にするのは好みであ�
 ## 参考
 
 - コンポーネントのディレクトリ構成
-  - [SPA Componentの推しディレクトリ構成について語る](https://zenn.dev/yoshiko/articles/99f8047555f700)
+  - [SPA Component の推しディレクトリ構成について語る](https://zenn.dev/yoshiko/articles/99f8047555f700)
 - 状態管理
-  - [「3種類」で管理するReactのState戦略](https://zenn.dev/yoshiko/articles/607ec0c9b0408d)
-  - [Facebook製の新しいステート管理ライブラリ「Recoil」を最速で理解する](https://blog.uhy.ooo/entry/2020-05-16/recoil-first-impression/)
+  - [「3 種類」で管理する React の State 戦略](https://zenn.dev/yoshiko/articles/607ec0c9b0408d)
+  - [Facebook 製の新しいステート管理ライブラリ「Recoil」を最速で理解する](https://blog.uhy.ooo/entry/2020-05-16/recoil-first-impression/)
   - [Recoil Project Structure Best Practices](https://wes-rast.medium.com/recoil-project-structure-best-practices-79e74a475caa)
