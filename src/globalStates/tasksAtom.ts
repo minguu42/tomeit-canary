@@ -1,13 +1,11 @@
 import { useCallback } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import { User } from "firebase/auth";
 
 import { Task } from "@/models/task";
-import { fetchTasks, postTasks } from "@/lib/fetch";
 
 type TasksMutators = {
   initTasks: (tasks: Task[]) => void;
-  addTask: (user: User, task: Task) => void;
+  addTask: (task: Task) => void;
   replaceTask: (task: Task, newTask: Task) => void;
   deleteTask: (task: Task) => void;
 };
@@ -30,17 +28,8 @@ export const useTasksMutators = (): TasksMutators => {
   );
 
   const addTask = useCallback(
-    (user: User, task: Task): void => {
+    (task: Task): void => {
       setTasks((prev) => [...prev, task]);
-      user
-        .getIdToken(true)
-        .then((idToken) => {
-          postTasks(idToken);
-          fetchTasks(idToken);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
     },
     [setTasks]
   );
