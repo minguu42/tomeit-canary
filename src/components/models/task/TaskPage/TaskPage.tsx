@@ -6,7 +6,7 @@ import TaskAddForm from "@/components/models/task/TaskAddForm";
 import TaskList from "@/components/models/task/TaskList";
 import TaskSideSheet from "@/components/models/task/TaskSideSheet";
 import { useRequiredLogin } from "@/components/functional/Auth";
-import s from "./TasksPage.module.css";
+import s from "./TaskPage.module.css";
 import { useTasksMutators } from "@/globalStates/tasksAtom";
 import {
   usePomodoroTimerActions,
@@ -19,7 +19,7 @@ type Props = {
   filter: "today" | "tomorrow" | "someday";
 };
 
-const TasksPage: FC<Props> = ({ title, filter }) => {
+const TaskPage: FC<Props> = ({ title, filter }) => {
   useRequiredLogin();
   const { replaceTask, deleteTask } = useTasksMutators();
   const { playPomodoro, setPlayingTask } = usePomodoroTimerActions();
@@ -82,4 +82,4 @@ const TasksPage: FC<Props> = ({ title, filter }) => {
   );
 };
 
-export default TasksPage;
+export default TaskPage;

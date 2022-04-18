@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 
-import TasksPage from "@/components/models/task/TasksPage";
+import TaskPage from "@/components/models/task/TaskPage";
 
 export const Someday: NextPage = () => {
-  return <TasksPage title="いつか - tomeit" filter="someday" />;
+  return <TaskPage title="いつか - tomeit" filter="someday" />;
 };
 
 export default Someday;

@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 
-import TasksPage from "@/components/models/task/TasksPage";
+import TaskPage from "@/components/models/task/TaskPage";
 
 export const Today: NextPage = () => {
-  return <TasksPage title="今日 - tomeit" filter="today" />;
+  return <TaskPage title="今日 - tomeit" filter="today" />;
 };
 
 export default Today;
