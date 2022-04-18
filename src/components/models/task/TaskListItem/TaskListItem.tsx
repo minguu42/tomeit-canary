@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 import { CircleIcon, PlayCircleIcon } from "@/components/common/icons";
 import PomodoroCaption from "@/components/models/pomodoro/PomodoroCaption";
@@ -16,7 +16,7 @@ type Props = {
   closeTaskSideSheet: () => void;
 };
 
-const TaskListItem: VFC<Props> = ({
+const TaskListItem: FC<Props> = ({
   task,
   featuredTask,
   onCompleteTaskButtonClick,

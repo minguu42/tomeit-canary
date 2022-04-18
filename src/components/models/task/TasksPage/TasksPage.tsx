@@ -1,4 +1,4 @@
-import { useState, VFC } from "react";
+import { FC, useState } from "react";
 import Head from "next/head";
 
 import PomodoroTimer from "@/components/models/pomodoro/PomodoroTimer";
@@ -19,7 +19,7 @@ type Props = {
   filter: "today" | "tomorrow" | "someday";
 };
 
-const TasksPage: VFC<Props> = ({ title, filter }) => {
+const TasksPage: FC<Props> = ({ title, filter }) => {
   useRequiredLogin();
   const { replaceTask, deleteTask } = useTasksMutators();
   const { playPomodoro, setPlayingTask } = usePomodoroTimerActions();

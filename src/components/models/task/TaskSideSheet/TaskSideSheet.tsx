@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 import {
   AlarmIcon,
@@ -19,7 +19,7 @@ type Props = {
   onCompleteTaskButtonClick: (task: Task) => void;
 };
 
-const TaskSideSheet: VFC<Props> = ({
+const TaskSideSheet: FC<Props> = ({
   task,
   onDeleteTaskButtonClick,
   onCompleteTaskButtonClick,

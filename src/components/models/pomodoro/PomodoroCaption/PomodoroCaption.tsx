@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 import cn from "classnames";
 
 import { AlarmIcon, AlarmOnIcon } from "@/components/common/icons";
@@ -9,7 +9,7 @@ type Props = {
   actualPomodoroNum: number;
 };
 
-const PomodoroCaption: VFC<Props> = ({
+const PomodoroCaption: FC<Props> = ({
   expectedPomodoroNum,
   actualPomodoroNum,
 }) => {

@@ -1,4 +1,4 @@
-import { useEffect, useState, VFC } from "react";
+import { FC, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import cn from "classnames";
 
@@ -15,7 +15,7 @@ import { useThemeAtom } from "@/globalStates/themeAtom";
 import { useIsNavigationDrawerOpenMutators } from "@/globalStates/isNavigationDrawerOpenAtom";
 import { logout } from "@/lib/auth";
 
-const TopAppBar: VFC = () => {
+const TopAppBar: FC = () => {
   const [headline, setHeadline] = useState("tomeit");
   const router = useRouter();
   const user = useUserAtom();

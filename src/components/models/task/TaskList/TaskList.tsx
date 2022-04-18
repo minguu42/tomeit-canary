@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { FC } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
 import { useTasksAtom } from "@/globalStates/tasksAtom";
@@ -14,7 +14,7 @@ type Props = {
   closeTaskSideSheet: () => void;
 };
 
-const TaskList: VFC<Props> = ({
+const TaskList: FC<Props> = ({
   filter,
   featuredTask,
   completeTask,
