@@ -24,7 +24,7 @@ const TaskSideSheet: FC<Props> = ({
   onDeleteTaskButtonClick,
   onCompleteTaskButtonClick,
 }) => {
-  if (task === null || task.isCompleted) {
+  if (task === null || task.completedOn !== null) {
     return <></>;
   }
 

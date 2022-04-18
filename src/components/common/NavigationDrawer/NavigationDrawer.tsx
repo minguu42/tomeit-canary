@@ -26,17 +26,19 @@ const NavigationDrawer: FC = () => {
   tomorrow.setDate(today.getDate() + 1);
   const todayTaskNum = tasks.filter(
     (task) =>
-      !task.isCompleted &&
+      task.completedOn === null &&
       task.dueOn &&
       formatDate(task.dueOn) === formatDate(today)
   ).length;
   const tomorrowTaskNum = tasks.filter(
     (task) =>
-      !task.isCompleted &&
+      task.completedOn === null &&
       task.dueOn &&
       formatDate(task.dueOn) === formatDate(tomorrow)
   ).length;
-  const somedayTaskNum = tasks.filter((task) => !task.isCompleted).length;
+  const somedayTaskNum = tasks.filter(
+    (task) => task.completedOn === null
+  ).length;
 
   if (!isOpen) return <></>;
 

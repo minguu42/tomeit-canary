@@ -34,7 +34,7 @@ const TaskPage: FC<Props> = ({ title, filter }) => {
   };
 
   const completeTask = (task: Task): void => {
-    const newTask: Task = { ...task, isCompleted: true };
+    const newTask: Task = { ...task, completedOn: new Date() };
     replaceTask(task, newTask);
     if (featuredTask !== null && task.id === featuredTask.id) {
       setFeaturedTask(null);
