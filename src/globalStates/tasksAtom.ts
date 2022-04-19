@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
-import { Task } from "@/models/task";
+import { Task } from "@/models/task/task";
 
 type TasksMutators = {
   initTasks: (tasks: Task[]) => void;

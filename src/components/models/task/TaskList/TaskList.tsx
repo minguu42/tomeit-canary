@@ -1,9 +1,11 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
-import { useTasksAtom } from "@/globalStates/tasksAtom";
-import { Task } from "@/models/task";
+import { useTasksAtom, useTasksMutators } from "@/globalStates/tasksAtom";
+import { newTask, Task } from "@/models/task/task";
 import { formatDate } from "@/lib/format";
+import { fetchTasks } from "@/models/task/fetch";
+import { useUserAtom } from "@/globalStates/userAtom";
 
 type Props = {
   filter: "today" | "tomorrow" | "someday";
@@ -23,6 +25,16 @@ const TaskList: FC<Props> = ({
   closeTaskSideSheet,
 }) => {
   const tasks = useTasksAtom();
+  const { initTasks } = useTasksMutators();
+  const user = useUserAtom();
+
+  useEffect(() => {
+    fetchTasks(user)
+      .then((tasksResponse) =>
+        initTasks(tasksResponse.tasks.map((t) => newTask(t)))
+      )
+      .catch((error) => console.error(error));
+  }, [initTasks, user]);
 
   const isNotTaskCompleted = (task: Task) => task.completedOn == null;
   const isTaskDueOn = (task: Task, date: Date) =>

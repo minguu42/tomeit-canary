@@ -10,7 +10,7 @@ import {
 } from "@/components/common/icons";
 import IconButton from "@/components/common/IconButton";
 import s from "./TaskSideSheet.module.css";
-import { Task } from "@/models/task";
+import { Task } from "@/models/task/task";
 import { formatDateToJP } from "@/lib/format";
 
 type Props = {

@@ -4,7 +4,7 @@ import { CircleIcon, PlayCircleIcon } from "@/components/common/icons";
 import PomodoroCaption from "@/components/models/pomodoro/PomodoroCaption";
 import IconButton from "@/components/common/IconButton";
 import s from "./TaskListItem.module.css";
-import { Task } from "@/models/task";
+import { Task } from "@/models/task/task";
 import { formatDate } from "@/lib/format";
 
 type Props = {

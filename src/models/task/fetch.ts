@@ -5,7 +5,7 @@ import {
   isTasksResponse,
   TaskResponse,
   TasksResponse,
-} from "@/models/task";
+} from "@/models/task/task";
 import { formatDateStringToRFC3339 } from "@/lib/format";
 
 const TOMEIT_API_URL = "http://localhost:8080/v0";

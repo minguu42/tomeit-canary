@@ -1,6 +1,6 @@
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
-import { Task } from "@/models/task";
+import { Task } from "@/models/task/task";
 
 export const POMODORO_TIME = 1500;
 export const SHORT_REST_TIME = 300;

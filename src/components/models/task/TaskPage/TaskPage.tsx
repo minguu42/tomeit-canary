@@ -12,7 +12,7 @@ import {
   usePomodoroTimerActions,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
-import { Task } from "@/models/task";
+import { Task } from "@/models/task/task";
 
 type Props = {
   title: string;
