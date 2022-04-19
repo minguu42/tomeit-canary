@@ -75,3 +75,31 @@ export const fetchTasks = async (user: User | null): Promise<TasksResponse> => {
   }
   return errorResponse;
 };
+
+export const patchTask = async (
+  user: User | null,
+  taskID: number,
+  body: string
+) => {
+  if (!user) {
+    return null;
+  }
+
+  const idToken = await user.getIdToken(true);
+  const response = await fetch(TOMEIT_API_URL + "/tasks/" + String(taskID), {
+    method: "PATCH",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      Authorization: "Bearer " + idToken,
+      "Content-Type": "application/json",
+    },
+    body: body,
+  });
+  const data: unknown = await response.json();
+
+  if (isTaskResponse(data)) {
+    return data;
+  }
+  return null;
+};
