@@ -6,6 +6,7 @@ import IconButton from "@/components/common/IconButton";
 import s from "./TaskListItem.module.css";
 import { Task } from "@/models/task/task";
 import { formatDate } from "@/lib/format";
+import { useTaskListItem } from "@/components/models/task/TaskListItem/TaskListItem.hooks";
 
 type Props = {
   task: Task;
@@ -19,16 +20,17 @@ type Props = {
 const TaskListItem: FC<Props> = ({
   task,
   featuredTask,
-  onCompleteTaskButtonClick,
   onPlayPomodoroButtonClick,
   openInTaskSideSheet,
   closeTaskSideSheet,
 }) => {
+  const { handleCompleteButtonClick } = useTaskListItem(task);
+
   return (
     <li className={s.container}>
       <IconButton
         icon={<CircleIcon />}
-        onClick={onCompleteTaskButtonClick}
+        onClick={handleCompleteButtonClick}
         label="タスクを完了する"
       />
       <button
