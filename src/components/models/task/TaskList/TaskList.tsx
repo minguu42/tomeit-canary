@@ -13,16 +13,16 @@ type Props = {
 
 const TaskList: FC<Props> = ({ filter }) => {
   const tasks = useTasksAtom();
-  const { initTasks } = useTasksMutators();
+  const { setTasks } = useTasksMutators();
   const user = useUserAtom();
 
   useEffect(() => {
     fetchTasks(user)
       .then((tasksResponse) =>
-        initTasks(tasksResponse.tasks.map((t) => newTask(t)))
+        setTasks(tasksResponse.tasks.map((t) => newTask(t)))
       )
       .catch((error) => console.error(error));
-  }, [initTasks, user]);
+  }, [setTasks, user]);
 
   const isNotTaskCompleted = (task: Task) => task.completedOn == null;
   const isTaskDueOn = (task: Task, date: Date) =>

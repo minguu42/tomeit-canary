@@ -4,10 +4,10 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { Task } from "@/models/task/task";
 
 type TasksMutators = {
-  initTasks: (tasks: Task[]) => void;
+  setTasks: (tasks: Task[]) => void;
   addTask: (task: Task) => void;
   replaceTask: (task: Task, newTask: Task) => void;
-  deleteTask: (task: Task) => void;
+  destroyTask: (task: Task) => void;
 };
 
 const tasksAtom = atom<Task[]>({
@@ -18,25 +18,25 @@ const tasksAtom = atom<Task[]>({
 export const useTasksAtom = (): Task[] => useRecoilValue(tasksAtom);
 
 export const useTasksMutators = (): TasksMutators => {
-  const setTasks = useSetRecoilState(tasksAtom);
+  const setAtom = useSetRecoilState(tasksAtom);
 
-  const initTasks = useCallback(
+  const setTasks = useCallback(
     (tasks: Task[]): void => {
-      setTasks(tasks);
+      setAtom(tasks);
     },
-    [setTasks]
+    [setAtom]
   );
 
   const addTask = useCallback(
     (task: Task): void => {
-      setTasks((prev) => [...prev, task]);
+      setAtom((prev) => [...prev, task]);
     },
-    [setTasks]
+    [setAtom]
   );
 
   const replaceTask = useCallback(
     (task: Task, newTask: Task): void => {
-      setTasks((prev) => {
+      setAtom((prev) => {
         const index = prev.findIndex((t) => t.id === task.id);
         if (index === -1) {
           return [...prev];
@@ -44,12 +44,12 @@ export const useTasksMutators = (): TasksMutators => {
         return [...prev.slice(0, index), newTask, ...prev.slice(index + 1)];
       });
     },
-    [setTasks]
+    [setAtom]
   );
 
-  const deleteTask = useCallback(
+  const destroyTask = useCallback(
     (task: Task): void => {
-      setTasks((prev) => {
+      setAtom((prev) => {
         const index = prev.findIndex((t) => t.id === task.id);
         if (index === -1) {
           return [...prev];
@@ -57,8 +57,8 @@ export const useTasksMutators = (): TasksMutators => {
         return [...prev.slice(0, index), ...prev.slice(index + 1)];
       });
     },
-    [setTasks]
+    [setAtom]
   );
 
-  return { initTasks, addTask, replaceTask, deleteTask };
+  return { setTasks, addTask, replaceTask, destroyTask };
 };
