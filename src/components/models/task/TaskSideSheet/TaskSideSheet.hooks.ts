@@ -9,7 +9,7 @@ import {
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
 import { newTask, Task } from "@/models/task/task";
-import { patchTask } from "@/models/task/fetch";
+import { patchTask, deleteTask } from "@/models/task/fetch";
 
 type Values = {
   featuredTaskExists: boolean;
@@ -28,17 +28,26 @@ export const useTaskSideSheet = (): Values => {
     completedOn: null,
   };
   const user = useUserAtom();
-  const { replaceTask, deleteTask } = useTasksMutators();
+  const { replaceTask, destroyTask } = useTasksMutators();
   const featuredTask = useFeaturedTaskAtom();
-  const { setFeaturedTask, unsetFeaturedTask } = useFeaturedTaskMutators();
+  const { unsetFeaturedTask } = useFeaturedTaskMutators();
   const { playingTask } = usePomodoroTimerAtom();
   const { unsetPlayingTask } = usePomodoroTimerMutators();
 
   const handleDeleteTaskButtonClick = (task: Task): void => {
-    deleteTask(task);
-    if (task.id === featuredTask?.id) {
-      setFeaturedTask(task);
-    }
+    deleteTask(user, task.id)
+      .then((ok) => {
+        if (ok) {
+          destroyTask(task);
+          if (task.id === featuredTask?.id) {
+            unsetFeaturedTask();
+          }
+          if (task.id === playingTask?.id) {
+            unsetPlayingTask();
+          }
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   const handleCompleteTaskButtonClick = (task: Task): void => {
