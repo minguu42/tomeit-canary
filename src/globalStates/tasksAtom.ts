@@ -7,7 +7,7 @@ type TasksMutators = {
   initTasks: (tasks: Task[]) => void;
   addTask: (task: Task) => void;
   replaceTask: (task: Task, newTask: Task) => void;
-  deleteTask: (task: Task) => void;
+  destroyTask: (task: Task) => void;
 };
 
 const tasksAtom = atom<Task[]>({
@@ -47,7 +47,7 @@ export const useTasksMutators = (): TasksMutators => {
     [setTasks]
   );
 
-  const deleteTask = useCallback(
+  const destroyTask = useCallback(
     (task: Task): void => {
       setTasks((prev) => {
         const index = prev.findIndex((t) => t.id === task.id);
@@ -60,5 +60,5 @@ export const useTasksMutators = (): TasksMutators => {
     [setTasks]
   );
 
-  return { initTasks, addTask, replaceTask, deleteTask };
+  return { initTasks, addTask, replaceTask, destroyTask };
 };
