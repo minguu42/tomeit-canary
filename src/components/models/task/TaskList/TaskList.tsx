@@ -9,21 +9,9 @@ import { useUserAtom } from "@/globalStates/userAtom";
 
 type Props = {
   filter: "today" | "tomorrow" | "someday";
-  featuredTask: Task | null;
-  completeTask: (task: Task) => void;
-  playPomodoro: (task: Task) => void;
-  openTaskInSideSheet: (task: Task) => void;
-  closeTaskSideSheet: () => void;
 };
 
-const TaskList: FC<Props> = ({
-  filter,
-  featuredTask,
-  completeTask,
-  playPomodoro,
-  openTaskInSideSheet,
-  closeTaskSideSheet,
-}) => {
+const TaskList: FC<Props> = ({ filter }) => {
   const tasks = useTasksAtom();
   const { initTasks } = useTasksMutators();
   const user = useUserAtom();
@@ -54,21 +42,7 @@ const TaskList: FC<Props> = ({
   return (
     <ul>
       {tasks.filter(filterConditions).map((task) => (
-        <TaskListItem
-          key={task.id}
-          task={task}
-          featuredTask={featuredTask}
-          onCompleteTaskButtonClick={() => {
-            completeTask(task);
-          }}
-          onPlayPomodoroButtonClick={() => {
-            playPomodoro(task);
-          }}
-          openInTaskSideSheet={() => {
-            openTaskInSideSheet(task);
-          }}
-          closeTaskSideSheet={closeTaskSideSheet}
-        />
+        <TaskListItem key={task.id} task={task} />
       ))}
     </ul>
   );

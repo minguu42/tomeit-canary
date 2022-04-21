@@ -10,21 +10,18 @@ import {
 } from "@/components/common/icons";
 import IconButton from "@/components/common/IconButton";
 import s from "./TaskSideSheet.module.css";
-import { Task } from "@/models/task/task";
+import { useTaskSideSheet } from "./TaskSideSheet.hooks";
 import { formatDateToJP } from "@/lib/format";
 
-type Props = {
-  task: Task | null;
-  onDeleteTaskButtonClick: (task: Task) => void;
-  onCompleteTaskButtonClick: (task: Task) => void;
-};
+const TaskSideSheet: FC = () => {
+  const {
+    featuredTaskExists,
+    featuredTask,
+    handleDeleteTaskButtonClick,
+    handleCompleteTaskButtonClick,
+  } = useTaskSideSheet();
 
-const TaskSideSheet: FC<Props> = ({
-  task,
-  onDeleteTaskButtonClick,
-  onCompleteTaskButtonClick,
-}) => {
-  if (task === null || task.completedOn !== null) {
+  if (!featuredTaskExists) {
     return <></>;
   }
 
@@ -34,28 +31,28 @@ const TaskSideSheet: FC<Props> = ({
         <IconButton
           icon={<CircleIcon />}
           onClick={() => {
-            onCompleteTaskButtonClick(task);
+            handleCompleteTaskButtonClick(featuredTask);
           }}
           label="タスクを完了する"
         />
-        <h2 className={s.title}>{task.title}</h2>
+        <h2 className={s.title}>{featuredTask.title}</h2>
       </div>
       <ul className={s.fieldList}>
         <li className={s.fieldListItem}>
           <AlarmOnIcon />
           <p className={s.fieldName}>実行ポモドーロ数</p>
-          <p className={s.fieldValue}>{task.completedPomoNum}</p>
+          <p className={s.fieldValue}>{featuredTask.completedPomoNum}</p>
         </li>
         <li className={s.fieldListItem}>
           <AlarmIcon />
           <p className={s.fieldName}>期待ポモドーロ数</p>
-          <p className={s.fieldValue}>{task.estimatedPomoNum}</p>
+          <p className={s.fieldValue}>{featuredTask.estimatedPomoNum}</p>
         </li>
-        {task.dueOn && (
+        {featuredTask.dueOn && (
           <li className={s.fieldListItem}>
             <EventIcon />
             <p className={s.fieldName}>期限</p>
-            <p className={s.fieldValue}>{formatDateToJP(task.dueOn)}</p>
+            <p className={s.fieldValue}>{formatDateToJP(featuredTask.dueOn)}</p>
           </li>
         )}
       </ul>
@@ -71,7 +68,7 @@ const TaskSideSheet: FC<Props> = ({
         <li>
           <button
             onClick={() => {
-              onDeleteTaskButtonClick(task);
+              handleDeleteTaskButtonClick(featuredTask);
             }}
             className={s.actionListItem}
           >

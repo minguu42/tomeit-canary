@@ -12,31 +12,49 @@ import { patchTask } from "@/models/task/fetch";
 import { useUserAtom } from "@/globalStates/userAtom";
 
 type Values = {
-  handleCompleteButtonClick: () => void;
+  handlePlayButtonClick: (task: Task) => void;
+  handleCompleteButtonClick: (task: Task) => void;
+  handleSideSheetButtonClick: (task: Task) => void;
 };
 
-export const useTaskListItem = (task: Task): Values => {
+export const useTaskListItem = (): Values => {
   const user = useUserAtom();
   const { replaceTask } = useTasksMutators();
   const featuredTask = useFeaturedTaskAtom();
-  const { resetFeaturedTask } = useFeaturedTaskMutators();
+  const { setFeaturedTask, unsetFeaturedTask } = useFeaturedTaskMutators();
   const { playingTask } = usePomodoroTimerAtom();
-  const { setPlayingTask } = usePomodoroTimerActions();
+  const { playPomodoro, unsetPlayingTask } = usePomodoroTimerActions();
 
-  const handleCompleteButtonClick = () => {
+  const handlePlayButtonClick = (task: Task): void => {
+    playPomodoro(task);
+  };
+
+  const handleCompleteButtonClick = (task: Task): void => {
     patchTask(user, task.id, JSON.stringify({ completedOn: new Date() }))
       .then((taskResponse) => {
         taskResponse && replaceTask(task, newTask(taskResponse));
       })
       .catch((error) => console.error(error));
 
-    if (featuredTask !== null && task.id === featuredTask.id) {
-      resetFeaturedTask();
+    if (task.id === featuredTask?.id) {
+      unsetFeaturedTask();
     }
-    if (playingTask !== null && task.id === playingTask.id) {
-      setPlayingTask(null);
+    if (task.id === playingTask?.id) {
+      unsetPlayingTask();
     }
   };
 
-  return { handleCompleteButtonClick };
+  const handleSideSheetButtonClick = (task: Task): void => {
+    if (task.id === featuredTask?.id) {
+      unsetFeaturedTask();
+    } else {
+      setFeaturedTask(task);
+    }
+  };
+
+  return {
+    handlePlayButtonClick,
+    handleCompleteButtonClick,
+    handleSideSheetButtonClick,
+  };
 };
