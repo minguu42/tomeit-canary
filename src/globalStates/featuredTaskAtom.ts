@@ -11,15 +11,23 @@ const featuredTaskAtom = atom<Task | null>({
 export const useFeaturedTaskAtom = () => useRecoilValue(featuredTaskAtom);
 
 type FeaturedTaskMutators = {
-  resetFeaturedTask: () => void;
+  setFeaturedTask: (task: Task) => void;
+  unsetFeaturedTask: () => void;
 };
 
 export const useFeaturedTaskMutators = (): FeaturedTaskMutators => {
-  const setFeaturedTask = useSetRecoilState(featuredTaskAtom);
+  const setAtom = useSetRecoilState(featuredTaskAtom);
 
-  const resetFeaturedTask = useCallback(() => {
-    setFeaturedTask(null);
-  }, [setFeaturedTask]);
+  const setFeaturedTask = useCallback(
+    (task: Task) => {
+      setAtom(task);
+    },
+    [setAtom]
+  );
 
-  return { resetFeaturedTask };
+  const unsetFeaturedTask = useCallback(() => {
+    setAtom(null);
+  }, [setAtom]);
+
+  return { setFeaturedTask, unsetFeaturedTask };
 };
