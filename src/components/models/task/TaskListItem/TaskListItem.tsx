@@ -4,37 +4,30 @@ import { CircleIcon, PlayCircleIcon } from "@/components/common/icons";
 import PomodoroCaption from "@/components/models/pomodoro/PomodoroCaption";
 import IconButton from "@/components/common/IconButton";
 import s from "./TaskListItem.module.css";
-import { Task } from "@/models/task";
+import { Task } from "@/models/task/task";
 import { formatDate } from "@/lib/format";
+import { useTaskListItem } from "@/components/models/task/TaskListItem/TaskListItem.hooks";
 
 type Props = {
   task: Task;
-  featuredTask: Task | null;
-  onCompleteTaskButtonClick: () => void;
-  onPlayPomodoroButtonClick: () => void;
-  openInTaskSideSheet: () => void;
-  closeTaskSideSheet: () => void;
 };
 
-const TaskListItem: FC<Props> = ({
-  task,
-  featuredTask,
-  onCompleteTaskButtonClick,
-  onPlayPomodoroButtonClick,
-  openInTaskSideSheet,
-  closeTaskSideSheet,
-}) => {
+const TaskListItem: FC<Props> = ({ task }) => {
+  const {
+    handlePlayButtonClick,
+    handleCompleteButtonClick,
+    handleSideSheetButtonClick,
+  } = useTaskListItem();
+
   return (
     <li className={s.container}>
       <IconButton
         icon={<CircleIcon />}
-        onClick={onCompleteTaskButtonClick}
+        onClick={() => handleCompleteButtonClick(task)}
         label="タスクを完了する"
       />
       <button
-        onClick={
-          task === featuredTask ? closeTaskSideSheet : openInTaskSideSheet
-        }
+        onClick={() => handleSideSheetButtonClick(task)}
         className={s.main}
       >
         <p className={s.title}>{task.title}</p>
@@ -46,7 +39,7 @@ const TaskListItem: FC<Props> = ({
       {task.dueOn && <p className={s.dueOnCaption}>{formatDate(task.dueOn)}</p>}
       <IconButton
         icon={<PlayCircleIcon />}
-        onClick={onPlayPomodoroButtonClick}
+        onClick={() => handlePlayButtonClick(task)}
         label="ポモドーロを開始する"
       />
     </li>

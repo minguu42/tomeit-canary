@@ -12,12 +12,12 @@ import {
   LONG_REST_TIME,
   POMODORO_TIME,
   SHORT_REST_TIME,
-  usePomodoroTimerActions,
+  usePomodoroTimerMutators,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
 import { useTasksMutators } from "@/globalStates/tasksAtom";
 import { formatTimerTime } from "@/lib/format";
-import { Task } from "@/models/task";
+import { Task } from "@/models/task/task";
 
 const PomodoroTimer: FC = () => {
   const { time, isActive, isNextPomodoro, playingTask } =
@@ -30,7 +30,7 @@ const PomodoroTimer: FC = () => {
     setPlayingTask,
     updatePomodoroTimerWhenTimeEnd,
     tickTime,
-  } = usePomodoroTimerActions();
+  } = usePomodoroTimerMutators();
   const { replaceTask } = useTasksMutators();
 
   useEffect(() => {

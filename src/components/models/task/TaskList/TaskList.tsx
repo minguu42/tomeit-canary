@@ -1,28 +1,28 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
-import { useTasksAtom } from "@/globalStates/tasksAtom";
-import { Task } from "@/models/task";
+import { useTasksAtom, useTasksMutators } from "@/globalStates/tasksAtom";
+import { newTask, Task } from "@/models/task/task";
 import { formatDate } from "@/lib/format";
+import { fetchTasks } from "@/models/task/fetch";
+import { useUserAtom } from "@/globalStates/userAtom";
 
 type Props = {
   filter: "today" | "tomorrow" | "someday";
-  featuredTask: Task | null;
-  completeTask: (task: Task) => void;
-  playPomodoro: (task: Task) => void;
-  openTaskInSideSheet: (task: Task) => void;
-  closeTaskSideSheet: () => void;
 };
 
-const TaskList: FC<Props> = ({
-  filter,
-  featuredTask,
-  completeTask,
-  playPomodoro,
-  openTaskInSideSheet,
-  closeTaskSideSheet,
-}) => {
+const TaskList: FC<Props> = ({ filter }) => {
   const tasks = useTasksAtom();
+  const { initTasks } = useTasksMutators();
+  const user = useUserAtom();
+
+  useEffect(() => {
+    fetchTasks(user)
+      .then((tasksResponse) =>
+        initTasks(tasksResponse.tasks.map((t) => newTask(t)))
+      )
+      .catch((error) => console.error(error));
+  }, [initTasks, user]);
 
   const isNotTaskCompleted = (task: Task) => task.completedOn == null;
   const isTaskDueOn = (task: Task, date: Date) =>
@@ -42,21 +42,7 @@ const TaskList: FC<Props> = ({
   return (
     <ul>
       {tasks.filter(filterConditions).map((task) => (
-        <TaskListItem
-          key={task.id}
-          task={task}
-          featuredTask={featuredTask}
-          onCompleteTaskButtonClick={() => {
-            completeTask(task);
-          }}
-          onPlayPomodoroButtonClick={() => {
-            playPomodoro(task);
-          }}
-          openInTaskSideSheet={() => {
-            openTaskInSideSheet(task);
-          }}
-          closeTaskSideSheet={closeTaskSideSheet}
-        />
+        <TaskListItem key={task.id} task={task} />
       ))}
     </ul>
   );

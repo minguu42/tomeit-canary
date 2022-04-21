@@ -10,15 +10,15 @@ const REDIRECT_TARGET_URL_AT_LOGIN = "/tasks/today";
 
 export const useAuth = (): boolean => {
   const [isLoading, setIsLoading] = useState(true);
-  const { setUser } = useUserMutators();
+  const { setUser, unsetUser } = useUserMutators();
 
   useEffect(() => {
     const auth = getAuth(app);
     return onAuthStateChanged(auth, (user) => {
-      setUser(user);
+      user != null ? setUser(user) : unsetUser();
       setIsLoading(false);
     });
-  }, [setUser]);
+  }, [setUser, unsetUser]);
 
   return isLoading;
 };

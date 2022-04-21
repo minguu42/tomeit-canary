@@ -1,6 +1,11 @@
 import { User } from "firebase/auth";
 
-import { isTaskResponse, TaskResponse } from "@/models/task";
+import {
+  isTaskResponse,
+  isTasksResponse,
+  TaskResponse,
+  TasksResponse,
+} from "@/models/task/task";
 import { formatDateStringToRFC3339 } from "@/lib/format";
 
 const TOMEIT_API_URL = "http://localhost:8080/v0";
@@ -46,4 +51,55 @@ export const postTasks = async (
     return data;
   }
   return errorResponse;
+};
+
+export const fetchTasks = async (user: User | null): Promise<TasksResponse> => {
+  const errorResponse: TasksResponse = { tasks: [] };
+  if (!user) {
+    return errorResponse;
+  }
+
+  const idToken = await user.getIdToken(true);
+  const response = await fetch(TOMEIT_API_URL + "/tasks", {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      Authorization: "Bearer " + idToken,
+    },
+  });
+  const data: unknown = await response.json();
+
+  if (isTasksResponse(data)) {
+    return data;
+  }
+  return errorResponse;
+};
+
+export const patchTask = async (
+  user: User | null,
+  taskID: number,
+  body: string
+) => {
+  if (!user) {
+    return null;
+  }
+
+  const idToken = await user.getIdToken(true);
+  const response = await fetch(TOMEIT_API_URL + "/tasks/" + String(taskID), {
+    method: "PATCH",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      Authorization: "Bearer " + idToken,
+      "Content-Type": "application/json",
+    },
+    body: body,
+  });
+  const data: unknown = await response.json();
+
+  if (isTaskResponse(data)) {
+    return data;
+  }
+  return null;
 };

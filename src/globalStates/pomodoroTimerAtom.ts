@@ -1,6 +1,6 @@
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
-import { Task } from "@/models/task";
+import { Task } from "@/models/task/task";
 
 export const POMODORO_TIME = 1500;
 export const SHORT_REST_TIME = 300;
@@ -13,16 +13,6 @@ type PomodoroTimerAtom = {
   isNextPomodoro: boolean;
   restCount: number;
   playingTask: Task | null;
-};
-
-type PomodoroTimerActions = {
-  playPomodoro: (task: Task) => void;
-  stopPomodoroTimer: () => void;
-  skipRestTime: () => void;
-  resetPomodoro: () => void;
-  setPlayingTask: (task: Task | null) => void;
-  tickTime: () => void;
-  updatePomodoroTimerWhenTimeEnd: () => void;
 };
 
 const pomodoroTimerAtom = atom<PomodoroTimerAtom>({
@@ -39,7 +29,18 @@ const pomodoroTimerAtom = atom<PomodoroTimerAtom>({
 export const usePomodoroTimerAtom = (): PomodoroTimerAtom =>
   useRecoilValue(pomodoroTimerAtom);
 
-export const usePomodoroTimerActions = (): PomodoroTimerActions => {
+type PomodoroTimerMutators = {
+  playPomodoro: (task: Task) => void;
+  stopPomodoroTimer: () => void;
+  skipRestTime: () => void;
+  resetPomodoro: () => void;
+  setPlayingTask: (task: Task) => void;
+  unsetPlayingTask: () => void;
+  tickTime: () => void;
+  updatePomodoroTimerWhenTimeEnd: () => void;
+};
+
+export const usePomodoroTimerMutators = (): PomodoroTimerMutators => {
   const setAtom = useSetRecoilState(pomodoroTimerAtom);
 
   const playPomodoro = (task: Task) => {
@@ -89,9 +90,15 @@ export const usePomodoroTimerActions = (): PomodoroTimerActions => {
     });
   };
 
-  const setPlayingTask = (task: Task | null) => {
+  const setPlayingTask = (task: Task) => {
     setAtom((prev) => {
       return { ...prev, playingTask: task };
+    });
+  };
+
+  const unsetPlayingTask = (): void => {
+    setAtom((prev) => {
+      return { ...prev, playingTask: null };
     });
   };
 
@@ -107,6 +114,7 @@ export const usePomodoroTimerActions = (): PomodoroTimerActions => {
     skipRestTime,
     resetPomodoro,
     setPlayingTask,
+    unsetPlayingTask,
     tickTime,
     updatePomodoroTimerWhenTimeEnd,
   };

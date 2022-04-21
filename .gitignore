@@ -52,7 +52,10 @@ setEnvVars.js
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
+# Temporary directory of air
+*/tmp/
+
 ### Go Patch ###
-/vendor/
-/Godeps/
-.reg
+*/vendor/
+*/Godeps/
+*.reg
