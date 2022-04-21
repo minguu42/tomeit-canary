@@ -5,7 +5,7 @@ import {
 import { useTasksMutators } from "@/globalStates/tasksAtom";
 import { useUserAtom } from "@/globalStates/userAtom";
 import {
-  usePomodoroTimerActions,
+  usePomodoroTimerMutators,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
 import { newTask, Task } from "@/models/task/task";
@@ -32,7 +32,7 @@ export const useTaskSideSheet = (): Values => {
   const featuredTask = useFeaturedTaskAtom();
   const { setFeaturedTask, unsetFeaturedTask } = useFeaturedTaskMutators();
   const { playingTask } = usePomodoroTimerAtom();
-  const { unsetPlayingTask } = usePomodoroTimerActions();
+  const { unsetPlayingTask } = usePomodoroTimerMutators();
 
   const handleDeleteTaskButtonClick = (task: Task): void => {
     deleteTask(task);

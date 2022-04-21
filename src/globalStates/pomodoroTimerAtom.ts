@@ -15,17 +15,6 @@ type PomodoroTimerAtom = {
   playingTask: Task | null;
 };
 
-type PomodoroTimerActions = {
-  playPomodoro: (task: Task) => void;
-  stopPomodoroTimer: () => void;
-  skipRestTime: () => void;
-  resetPomodoro: () => void;
-  setPlayingTask: (task: Task) => void;
-  unsetPlayingTask: () => void;
-  tickTime: () => void;
-  updatePomodoroTimerWhenTimeEnd: () => void;
-};
-
 const pomodoroTimerAtom = atom<PomodoroTimerAtom>({
   key: "pomodoroTimerAtom",
   default: {
@@ -40,7 +29,18 @@ const pomodoroTimerAtom = atom<PomodoroTimerAtom>({
 export const usePomodoroTimerAtom = (): PomodoroTimerAtom =>
   useRecoilValue(pomodoroTimerAtom);
 
-export const usePomodoroTimerActions = (): PomodoroTimerActions => {
+type PomodoroTimerMutators = {
+  playPomodoro: (task: Task) => void;
+  stopPomodoroTimer: () => void;
+  skipRestTime: () => void;
+  resetPomodoro: () => void;
+  setPlayingTask: (task: Task) => void;
+  unsetPlayingTask: () => void;
+  tickTime: () => void;
+  updatePomodoroTimerWhenTimeEnd: () => void;
+};
+
+export const usePomodoroTimerMutators = (): PomodoroTimerMutators => {
   const setAtom = useSetRecoilState(pomodoroTimerAtom);
 
   const playPomodoro = (task: Task) => {

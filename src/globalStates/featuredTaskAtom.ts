@@ -1,7 +1,7 @@
+import { useCallback } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Task } from "@/models/task/task";
-import { useCallback } from "react";
 
 const featuredTaskAtom = atom<Task | null>({
   key: "featuredTaskAtom",

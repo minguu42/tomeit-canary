@@ -1,10 +1,6 @@
 import { useCallback } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
-type IsNavigationDrawerOpenMutators = {
-  toggleNavigationDrawer: () => void;
-};
-
 const isNavigationDrawerOpenAtom = atom({
   key: "isNavigationDrawerOpenAtom",
   default: false,
@@ -12,6 +8,10 @@ const isNavigationDrawerOpenAtom = atom({
 
 export const useIsNavigationDrawerOpenAtom = (): boolean =>
   useRecoilValue(isNavigationDrawerOpenAtom);
+
+type IsNavigationDrawerOpenMutators = {
+  toggleNavigationDrawer: () => void;
+};
 
 export const useIsNavigationDrawerOpenMutators =
   (): IsNavigationDrawerOpenMutators => {
