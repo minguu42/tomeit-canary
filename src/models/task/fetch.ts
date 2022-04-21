@@ -103,3 +103,24 @@ export const patchTask = async (
   }
   return null;
 };
+
+export const deleteTask = async (
+  user: User | null,
+  taskID: number
+): Promise<boolean> => {
+  if (!user) {
+    return false;
+  }
+
+  const idToken = await user.getIdToken(true);
+  const response = await fetch(TOMEIT_API_URL + "/tasks/" + String(taskID), {
+    method: "DELETE",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
+
+  return response.ok;
+};
