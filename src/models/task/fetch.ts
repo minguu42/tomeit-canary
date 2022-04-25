@@ -8,7 +8,8 @@ import {
 } from "@/models/task/task";
 import { formatDateStringToRFC3339 } from "@/lib/format";
 
-const TOMEIT_API_URL = "http://localhost:8080/v0";
+const TOMEIT_API_URL =
+  process.env.NEXT_PUBLIC_TOMEIT_API_URL ?? "http://localhost:8080/v0";
 
 export const postTasks = async (
   user: User | null,
@@ -31,7 +32,7 @@ export const postTasks = async (
   }
 
   const idToken = await user.getIdToken(true);
-  const response = await fetch(TOMEIT_API_URL + "/tasks", {
+  const response = await fetch(`${TOMEIT_API_URL}/tasks`, {
     method: "POST",
     mode: "cors",
     credentials: "include",
@@ -60,7 +61,7 @@ export const fetchTasks = async (user: User | null): Promise<TasksResponse> => {
   }
 
   const idToken = await user.getIdToken(true);
-  const response = await fetch(TOMEIT_API_URL + "/tasks", {
+  const response = await fetch(`${TOMEIT_API_URL}/tasks`, {
     method: "GET",
     mode: "cors",
     credentials: "include",
@@ -86,7 +87,7 @@ export const patchTask = async (
   }
 
   const idToken = await user.getIdToken(true);
-  const response = await fetch(TOMEIT_API_URL + "/tasks/" + String(taskID), {
+  const response = await fetch(`${TOMEIT_API_URL}/tasks/${taskID}`, {
     method: "PATCH",
     mode: "cors",
     credentials: "include",
@@ -113,7 +114,7 @@ export const deleteTask = async (
   }
 
   const idToken = await user.getIdToken(true);
-  const response = await fetch(TOMEIT_API_URL + "/tasks/" + String(taskID), {
+  const response = await fetch(`${TOMEIT_API_URL}/tasks/${taskID}`, {
     method: "DELETE",
     mode: "cors",
     credentials: "include",
