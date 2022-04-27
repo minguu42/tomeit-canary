@@ -3,7 +3,7 @@ import { useState, FormEventHandler, SyntheticEvent } from "react";
 import { useUserAtom } from "@/globalStates/userAtom";
 import { postTasks } from "@/models/task/fetch";
 import { useTasksMutators } from "@/globalStates/tasksAtom";
-import { newTask } from "@/models/task/task";
+import { newTask } from "@/types/task";
 
 type Values = {
   title: string;

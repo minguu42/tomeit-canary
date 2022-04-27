@@ -1,11 +1,6 @@
 import { User } from "firebase/auth";
 
-import {
-  isTaskResponse,
-  isTasksResponse,
-  TaskResponse,
-  TasksResponse,
-} from "@/models/task/task";
+import { isTaskResponse, isTasksResponse, TaskResponse, TasksResponse } from "@/types/task";
 import { formatDateStringToRFC3339 } from "@/lib/format";
 
 const TOMEIT_API_URL =

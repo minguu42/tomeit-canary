@@ -1,4 +1,4 @@
-import { newTask, Task } from "@/models/task/task";
+import { newTask, Task } from "@/types/task";
 import { useTasksMutators } from "@/globalStates/tasksAtom";
 import {
   usePomodoroTimerMutators,

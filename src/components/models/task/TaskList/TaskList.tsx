@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
 import { useTasksAtom, useTasksMutators } from "@/globalStates/tasksAtom";
-import { newTask, Task } from "@/models/task/task";
+import { newTask, Task } from "@/types/task";
 import { formatDate } from "@/lib/format";
 import { fetchTasks } from "@/models/task/fetch";
 import { useUserAtom } from "@/globalStates/userAtom";

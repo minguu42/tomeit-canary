@@ -8,7 +8,7 @@ import {
   usePomodoroTimerMutators,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
-import { newTask, Task } from "@/models/task/task";
+import { newTask, Task } from "@/types/task";
 import { patchTask, deleteTask } from "@/models/task/fetch";
 
 type Values = {
@@ -26,6 +26,8 @@ export const useTaskSideSheet = (): Values => {
     completedPomoNum: 0,
     dueOn: null,
     completedOn: null,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
   const user = useUserAtom();
   const { replaceTask, destroyTask } = useTasksMutators();
