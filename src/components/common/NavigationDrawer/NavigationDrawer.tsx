@@ -12,7 +12,7 @@ import {
   useIsNavigationDrawerOpenAtom,
   useIsNavigationDrawerOpenMutators,
 } from "@/globalStates/isNavigationDrawerOpenAtom";
-import { useTasksAtom } from "@/globalStates/tasksAtom";
+import { useTasks } from "@/hooks/fetch";
 import { formatDate } from "@/lib/format";
 
 const NavigationDrawer: FC = () => {
@@ -20,7 +20,7 @@ const NavigationDrawer: FC = () => {
   const { toggleNavigationDrawer } = useIsNavigationDrawerOpenMutators();
   const router = useRouter();
 
-  const tasks = useTasksAtom();
+  const { tasks } = useTasks();
   const today = new Date();
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
