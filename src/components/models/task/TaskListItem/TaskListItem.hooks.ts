@@ -1,5 +1,4 @@
-import { newTask, Task } from "@/types/task";
-import { useTasksMutators } from "@/globalStates/tasksAtom";
+import { Task } from "@/types/task";
 import {
   usePomodoroTimerMutators,
   usePomodoroTimerAtom,
@@ -8,8 +7,6 @@ import {
   useFeaturedTaskAtom,
   useFeaturedTaskMutators,
 } from "@/globalStates/featuredTaskAtom";
-import { patchTask } from "@/models/task/fetch";
-import { useUserAtom } from "@/globalStates/userAtom";
 
 type Values = {
   handlePlayButtonClick: (task: Task) => void;
@@ -18,8 +15,6 @@ type Values = {
 };
 
 export const useTaskListItem = (): Values => {
-  const user = useUserAtom();
-  const { replaceTask } = useTasksMutators();
   const featuredTask = useFeaturedTaskAtom();
   const { setFeaturedTask, unsetFeaturedTask } = useFeaturedTaskMutators();
   const { playingTask } = usePomodoroTimerAtom();
@@ -30,11 +25,7 @@ export const useTaskListItem = (): Values => {
   };
 
   const handleCompleteButtonClick = (task: Task): void => {
-    patchTask(user, task.id, JSON.stringify({ completedOn: new Date() }))
-      .then((taskResponse) => {
-        taskResponse && replaceTask(task, newTask(taskResponse));
-      })
-      .catch((error) => console.error(error));
+    // TODO: Tomeit API を叩いて、タスクを更新する
 
     if (task.id === featuredTask?.id) {
       unsetFeaturedTask();

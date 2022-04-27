@@ -2,14 +2,11 @@ import {
   useFeaturedTaskAtom,
   useFeaturedTaskMutators,
 } from "@/globalStates/featuredTaskAtom";
-import { useTasksMutators } from "@/globalStates/tasksAtom";
-import { useUserAtom } from "@/globalStates/userAtom";
 import {
   usePomodoroTimerMutators,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
-import { newTask, Task } from "@/types/task";
-import { patchTask, deleteTask } from "@/models/task/fetch";
+import { Task } from "@/types/task";
 
 type Values = {
   featuredTaskExists: boolean;
@@ -29,35 +26,24 @@ export const useTaskSideSheet = (): Values => {
     createdAt: new Date(),
     updatedAt: new Date(),
   };
-  const user = useUserAtom();
-  const { replaceTask, destroyTask } = useTasksMutators();
   const featuredTask = useFeaturedTaskAtom();
   const { unsetFeaturedTask } = useFeaturedTaskMutators();
   const { playingTask } = usePomodoroTimerAtom();
   const { unsetPlayingTask } = usePomodoroTimerMutators();
 
   const handleDeleteTaskButtonClick = (task: Task): void => {
-    deleteTask(user, task.id)
-      .then((ok) => {
-        if (ok) {
-          destroyTask(task);
-          if (task.id === featuredTask?.id) {
-            unsetFeaturedTask();
-          }
-          if (task.id === playingTask?.id) {
-            unsetPlayingTask();
-          }
-        }
-      })
-      .catch((error) => console.error(error));
+    // TODO: Tomeit API を叩いて、タスクを削除する
+
+    if (task.id === featuredTask?.id) {
+      unsetFeaturedTask();
+    }
+    if (task.id === playingTask?.id) {
+      unsetPlayingTask();
+    }
   };
 
   const handleCompleteTaskButtonClick = (task: Task): void => {
-    patchTask(user, task.id, JSON.stringify({ completedOn: new Date() }))
-      .then((taskResponse) => {
-        taskResponse && replaceTask(task, newTask(taskResponse));
-      })
-      .catch((error) => console.error(error));
+    // TODO: Tomeit API を叩いて、タスクを更新する
 
     if (task.id === featuredTask?.id) {
       unsetFeaturedTask();
