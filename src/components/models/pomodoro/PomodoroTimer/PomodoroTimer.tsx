@@ -15,7 +15,6 @@ import {
   usePomodoroTimerMutators,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
-import { useTasksMutators } from "@/globalStates/tasksAtom";
 import { formatTimerTime } from "@/lib/format";
 import { Task } from "@/types/task";
 
@@ -31,7 +30,6 @@ const PomodoroTimer: FC = () => {
     updatePomodoroTimerWhenTimeEnd,
     tickTime,
   } = usePomodoroTimerMutators();
-  const { replaceTask } = useTasksMutators();
 
   useEffect(() => {
     if (!isActive) return;
@@ -52,7 +50,7 @@ const PomodoroTimer: FC = () => {
           ...playingTask,
           completedPomoNum: playingTask.completedPomoNum + 1,
         };
-        replaceTask(playingTask, newTask);
+        // TODO: Tomeit API を叩いて、タスクを更新する
         setPlayingTask(newTask);
       }
       updatePomodoroTimerWhenTimeEnd();
@@ -60,7 +58,6 @@ const PomodoroTimer: FC = () => {
   }, [
     isNextPomodoro,
     playingTask,
-    replaceTask,
     setPlayingTask,
     time,
     updatePomodoroTimerWhenTimeEnd,
