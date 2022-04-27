@@ -10,39 +10,39 @@ export type TaskResponse = {
 };
 
 export const isTaskResponse = (arg: unknown): arg is TaskResponse => {
-    const t = arg as TaskResponse;
+  const t = arg as TaskResponse;
 
-    return (
-        typeof t?.id === "number" &&
-            typeof t?.title === "string" &&
-            typeof t?.estimatedPomoNum === "number" &&
-            typeof t?.completedPomoNum === "number" &&
-            typeof t?.dueOn === "string" &&
-            typeof t?.completedOn === "string" &&
-            typeof t?.createdAt === "string" &&
-            typeof t?.updatedAt === "string"
-    )
-}
+  return (
+    typeof t?.id === "number" &&
+    typeof t?.title === "string" &&
+    typeof t?.estimatedPomoNum === "number" &&
+    typeof t?.completedPomoNum === "number" &&
+    typeof t?.dueOn === "string" &&
+    typeof t?.completedOn === "string" &&
+    typeof t?.createdAt === "string" &&
+    typeof t?.updatedAt === "string"
+  );
+};
 
 export type TasksResponse = {
-    tasks: TaskResponse[];
-}
+  tasks: TaskResponse[];
+};
 
 export const isTasksResponse = (arg: unknown): arg is TasksResponse => {
-    const ts = arg as TasksResponse
+  const ts = arg as TasksResponse;
 
-    return Array.isArray(ts?.tasks) && ts?.tasks.every(isTaskResponse)
-}
+  return Array.isArray(ts?.tasks) && ts?.tasks.every(isTaskResponse);
+};
 
 export type Task = {
-    id: number;
-    title: string;
-    estimatedPomoNum: number;
-    completedPomoNum: number;
-    dueOn: Date | null;
-    completedOn: Date | null;
-    createdAt: Date;
-    updatedAt: Date;
+  id: number;
+  title: string;
+  estimatedPomoNum: number;
+  completedPomoNum: number;
+  dueOn: Date | null;
+  completedOn: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export const newTask = (r: TaskResponse): Task => {
