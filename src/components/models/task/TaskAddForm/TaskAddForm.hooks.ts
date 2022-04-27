@@ -1,10 +1,5 @@
 import { useState, FormEventHandler, SyntheticEvent } from "react";
 
-import { useUserAtom } from "@/globalStates/userAtom";
-import { postTasks } from "@/models/task/fetch";
-import { useTasksMutators } from "@/globalStates/tasksAtom";
-import { newTask } from "@/types/task";
-
 type Values = {
   title: string;
   estimatedPomoNum: number;
@@ -19,8 +14,6 @@ export const useTaskAddForm = (): Values => {
   const [title, setTitle] = useState("");
   const [estimatedPomoNum, setEstimatedPomoNum] = useState(0);
   const [dueOn, setDueOn] = useState("");
-  const user = useUserAtom();
-  const { addTask } = useTasksMutators();
 
   const handleTitleChange: FormEventHandler<HTMLInputElement> = (event) => {
     setTitle(event.currentTarget.value);
@@ -36,13 +29,7 @@ export const useTaskAddForm = (): Values => {
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
-    postTasks(user, title, estimatedPomoNum, dueOn)
-      .then((task) => {
-        addTask(newTask(task));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // TODO: Tomeit API を叩き、タスクを作成する
 
     setTitle("");
     setEstimatedPomoNum(0);
