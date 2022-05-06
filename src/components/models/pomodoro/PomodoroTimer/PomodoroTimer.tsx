@@ -15,7 +15,7 @@ import {
   usePomodoroTimerMutators,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
-import { formatTimerTime } from "@/lib/format";
+import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
 import { Task } from "@/types/task";
 
 const PomodoroTimer: FC = () => {
@@ -79,7 +79,7 @@ const PomodoroTimer: FC = () => {
         [s.colorInRest]: isNextPomodoro,
       })}
     >
-      <p className={s.timeText}>{formatTimerTime(time)}</p>
+      <p className={s.timeText}>{formatSecondsToMinutesSeconds(time)}</p>
       <p className={s.labelText}>{playingTask !== null && playingTask.title}</p>
       <div className={s.actionButtons}>
         {isNotStartPomodoroTimer && (

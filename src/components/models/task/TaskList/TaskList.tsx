@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
 import { useTasks } from "@/hooks/fetch";
-import { formatDate } from "@/lib/format";
+import { formatDateToJP } from "@/lib/formatDate";
 import { Task } from "@/types/task";
 
 type Props = {
@@ -14,7 +14,7 @@ const TaskList: FC<Props> = ({ filter }) => {
 
   const isNotTaskCompleted = (task: Task) => task.completedOn == null;
   const isTaskDueOn = (task: Task, date: Date) =>
-    task.dueOn !== null && formatDate(task.dueOn) === formatDate(date);
+    task.dueOn !== null && formatDateToJP(task.dueOn) === formatDateToJP(date);
   let filterConditions = isNotTaskCompleted;
   if (filter === "today") {
     const today = new Date();

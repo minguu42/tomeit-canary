@@ -13,7 +13,7 @@ import {
   useIsNavigationDrawerOpenMutators,
 } from "@/globalStates/isNavigationDrawerOpenAtom";
 import { useTasks } from "@/hooks/fetch";
-import { formatDate } from "@/lib/format";
+import { formatDateToJP } from "@/lib/formatDate";
 
 const NavigationDrawer: FC = () => {
   const isOpen = useIsNavigationDrawerOpenAtom();
@@ -28,13 +28,13 @@ const NavigationDrawer: FC = () => {
     (task) =>
       task.completedOn === null &&
       task.dueOn &&
-      formatDate(task.dueOn) === formatDate(today)
+      formatDateToJP(task.dueOn) === formatDateToJP(today)
   ).length;
   const tomorrowTaskNum = tasks.filter(
     (task) =>
       task.completedOn === null &&
       task.dueOn &&
-      formatDate(task.dueOn) === formatDate(tomorrow)
+      formatDateToJP(task.dueOn) === formatDateToJP(tomorrow)
   ).length;
   const somedayTaskNum = tasks.filter(
     (task) => task.completedOn === null
