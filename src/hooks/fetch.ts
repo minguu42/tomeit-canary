@@ -71,7 +71,7 @@ export const useTaskActions = (): TaskActions => {
         body: JSON.stringify({
           title: title,
           estimatedPomoNum: estimatedPomoNum,
-          dueOn: formatDateStringToRFC3339(dueOn),
+          dueOn: dueOn === "" ? "" : formatDateStringToRFC3339(dueOn),
         }),
       });
       if (!res.ok) {
