@@ -46,6 +46,8 @@ type TaskActions = {
     estimatedPomoNum: number,
     dueOn: string
   ) => Promise<void>;
+  putCompleteTask: (id: number) => Promise<void>;
+  deleteTask: (id: number) => Promise<void>;
 };
 
 export const useTaskActions = (): TaskActions => {
@@ -72,7 +74,6 @@ export const useTaskActions = (): TaskActions => {
           dueOn: formatDateStringToRFC3339(dueOn),
         }),
       });
-
       if (!res.ok) {
         throw new Error("タスクの作成に失敗しました。");
       }
@@ -88,7 +89,63 @@ export const useTaskActions = (): TaskActions => {
     });
   };
 
+  const putCompleteTask = async (id: number): Promise<void> => {
+    const idToken = await getIDToken(true);
+    mutate<Task[]>(TOMEIT_API_TASKS_URL, async (tasks) => {
+      const res = await fetch(`${TOMEIT_API_TASKS_URL}/${id}`, {
+        method: "PATCH",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          completedOn: new Date().toISOString(),
+        }),
+      });
+      if (!res.ok) {
+        throw new Error("タスクの完了に失敗しました。");
+      }
+
+      const data: unknown = await res.json();
+      if (tasks && isTaskResponse(data)) {
+        return tasks.filter((task) => task.id !== id);
+      } else {
+        throw new Error("タスクの完了に失敗しました。");
+      }
+    }).catch((error) => {
+      throw error;
+    });
+  };
+
+  const deleteTask = async (id: number): Promise<void> => {
+    const idToken = await getIDToken(true);
+    mutate<Task[]>(TOMEIT_API_TASKS_URL, async (tasks) => {
+      const res = await fetch(`${TOMEIT_API_TASKS_URL}/${id}`, {
+        method: "DELETE",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+      if (!res.ok) {
+        throw new Error("タスクの削除に失敗しました。");
+      }
+      if (tasks) {
+        return tasks.filter((task) => task.id !== id);
+      } else {
+        throw new Error("タスクの削除に失敗しました。");
+      }
+    }).catch((error) => {
+      throw error;
+    });
+  };
+
   return {
     postTasks,
+    putCompleteTask,
+    deleteTask,
   };
 };
