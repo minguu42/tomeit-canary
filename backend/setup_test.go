@@ -20,7 +20,7 @@ var testUrl string
 
 func TestMain(m *testing.M) {
 	InitLogger(false)
-	firebaseAppMock := &firebaseAppMock{}
+	authenticator := NewFirebaseAppMock()
 
 	if err := OpenDB("mysql", "test:password@tcp(localhost:13306)/db_test?charset=utf8mb4&parseTime=true"); err != nil {
 		log.Fatalf("OpenDB failed: %v", err)
@@ -28,7 +28,7 @@ func TestMain(m *testing.M) {
 	defer CloseDB()
 
 	r := chi.NewRouter()
-	r.Use(Auth(firebaseAppMock))
+	r.Use(Auth(authenticator))
 	Route(r)
 
 	ts := httptest.NewServer(r)
