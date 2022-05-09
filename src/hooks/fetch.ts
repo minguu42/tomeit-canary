@@ -110,7 +110,7 @@ export const useTaskActions = (): TaskActions => {
 
       const data: unknown = await res.json();
       if (tasks && isTaskResponse(data)) {
-        return tasks.filter((task) => task.id !== id);
+        return [...tasks.filter((task) => task.id !== id), newTask(data)];
       } else {
         throw new Error("タスクの完了に失敗しました。");
       }
