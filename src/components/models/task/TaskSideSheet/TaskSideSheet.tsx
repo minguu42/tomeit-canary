@@ -11,7 +11,7 @@ import {
 import IconButton from "@/components/common/IconButton";
 import s from "./TaskSideSheet.module.css";
 import { useTaskSideSheet } from "./TaskSideSheet.hooks";
-import { formatDateToJP } from "@/lib/format";
+import { formatDateToJP } from "@/lib/formatDate";
 
 const TaskSideSheet: FC = () => {
   const {

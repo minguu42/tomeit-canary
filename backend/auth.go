@@ -12,7 +12,7 @@ import (
 
 type userKey struct{}
 
-func Auth(authenticator authenticator) func(handler http.Handler) http.Handler {
+func Auth(authenticator Authenticator) func(handler http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if r.URL.Path == "/v0/healthz" {
@@ -28,9 +28,9 @@ func Auth(authenticator authenticator) func(handler http.Handler) http.Handler {
 				return
 			}
 			idToken := strings.Split(r.Header.Get("Authorization"), " ")[1]
-			token, err := authenticator.VerifyIDToken(ctx, idToken)
+			token, err := authenticator.verifyIDToken(ctx, idToken)
 			if err != nil {
-				log.Printf("authenticator.VerifyIDToken failed: %v", err)
+				log.Printf("Authenticator.verifyIDToken failed: %v", err)
 				_ = writeErrResponse(w, newErrUnauthorized(err))
 				return
 			}

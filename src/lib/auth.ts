@@ -17,3 +17,14 @@ export const logout = (): Promise<void> => {
   const auth = getAuth(app);
   return signOut(auth);
 };
+
+export const getIDToken = async (forceRefresh?: boolean): Promise<string> => {
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
+  if (user) {
+    return await user.getIdToken(forceRefresh);
+  } else {
+    throw new Error("User not found");
+  }
+};

@@ -1,14 +1,3 @@
-export type Task = {
-  id: number;
-  title: string;
-  estimatedPomoNum: number;
-  completedPomoNum: number;
-  dueOn: Date | null;
-  completedOn: Date | null;
-  createdAt?: Date;
-  updatedAt?: Date;
-};
-
 export type TaskResponse = {
   id: number;
   title: string;
@@ -18,10 +7,6 @@ export type TaskResponse = {
   completedOn: string;
   createdAt: string;
   updatedAt: string;
-};
-
-export type TasksResponse = {
-  tasks: TaskResponse[];
 };
 
 export const isTaskResponse = (arg: unknown): arg is TaskResponse => {
@@ -39,24 +24,36 @@ export const isTaskResponse = (arg: unknown): arg is TaskResponse => {
   );
 };
 
+export type TasksResponse = {
+  tasks: TaskResponse[];
+};
+
 export const isTasksResponse = (arg: unknown): arg is TasksResponse => {
   const ts = arg as TasksResponse;
 
   return Array.isArray(ts?.tasks) && ts?.tasks.every(isTaskResponse);
 };
 
-export const newTask = (taskResponse: TaskResponse): Task => {
+export type Task = {
+  id: number;
+  title: string;
+  estimatedPomoNum: number;
+  completedPomoNum: number;
+  dueOn: Date | null;
+  completedOn: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export const newTask = (r: TaskResponse): Task => {
   return {
-    id: taskResponse.id,
-    title: taskResponse.title,
-    estimatedPomoNum: taskResponse.estimatedPomoNum,
-    completedPomoNum: taskResponse.completedPomoNum,
-    dueOn: taskResponse.dueOn !== "" ? new Date(taskResponse.dueOn) : null,
-    completedOn:
-      taskResponse.completedOn !== ""
-        ? new Date(taskResponse.completedOn)
-        : null,
-    createdAt: new Date(taskResponse.createdAt),
-    updatedAt: new Date(taskResponse.updatedAt),
+    id: r.id,
+    title: r.title,
+    estimatedPomoNum: r.estimatedPomoNum,
+    completedPomoNum: r.completedPomoNum,
+    dueOn: r.dueOn !== "" ? new Date(r.dueOn) : null,
+    completedOn: r.completedOn !== "" ? new Date(r.completedOn) : null,
+    createdAt: new Date(r.createdAt),
+    updatedAt: new Date(r.updatedAt),
   };
 };

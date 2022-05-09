@@ -15,9 +15,8 @@ import {
   usePomodoroTimerMutators,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
-import { useTasksMutators } from "@/globalStates/tasksAtom";
-import { formatTimerTime } from "@/lib/format";
-import { Task } from "@/models/task/task";
+import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
+import { Task } from "@/types/task";
 
 const PomodoroTimer: FC = () => {
   const { time, isActive, isNextPomodoro, playingTask } =
@@ -31,7 +30,6 @@ const PomodoroTimer: FC = () => {
     updatePomodoroTimerWhenTimeEnd,
     tickTime,
   } = usePomodoroTimerMutators();
-  const { replaceTask } = useTasksMutators();
 
   useEffect(() => {
     if (!isActive) return;
@@ -52,7 +50,7 @@ const PomodoroTimer: FC = () => {
           ...playingTask,
           completedPomoNum: playingTask.completedPomoNum + 1,
         };
-        replaceTask(playingTask, newTask);
+        // TODO: Tomeit API を叩いて、タスクを更新する
         setPlayingTask(newTask);
       }
       updatePomodoroTimerWhenTimeEnd();
@@ -60,7 +58,6 @@ const PomodoroTimer: FC = () => {
   }, [
     isNextPomodoro,
     playingTask,
-    replaceTask,
     setPlayingTask,
     time,
     updatePomodoroTimerWhenTimeEnd,
@@ -82,7 +79,7 @@ const PomodoroTimer: FC = () => {
         [s.colorInRest]: isNextPomodoro,
       })}
     >
-      <p className={s.timeText}>{formatTimerTime(time)}</p>
+      <p className={s.timeText}>{formatSecondsToMinutesSeconds(time)}</p>
       <p className={s.labelText}>{playingTask !== null && playingTask.title}</p>
       <div className={s.actionButtons}>
         {isNotStartPomodoroTimer && (

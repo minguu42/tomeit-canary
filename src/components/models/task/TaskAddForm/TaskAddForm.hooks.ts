@@ -1,9 +1,5 @@
 import { useState, FormEventHandler, SyntheticEvent } from "react";
-
-import { useUserAtom } from "@/globalStates/userAtom";
-import { postTasks } from "@/models/task/fetch";
-import { useTasksMutators } from "@/globalStates/tasksAtom";
-import { newTask } from "@/models/task/task";
+import { useTaskActions } from "@/hooks/fetch";
 
 type Values = {
   title: string;
@@ -19,8 +15,7 @@ export const useTaskAddForm = (): Values => {
   const [title, setTitle] = useState("");
   const [estimatedPomoNum, setEstimatedPomoNum] = useState(0);
   const [dueOn, setDueOn] = useState("");
-  const user = useUserAtom();
-  const { addTask } = useTasksMutators();
+  const { postTasks } = useTaskActions();
 
   const handleTitleChange: FormEventHandler<HTMLInputElement> = (event) => {
     setTitle(event.currentTarget.value);
@@ -36,13 +31,10 @@ export const useTaskAddForm = (): Values => {
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
-    postTasks(user, title, estimatedPomoNum, dueOn)
-      .then((task) => {
-        addTask(newTask(task));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+
+    postTasks(title, estimatedPomoNum, dueOn).catch((error) => {
+      console.error(error);
+    });
 
     setTitle("");
     setEstimatedPomoNum(0);

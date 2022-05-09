@@ -1,32 +1,20 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 import TaskListItem from "@/components/models/task/TaskListItem";
-import { useTasksAtom, useTasksMutators } from "@/globalStates/tasksAtom";
-import { newTask, Task } from "@/models/task/task";
-import { formatDate } from "@/lib/format";
-import { fetchTasks } from "@/models/task/fetch";
-import { useUserAtom } from "@/globalStates/userAtom";
+import { useTasks } from "@/hooks/fetch";
+import { formatDateToJP } from "@/lib/formatDate";
+import { Task } from "@/types/task";
 
 type Props = {
   filter: "today" | "tomorrow" | "someday";
 };
 
 const TaskList: FC<Props> = ({ filter }) => {
-  const tasks = useTasksAtom();
-  const { setTasks } = useTasksMutators();
-  const user = useUserAtom();
-
-  useEffect(() => {
-    fetchTasks(user)
-      .then((tasksResponse) =>
-        setTasks(tasksResponse.tasks.map((t) => newTask(t)))
-      )
-      .catch((error) => console.error(error));
-  }, [setTasks, user]);
+  const { tasks, isLoading, isError } = useTasks();
 
   const isNotTaskCompleted = (task: Task) => task.completedOn == null;
   const isTaskDueOn = (task: Task, date: Date) =>
-    task.dueOn !== null && formatDate(task.dueOn) === formatDate(date);
+    task.dueOn !== null && formatDateToJP(task.dueOn) === formatDateToJP(date);
   let filterConditions = isNotTaskCompleted;
   if (filter === "today") {
     const today = new Date();
@@ -39,10 +27,12 @@ const TaskList: FC<Props> = ({ filter }) => {
       isNotTaskCompleted(task) && isTaskDueOn(task, tomorrow);
   }
 
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
   return (
     <ul>
-      {tasks.filter(filterConditions).map((task) => (
-        <TaskListItem key={task.id} task={task} />
+      {tasks.filter(filterConditions).map((t) => (
+        <TaskListItem key={t.id} task={t} />
       ))}
     </ul>
   );

@@ -4,9 +4,10 @@ module.exports = {
     dirs: [
       "src/components",
       "src/globalStates",
+      "src/hooks",
       "src/lib",
-      "src/models",
       "src/pages",
+      "src/types",
     ],
   },
 };

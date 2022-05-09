@@ -11,16 +11,14 @@ services:
       - GOOGLE_CREDENTIALS_JSON
       - ALLOW_ORIGINS
     container_name: tomeit-api
-    stdin_open: true
-    tty: true
     volumes:
       - ./backend:/app
     ports:
       - ${PORT}:${PORT}
     depends_on:
-      - db-dev
-  db-dev:
-    image: mysql:8.0.28-debian
+      - db-local
+  db-local:
+    image: mysql:8.0.29
     environment:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_DATABASE
@@ -29,12 +27,12 @@ services:
     container_name: tomeit-api-db-dev
     restart: always
     volumes:
-      - data-dev:/var/lib/mysql
+      - data-local:/var/lib/mysql
       - ./backend/build/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
   db-test:
-    image: mysql:8.0.28-debian
+    image: mysql:8.0.29
     environment:
-      MYSQL_ROOT_PASSWORD: passsword
+      MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: db_test
       MYSQL_USER: test
       MYSQL_PASSWORD: password
@@ -45,7 +43,7 @@ services:
     volumes:
       - data-test:/var/lib/mysql
   docs:
-    image: swaggerapi/swagger-ui:3.18.3
+    image: swaggerapi/swagger-ui:v4.11.0
     container_name: tomeit-api-docs
     environment:
       API_URL: openapi.yaml
@@ -55,7 +53,7 @@ services:
       - ./docs/openapi.yaml:/usr/share/nginx/html/openapi.yaml
 
 volumes:
-  data-dev:
+  data-local:
     driver: local
   data-test:
     driver: local

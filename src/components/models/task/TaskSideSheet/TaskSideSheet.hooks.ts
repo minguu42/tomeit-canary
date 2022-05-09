@@ -2,14 +2,12 @@ import {
   useFeaturedTaskAtom,
   useFeaturedTaskMutators,
 } from "@/globalStates/featuredTaskAtom";
-import { useTasksMutators } from "@/globalStates/tasksAtom";
-import { useUserAtom } from "@/globalStates/userAtom";
 import {
   usePomodoroTimerMutators,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
-import { newTask, Task } from "@/models/task/task";
-import { patchTask, deleteTask } from "@/models/task/fetch";
+import { useTaskActions } from "@/hooks/fetch";
+import { Task } from "@/types/task";
 
 type Values = {
   featuredTaskExists: boolean;
@@ -26,36 +24,32 @@ export const useTaskSideSheet = (): Values => {
     completedPomoNum: 0,
     dueOn: null,
     completedOn: null,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
-  const user = useUserAtom();
-  const { replaceTask, destroyTask } = useTasksMutators();
+  const { putCompleteTask, deleteTask } = useTaskActions();
   const featuredTask = useFeaturedTaskAtom();
   const { unsetFeaturedTask } = useFeaturedTaskMutators();
   const { playingTask } = usePomodoroTimerAtom();
   const { unsetPlayingTask } = usePomodoroTimerMutators();
 
   const handleDeleteTaskButtonClick = (task: Task): void => {
-    deleteTask(user, task.id)
-      .then((ok) => {
-        if (ok) {
-          destroyTask(task);
-          if (task.id === featuredTask?.id) {
-            unsetFeaturedTask();
-          }
-          if (task.id === playingTask?.id) {
-            unsetPlayingTask();
-          }
-        }
-      })
-      .catch((error) => console.error(error));
+    deleteTask(task.id).catch((error) => {
+      console.error(error);
+    });
+
+    if (task.id === featuredTask?.id) {
+      unsetFeaturedTask();
+    }
+    if (task.id === playingTask?.id) {
+      unsetPlayingTask();
+    }
   };
 
   const handleCompleteTaskButtonClick = (task: Task): void => {
-    patchTask(user, task.id, JSON.stringify({ completedOn: new Date() }))
-      .then((taskResponse) => {
-        taskResponse && replaceTask(task, newTask(taskResponse));
-      })
-      .catch((error) => console.error(error));
+    putCompleteTask(task.id).catch((error) => {
+      console.error(error);
+    });
 
     if (task.id === featuredTask?.id) {
       unsetFeaturedTask();
