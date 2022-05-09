@@ -1,4 +1,3 @@
-import { Task } from "@/types/task";
 import {
   usePomodoroTimerMutators,
   usePomodoroTimerAtom,
@@ -7,6 +6,8 @@ import {
   useFeaturedTaskAtom,
   useFeaturedTaskMutators,
 } from "@/globalStates/featuredTaskAtom";
+import { useTaskActions } from "@/hooks/fetch";
+import { Task } from "@/types/task";
 
 type Values = {
   handlePlayButtonClick: (task: Task) => void;
@@ -15,6 +16,7 @@ type Values = {
 };
 
 export const useTaskListItem = (): Values => {
+  const { putCompleteTask } = useTaskActions();
   const featuredTask = useFeaturedTaskAtom();
   const { setFeaturedTask, unsetFeaturedTask } = useFeaturedTaskMutators();
   const { playingTask } = usePomodoroTimerAtom();
@@ -25,7 +27,9 @@ export const useTaskListItem = (): Values => {
   };
 
   const handleCompleteButtonClick = (task: Task): void => {
-    // TODO: Tomeit API を叩いて、タスクを更新する
+    putCompleteTask(task.id).catch((error) => {
+      console.error(error);
+    });
 
     if (task.id === featuredTask?.id) {
       unsetFeaturedTask();

@@ -6,6 +6,7 @@ import {
   usePomodoroTimerMutators,
   usePomodoroTimerAtom,
 } from "@/globalStates/pomodoroTimerAtom";
+import { useTaskActions } from "@/hooks/fetch";
 import { Task } from "@/types/task";
 
 type Values = {
@@ -26,13 +27,16 @@ export const useTaskSideSheet = (): Values => {
     createdAt: new Date(),
     updatedAt: new Date(),
   };
+  const { putCompleteTask, deleteTask } = useTaskActions();
   const featuredTask = useFeaturedTaskAtom();
   const { unsetFeaturedTask } = useFeaturedTaskMutators();
   const { playingTask } = usePomodoroTimerAtom();
   const { unsetPlayingTask } = usePomodoroTimerMutators();
 
   const handleDeleteTaskButtonClick = (task: Task): void => {
-    // TODO: Tomeit API を叩いて、タスクを削除する
+    deleteTask(task.id).catch((error) => {
+      console.error(error);
+    });
 
     if (task.id === featuredTask?.id) {
       unsetFeaturedTask();
@@ -43,7 +47,9 @@ export const useTaskSideSheet = (): Values => {
   };
 
   const handleCompleteTaskButtonClick = (task: Task): void => {
-    // TODO: Tomeit API を叩いて、タスクを更新する
+    putCompleteTask(task.id).catch((error) => {
+      console.error(error);
+    });
 
     if (task.id === featuredTask?.id) {
       unsetFeaturedTask();
