@@ -1,0 +1,3 @@
+GET http://localhost:8080/v0/tasks?isCompleted=true&completedOn=2021-12-31T15:04:05Z
+Authorization: Bearer someIDToken
+Accept: application/json
