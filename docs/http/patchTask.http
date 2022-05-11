@@ -1,0 +1,11 @@
+PATCH http://localhost:8080/v0/tasks/1
+Authorization: Bearer someIDToken
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "更新済みタスク1",
+  "estimatedPomoNum": 2,
+  "dueOn": "2022-12-31T00:00:00Z",
+  "completedOn": "2022-12-31T00:00:00Z"
+}
