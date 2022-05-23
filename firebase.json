@@ -2,5 +2,11 @@
   "hosting": {
     "public": "out",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  },
+  "emulators": {
+    "hosting": {
+      "host": "localhost",
+      "port": "5001"
+    }
   }
 }
