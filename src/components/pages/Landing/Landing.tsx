@@ -36,6 +36,7 @@ export const Landing: NextPage = () => {
             height={340}
             alt=""
             loader={imageLoader}
+            unoptimized={true}
           />
         </div>
       </main>

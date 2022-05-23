@@ -17,6 +17,7 @@ export const GoogleLoginButton: FC = () => {
           layout="fixed"
           alt="Google ロゴ"
           loader={imageLoader}
+          unoptimized={true}
         />
       </div>
       Sign in with Google
