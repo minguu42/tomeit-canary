@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import s from "./GoogleLoginButton.module.css";
 import { login } from "@/lib/auth";
+import { imageLoader } from "@/lib/loader";
 
 export const GoogleLoginButton: FC = () => {
   return (
@@ -15,6 +16,7 @@ export const GoogleLoginButton: FC = () => {
           height={18}
           layout="fixed"
           alt="Google ロゴ"
+          loader={imageLoader}
         />
       </div>
       Sign in with Google
