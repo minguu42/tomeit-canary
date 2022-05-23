@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 ### Common ###
 # Local env files
 .env
@@ -35,6 +33,9 @@ setEnvVars.js
 # Vercel
 .vercel
 
+# Firebase
+.firebaserc
+
 ### Backend - Go ###
 # Binaries for programs and plugins
 backend/*.exe
@@ -52,6 +53,6 @@ backend/*.out
 # Temporary directory of air
 backend/tmp/
 
-# GCP Setting
+# GCP (Google Cloud Platform)
 backend/.gcloudignore
 backend/app.yaml
