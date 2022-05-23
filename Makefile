@@ -6,8 +6,13 @@ dev:  ## http://localhost:3000 で開発用 Web サーバを起動する
 	@npm run dev
 
 .PHONY: dev-backend
-dev-backend:  ## 開発用 API サーバを起動する
+dev-backend:  ## http://localhost:8080 で開発用 API サーバを起動する
 	@docker compose up api
+
+.PHONY: emulate
+emulate:  ## http://localhost:5001 でテスト用 Firebase Hosting サーバを起動する
+	@npm run build
+	@firebase emulators:start
 
 .PHONY: docs
 docs: ## http://localhost:8000 でドキュメント用サーバを起動する
