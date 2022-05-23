@@ -34,6 +34,7 @@ setEnvVars.js
 .vercel
 
 # Firebase
+/.firebase
 .firebaserc
 
 ### Backend - Go ###
