@@ -7,7 +7,7 @@ dev:  ## http://localhost:3000 で開発用 Web サーバを起動する
 
 .PHONY: dev-backend
 dev-backend:  ## http://localhost:8080 で開発用 API サーバを起動する
-	@docker compose up api
+	@docker compose --env-file .env.development up api
 
 .PHONY: emulate
 emulate:  ## http://localhost:5001 でテスト用 Firebase Hosting サーバを起動する
@@ -17,7 +17,7 @@ emulate:  ## http://localhost:5001 でテスト用 Firebase Hosting サーバを
 .PHONY: docs
 docs: ## http://localhost:8000 でドキュメント用サーバを起動する
 	@open http://localhost:8000/
-	@docker compose up -d docs
+	@docker compose --env-file .env.development up -d docs
 
 .PHONY: build
 build:  ## Next.js アプリをビルドする
@@ -37,7 +37,7 @@ lint:  ## js, ts, jsx, tsx, css ファイルを静的解析する
 
 .PHONY: down
 down:  ## 関連する Docker コンテナを停止し, 削除する
-	@docker compose down
+	@docker compose --env-file .env.development down
 
 .PHONY: help
 help: ## ヘルプを表示する
