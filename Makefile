@@ -35,6 +35,15 @@ fmt:  ## js, ts, jsx, tsx, css, json, md ファイルを自動整形する
 lint:  ## js, ts, jsx, tsx, css ファイルを静的解析する
 	@npm run lint
 
+.PHONY: deploy
+deploy:  ## Next.js アプリを Firebase Hosting にデプロイする
+	@npm run build
+	@firebase deploy --only hosting
+
+.PHONY: deploy-backend
+deploy-backend:  ## API サーバを Google App Engine にデプロイする
+	@cd ./backend && gcloud app deploy
+
 .PHONY: down
 down:  ## 関連する Docker コンテナを停止し, 削除する
 	@docker compose --env-file .env.development down
