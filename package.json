@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "check-style": "prettier --check --ignore-path .lintignore '{**/*,*}.{js,ts,jsx,tsx,css,json,md,yaml}'",
     "fmt": "prettier --ignore-path .lintignore -l -w '{**/*,*}.{js,ts,jsx,tsx,css,json,md,yaml}' && stylelint --fix --ignore-path .lintignore 'src/**/*.css'",

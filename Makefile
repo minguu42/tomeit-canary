@@ -6,13 +6,18 @@ dev:  ## http://localhost:3000 で開発用 Web サーバを起動する
 	@npm run dev
 
 .PHONY: dev-backend
-dev-backend:  ## 開発用 API サーバを起動する
-	@docker compose up api
+dev-backend:  ## http://localhost:8080 で開発用 API サーバを起動する
+	@docker compose --env-file .env.development up api
+
+.PHONY: emulate
+emulate:  ## http://localhost:5001 でテスト用 Firebase Hosting サーバを起動する
+	@npm run build
+	@firebase emulators:start
 
 .PHONY: docs
 docs: ## http://localhost:8000 でドキュメント用サーバを起動する
 	@open http://localhost:8000/
-	@docker compose up -d docs
+	@docker compose --env-file .env.development up -d docs
 
 .PHONY: build
 build:  ## Next.js アプリをビルドする
@@ -30,9 +35,18 @@ fmt:  ## js, ts, jsx, tsx, css, json, md ファイルを自動整形する
 lint:  ## js, ts, jsx, tsx, css ファイルを静的解析する
 	@npm run lint
 
+.PHONY: deploy
+deploy:  ## Next.js アプリを Firebase Hosting にデプロイする
+	@npm run build
+	@firebase deploy --only hosting
+
+.PHONY: deploy-backend
+deploy-backend:  ## API サーバを Google App Engine にデプロイする
+	@cd ./backend && gcloud app deploy
+
 .PHONY: down
 down:  ## 関連する Docker コンテナを停止し, 削除する
-	@docker compose down
+	@docker compose --env-file .env.development down
 
 .PHONY: help
 help: ## ヘルプを表示する

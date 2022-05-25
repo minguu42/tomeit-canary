@@ -1,5 +1,8 @@
 module.exports = {
   reactStrictMode: true,
+  images: {
+    loader: "custom",
+  },
   eslint: {
     dirs: [
       "src/components",
