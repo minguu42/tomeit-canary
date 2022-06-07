@@ -1,0 +1,19 @@
+name: Set Assignees
+
+on:
+  pull_request:
+    types:
+      - opened
+      - unassigned
+
+jobs:
+  set-assignees:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set assignees
+        env:
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GH_REPO: "${{ github.action_repository }}"
+          PR_NUMBER: "${{ github.event.pull_request.number }}"
+          ASSIGNEES: "${{ github.actor }}"
+        run: gh pr edit $PR_NUMBER --add-assignee $ASSIGNEES

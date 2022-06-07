@@ -57,4 +57,4 @@ backend/tmp/
 
 # GCP (Google Cloud Platform)
 backend/.gcloudignore
-backend/app.yaml
+backend/app.yml
