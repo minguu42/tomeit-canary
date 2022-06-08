@@ -10,9 +10,9 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-// NewDB はデータベースに接続し、 *sql.DB を返す。
-func NewDB(driverName, dsn string) (*sql.DB, error) {
-	db, err := sql.Open(driverName, dsn)
+// NewDB は MySQL に接続し、sql.DB を返す。
+func NewDB(dsn string) (*sql.DB, error) {
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database. %w", err)
 	}
