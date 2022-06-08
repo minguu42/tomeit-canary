@@ -11,7 +11,5 @@ func Route(r chi.Router) {
 			r.Patch("/{taskID}", patchTask)
 			r.Delete("/{taskID}", deleteTask)
 		})
-
-		r.Get("/healthz", getHealthz)
 	})
 }
