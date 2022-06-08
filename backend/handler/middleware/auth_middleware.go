@@ -12,19 +12,13 @@ import (
 
 type UserKey struct{}
 
-type Authenticator interface {
-	verifyIDToken(ctx context.Context, idToken string) (uid string, err error)
-}
-
 type AuthMiddleware struct {
-	authenticator Authenticator
-	userService   service.UserService
+	userService service.UserService
 }
 
-func NewAuthMiddleware(authenticator Authenticator, userService service.UserService) (*AuthMiddleware, error) {
+func NewAuthMiddleware(userService service.UserService) (*AuthMiddleware, error) {
 	return &AuthMiddleware{
-		authenticator: authenticator,
-		userService:   userService,
+		userService: userService,
 	}, nil
 }
 
@@ -42,7 +36,7 @@ func (m *AuthMiddleware) Handle(next http.Handler) http.Handler {
 			return
 		}
 		idToken := strings.Split(r.Header.Get("Authorization"), " ")[1]
-		uid, err := m.authenticator.verifyIDToken(ctx, idToken)
+		uid, err := m.userService.VerifyIDToken(ctx, idToken)
 		if err != nil {
 			// TODO: エラーレスポンスの生成
 			return
