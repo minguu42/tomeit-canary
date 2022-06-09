@@ -1,7 +1,16 @@
+// Package handler は各エンドポイントに対応するハンドラを定義するパッケージ
 package handler
 
-type handler struct{}
+import "github.com/minguu42/tomeit/service"
 
-func New() *handler {
-	return &handler{}
+// Handler -
+type Handler struct {
+	svc service.Service
+}
+
+// New は Handler を初期化し、返す。
+func New(svc service.Service) *Handler {
+	return &Handler{
+		svc: svc,
+	}
 }
