@@ -26,18 +26,18 @@ func (m *Middleware) Auth(next http.Handler) http.Handler {
 			return
 		}
 		idToken := strings.Split(r.Header.Get("Authorization"), " ")[1]
-		uid, err := m.userService.VerifyIDToken(ctx, idToken)
+		uid, err := m.svc.VerifyIDToken(ctx, idToken)
 		if err != nil {
 			// TODO: エラーレスポンスの生成
 			return
 		}
 
-		user, err := m.userService.GetUser(ctx, hash(uid))
+		user, err := m.svc.GetUser(ctx, hash(uid))
 		// TODO: ここの処理を見直す。
 		// やりたいことは最初にログインして MySQL にデータが存在しない場合は作成する。
 		// 取得をそもそも失敗している場合はエラーレスポンスを生成する。
 		if user == nil || err != nil {
-			user, err = m.userService.CreateUser(ctx, hash(uid))
+			user, err = m.svc.CreateUser(ctx, hash(uid))
 			if err != nil {
 				// TODO: エラーレスポンスの生成
 				return

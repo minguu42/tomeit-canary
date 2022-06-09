@@ -5,12 +5,12 @@ import "github.com/minguu42/tomeit/service"
 
 // Middleware -
 type Middleware struct {
-	userService service.UserService
+	svc service.Service
 }
 
-// New は Middleware を初期化して、返す。
-func New(userService service.UserService) *Middleware {
+// New は Middleware を初期化し、返す。
+func New(svc service.Service) *Middleware {
 	return &Middleware{
-		userService: userService,
+		svc: svc,
 	}
 }
