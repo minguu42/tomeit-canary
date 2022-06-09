@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
@@ -9,81 +10,66 @@ import (
 	"strings"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
-	"github.com/go-chi/cors"
-	"github.com/minguu42/tomeit"
+	"github.com/minguu42/tomeit/db"
+	"github.com/minguu42/tomeit/firebase"
+	"github.com/minguu42/tomeit/handler"
+	"github.com/minguu42/tomeit/handler/middleware"
+	"github.com/minguu42/tomeit/service"
 )
-
-func init() {
-	tomeit.InitLogger(true)
-}
 
 func main() {
 	if err := _main(); err != nil {
-		log.Fatalf("_main failed: %v", err)
+		log.Fatalf("failed to run _main function. %v", err)
 	}
 }
 
 func _main() error {
 	var (
-		apiEnv                = "local"
-		port                  = "8080"
-		allowedOrigins        = "https://*,http://*"
-		driverName            = "mysql"
+		apiEnv                = os.Getenv("API_ENV")
+		allowedOrigins        = os.Getenv("ALLOWED_ORIGINS")
 		dsn                   = os.Getenv("DSN")
 		googleCredentialsJSON = os.Getenv("GOOGLE_CREDENTIALS_JSON")
 	)
-	if envAPIEnv := os.Getenv("API_ENV"); envAPIEnv != "" {
-		apiEnv = envAPIEnv
-	}
-	if envPort := os.Getenv("PORT"); envPort != "" {
-		port = envPort
-	}
-	if envAllowedOrigins := os.Getenv("ALLOWED_ORIGINS"); envAllowedOrigins != "" {
-		allowedOrigins = envAllowedOrigins
-	}
-	if envDriverName := os.Getenv("DRIVER_NAME"); envDriverName != "" {
-		driverName = envDriverName
-	}
-	if dsn == "" {
-		return errors.New("environment variable DSN does not exist")
-	}
-	if googleCredentialsJSON == "" {
-		return errors.New("environment variable GOOGLE_CREDENTIALS_JSON does not exist")
+	switch {
+	case apiEnv == "":
+		return errors.New("environment API_ENV does not exist")
+	case allowedOrigins == "":
+		return errors.New("environment ALLOWED_ORIGINS does not exist")
+	case dsn == "":
+		return errors.New("environment DSN does not exist")
+	case googleCredentialsJSON == "":
+		return errors.New("environment GOOGLE_CREDENTIALS_JSON does not exist")
 	}
 
-	var authenticator tomeit.Authenticator
-	var err error
-	switch apiEnv {
-	case "production":
-		authenticator, err = tomeit.NewFirebaseApp()
-		if err != nil {
-			return fmt.Errorf("tomeit.NewFirebaseApp failed: %w", err)
-		}
-	default:
-		authenticator = tomeit.NewFirebaseAppMock()
+	ctx := context.Background()
+
+	dialect := db.NewDialect()
+	mysql, err := db.NewDB(ctx, dsn)
+	if err != nil {
+		return fmt.Errorf("failed to create db. %w", err)
 	}
 
-	if err := tomeit.OpenDB(driverName, dsn); err != nil {
-		return fmt.Errorf("tomeit.OpenDB failed: %w", err)
+	firebaseApp, err := firebase.NewApp(ctx, googleCredentialsJSON)
+	if err != nil {
+		return fmt.Errorf("failed to create firebase app. %w", err)
 	}
-	defer tomeit.CloseDB()
+
+	svc, err := service.New(dialect, mysql, firebaseApp)
+	if err != nil {
+		return fmt.Errorf("failed to create service. %w", err)
+	}
 
 	r := chi.NewRouter()
-	r.Use(middleware.Logger)
-	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   strings.Split(allowedOrigins, ","),
-		AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
-		AllowCredentials: true,
-		MaxAge:           300,
-	}))
-	r.Use(tomeit.Auth(authenticator))
-	r.Use(middleware.Recoverer)
-	tomeit.Route(r)
+	m := middleware.New(svc)
+	r.Use(m.Log)
+	r.Use(m.CORS(strings.Split(allowedOrigins, ",")))
+	r.Use(m.Auth)
+	r.Use(m.Recover)
+	h := handler.New(svc)
+	h.Route(r)
 
-	if err := http.ListenAndServe(":"+port, r); err != nil {
-		return fmt.Errorf("http.ListenAndServe failed: %w", err)
+	if err := http.ListenAndServe(":8080", r); err != nil {
+		return fmt.Errorf("failed to run server: %w", err)
 	}
 	return nil
 }
