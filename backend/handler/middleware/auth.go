@@ -6,23 +6,13 @@ import (
 	"encoding/hex"
 	"net/http"
 	"strings"
-
-	"github.com/minguu42/tomeit/service"
 )
 
+// UserKey はコンテキストでユーザを管理するためのキー
 type UserKey struct{}
 
-type AuthMiddleware struct {
-	userService service.UserService
-}
-
-func NewAuthMiddleware(userService service.UserService) (*AuthMiddleware, error) {
-	return &AuthMiddleware{
-		userService: userService,
-	}, nil
-}
-
-func (m *AuthMiddleware) Handle(next http.Handler) http.Handler {
+// Auth はユーザ認証を行うミドルウェア
+func (m *Middleware) Auth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/healthz" {
 			next.ServeHTTP(w, r)
