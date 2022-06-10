@@ -10,7 +10,6 @@ import (
 	"strings"
 
 	"github.com/minguu42/tomeit/internal/handler/utils"
-
 	"github.com/minguu42/tomeit/internal/log"
 	"github.com/minguu42/tomeit/internal/model"
 )
