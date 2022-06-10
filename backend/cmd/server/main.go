@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -15,25 +14,23 @@ import (
 	"github.com/minguu42/tomeit/internal/firebase"
 	"github.com/minguu42/tomeit/internal/handler"
 	"github.com/minguu42/tomeit/internal/handler/middleware"
+	"github.com/minguu42/tomeit/internal/log"
 	"github.com/minguu42/tomeit/internal/service"
 )
 
 func main() {
 	if err := _main(); err != nil {
-		log.Fatalf("failed to run _main function. %v", err)
+		log.Fatal("failed to run _main().", err)
 	}
 }
 
 func _main() error {
 	var (
-		apiEnv                = os.Getenv("API_ENV")
 		allowedOrigins        = os.Getenv("ALLOWED_ORIGINS")
 		dsn                   = os.Getenv("DSN")
 		googleCredentialsJSON = os.Getenv("GOOGLE_CREDENTIALS_JSON")
 	)
 	switch {
-	case apiEnv == "":
-		return errors.New("environment API_ENV does not exist")
 	case allowedOrigins == "":
 		return errors.New("environment ALLOWED_ORIGINS does not exist")
 	case dsn == "":
@@ -54,7 +51,6 @@ func _main() error {
 	if err != nil {
 		return fmt.Errorf("failed to create firebase app. %w", err)
 	}
-
 	authenticator, err := auth.New(firebaseApp)
 	if err != nil {
 		return fmt.Errorf("failed to create authenticator. %w", err)
