@@ -15,18 +15,17 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db-local
-  db-local:
+      - db-dev
+  db-dev:
     image: mysql:8.0.29
     environment:
-      - MYSQL_ROOT_PASSWORD
-      - MYSQL_DATABASE
-      - MYSQL_USER
-      - MYSQL_PASSWORD
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: tomeit-dev
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
     container_name: tomeit-api-db-dev
     restart: always
     volumes:
-      - data-local:/var/lib/mysql
+      - data-dev:/var/lib/mysql
       - ./backend/build/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
   db-test:
     image: mysql:8.0.29
@@ -52,7 +51,7 @@ services:
       - ./docs/openapi.yaml:/usr/share/nginx/html/openapi.yaml
 
 volumes:
-  data-local:
+  data-dev:
     driver: local
   data-test:
     driver: local
