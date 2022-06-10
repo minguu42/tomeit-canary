@@ -5,12 +5,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
 	_ "github.com/doug-martin/goqu/v9/dialect/mysql"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/minguu42/tomeit/internal/log"
 )
 
 // NewDialect は MySQL のクエリを生成する goqu.DialectWrapper を返す。
@@ -27,10 +27,10 @@ func NewDB(ctx context.Context, dsn string) (*sql.DB, error) {
 	}
 
 	for count := 0; count < 6; count++ {
-		if err := db.PingContext(ctx); err == nil {
+		if err = db.PingContext(ctx); err == nil {
 			return db, nil
 		}
-		log.Println("connection to database does not exit. check again after 5 seconds.")
+		log.Info("connection to database does not exit. check again after 5 seconds.")
 		time.Sleep(time.Second * 5)
 	}
 
