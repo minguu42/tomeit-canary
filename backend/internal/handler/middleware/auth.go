@@ -26,7 +26,7 @@ func (m *Middleware) Auth(next http.Handler) http.Handler {
 			return
 		}
 		idToken := strings.Split(r.Header.Get("Authorization"), " ")[1]
-		uid, err := m.svc.VerifyIDToken(ctx, idToken)
+		uid, err := m.auth.VerifyIDToken(ctx, idToken)
 		if err != nil {
 			// TODO: エラーレスポンスの生成
 			return

@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/minguu42/tomeit/internal/auth"
 	"github.com/minguu42/tomeit/internal/db"
 	"github.com/minguu42/tomeit/internal/firebase"
 	"github.com/minguu42/tomeit/internal/handler"
@@ -54,13 +55,18 @@ func _main() error {
 		return fmt.Errorf("failed to create firebase app. %w", err)
 	}
 
-	svc, err := service.New(dialect, mysql, firebaseApp)
+	authenticator, err := auth.New(firebaseApp)
+	if err != nil {
+		return fmt.Errorf("failed to create authenticator. %w", err)
+	}
+
+	svc, err := service.New(dialect, mysql)
 	if err != nil {
 		return fmt.Errorf("failed to create service. %w", err)
 	}
 
 	r := chi.NewRouter()
-	m := middleware.New(svc)
+	m := middleware.New(svc, authenticator)
 	r.Use(m.Log)
 	r.Use(m.CORS(strings.Split(allowedOrigins, ",")))
 	r.Use(m.Auth)
