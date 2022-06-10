@@ -1,4 +1,5 @@
-package handler
+// Package utils はハンドラ関連のユーティリティ関数を定義するパッケージ
+package utils
 
 import (
 	"encoding/json"
@@ -8,8 +9,8 @@ import (
 	"github.com/minguu42/tomeit/internal/model"
 )
 
-// writeResponse はレスポンスにステータスコード、JSON データを書き込む。
-func writeResponse(w http.ResponseWriter, statusCode int, body interface{}) error {
+// WriteResponse はレスポンスにステータスコード、JSON データを書き込む。
+func WriteResponse(w http.ResponseWriter, statusCode int, body interface{}) error {
 	w.WriteHeader(statusCode)
 	w.Header().Set("Content-Type", "application/json")
 

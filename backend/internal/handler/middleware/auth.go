@@ -9,7 +9,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/minguu42/tomeit/internal/handler"
+	"github.com/minguu42/tomeit/internal/handler/utils"
+
 	"github.com/minguu42/tomeit/internal/log"
 	"github.com/minguu42/tomeit/internal/model"
 )
@@ -28,14 +29,14 @@ func (m *Middleware) Auth(next http.Handler) http.Handler {
 		ctx := r.Context()
 
 		if !strings.HasPrefix(r.Header.Get("Authorization"), "Bearer ") {
-			handler.WriteErrorResponse(w, model.NewErrUnauthorized(errors.New(`format of Authorization field should be "Bearer some-id-token"`)))
+			utils.WriteErrorResponse(w, model.NewErrUnauthorized(errors.New(`format of Authorization field should be "Bearer some-id-token"`)))
 			log.Info("format of Authorization is invalid")
 			return
 		}
 		idToken := strings.Split(r.Header.Get("Authorization"), " ")[1]
 		uid, err := m.auth.VerifyIDToken(ctx, idToken)
 		if err != nil {
-			handler.WriteErrorResponse(w, model.NewErrUnauthorized(err))
+			utils.WriteErrorResponse(w, model.NewErrUnauthorized(err))
 			log.Info("failed to authenticate user.", err)
 			return
 		}
@@ -44,12 +45,12 @@ func (m *Middleware) Auth(next http.Handler) http.Handler {
 		switch {
 		case errors.Is(err, sql.ErrNoRows):
 			if user, err = m.svc.CreateUser(ctx, hash(uid)); err != nil {
-				handler.WriteErrorResponse(w, model.NewErrInternalServerError(err))
+				utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 				log.Error("failed to create user.", err)
 				return
 			}
 		case err != nil:
-			handler.WriteErrorResponse(w, model.NewErrInternalServerError(err))
+			utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 			log.Error("failed to get user.", err)
 			return
 		}

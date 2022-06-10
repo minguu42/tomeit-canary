@@ -10,6 +10,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/minguu42/tomeit/internal/handler/middleware"
+	"github.com/minguu42/tomeit/internal/handler/utils"
 	"github.com/minguu42/tomeit/internal/log"
 	"github.com/minguu42/tomeit/internal/model"
 )
@@ -18,13 +19,13 @@ import (
 func (h *Handler) CreateTask(w http.ResponseWriter, r *http.Request) {
 	var req model.CreateTaskRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		WriteErrorResponse(w, model.NewErrBadRequest(err))
+		utils.WriteErrorResponse(w, model.NewErrBadRequest(err))
 		log.Info("failed to decode request.", err)
 		return
 	}
 
 	if req.Title == "" {
-		WriteErrorResponse(w, model.NewErrBadRequest(errors.New("title is required")))
+		utils.WriteErrorResponse(w, model.NewErrBadRequest(errors.New("title is required")))
 		log.Info("title is required but none")
 		return
 	}
@@ -32,7 +33,7 @@ func (h *Handler) CreateTask(w http.ResponseWriter, r *http.Request) {
 	if req.DueOn != "" {
 		tmpDueOn, err := time.Parse(time.RFC3339, req.DueOn)
 		if err != nil {
-			WriteErrorResponse(w, model.NewErrBadRequest(err))
+			utils.WriteErrorResponse(w, model.NewErrBadRequest(err))
 			log.Info("failed to parse dueOn.", err)
 			return
 		}
@@ -44,7 +45,7 @@ func (h *Handler) CreateTask(w http.ResponseWriter, r *http.Request) {
 
 	task, err := h.svc.CreateTask(ctx, user.ID, req.Title, req.EstimatedPomoNum, dueOn)
 	if err != nil {
-		WriteErrorResponse(w, model.NewErrInternalServerError(err))
+		utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 		log.Error("failed to create task.", err)
 		return
 	}
@@ -54,8 +55,8 @@ func (h *Handler) CreateTask(w http.ResponseWriter, r *http.Request) {
 		scheme = "http://"
 	}
 	w.Header().Set("Location", scheme+r.Host+r.URL.Path+"/"+strconv.Itoa(task.ID))
-	if err := writeResponse(w, http.StatusCreated, model.NewTaskResponse(task)); err != nil {
-		WriteErrorResponse(w, model.NewErrInternalServerError(err))
+	if err := utils.WriteResponse(w, http.StatusCreated, model.NewTaskResponse(task)); err != nil {
+		utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 		log.Error("failed to write response.", err)
 		return
 	}
@@ -69,7 +70,7 @@ func (h *Handler) ReadTask(w http.ResponseWriter, r *http.Request) {
 		case "isCompleted":
 			isCompleted, err := strconv.ParseBool(v[0])
 			if err != nil {
-				WriteErrorResponse(w, model.NewErrBadRequest(err))
+				utils.WriteErrorResponse(w, model.NewErrBadRequest(err))
 				log.Info("failed to parse isCompleted.", err)
 				return
 			}
@@ -77,7 +78,7 @@ func (h *Handler) ReadTask(w http.ResponseWriter, r *http.Request) {
 		case "completedOn":
 			completedOn, err := time.Parse(time.RFC3339, v[0])
 			if err != nil {
-				WriteErrorResponse(w, model.NewErrBadRequest(err))
+				utils.WriteErrorResponse(w, model.NewErrBadRequest(err))
 				log.Info("failed to parse completedOn.", err)
 				return
 			}
@@ -90,13 +91,13 @@ func (h *Handler) ReadTask(w http.ResponseWriter, r *http.Request) {
 
 	tasks, err := h.svc.GetTasks(ctx, user.ID, &req)
 	if err != nil {
-		WriteErrorResponse(w, model.NewErrInternalServerError(err))
+		utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 		log.Error("failed to get tasks.", err)
 		return
 	}
 
-	if err := writeResponse(w, http.StatusOK, model.NewTasksResponse(tasks)); err != nil {
-		WriteErrorResponse(w, model.NewErrInternalServerError(err))
+	if err := utils.WriteResponse(w, http.StatusOK, model.NewTasksResponse(tasks)); err != nil {
+		utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 		log.Error("failed to write response.", err)
 		return
 	}
@@ -107,13 +108,13 @@ func (h *Handler) UpdateTask(w http.ResponseWriter, r *http.Request) {
 	var req model.UpdateTaskRequest
 	taskID, err := strconv.Atoi(chi.URLParam(r, "taskID"))
 	if err != nil {
-		WriteErrorResponse(w, model.NewErrBadRequest(err))
+		utils.WriteErrorResponse(w, model.NewErrBadRequest(err))
 		log.Info("failed to convert taskID to integer.", err)
 		return
 	}
 	req.TaskID = taskID
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		WriteErrorResponse(w, model.NewErrBadRequest(err))
+		utils.WriteErrorResponse(w, model.NewErrBadRequest(err))
 		log.Info("failed to decode request.", err)
 		return
 	}
@@ -124,16 +125,16 @@ func (h *Handler) UpdateTask(w http.ResponseWriter, r *http.Request) {
 	task, err := h.svc.GetTask(ctx, req.TaskID)
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
-		WriteErrorResponse(w, model.NewErrNotFound(err))
+		utils.WriteErrorResponse(w, model.NewErrNotFound(err))
 		log.Info("failed to get task.", err)
 		return
 	case err != nil:
-		WriteErrorResponse(w, model.NewErrInternalServerError(err))
+		utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 		log.Error("failed to get task.", err)
 		return
 	}
 	if user.HasTask(task) {
-		WriteErrorResponse(w, model.NewErrNotFound(errors.New("task is not found")))
+		utils.WriteErrorResponse(w, model.NewErrNotFound(errors.New("task is not found")))
 		log.Info("user does not have access to the task")
 		return
 	}
@@ -147,7 +148,7 @@ func (h *Handler) UpdateTask(w http.ResponseWriter, r *http.Request) {
 	if req.DueOn != nil {
 		dueOn, err := time.Parse(time.RFC3339, *req.DueOn)
 		if err != nil {
-			WriteErrorResponse(w, model.NewErrBadRequest(err))
+			utils.WriteErrorResponse(w, model.NewErrBadRequest(err))
 			log.Info("failed to parse dueOn.", err)
 			return
 		}
@@ -156,7 +157,7 @@ func (h *Handler) UpdateTask(w http.ResponseWriter, r *http.Request) {
 	if req.CompletedOn != nil {
 		completedOn, err := time.Parse(time.RFC3339, *req.CompletedOn)
 		if err != nil {
-			WriteErrorResponse(w, model.NewErrBadRequest(err))
+			utils.WriteErrorResponse(w, model.NewErrBadRequest(err))
 			log.Info("failed to parse completedOn.", err)
 			return
 		}
@@ -164,13 +165,13 @@ func (h *Handler) UpdateTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.svc.UpdateTask(ctx, task); err != nil {
-		WriteErrorResponse(w, model.NewErrInternalServerError(err))
+		utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 		log.Error("failed to update task.", err)
 		return
 	}
 
-	if err := writeResponse(w, http.StatusOK, model.NewTaskResponse(task)); err != nil {
-		WriteErrorResponse(w, model.NewErrInternalServerError(err))
+	if err := utils.WriteResponse(w, http.StatusOK, model.NewTaskResponse(task)); err != nil {
+		utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 		log.Error("failed to write response.", err)
 		return
 	}
@@ -181,7 +182,7 @@ func (h *Handler) DeleteTask(w http.ResponseWriter, r *http.Request) {
 	var req model.DeleteTaskRequest
 	taskID, err := strconv.Atoi(chi.URLParam(r, "taskID"))
 	if err != nil {
-		WriteErrorResponse(w, model.NewErrBadRequest(err))
+		utils.WriteErrorResponse(w, model.NewErrBadRequest(err))
 		log.Info("failed to convert taskID to integer.", err)
 		return
 	}
@@ -193,22 +194,22 @@ func (h *Handler) DeleteTask(w http.ResponseWriter, r *http.Request) {
 	task, err := h.svc.GetTask(ctx, req.TaskID)
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
-		WriteErrorResponse(w, model.NewErrNotFound(err))
+		utils.WriteErrorResponse(w, model.NewErrNotFound(err))
 		log.Info("failed to get task.", err)
 		return
 	case err != nil:
-		WriteErrorResponse(w, model.NewErrInternalServerError(err))
+		utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 		log.Error("failed to get task.", err)
 		return
 	}
 	if user.HasTask(task) {
-		WriteErrorResponse(w, model.NewErrNotFound(errors.New("task is not found")))
+		utils.WriteErrorResponse(w, model.NewErrNotFound(errors.New("task is not found")))
 		log.Info("user does not have access to the task")
 		return
 	}
 
 	if err := h.svc.DeleteTask(ctx, req.TaskID); err != nil {
-		WriteErrorResponse(w, model.NewErrInternalServerError(err))
+		utils.WriteErrorResponse(w, model.NewErrInternalServerError(err))
 		log.Error("failed to delete task.", err)
 		return
 	}
