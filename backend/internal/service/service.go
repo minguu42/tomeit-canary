@@ -58,8 +58,8 @@ func (s *Mock) CreateUser(_ context.Context, _ string) (*model.User, error) {
 		ID:        1,
 		DigestUID: "a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a",
 		RestCount: 0,
-		CreatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
-		UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+		CreatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+		UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 	}, nil
 }
 
@@ -68,8 +68,8 @@ func (s *Mock) GetUser(_ context.Context, _ string) (*model.User, error) {
 		ID:        1,
 		DigestUID: "a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a",
 		RestCount: 0,
-		CreatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
-		UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+		CreatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+		UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 	}, nil
 }
 
@@ -85,8 +85,8 @@ func (s *Mock) CreateTask(_ context.Context, _ int, _ string, _ int, _ *time.Tim
 		EstimatedPomoNum: 4,
 		DueOn:            nil,
 		CompletedOn:      nil,
-		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
-		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 	}, nil
 }
 
@@ -98,8 +98,8 @@ func (s *Mock) GetTask(_ context.Context, _ int) (*model.Task, error) {
 		EstimatedPomoNum: 4,
 		DueOn:            nil,
 		CompletedOn:      nil,
-		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
-		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 	}, nil
 }
 
@@ -112,8 +112,8 @@ func (s *Mock) GetTasks(_ context.Context, _ int, _ *model.ReadTaskRequest) ([]*
 			EstimatedPomoNum: 4,
 			DueOn:            nil,
 			CompletedOn:      nil,
-			CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
-			UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+			CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+			UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 		},
 		{
 			ID:               2,
@@ -122,8 +122,8 @@ func (s *Mock) GetTasks(_ context.Context, _ int, _ *model.ReadTaskRequest) ([]*
 			EstimatedPomoNum: 0,
 			DueOn:            nil,
 			CompletedOn:      nil,
-			CreatedAt:        time.Date(2021, 7, 10, 0, 0, 0, 0, time.Local),
-			UpdatedAt:        time.Date(2021, 7, 10, 0, 0, 0, 0, time.Local),
+			CreatedAt:        time.Date(2021, 7, 10, 0, 0, 0, 0, time.UTC),
+			UpdatedAt:        time.Date(2021, 7, 10, 0, 0, 0, 0, time.UTC),
 		},
 	}, nil
 }

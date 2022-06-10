@@ -48,8 +48,8 @@ func TestCreateTask(t *testing.T) {
 		CompletedPomoNum: 0,
 		DueOn:            "",
 		CompletedOn:      "",
-		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
-		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 	}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got = %v, want = %v", got, want)
