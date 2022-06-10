@@ -14,5 +14,6 @@ func (h *Handler) GetHealthz(w http.ResponseWriter, _ *http.Request) {
 	}); err != nil {
 		WriteErrorResponse(w, model.NewErrInternalServerError(err))
 		log.Error("failed to write response.", err)
+		return
 	}
 }
