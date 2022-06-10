@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
+	"github.com/minguu42/tomeit/internal/log"
 	"github.com/minguu42/tomeit/internal/model"
 )
 
@@ -30,6 +31,7 @@ func (s *service) CreateTask(ctx context.Context, userID int, title string, esti
 	if err != nil {
 		return nil, fmt.Errorf("failed to exec insert sql. %w", err)
 	}
+	log.Info(query)
 
 	id, err := result.LastInsertId()
 	if err != nil {
@@ -59,6 +61,7 @@ func (s *service) GetTask(ctx context.Context, id int) (*model.Task, error) {
 	if err := s.db.QueryRowContext(ctx, query).Scan(&t.CompletedOn, &t.CreatedAt, &t.DueOn, &t.EstimatedPomoNum, &t.ID, &t.Title, &t.UpdatedAt, &t.UserID); err != nil {
 		return nil, fmt.Errorf("failed to get task row. %w", err)
 	}
+	log.Info(query)
 
 	return &t, nil
 }
@@ -89,6 +92,7 @@ func (s *service) GetTasks(ctx context.Context, userID int, opt *model.ReadTaskR
 		return nil, fmt.Errorf("failed to exec select sql. %w", err)
 	}
 	defer rows.Close()
+	log.Info(query)
 
 	tasks := make([]*model.Task, 0, 30)
 	for rows.Next() {
@@ -112,6 +116,7 @@ func (s *service) UpdateTask(ctx context.Context, task *model.Task) error {
 	if _, err := s.db.ExecContext(ctx, query); err != nil {
 		return fmt.Errorf("failed to exec update sql. %w", err)
 	}
+	log.Info(query)
 	return nil
 }
 
@@ -125,5 +130,6 @@ func (s *service) DeleteTask(ctx context.Context, id int) error {
 	if _, err := s.db.ExecContext(ctx, query); err != nil {
 		return fmt.Errorf("failed to exec delete sql. %w", err)
 	}
+	log.Info(query)
 	return nil
 }

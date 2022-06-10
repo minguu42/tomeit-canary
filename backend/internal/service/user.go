@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
+	"github.com/minguu42/tomeit/internal/log"
 	"github.com/minguu42/tomeit/internal/model"
 )
 
@@ -27,6 +28,7 @@ func (s *service) CreateUser(ctx context.Context, digestUID string) (*model.User
 	if err != nil {
 		return nil, fmt.Errorf("failed to exec insert sql. %w", err)
 	}
+	log.Info(query)
 
 	id, err := result.LastInsertId()
 	if err != nil {
@@ -53,6 +55,7 @@ func (s *service) GetUser(ctx context.Context, digestUID string) (*model.User, e
 	if err := s.db.QueryRowContext(ctx, query).Scan(&u.CreatedAt, &u.DigestUID, &u.ID, &u.RestCount, &u.UpdatedAt); err != nil {
 		return nil, fmt.Errorf("failed to get user row. %w", err)
 	}
+	log.Info(query)
 
 	return &u, nil
 }
