@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
-	"github.com/minguu42/tomeit/internal/model"
 )
 
 // writeResponse はレスポンスにステータスコード、JSON データを書き込む。
@@ -21,15 +19,15 @@ func writeResponse(w http.ResponseWriter, statusCode int, body interface{}) erro
 	return nil
 }
 
-// writeErrorResponse はレスポンスにステータスコード、JSON データを書き込む。
-func writeErrorResponse(w http.ResponseWriter, resp *model.HTTPErrorResponse) error {
-	w.WriteHeader(resp.StatusCode)
-	w.Header().Set("Content-Type", "application/json")
-
-	encoder := json.NewEncoder(w)
-	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(resp); err != nil {
-		return fmt.Errorf("failed to encode error response. %w", err)
-	}
-	return nil
-}
+//// writeErrorResponse はレスポンスにステータスコード、JSON データを書き込む。
+//func writeErrorResponse(w http.ResponseWriter, resp *model.HTTPErrorResponse) error {
+//	w.WriteHeader(resp.StatusCode)
+//	w.Header().Set("Content-Type", "application/json")
+//
+//	encoder := json.NewEncoder(w)
+//	encoder.SetIndent("", "  ")
+//	if err := encoder.Encode(resp); err != nil {
+//		return fmt.Errorf("failed to encode error response. %w", err)
+//	}
+//	return nil
+//}
