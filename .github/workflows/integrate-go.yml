@@ -58,7 +58,7 @@ jobs:
           MYSQL_USER: corge
           MYSQL_PASSWORD: grault
       - name: Test
-        run: go test
+        run: go test ./...
         working-directory: ./backend
   build:
     runs-on: ubuntu-20.04

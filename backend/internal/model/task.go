@@ -1,9 +1,9 @@
-package tomeit
+package model
 
 import "time"
 
 type (
-	task struct {
+	Task struct {
 		ID               int        `db:"id"      goqu:"skipinsert,skipupdate"`
 		UserID           int        `db:"user_id" goqu:"skipupdate"`
 		Title            string     `db:"title"`
@@ -14,27 +14,27 @@ type (
 		UpdatedAt        time.Time  `db:"updated_at"   goqu:"skipupdate"`
 	}
 
-	postTasksRequest struct {
+	CreateTaskRequest struct {
 		Title            string `json:"title"`
 		EstimatedPomoNum int    `json:"estimatedPomoNum"`
 		DueOn            string `json:"dueOn"`
 	}
-	getTasksRequest struct {
-		isCompleted *bool
-		completedOn *time.Time
+	ReadTaskRequest struct {
+		IsCompleted *bool
+		CompletedOn *time.Time
 	}
-	patchTaskRequest struct {
-		taskID           int
+	UpdateTaskRequest struct {
+		TaskID           int
 		Title            string  `json:"title"`
 		EstimatedPomoNum *int    `json:"estimatedPomoNum"`
 		DueOn            *string `json:"dueOn"`
 		CompletedOn      *string `json:"completedOn"`
 	}
-	deleteTaskRequest struct {
-		taskID int
+	DeleteTaskRequest struct {
+		TaskID int
 	}
 
-	taskResponse struct {
+	TaskResponse struct {
 		ID               int       `json:"id"`
 		Title            string    `json:"title"`
 		EstimatedPomoNum int       `json:"estimatedPomoNum"`
@@ -44,24 +44,26 @@ type (
 		CreatedAt        time.Time `json:"createdAt"`
 		UpdatedAt        time.Time `json:"updatedAt"`
 	}
-	tasksResponse struct {
-		Tasks []*taskResponse `json:"tasks"`
+	TasksResponse struct {
+		Tasks []*TaskResponse `json:"tasks"`
 	}
 )
 
-// newTaskResponse は task で taskResponse を初期化する。
-// TODO: CompletedPomoNum が適切な値になるように実装する
-func newTaskResponse(t *task) *taskResponse {
-	dueOn := ""
+// NewTaskResponse は Task から TaskResponse を生成する。
+// TODO: CompletedPomoNum が適切な値になるように実装できていない。
+func NewTaskResponse(t *Task) *TaskResponse {
+	var (
+		dueOn       = ""
+		completedOn = ""
+	)
 	if t.DueOn != nil {
 		dueOn = t.DueOn.Format(time.RFC3339)
 	}
-	completedOn := ""
 	if t.CompletedOn != nil {
 		completedOn = t.CompletedOn.Format(time.RFC3339)
 	}
 
-	return &taskResponse{
+	return &TaskResponse{
 		ID:               t.ID,
 		Title:            t.Title,
 		EstimatedPomoNum: t.EstimatedPomoNum,
@@ -73,12 +75,11 @@ func newTaskResponse(t *task) *taskResponse {
 	}
 }
 
-// newTasksResponse は task のスライスで tasksResponse を初期化する。
-func newTasksResponse(ts []*task) *tasksResponse {
-	tasks := make([]*taskResponse, 0, len(ts))
+// NewTasksResponse は Task のスライスから TasksResponse を生成する。
+func NewTasksResponse(ts []*Task) *TasksResponse {
+	tasks := make([]*TaskResponse, 0, len(ts))
 	for _, t := range ts {
-		task := newTaskResponse(t)
-		tasks = append(tasks, task)
+		tasks = append(tasks, NewTaskResponse(t))
 	}
-	return &tasksResponse{Tasks: tasks}
+	return &TasksResponse{Tasks: tasks}
 }

@@ -1,8 +1,8 @@
-package tomeit
+package model
 
 import "time"
 
-type user struct {
+type User struct {
 	ID        int       `db:"id" goqu:"skipinsert"`
 	DigestUID string    `db:"digest_uid"`
 	RestCount int       `db:"rest_count" goqu:"skipinsert"`
@@ -10,8 +10,9 @@ type user struct {
 	UpdatedAt time.Time `db:"updated_at"`
 }
 
-func (u *user) hasTask(t *task) bool {
-	if u.ID == 0 || t.UserID == 0 {
+// HasTask はユーザがそのタスクを持っているかを確かめる。
+func (u *User) HasTask(t *Task) bool {
+	if u.ID <= 0 || t.UserID <= 0 {
 		return false
 	}
 	return u.ID == t.UserID
