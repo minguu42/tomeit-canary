@@ -2,12 +2,12 @@
 
 .PHONY: dev
 dev:  ## http://localhost:8080 で開発用 API サーバを起動する
-	@docker compose --env-file ../.env -f ../docker-compose.yaml up api
+	@docker compose --env-file ../.env.development -f ../docker-compose.yaml up api
 
 .PHONY: docs
 docs: ## http://localhost:8000 でドキュメント用サーバを起動する
 	@open http://localhost:8000/
-	@docker compose --env-file ../.env -f ../docker-compose.yaml up -d docs
+	@docker compose --env-file ../.env.development -f ../docker-compose.yaml up -d docs
 
 .PHONY: fmt
 fmt:  ## Go ファイルを自動整形する
@@ -21,12 +21,12 @@ lint:  ## Go ファイルを静的解析する
 
 .PHONY: test
 test: ## Go ファイルをテストする
-	@docker compose --env-file ../.env -f ../docker-compose.yaml up -d db-test
-	@go test
+	@docker compose --env-file ../.env.development -f ../docker-compose.yaml up -d db-test
+	@go test ./...
 
 .PHONY: down
 down:  ## 関連する Docker コンテナを停止し, 削除する
-	@docker compose --env-file ../.env -f ../docker-compose.yaml down
+	@docker compose --env-file ../.env.development -f ../docker-compose.yaml down
 
 .PHONY: help
 help: ## ヘルプを表示する
