@@ -7,7 +7,6 @@ import (
 	"errors"
 	"time"
 
-	firebase "firebase.google.com/go/v4"
 	"github.com/doug-martin/goqu/v9"
 	"github.com/minguu42/tomeit/internal/model"
 )
@@ -16,7 +15,6 @@ import (
 type Service interface {
 	CreateUser(ctx context.Context, digestUID string) (*model.User, error)
 	GetUser(ctx context.Context, digestUID string) (*model.User, error)
-	VerifyIDToken(ctx context.Context, idToken string) (string, error)
 
 	CreateTask(ctx context.Context, userID int, title string, estimatedPomoNum int, dueOn *time.Time) (*model.Task, error)
 	GetTask(ctx context.Context, id int) (*model.Task, error)
@@ -27,30 +25,26 @@ type Service interface {
 
 // service は Service を実装する構造体
 type service struct {
-	dialect     *goqu.DialectWrapper
-	db          *sql.DB
-	firebaseApp *firebase.App
+	dialect *goqu.DialectWrapper
+	db      *sql.DB
 }
 
-// New は Service を満たす構造体を初期化し、返す。
-func New(dialect *goqu.DialectWrapper, db *sql.DB, firebaseApp *firebase.App) (*service, error) {
+// New は Service を実装する構造体を初期化し、返す。
+func New(dialect *goqu.DialectWrapper, db *sql.DB) (*service, error) {
 	switch {
 	case dialect == nil:
 		return nil, errors.New("dialect is required")
 	case db == nil:
 		return nil, errors.New("db is required")
-	case firebaseApp == nil:
-		return nil, errors.New("firebaseApp is required")
 	}
 
 	return &service{
-		dialect:     dialect,
-		db:          db,
-		firebaseApp: firebaseApp,
+		dialect: dialect,
+		db:      db,
 	}, nil
 }
 
-// Mock はテストで使用する Service を満たすモック
+// Mock はテストで使用する Service を実装するモック
 type Mock struct{}
 
 func (s *Mock) CreateUser(_ context.Context, _ string) (*model.User, error) {
@@ -71,10 +65,6 @@ func (s *Mock) GetUser(_ context.Context, _ string) (*model.User, error) {
 		CreatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 		UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 	}, nil
-}
-
-func (s *Mock) VerifyIDToken(_ context.Context, _ string) (string, error) {
-	return "someUID", nil
 }
 
 func (s *Mock) CreateTask(_ context.Context, _ int, _ string, _ int, _ *time.Time) (*model.Task, error) {

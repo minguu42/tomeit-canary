@@ -56,18 +56,3 @@ func (s *service) GetUser(ctx context.Context, digestUID string) (*model.User, e
 
 	return &u, nil
 }
-
-// VerifyIDToken は Firebase Authentication で ID トークンを検証し、ID トークンが正当なものである場合はそのユーザの UID を返す。
-func (s *service) VerifyIDToken(ctx context.Context, idToken string) (string, error) {
-	client, err := s.firebaseApp.Auth(ctx)
-	if err != nil {
-		return "", fmt.Errorf("failed to create firebase auth client. %w", err)
-	}
-
-	token, err := client.VerifyIDToken(ctx, idToken)
-	if err != nil {
-		return "", fmt.Errorf("failed to verify ID token. %w", err)
-	}
-
-	return token.UID, err
-}
