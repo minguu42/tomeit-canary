@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
-	"github.com/minguu42/tomeit/model"
+	"github.com/minguu42/tomeit/internal/model"
 )
 
 // CreateTask は DB に model.Task を作成し、返す。

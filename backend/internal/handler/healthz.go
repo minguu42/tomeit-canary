@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/minguu42/tomeit/model"
+	"github.com/minguu42/tomeit/internal/model"
 )
 
 // GetHealthz は GET /healthz に対応するハンドラ

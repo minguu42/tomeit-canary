@@ -10,11 +10,11 @@ import (
 	"strings"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/minguu42/tomeit/db"
-	"github.com/minguu42/tomeit/firebase"
-	"github.com/minguu42/tomeit/handler"
-	"github.com/minguu42/tomeit/handler/middleware"
-	"github.com/minguu42/tomeit/service"
+	"github.com/minguu42/tomeit/internal/db"
+	"github.com/minguu42/tomeit/internal/firebase"
+	"github.com/minguu42/tomeit/internal/handler"
+	"github.com/minguu42/tomeit/internal/handler/middleware"
+	"github.com/minguu42/tomeit/internal/service"
 )
 
 func main() {

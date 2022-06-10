@@ -3,7 +3,7 @@ package handler
 
 import (
 	"github.com/go-chi/chi/v5"
-	"github.com/minguu42/tomeit/service"
+	"github.com/minguu42/tomeit/internal/service"
 )
 
 // Handler -

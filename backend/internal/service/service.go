@@ -9,7 +9,7 @@ import (
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/doug-martin/goqu/v9"
-	"github.com/minguu42/tomeit/model"
+	"github.com/minguu42/tomeit/internal/model"
 )
 
 // Service は各エンティティの CRUD 処理のインタフェース

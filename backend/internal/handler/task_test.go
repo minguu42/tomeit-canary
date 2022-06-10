@@ -4,14 +4,15 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/minguu42/tomeit/handler/middleware"
-	"github.com/minguu42/tomeit/model"
-	"github.com/minguu42/tomeit/service"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/minguu42/tomeit/internal/handler/middleware"
+	"github.com/minguu42/tomeit/internal/model"
+	"github.com/minguu42/tomeit/internal/service"
 )
 
 func TestCreateTask(t *testing.T) {

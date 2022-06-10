@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/minguu42/tomeit/handler/middleware"
-	"github.com/minguu42/tomeit/model"
+	"github.com/minguu42/tomeit/internal/handler/middleware"
+	"github.com/minguu42/tomeit/internal/model"
 )
 
 // CreateTask は POST /tasks エンドポイントに対応するハンドラ
