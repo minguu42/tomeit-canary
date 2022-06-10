@@ -49,3 +49,89 @@ func New(dialect *goqu.DialectWrapper, db *sql.DB, firebaseApp *firebase.App) (*
 		firebaseApp: firebaseApp,
 	}, nil
 }
+
+// Mock はテストで使用する Service を満たすモック
+type Mock struct{}
+
+func (s *Mock) CreateUser(_ context.Context, _ string) (*model.User, error) {
+	return &model.User{
+		ID:        1,
+		DigestUID: "a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a",
+		RestCount: 0,
+		CreatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+		UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+	}, nil
+}
+
+func (s *Mock) GetUser(_ context.Context, _ string) (*model.User, error) {
+	return &model.User{
+		ID:        1,
+		DigestUID: "a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a",
+		RestCount: 0,
+		CreatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+		UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+	}, nil
+}
+
+func (s *Mock) VerifyIDToken(_ context.Context, _ string) (string, error) {
+	return "someUID", nil
+}
+
+func (s *Mock) CreateTask(_ context.Context, _ int, _ string, _ int, _ *time.Time) (*model.Task, error) {
+	return &model.Task{
+		ID:               1,
+		UserID:           1,
+		Title:            "タスク1",
+		EstimatedPomoNum: 4,
+		DueOn:            nil,
+		CompletedOn:      nil,
+		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+	}, nil
+}
+
+func (s *Mock) GetTask(_ context.Context, _ int) (*model.Task, error) {
+	return &model.Task{
+		ID:               1,
+		UserID:           1,
+		Title:            "タスク1",
+		EstimatedPomoNum: 4,
+		DueOn:            nil,
+		CompletedOn:      nil,
+		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+	}, nil
+}
+
+func (s *Mock) GetTasks(_ context.Context, _ int, _ *model.ReadTaskRequest) ([]*model.Task, error) {
+	return []*model.Task{
+		{
+			ID:               1,
+			UserID:           1,
+			Title:            "タスク1",
+			EstimatedPomoNum: 4,
+			DueOn:            nil,
+			CompletedOn:      nil,
+			CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+			UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.Local),
+		},
+		{
+			ID:               2,
+			UserID:           1,
+			Title:            "タスク2",
+			EstimatedPomoNum: 0,
+			DueOn:            nil,
+			CompletedOn:      nil,
+			CreatedAt:        time.Date(2021, 7, 10, 0, 0, 0, 0, time.Local),
+			UpdatedAt:        time.Date(2021, 7, 10, 0, 0, 0, 0, time.Local),
+		},
+	}, nil
+}
+
+func (s *Mock) UpdateTask(_ context.Context, _ *model.Task) error {
+	return nil
+}
+
+func (s *Mock) DeleteTask(_ context.Context, _ int) error {
+	return nil
+}
