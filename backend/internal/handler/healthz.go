@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"log"
 	"net/http"
 
+	"github.com/minguu42/tomeit/internal/log"
 	"github.com/minguu42/tomeit/internal/model"
 )
 
@@ -12,6 +12,7 @@ func (h *Handler) GetHealthz(w http.ResponseWriter, _ *http.Request) {
 	if err := writeResponse(w, http.StatusOK, &model.HealthzResponse{
 		Status: "OK",
 	}); err != nil {
-		log.Println("failed to write response.", err)
+		writeErrorResponse(w, model.NewErrInternalServerError(err))
+		log.Error("failed to write response.", err)
 	}
 }
