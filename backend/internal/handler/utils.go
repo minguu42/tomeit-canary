@@ -21,8 +21,8 @@ func writeResponse(w http.ResponseWriter, statusCode int, body interface{}) erro
 	return nil
 }
 
-// writeErrorResponse はレスポンスにステータスコード、JSON データを書き込む。
-func writeErrorResponse(w http.ResponseWriter, resp *model.HTTPErrorResponse) {
+// WriteErrorResponse はレスポンスにステータスコード、JSON データを書き込む。
+func WriteErrorResponse(w http.ResponseWriter, resp *model.HTTPErrorResponse) {
 	w.WriteHeader(resp.StatusCode)
 	w.Header().Set("Content-Type", "application/json")
 
