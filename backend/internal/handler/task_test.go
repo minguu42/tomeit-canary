@@ -4,54 +4,78 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"net/http"
 	"net/http/httptest"
-	"reflect"
 	"testing"
 	"time"
 
+	"github.com/google/go-cmp/cmp"
 	"github.com/minguu42/tomeit/internal/handler/middleware"
 	"github.com/minguu42/tomeit/internal/model"
 	"github.com/minguu42/tomeit/internal/service"
 )
 
 func TestCreateTask(t *testing.T) {
-	req := model.CreateTaskRequest{
-		Title:            "タスク1",
-		EstimatedPomoNum: 4,
-		DueOn:            "",
+	type want struct {
+		statusCode int
+		location   string
+		response   interface{}
 	}
-	data, err := json.Marshal(req)
-	if err != nil {
-		t.Fatalf("failed to marshal CreateTaskRequest. %v", err)
+	testcases := []struct {
+		request model.CreateTaskRequest
+		want    want
+	}{
+		{
+			request: model.CreateTaskRequest{Title: "タスク1", EstimatedPomoNum: 4, DueOn: ""},
+			want: want{
+				statusCode: 201,
+				location:   "https://example.com/tasks/1",
+				response: model.TaskResponse{
+					ID:               1,
+					Title:            "タスク1",
+					EstimatedPomoNum: 4,
+					CompletedPomoNum: 0,
+					DueOn:            "",
+					CompletedOn:      "",
+					CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+					UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+				},
+			},
+		},
+		{
+			request: model.CreateTaskRequest{Title: "", EstimatedPomoNum: 0, DueOn: ""},
+			want:    want{statusCode: 400},
+		},
 	}
-	w := httptest.NewRecorder()
-	r := httptest.NewRequest(http.MethodPost, "/tasks", bytes.NewReader(data))
-	r = r.WithContext(context.WithValue(r.Context(), middleware.UserKey{}, &model.User{}))
 
-	h := New(&service.Mock{})
-	h.CreateTask(w, r)
+	for i, tc := range testcases {
+		data, err := json.Marshal(tc.request)
+		if err != nil {
+			t.Fatalf("#%d: failed to encode request. %v", i+1, err)
+		}
+		w := httptest.NewRecorder()
+		r := httptest.NewRequest("POST", "/tasks", bytes.NewReader(data))
+		r = r.WithContext(context.WithValue(r.Context(), middleware.UserKey{}, &model.User{}))
 
-	resp := w.Result()
-	if resp.StatusCode != http.StatusCreated {
-		t.Errorf("got = %v, want = %v", resp.StatusCode, http.StatusCreated)
-	}
+		h := New(&service.Mock{})
+		h.CreateTask(w, r)
 
-	var got model.TaskResponse
-	if err := json.NewDecoder(resp.Body).Decode(&got); err != nil {
-		t.Fatalf("failed to decode response body. %v", err)
-	}
-	want := model.TaskResponse{
-		ID:               1,
-		Title:            "タスク1",
-		EstimatedPomoNum: 4,
-		CompletedPomoNum: 0,
-		DueOn:            "",
-		CompletedOn:      "",
-		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
-		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
-	}
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("got = %v, want = %v", got, want)
+		resp := w.Result()
+		if resp.StatusCode != tc.want.statusCode {
+			t.Errorf("#%d: got = %v, want = %v", i+1, resp.StatusCode, tc.want.statusCode)
+		}
+
+		if resp.StatusCode == 201 {
+			if location := w.Header().Get("Location"); location != tc.want.location {
+				t.Errorf("got = %v, want = %v", location, tc.want.location)
+			}
+
+			var got model.TaskResponse
+			if err := json.NewDecoder(resp.Body).Decode(&got); err != nil {
+				t.Fatalf("#%d: failed to decode response body. %v", i+1, err)
+			}
+			if diff := cmp.Diff(got, tc.want.response); diff != "" {
+				t.Errorf("#%d: task reponse body is mismatch (-got +want):\n%s", i+1, diff)
+			}
+		}
 	}
 }
