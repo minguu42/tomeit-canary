@@ -25,7 +25,7 @@ func TestCreateTask(t *testing.T) {
 		want    want
 	}{
 		{
-			request: model.CreateTaskRequest{Title: "タスク1", EstimatedPomoNum: 4, DueOn: ""},
+			request: model.CreateTaskRequest{Title: "タスク1", EstimatedPomoNum: 4, DueOn: "2021-07-10T00:00:00Z"},
 			want: want{
 				statusCode: 201,
 				location:   "https://example.com/tasks/1",
@@ -34,7 +34,7 @@ func TestCreateTask(t *testing.T) {
 					Title:            "タスク1",
 					EstimatedPomoNum: 4,
 					CompletedPomoNum: 0,
-					DueOn:            "",
+					DueOn:            "2021-07-10T00:00:00Z",
 					CompletedOn:      "",
 					CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 					UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
@@ -42,7 +42,19 @@ func TestCreateTask(t *testing.T) {
 			},
 		},
 		{
-			request: model.CreateTaskRequest{Title: "", EstimatedPomoNum: 0, DueOn: ""},
+			request: model.CreateTaskRequest{Title: "", EstimatedPomoNum: 4, DueOn: "2021-07-10T00:00:00Z"},
+			want:    want{statusCode: 400},
+		},
+		{
+			request: model.CreateTaskRequest{Title: "タスク1", EstimatedPomoNum: -1, DueOn: "2021-07-10T00:00:00Z"},
+			want:    want{statusCode: 400},
+		},
+		{
+			request: model.CreateTaskRequest{Title: "タスク1", EstimatedPomoNum: 5, DueOn: "2021-07-10T00:00:00Z"},
+			want:    want{statusCode: 400},
+		},
+		{
+			request: model.CreateTaskRequest{Title: "タスク1", EstimatedPomoNum: 4, DueOn: "2021-07-10"},
 			want:    want{statusCode: 400},
 		},
 	}
@@ -66,7 +78,7 @@ func TestCreateTask(t *testing.T) {
 
 		if resp.StatusCode == 201 {
 			if location := w.Header().Get("Location"); location != tc.want.location {
-				t.Errorf("got = %v, want = %v", location, tc.want.location)
+				t.Errorf("#%d: got = %v, want = %v", i+1, location, tc.want.location)
 			}
 
 			var got model.TaskResponse
