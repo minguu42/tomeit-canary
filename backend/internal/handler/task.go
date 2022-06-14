@@ -29,6 +29,11 @@ func (h *Handler) CreateTask(w http.ResponseWriter, r *http.Request) {
 		log.Info("title is required but none")
 		return
 	}
+	if req.EstimatedPomoNum < 0 || req.EstimatedPomoNum > 4 {
+		utils.WriteErrorResponse(w, model.NewErrBadRequest(errors.New("estimatedPomoNum should be positive number")))
+		log.Info("estimatedPomoNum should be positive number")
+		return
+	}
 	var dueOn *time.Time
 	if req.DueOn != "" {
 		tmpDueOn, err := time.Parse(time.RFC3339, req.DueOn)
