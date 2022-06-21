@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 
+	_ "github.com/GoogleCloudPlatform/berglas/pkg/auto"
 	"github.com/go-chi/chi/v5"
 	"github.com/minguu42/tomeit/internal/auth"
 	"github.com/minguu42/tomeit/internal/db"
