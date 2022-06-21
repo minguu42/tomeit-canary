@@ -31,13 +31,6 @@ yarn-error.log*
 # Set environment variables on jest
 setEnvVars.js
 
-# Vercel
-.vercel
-
-# Firebase
-/.firebase
-.firebaserc
-
 ### Backend - Go ###
 # Binaries for programs and plugins
 backend/*.exe
