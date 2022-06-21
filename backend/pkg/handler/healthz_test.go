@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/minguu42/tomeit/internal/model"
-	"github.com/minguu42/tomeit/internal/service"
+	"github.com/minguu42/tomeit/pkg/model"
+	"github.com/minguu42/tomeit/pkg/service"
 )
 
 func TestGetHealthz(t *testing.T) {

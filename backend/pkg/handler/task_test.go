@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/minguu42/tomeit/internal/handler/middleware"
-	"github.com/minguu42/tomeit/internal/model"
-	"github.com/minguu42/tomeit/internal/service"
+	"github.com/minguu42/tomeit/pkg/handler/middleware"
+	"github.com/minguu42/tomeit/pkg/model"
+	"github.com/minguu42/tomeit/pkg/service"
 )
 
 func TestCreateTask(t *testing.T) {

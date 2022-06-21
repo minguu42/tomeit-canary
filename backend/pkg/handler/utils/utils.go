@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/minguu42/tomeit/internal/model"
+	"github.com/minguu42/tomeit/pkg/model"
 )
 
 // WriteResponse はレスポンスにステータスコード、JSON データを書き込む。

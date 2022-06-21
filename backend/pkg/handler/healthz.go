@@ -3,9 +3,9 @@ package handler
 import (
 	"net/http"
 
-	"github.com/minguu42/tomeit/internal/handler/utils"
-	"github.com/minguu42/tomeit/internal/log"
-	"github.com/minguu42/tomeit/internal/model"
+	"github.com/minguu42/tomeit/pkg/handler/utils"
+	"github.com/minguu42/tomeit/pkg/log"
+	"github.com/minguu42/tomeit/pkg/model"
 )
 
 // GetHealthz は GET /healthz に対応するハンドラ

@@ -2,8 +2,8 @@
 package middleware
 
 import (
-	"github.com/minguu42/tomeit/internal/auth"
-	"github.com/minguu42/tomeit/internal/service"
+	"github.com/minguu42/tomeit/pkg/auth"
+	"github.com/minguu42/tomeit/pkg/service"
 )
 
 // Middleware -

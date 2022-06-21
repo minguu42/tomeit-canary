@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
-	"github.com/minguu42/tomeit/internal/model"
+	"github.com/minguu42/tomeit/pkg/model"
 )
 
 // Service は各エンティティの CRUD 処理のインタフェース
