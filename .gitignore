@@ -47,7 +47,3 @@ backend/*.out
 
 # Temporary directory of air
 backend/tmp/
-
-# GCP (Google Cloud Platform)
-backend/.gcloudignore
-backend/app.yml
