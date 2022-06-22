@@ -91,3 +91,69 @@ func TestCreateTask(t *testing.T) {
 		}
 	}
 }
+
+func TestReadTask(t *testing.T) {
+	type want struct {
+		statusCode int
+		response   interface{}
+	}
+	testcases := []struct {
+		target string
+		want   want
+	}{
+		{
+			target: "/tasks",
+			want: want{
+				statusCode: 200,
+				response: model.TasksResponse{Tasks: []*model.TaskResponse{
+					{
+						ID:               1,
+						Title:            "タスク1",
+						EstimatedPomoNum: 4,
+						CompletedPomoNum: 0,
+						DueOn:            "2021-07-10T00:00:00Z",
+						CompletedOn:      "",
+						CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+						UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+					},
+					{
+						ID:               2,
+						Title:            "タスク2",
+						EstimatedPomoNum: 0,
+						CompletedPomoNum: 0,
+						DueOn:            "",
+						CompletedOn:      "",
+						CreatedAt:        time.Date(2021, 7, 10, 0, 0, 0, 0, time.UTC),
+						UpdatedAt:        time.Date(2021, 7, 10, 0, 0, 0, 0, time.UTC),
+					},
+				}}},
+		},
+		{
+			target: "/tasks?isCompleted=",
+			want:   want{statusCode: 400},
+		},
+	}
+	for i, tc := range testcases {
+		w := httptest.NewRecorder()
+		r := httptest.NewRequest("GET", tc.target, nil)
+		r = r.WithContext(context.WithValue(r.Context(), middleware.UserKey{}, &model.User{}))
+
+		h := New(&service.Mock{})
+		h.ReadTask(w, r)
+
+		resp := w.Result()
+		if resp.StatusCode != tc.want.statusCode {
+			t.Errorf("#%d: got = %v, want = %v", i+1, resp.StatusCode, tc.want.statusCode)
+		}
+
+		if resp.StatusCode == 200 {
+			var got model.TasksResponse
+			if err := json.NewDecoder(resp.Body).Decode(&got); err != nil {
+				t.Fatalf("#%d: failed to decode response body. %v", i+1, err)
+			}
+			if diff := cmp.Diff(got, tc.want.response); diff != "" {
+				t.Errorf("#%d: tasks reponse body is mismatch (-got +want):\n%s", i+1, diff)
+			}
+		}
+	}
+}
