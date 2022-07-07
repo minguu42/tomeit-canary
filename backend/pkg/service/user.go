@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
-	"github.com/minguu42/tomeit/internal/log"
-	"github.com/minguu42/tomeit/internal/model"
+	"github.com/minguu42/tomeit/pkg/log"
+	"github.com/minguu42/tomeit/pkg/model"
 )
 
 // CreateUser は DB に model.User を作成し、返す。

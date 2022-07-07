@@ -1,0 +1,10 @@
+runtime: go116
+
+instance_class: F1
+
+main: ./cmd/server
+
+env_variables:
+  ALLOWED_ORIGINS: berglas://tomeit-prod-secrets/allowed-origins
+  DSN: berglas://tomeit-prod-secrets/dsn
+  GOOGLE_CREDENTIALS_JSON: berglas://tomeit-prod-secrets/google-credentials-json

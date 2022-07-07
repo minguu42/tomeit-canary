@@ -8,14 +8,15 @@ import (
 	"os"
 	"strings"
 
+	_ "github.com/GoogleCloudPlatform/berglas/pkg/auto"
 	"github.com/go-chi/chi/v5"
-	"github.com/minguu42/tomeit/internal/auth"
-	"github.com/minguu42/tomeit/internal/db"
-	"github.com/minguu42/tomeit/internal/firebase"
-	"github.com/minguu42/tomeit/internal/handler"
-	"github.com/minguu42/tomeit/internal/handler/middleware"
-	"github.com/minguu42/tomeit/internal/log"
-	"github.com/minguu42/tomeit/internal/service"
+	"github.com/minguu42/tomeit/pkg/auth"
+	"github.com/minguu42/tomeit/pkg/db"
+	"github.com/minguu42/tomeit/pkg/firebase"
+	"github.com/minguu42/tomeit/pkg/handler"
+	"github.com/minguu42/tomeit/pkg/handler/middleware"
+	"github.com/minguu42/tomeit/pkg/log"
+	"github.com/minguu42/tomeit/pkg/service"
 )
 
 func main() {

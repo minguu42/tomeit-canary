@@ -10,7 +10,7 @@ import (
 	"github.com/doug-martin/goqu/v9"
 	_ "github.com/doug-martin/goqu/v9/dialect/mysql"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/minguu42/tomeit/internal/log"
+	"github.com/minguu42/tomeit/pkg/log"
 )
 
 // NewDialect は MySQL のクエリを生成する goqu.DialectWrapper を返す。

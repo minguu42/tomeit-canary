@@ -9,10 +9,10 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/minguu42/tomeit/internal/handler/middleware"
-	"github.com/minguu42/tomeit/internal/handler/utils"
-	"github.com/minguu42/tomeit/internal/log"
-	"github.com/minguu42/tomeit/internal/model"
+	"github.com/minguu42/tomeit/pkg/handler/middleware"
+	"github.com/minguu42/tomeit/pkg/handler/utils"
+	"github.com/minguu42/tomeit/pkg/log"
+	"github.com/minguu42/tomeit/pkg/model"
 )
 
 // CreateTask は POST /tasks エンドポイントに対応するハンドラ
@@ -27,6 +27,11 @@ func (h *Handler) CreateTask(w http.ResponseWriter, r *http.Request) {
 	if req.Title == "" {
 		utils.WriteErrorResponse(w, model.NewErrBadRequest(errors.New("title is required")))
 		log.Info("title is required but none")
+		return
+	}
+	if req.EstimatedPomoNum < 0 || req.EstimatedPomoNum > 4 {
+		utils.WriteErrorResponse(w, model.NewErrBadRequest(errors.New("estimatedPomoNum should be positive number")))
+		log.Info("estimatedPomoNum should be positive number")
 		return
 	}
 	var dueOn *time.Time

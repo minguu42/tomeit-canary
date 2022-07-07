@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
-	"github.com/minguu42/tomeit/internal/model"
+	"github.com/minguu42/tomeit/pkg/model"
 )
 
 // Service は各エンティティの CRUD 処理のインタフェース
@@ -68,12 +68,13 @@ func (s *Mock) GetUser(_ context.Context, _ string) (*model.User, error) {
 }
 
 func (s *Mock) CreateTask(_ context.Context, _ int, _ string, _ int, _ *time.Time) (*model.Task, error) {
+	dueOn := time.Date(2021, 7, 10, 0, 0, 0, 0, time.UTC)
 	return &model.Task{
 		ID:               1,
 		UserID:           1,
 		Title:            "タスク1",
 		EstimatedPomoNum: 4,
-		DueOn:            nil,
+		DueOn:            &dueOn,
 		CompletedOn:      nil,
 		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
@@ -81,12 +82,13 @@ func (s *Mock) CreateTask(_ context.Context, _ int, _ string, _ int, _ *time.Tim
 }
 
 func (s *Mock) GetTask(_ context.Context, _ int) (*model.Task, error) {
+	dueOn := time.Date(2021, 7, 10, 0, 0, 0, 0, time.UTC)
 	return &model.Task{
 		ID:               1,
 		UserID:           1,
 		Title:            "タスク1",
 		EstimatedPomoNum: 4,
-		DueOn:            nil,
+		DueOn:            &dueOn,
 		CompletedOn:      nil,
 		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
@@ -94,13 +96,14 @@ func (s *Mock) GetTask(_ context.Context, _ int) (*model.Task, error) {
 }
 
 func (s *Mock) GetTasks(_ context.Context, _ int, _ *model.ReadTaskRequest) ([]*model.Task, error) {
+	dueOn := time.Date(2021, 7, 10, 0, 0, 0, 0, time.UTC)
 	return []*model.Task{
 		{
 			ID:               1,
 			UserID:           1,
 			Title:            "タスク1",
 			EstimatedPomoNum: 4,
-			DueOn:            nil,
+			DueOn:            &dueOn,
 			CompletedOn:      nil,
 			CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 			UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
