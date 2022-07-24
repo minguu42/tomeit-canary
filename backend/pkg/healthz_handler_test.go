@@ -12,7 +12,7 @@ func TestGetHealthz(t *testing.T) {
 	w := httptest.NewRecorder()
 	r := httptest.NewRequest("GET", "/healthz", nil)
 
-	getHealthz(w, r)
+	GetHealthz(w, r)
 
 	resp := w.Result()
 	if resp.StatusCode != 200 {
