@@ -26,6 +26,4 @@ func (h *Handler) Route(r chi.Router) {
 		r.Patch("/{taskID}", h.UpdateTask)
 		r.Delete("/{taskID}", h.DeleteTask)
 	})
-
-	r.Get("/healthz", h.GetHealthz)
 }
