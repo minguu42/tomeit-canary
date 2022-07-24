@@ -38,7 +38,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		user, err := dbOperator.GetUserByDigestUID(ctx, hash(uid))
+		user, err := dbOperator.GetUser(ctx, hash(uid))
 		switch {
 		case errors.Is(err, sql.ErrNoRows):
 			if user, err = dbOperator.CreateUser(ctx, hash(uid)); err != nil {
