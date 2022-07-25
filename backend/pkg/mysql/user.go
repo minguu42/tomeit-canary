@@ -7,7 +7,6 @@ import (
 
 	"github.com/doug-martin/goqu/v9"
 	tomeit "github.com/minguu42/tomeit/pkg"
-	"github.com/minguu42/tomeit/pkg/logging"
 )
 
 // CreateUser はMySQLにtomeit.Userを作成し、返す。
@@ -27,7 +26,7 @@ func (o *dbOperator) CreateUser(ctx context.Context, digestUID string) (*tomeit.
 	if err != nil {
 		return nil, fmt.Errorf("failed to exec insert sql. %w", err)
 	}
-	logging.Info(q)
+	tomeit.LogInfo(q)
 
 	id, err := result.LastInsertId()
 	if err != nil {
@@ -54,7 +53,7 @@ func (o *dbOperator) GetUser(ctx context.Context, digestUID string) (*tomeit.Use
 	if err := o.db.QueryRowContext(ctx, q).Scan(&u.CreatedAt, &u.DigestUID, &u.ID, &u.RestCount, &u.UpdatedAt); err != nil {
 		return nil, fmt.Errorf("failed to get user row. %w", err)
 	}
-	logging.Info(q)
+	tomeit.LogInfo(q)
 
 	return &u, nil
 }

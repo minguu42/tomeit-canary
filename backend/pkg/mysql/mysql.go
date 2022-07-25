@@ -10,7 +10,7 @@ import (
 	"github.com/doug-martin/goqu/v9"
 	_ "github.com/doug-martin/goqu/v9/dialect/mysql"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/minguu42/tomeit/pkg/logging"
+	tomeit "github.com/minguu42/tomeit/pkg"
 )
 
 // dbOperator はtomeit.DBOperatorを実装する構造体
@@ -34,7 +34,7 @@ func NewDBOperator(ctx context.Context, dsn string) (*dbOperator, error) {
 			}, nil
 		}
 
-		logging.Info("connection to mysql does not exist. check again after 5 seconds.")
+		tomeit.LogInfo("connection to mysql does not exist. check again after 5 seconds.")
 		time.Sleep(5 * time.Second)
 	}
 

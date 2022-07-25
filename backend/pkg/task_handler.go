@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/minguu42/tomeit/pkg/logging"
 )
 
 // PostTasks は'POST /tasks'エンドポイントに対応するハンドラ
@@ -17,18 +16,18 @@ func PostTasks(w http.ResponseWriter, r *http.Request) {
 	var req postTaskRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		writeErrorResponse(w, newErrBadRequest(err))
-		logging.Info("failed to decode request.", err)
+		LogInfo("failed to decode request.", err)
 		return
 	}
 
 	if req.Title == "" {
 		writeErrorResponse(w, newErrBadRequest(errors.New("title is required")))
-		logging.Info("title is required")
+		LogInfo("title is required")
 		return
 	}
 	if req.EstimatedPomoNum < 0 || req.EstimatedPomoNum > 4 {
 		writeErrorResponse(w, newErrBadRequest(errors.New("estimatedPomoNum should be positive number")))
-		logging.Info("estimatedPomoNum should be positive number")
+		LogInfo("estimatedPomoNum should be positive number")
 		return
 	}
 	var dueOn *time.Time
@@ -36,7 +35,7 @@ func PostTasks(w http.ResponseWriter, r *http.Request) {
 		tmpDueOn, err := time.Parse(time.RFC3339, req.DueOn)
 		if err != nil {
 			writeErrorResponse(w, newErrBadRequest(err))
-			logging.Info("failed to parse dueOn.", err)
+			LogInfo("failed to parse dueOn.", err)
 			return
 		}
 		dueOn = &tmpDueOn
@@ -48,7 +47,7 @@ func PostTasks(w http.ResponseWriter, r *http.Request) {
 	task, err := dbOperator.CreateTask(ctx, user.ID, req.Title, req.EstimatedPomoNum, dueOn)
 	if err != nil {
 		writeErrorResponse(w, newErrInternalServerError(err))
-		logging.Error("failed to create task.", err)
+		LogError("failed to create task.", err)
 		return
 	}
 
@@ -59,7 +58,7 @@ func PostTasks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Location", scheme+r.Host+r.URL.Path+"/"+strconv.Itoa(task.ID))
 	if err := writeResponse(w, 201, newTaskResponse(task)); err != nil {
 		writeErrorResponse(w, newErrInternalServerError(err))
-		logging.Error("failed to write response.", err)
+		LogError("failed to write response.", err)
 	}
 }
 
@@ -72,7 +71,7 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 			isCompleted, err := strconv.ParseBool(v[0])
 			if err != nil {
 				writeErrorResponse(w, newErrBadRequest(err))
-				logging.Info("failed to parse isCompleted.", err)
+				LogInfo("failed to parse isCompleted.", err)
 				return
 			}
 			req.IsCompleted = &isCompleted
@@ -80,7 +79,7 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 			completedOn, err := time.Parse(time.RFC3339, v[0])
 			if err != nil {
 				writeErrorResponse(w, newErrBadRequest(err))
-				logging.Info("failed to parse completedOn.", err)
+				LogInfo("failed to parse completedOn.", err)
 				return
 			}
 			req.CompletedOn = &completedOn
@@ -93,13 +92,13 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 	tasks, err := dbOperator.GetTasks(ctx, user.ID, &req)
 	if err != nil {
 		writeErrorResponse(w, newErrInternalServerError(err))
-		logging.Error("failed to get tasks.", err)
+		LogError("failed to get tasks.", err)
 		return
 	}
 
 	if err := writeResponse(w, 200, newTasksResponse(tasks)); err != nil {
 		writeErrorResponse(w, newErrInternalServerError(err))
-		logging.Error("failed to write response.", err)
+		LogError("failed to write response.", err)
 	}
 }
 
@@ -109,13 +108,13 @@ func PatchTask(w http.ResponseWriter, r *http.Request) {
 	taskID, err := strconv.Atoi(chi.URLParam(r, "taskID"))
 	if err != nil {
 		writeErrorResponse(w, newErrBadRequest(err))
-		logging.Info("failed to convert taskID to integer.", err)
+		LogInfo("failed to convert taskID to integer.", err)
 		return
 	}
 	req.TaskID = taskID
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		writeErrorResponse(w, newErrBadRequest(err))
-		logging.Info("failed to decode request.", err)
+		LogInfo("failed to decode request.", err)
 		return
 	}
 
@@ -126,16 +125,16 @@ func PatchTask(w http.ResponseWriter, r *http.Request) {
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
 		writeErrorResponse(w, newErrNotFound(err))
-		logging.Info("task is not found.", err)
+		LogInfo("task is not found.", err)
 		return
 	case err != nil:
 		writeErrorResponse(w, newErrInternalServerError(err))
-		logging.Error("failed to get task.", err)
+		LogError("failed to get task.", err)
 		return
 	}
 	if user.HasTask(task) {
 		writeErrorResponse(w, newErrNotFound(errors.New("task is not found")))
-		logging.Info("user does not have access to the task")
+		LogInfo("user does not have access to the task")
 		return
 	}
 
@@ -149,7 +148,7 @@ func PatchTask(w http.ResponseWriter, r *http.Request) {
 		dueOn, err := time.Parse(time.RFC3339, *req.DueOn)
 		if err != nil {
 			writeErrorResponse(w, newErrBadRequest(err))
-			logging.Info("failed to parse dueOn.", err)
+			LogInfo("failed to parse dueOn.", err)
 			return
 		}
 		task.DueOn = &dueOn
@@ -158,7 +157,7 @@ func PatchTask(w http.ResponseWriter, r *http.Request) {
 		completedOn, err := time.Parse(time.RFC3339, *req.CompletedOn)
 		if err != nil {
 			writeErrorResponse(w, newErrBadRequest(err))
-			logging.Info("failed to parse completedOn.", err)
+			LogInfo("failed to parse completedOn.", err)
 			return
 		}
 		task.CompletedOn = &completedOn
@@ -166,13 +165,13 @@ func PatchTask(w http.ResponseWriter, r *http.Request) {
 
 	if err := dbOperator.UpdateTask(ctx, task); err != nil {
 		writeErrorResponse(w, newErrInternalServerError(err))
-		logging.Error("failed to update task.", err)
+		LogError("failed to update task.", err)
 		return
 	}
 
 	if err := writeResponse(w, 200, newTaskResponse(task)); err != nil {
 		writeErrorResponse(w, newErrInternalServerError(err))
-		logging.Error("failed to write response.", err)
+		LogError("failed to write response.", err)
 	}
 }
 
@@ -182,7 +181,7 @@ func DeleteTask(w http.ResponseWriter, r *http.Request) {
 	taskID, err := strconv.Atoi(chi.URLParam(r, "taskID"))
 	if err != nil {
 		writeErrorResponse(w, newErrBadRequest(err))
-		logging.Info("failed to convert taskID to integer.", err)
+		LogInfo("failed to convert taskID to integer.", err)
 		return
 	}
 	req.TaskID = taskID
@@ -194,22 +193,22 @@ func DeleteTask(w http.ResponseWriter, r *http.Request) {
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
 		writeErrorResponse(w, newErrNotFound(err))
-		logging.Info("task is not found.", err)
+		LogInfo("task is not found.", err)
 		return
 	case err != nil:
 		writeErrorResponse(w, newErrInternalServerError(err))
-		logging.Error("failed to get task.", err)
+		LogError("failed to get task.", err)
 		return
 	}
 	if user.HasTask(task) {
 		writeErrorResponse(w, newErrNotFound(errors.New("task is not found")))
-		logging.Info("user does not have access to the task")
+		LogInfo("user does not have access to the task")
 		return
 	}
 
 	if err := dbOperator.DeleteTask(ctx, req.TaskID); err != nil {
 		writeErrorResponse(w, newErrInternalServerError(err))
-		logging.Error("failed to delete task.", err)
+		LogError("failed to delete task.", err)
 		return
 	}
 

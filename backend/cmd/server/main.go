@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -20,7 +19,7 @@ import (
 
 func main() {
 	if err := _main(); err != nil {
-		log.Fatal("failed to run _main().", err)
+		tomeit.LogFatal("failed to run _main().", err)
 	}
 }
 

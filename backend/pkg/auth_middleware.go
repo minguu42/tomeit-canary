@@ -8,8 +8,6 @@ import (
 	"errors"
 	"net/http"
 	"strings"
-
-	"github.com/minguu42/tomeit/pkg/logging"
 )
 
 // userKey はコンテキストでユーザを管理するためのキー
@@ -27,14 +25,14 @@ func AuthMiddleware(next http.Handler) http.Handler {
 
 		if !strings.HasPrefix(r.Header.Get("Authorization"), "Bearer ") {
 			writeErrorResponse(w, newErrUnauthorized(errors.New(`format of Authorization field should be "Bearer some-id-token"`)))
-			logging.Info("format of Authorization is invalid")
+			LogInfo("format of Authorization is invalid")
 			return
 		}
 		idToken := strings.Split(r.Header.Get("Authorization"), " ")[1]
 		uid, err := authenticator.VerifyIDToken(ctx, idToken)
 		if err != nil {
 			writeErrorResponse(w, newErrUnauthorized(err))
-			logging.Info("failed to authenticate user.", err)
+			LogInfo("failed to authenticate user.", err)
 			return
 		}
 
@@ -43,12 +41,12 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		case errors.Is(err, sql.ErrNoRows):
 			if user, err = dbOperator.CreateUser(ctx, hash(uid)); err != nil {
 				writeErrorResponse(w, newErrInternalServerError(err))
-				logging.Error("failed to create user.", err)
+				LogError("failed to create user.", err)
 				return
 			}
 		case err != nil:
 			writeErrorResponse(w, newErrInternalServerError(err))
-			logging.Error("failed to get user.", err)
+			LogError("failed to get user.", err)
 			return
 		}
 

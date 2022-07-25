@@ -7,7 +7,6 @@ import (
 
 	"github.com/doug-martin/goqu/v9"
 	tomeit "github.com/minguu42/tomeit/pkg"
-	"github.com/minguu42/tomeit/pkg/logging"
 )
 
 // CreateTask はMySQLにtomeit.Taskを作成し、返す。
@@ -31,7 +30,7 @@ func (o *dbOperator) CreateTask(ctx context.Context, userID int, title string, e
 	if err != nil {
 		return nil, fmt.Errorf("failed to exec insert sql. %w", err)
 	}
-	logging.Info(q)
+	tomeit.LogInfo(q)
 
 	id, err := result.LastInsertId()
 	if err != nil {
@@ -61,7 +60,7 @@ func (o *dbOperator) GetTask(ctx context.Context, id int) (*tomeit.Task, error) 
 	if err := o.db.QueryRowContext(ctx, q).Scan(&t.CompletedOn, &t.CreatedAt, &t.DueOn, &t.EstimatedPomoNum, &t.ID, &t.Title, &t.UpdatedAt, &t.UserID); err != nil {
 		return nil, fmt.Errorf("failed to get task row. %w", err)
 	}
-	logging.Info(q)
+	tomeit.LogInfo(q)
 
 	return &t, nil
 }
@@ -92,7 +91,7 @@ func (o *dbOperator) GetTasks(ctx context.Context, userID int, opt *tomeit.GetTa
 		return nil, fmt.Errorf("failed to exec select sql. %w", err)
 	}
 	defer rows.Close()
-	logging.Info(q)
+	tomeit.LogInfo(q)
 
 	tasks := make([]*tomeit.Task, 0, 30)
 	for rows.Next() {
@@ -116,7 +115,7 @@ func (o *dbOperator) UpdateTask(ctx context.Context, task *tomeit.Task) error {
 	if _, err := o.db.ExecContext(ctx, q); err != nil {
 		return fmt.Errorf("failed to exec update sql. %w", err)
 	}
-	logging.Info(q)
+	tomeit.LogInfo(q)
 	return nil
 }
 
@@ -130,6 +129,6 @@ func (o *dbOperator) DeleteTask(ctx context.Context, id int) error {
 	if _, err := o.db.ExecContext(ctx, q); err != nil {
 		return fmt.Errorf("failed to exec delete sql. %w", err)
 	}
-	logging.Info(q)
+	tomeit.LogInfo(q)
 	return nil
 }
