@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	_ "github.com/GoogleCloudPlatform/berglas/pkg/auto"
+	"github.com/GoogleCloudPlatform/berglas/pkg/berglas"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
@@ -24,6 +24,23 @@ func main() {
 }
 
 func _main() error {
+	ctx := context.Background()
+
+	switch apiEnv := os.Getenv("API_ENV"); apiEnv {
+	case "production":
+		if err := berglas.Replace(ctx, "ALLOWED_ORIGINS"); err != nil {
+			return fmt.Errorf("failed to replace environment variable ALLOWED_ORIGINS. %w", err)
+		}
+		if err := berglas.Replace(ctx, "DSN"); err != nil {
+			return fmt.Errorf("failed to replace environment variable DSN. %w", err)
+		}
+		if err := berglas.Replace(ctx, "GOOGLE_CREDENTIALS_JSON"); err != nil {
+			return fmt.Errorf("failed to replace environment variable GOOGLE_CREDENTIALS_JSON. %w", err)
+		}
+	case "":
+		return errors.New("environment variable API_ENV does not exist")
+	}
+
 	var (
 		allowedOrigins        = os.Getenv("ALLOWED_ORIGINS")
 		dsn                   = os.Getenv("DSN")
@@ -31,14 +48,12 @@ func _main() error {
 	)
 	switch {
 	case allowedOrigins == "":
-		return errors.New("environment ALLOWED_ORIGINS does not exist")
+		return errors.New("environment variable ALLOWED_ORIGINS does not exist")
 	case dsn == "":
-		return errors.New("environment DSN does not exist")
+		return errors.New("environment variable DSN does not exist")
 	case googleCredentialsJSON == "":
-		return errors.New("environment GOOGLE_CREDENTIALS_JSON does not exist")
+		return errors.New("environment variable GOOGLE_CREDENTIALS_JSON does not exist")
 	}
-
-	ctx := context.Background()
 
 	dbOperator, err := mysql.NewDBOperator(ctx, dsn)
 	if err != nil {
