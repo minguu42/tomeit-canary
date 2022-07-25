@@ -5,7 +5,7 @@ info:
   version: 0.1.0
 
 servers:
-  - url: http://localhost:8080/v0
+  - url: http://localhost:8080/
     description: 開発用ローカルサーバ
 
 paths:
@@ -39,7 +39,7 @@ paths:
             Location:
               schema:
                 type: string
-                example: https://api.tomeit.com/v0/tasks/1
+                example: https://api.tomeit.com/tasks/1
           content:
             application/json:
               schema:
@@ -108,8 +108,6 @@ paths:
           $ref: "#/components/responses/ErrBadRequest"
         "401":
           $ref: "#/components/responses/ErrUnauthorized"
-        "403":
-          $ref: "#/components/responses/ErrForbidden"
         "404":
           $ref: "#/components/responses/ErrNotFound"
       security:
@@ -127,8 +125,75 @@ paths:
           $ref: "#/components/responses/ErrBadRequest"
         "401":
           $ref: "#/components/responses/ErrUnauthorized"
-        "403":
-          $ref: "#/components/responses/ErrForbidden"
+        "404":
+          $ref: "#/components/responses/ErrNotFound"
+      security:
+        - beaerAuth: []
+  /pomodoros:
+    post:
+      tags:
+        - pomodoros
+      summary: 新しいポモドーロ記録を作成する
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - completedAt
+              properties:
+                completedAt:
+                  type: string
+                  format: date-time
+      responses:
+        "201":
+          description: 成功
+          headers:
+            Location:
+              schema:
+                type: string
+                example: https://api.tomeit.com/pomodoros/1
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pomodoro"
+        "400":
+          $ref: "#/components/responses/ErrBadRequest"
+        "401":
+          $ref: "#/components/responses/ErrUnauthorized"
+      security:
+        - beaerAuth: []
+    get:
+      tags:
+        - pomodoros
+      summary: ポモドーロ記録一覧を取得する
+      description: 作成日時の昇順で最大30件まで取得する。
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pomodoros"
+        "401":
+          $ref: "#/components/responses/ErrUnauthorized"
+      security:
+        - beaerAuth: []
+  /pomodoros/{pomodoroID}:
+    delete:
+      summary: 指定したポモドーロ記録を削除する
+      tags:
+        - pomodoros
+      parameters:
+        - $ref: "#/components/parameters/pomodoroID"
+      responses:
+        "204":
+          description: 成功
+        "400":
+          $ref: "#/components/responses/ErrBadRequest"
+        "401":
+          $ref: "#/components/responses/ErrUnauthorized"
         "404":
           $ref: "#/components/responses/ErrNotFound"
       security:
@@ -225,7 +290,7 @@ components:
         - createdAt
       properties:
         id:
-          description: ポモドーロ記録 ID
+          description: ポモドーロ記録ID
           type: integer
           minimum: 1
           example: 1
@@ -278,24 +343,6 @@ components:
                 description: ユーザ向けの大まかなエラーの説明
                 type: string
                 example: ユーザの認証に失敗しました。ログイン後にもう一度お試しください。
-              error:
-                description: 開発者向けの詳細なエラーの説明
-                type: string
-                example: some error messages
-    ErrForbidden:
-      description: リソースへのアクセス権限がない
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-              - status
-              - error
-            properties:
-              status:
-                description: ユーザ向けの大まかなエラーの説明
-                type: string
-                example: 指定したリソースへのアクセスが許可されていません。
               error:
                 description: 開発者向けの詳細なエラーの説明
                 type: string
@@ -361,6 +408,8 @@ components:
 
 tags:
   - name: tasks
-    description: タスク関連 API
+    description: タスク関連API
+  - name: pomodoros
+    description: ポモドーロ関連API
   - name: monitoring
-    description: モニタリング関連 API
+    description: モニタリング関連API
