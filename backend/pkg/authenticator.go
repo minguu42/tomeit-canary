@@ -15,8 +15,8 @@ func SetAuthenticator(auth Authenticator) {
 	authenticator = auth
 }
 
-type authenticatorMock struct{}
-
-func (a *authenticatorMock) VerifyIDToken(_ context.Context, _ string) (uid string, err error) {
-	return "someUID", nil
-}
+//type authenticatorMock struct{}
+//
+//func (a *authenticatorMock) VerifyIDToken(_ context.Context, _ string) (uid string, err error) {
+//	return "someUID", nil
+//}
