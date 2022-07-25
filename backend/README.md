@@ -1,3 +1,3 @@
-# tomeit API
+# Tomeit API
 
-`tomeit API` は tomeit のデータや処理を扱う REST API です。
+`Tomeit API`はTomeitのデータ処理を行うREST APIである。

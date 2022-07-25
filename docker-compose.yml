@@ -4,8 +4,8 @@ services:
   api:
     build:
       context: ./backend
-      dockerfile: build/Dockerfile
     environment:
+      - API_ENV
       - ALLOWED_ORIGINS
       - DSN
       - GOOGLE_CREDENTIALS_JSON
@@ -41,11 +41,11 @@ services:
     image: swaggerapi/swagger-ui:v4.11.0
     container_name: tomeit-api-docs
     environment:
-      API_URL: openapi.yaml
+      API_URL: openapi.yml
     ports:
       - "8000:8080"
     volumes:
-      - ./docs/openapi.yaml:/usr/share/nginx/html/openapi.yaml
+      - ./docs/openapi.yml:/usr/share/nginx/html/openapi.yml
 
 volumes:
   data-dev:

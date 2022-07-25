@@ -1,4 +1,4 @@
-package model
+package tomeit
 
 import "time"
 
@@ -14,27 +14,27 @@ type (
 		UpdatedAt        time.Time  `db:"updated_at"   goqu:"skipupdate"`
 	}
 
-	CreateTaskRequest struct {
+	postTaskRequest struct {
 		Title            string `json:"title"`
 		EstimatedPomoNum int    `json:"estimatedPomoNum"`
 		DueOn            string `json:"dueOn"`
 	}
-	ReadTaskRequest struct {
-		IsCompleted *bool
-		CompletedOn *time.Time
+	GetTasksRequest struct {
+		IsCompleted *bool      `json:"-"`
+		CompletedOn *time.Time `json:"-"`
 	}
-	UpdateTaskRequest struct {
-		TaskID           int
+	patchTaskRequest struct {
+		TaskID           int     `json:"-"`
 		Title            string  `json:"title"`
 		EstimatedPomoNum *int    `json:"estimatedPomoNum"`
 		DueOn            *string `json:"dueOn"`
 		CompletedOn      *string `json:"completedOn"`
 	}
-	DeleteTaskRequest struct {
-		TaskID int
+	deleteTaskRequest struct {
+		TaskID int `json:"-"`
 	}
 
-	TaskResponse struct {
+	taskResponse struct {
 		ID               int       `json:"id"`
 		Title            string    `json:"title"`
 		EstimatedPomoNum int       `json:"estimatedPomoNum"`
@@ -44,14 +44,14 @@ type (
 		CreatedAt        time.Time `json:"createdAt"`
 		UpdatedAt        time.Time `json:"updatedAt"`
 	}
-	TasksResponse struct {
-		Tasks []*TaskResponse `json:"tasks"`
+	tasksResponse struct {
+		Tasks []*taskResponse `json:"tasks"`
 	}
 )
 
-// NewTaskResponse は Task から TaskResponse を生成する。
-// TODO: CompletedPomoNum が適切な値になるように実装できていない。
-func NewTaskResponse(t *Task) *TaskResponse {
+// newTaskResponse はTaskからtaskResponseを生成する。
+// TODO: CompletedPomoNumが適切な値になるように実装していない。
+func newTaskResponse(t *Task) *taskResponse {
 	var (
 		dueOn       = ""
 		completedOn = ""
@@ -63,7 +63,7 @@ func NewTaskResponse(t *Task) *TaskResponse {
 		completedOn = t.CompletedOn.Format(time.RFC3339)
 	}
 
-	return &TaskResponse{
+	return &taskResponse{
 		ID:               t.ID,
 		Title:            t.Title,
 		EstimatedPomoNum: t.EstimatedPomoNum,
@@ -75,11 +75,11 @@ func NewTaskResponse(t *Task) *TaskResponse {
 	}
 }
 
-// NewTasksResponse は Task のスライスから TasksResponse を生成する。
-func NewTasksResponse(ts []*Task) *TasksResponse {
-	tasks := make([]*TaskResponse, 0, len(ts))
+// newTasksResponse はTaskのスライスからtasksResponseを生成する。
+func newTasksResponse(ts []*Task) *tasksResponse {
+	tasks := make([]*taskResponse, 0, len(ts))
 	for _, t := range ts {
-		tasks = append(tasks, NewTaskResponse(t))
+		tasks = append(tasks, newTaskResponse(t))
 	}
-	return &TasksResponse{Tasks: tasks}
+	return &tasksResponse{Tasks: tasks}
 }

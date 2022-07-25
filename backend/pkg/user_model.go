@@ -1,4 +1,4 @@
-package model
+package tomeit
 
 import "time"
 
@@ -10,7 +10,7 @@ type User struct {
 	UpdatedAt time.Time `db:"updated_at"`
 }
 
-// HasTask はユーザがそのタスクを持っているかを確かめる。
+// HasTask はユーザがそのタスクを持っているかを判定する。
 func (u *User) HasTask(t *Task) bool {
 	if u.ID <= 0 || t.UserID <= 0 {
 		return false

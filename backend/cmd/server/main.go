@@ -8,24 +8,39 @@ import (
 	"os"
 	"strings"
 
-	_ "github.com/GoogleCloudPlatform/berglas/pkg/auto"
+	"github.com/GoogleCloudPlatform/berglas/pkg/berglas"
 	"github.com/go-chi/chi/v5"
-	"github.com/minguu42/tomeit/pkg/auth"
-	"github.com/minguu42/tomeit/pkg/db"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
+	tomeit "github.com/minguu42/tomeit/pkg"
 	"github.com/minguu42/tomeit/pkg/firebase"
-	"github.com/minguu42/tomeit/pkg/handler"
-	"github.com/minguu42/tomeit/pkg/handler/middleware"
-	"github.com/minguu42/tomeit/pkg/log"
-	"github.com/minguu42/tomeit/pkg/service"
+	"github.com/minguu42/tomeit/pkg/mysql"
 )
 
 func main() {
 	if err := _main(); err != nil {
-		log.Fatal("failed to run _main().", err)
+		tomeit.LogFatal("failed to run _main().", err)
 	}
 }
 
 func _main() error {
+	ctx := context.Background()
+
+	switch apiEnv := os.Getenv("API_ENV"); apiEnv {
+	case "production":
+		if err := berglas.Replace(ctx, "ALLOWED_ORIGINS"); err != nil {
+			return fmt.Errorf("failed to replace environment variable ALLOWED_ORIGINS. %w", err)
+		}
+		if err := berglas.Replace(ctx, "DSN"); err != nil {
+			return fmt.Errorf("failed to replace environment variable DSN. %w", err)
+		}
+		if err := berglas.Replace(ctx, "GOOGLE_CREDENTIALS_JSON"); err != nil {
+			return fmt.Errorf("failed to replace environment variable GOOGLE_CREDENTIALS_JSON. %w", err)
+		}
+	case "":
+		return errors.New("environment variable API_ENV does not exist")
+	}
+
 	var (
 		allowedOrigins        = os.Getenv("ALLOWED_ORIGINS")
 		dsn                   = os.Getenv("DSN")
@@ -33,43 +48,44 @@ func _main() error {
 	)
 	switch {
 	case allowedOrigins == "":
-		return errors.New("environment ALLOWED_ORIGINS does not exist")
+		return errors.New("environment variable ALLOWED_ORIGINS does not exist")
 	case dsn == "":
-		return errors.New("environment DSN does not exist")
+		return errors.New("environment variable DSN does not exist")
 	case googleCredentialsJSON == "":
-		return errors.New("environment GOOGLE_CREDENTIALS_JSON does not exist")
+		return errors.New("environment variable GOOGLE_CREDENTIALS_JSON does not exist")
 	}
 
-	ctx := context.Background()
-
-	dialect := db.NewDialect()
-	mysql, err := db.NewDB(ctx, dsn)
+	dbOperator, err := mysql.NewDBOperator(ctx, dsn)
 	if err != nil {
-		return fmt.Errorf("failed to create db. %w", err)
+		return fmt.Errorf("failed to create dbOperator. %w", err)
 	}
+	tomeit.SetDBOperator(dbOperator)
 
-	firebaseApp, err := firebase.NewApp(ctx, googleCredentialsJSON)
-	if err != nil {
-		return fmt.Errorf("failed to create firebase app. %w", err)
-	}
-	authenticator, err := auth.New(firebaseApp)
+	authenticator, err := firebase.NewAuthenticator(ctx, googleCredentialsJSON)
 	if err != nil {
 		return fmt.Errorf("failed to create authenticator. %w", err)
 	}
-
-	svc, err := service.New(dialect, mysql)
-	if err != nil {
-		return fmt.Errorf("failed to create service. %w", err)
-	}
+	tomeit.SetAuthenticator(authenticator)
 
 	r := chi.NewRouter()
-	m := middleware.New(svc, authenticator)
-	r.Use(m.Log)
-	r.Use(m.CORS(strings.Split(allowedOrigins, ",")))
-	r.Use(m.Auth)
-	r.Use(m.Recover)
-	h := handler.New(svc)
-	h.Route(r)
+	r.Use(middleware.Logger)
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   strings.Split(allowedOrigins, ","),
+		AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	}))
+	r.Use(tomeit.AuthMiddleware)
+	r.Use(middleware.Recoverer)
+
+	r.Route("/tasks", func(r chi.Router) {
+		r.Post("/", tomeit.PostTasks)
+		r.Get("/", tomeit.GetTasks)
+		r.Patch("/{taskID}", tomeit.PatchTask)
+		r.Delete("/{taskID}", tomeit.DeleteTask)
+	})
+	r.Get("/healthz", tomeit.GetHealthz)
 
 	if err := http.ListenAndServe(":8080", r); err != nil {
 		return fmt.Errorf("failed to run server: %w", err)
