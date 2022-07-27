@@ -2,7 +2,13 @@ package tomeit
 
 import (
 	"context"
+	"database/sql"
+	"fmt"
 	"time"
+
+	"github.com/doug-martin/goqu/v9"
+	_ "github.com/doug-martin/goqu/v9/dialect/mysql"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 // DBOperator は各モデルのCRUD処理のインタフェース
@@ -23,6 +29,34 @@ var dbOperator DBOperator
 // これは初期化処理時に1度のみ呼び出す。
 func SetDBOperator(db DBOperator) {
 	dbOperator = db
+}
+
+// mysql はDBOperatorを実装する構造体
+type mysql struct {
+	dialect goqu.DialectWrapper
+	db      *sql.DB
+}
+
+// NewMySQL はmysqlを初期化し、返す。
+func NewMySQL(ctx context.Context, dsn string) (*mysql, error) {
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open mysql. %w", err)
+	}
+
+	for count := 0; count < 6; count++ {
+		if err = db.PingContext(ctx); err == nil {
+			return &mysql{
+				dialect: goqu.Dialect("mysql"),
+				db:      db,
+			}, nil
+		}
+
+		LogInfo("connection to mysql does not exist. check again after 5 seconds.")
+		time.Sleep(5 * time.Second)
+	}
+
+	return nil, fmt.Errorf("failed to connect mysql. %w", err)
 }
 
 //type dbOperatorMock struct{}
