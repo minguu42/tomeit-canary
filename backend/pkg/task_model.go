@@ -3,7 +3,7 @@ package tomeit
 import "time"
 
 type (
-	Task struct {
+	task struct {
 		ID               int        `db:"id"      goqu:"skipinsert,skipupdate"`
 		UserID           int        `db:"user_id" goqu:"skipupdate"`
 		Title            string     `db:"title"`
@@ -19,7 +19,7 @@ type (
 		EstimatedPomoNum int    `json:"estimatedPomoNum"`
 		DueOn            string `json:"dueOn"`
 	}
-	GetTasksRequest struct {
+	getTasksRequest struct {
 		IsCompleted *bool      `json:"-"`
 		CompletedOn *time.Time `json:"-"`
 	}
@@ -51,7 +51,7 @@ type (
 
 // newTaskResponse はTaskからtaskResponseを生成する。
 // TODO: CompletedPomoNumが適切な値になるように実装していない。
-func newTaskResponse(t *Task) *taskResponse {
+func newTaskResponse(t *task) *taskResponse {
 	var (
 		dueOn       = ""
 		completedOn = ""
@@ -76,7 +76,7 @@ func newTaskResponse(t *Task) *taskResponse {
 }
 
 // newTasksResponse はTaskのスライスからtasksResponseを生成する。
-func newTasksResponse(ts []*Task) *tasksResponse {
+func newTasksResponse(ts []*task) *tasksResponse {
 	tasks := make([]*taskResponse, 0, len(ts))
 	for _, t := range ts {
 		tasks = append(tasks, newTaskResponse(t))

@@ -9,10 +9,10 @@ import (
 )
 
 // CreateTask はDBにタスクを作成し、返す。
-func (m *mysql) CreateTask(ctx context.Context, userID int, title string, estimatedPomoNum int, dueOn *time.Time) (*Task, error) {
+func (m *mysql) CreateTask(ctx context.Context, userID int, title string, estimatedPomoNum int, dueOn *time.Time) (*task, error) {
 	createdAt := time.Now()
 	q, _, err := m.dialect.Insert("tasks").Rows(
-		Task{
+		task{
 			UserID:           userID,
 			Title:            title,
 			EstimatedPomoNum: estimatedPomoNum,
@@ -36,7 +36,7 @@ func (m *mysql) CreateTask(ctx context.Context, userID int, title string, estima
 		return nil, fmt.Errorf("failed to get id. %w", err)
 	}
 
-	return &Task{
+	return &task{
 		ID:               int(id),
 		UserID:           userID,
 		Title:            title,
@@ -49,13 +49,13 @@ func (m *mysql) CreateTask(ctx context.Context, userID int, title string, estima
 }
 
 // GetTask はDBからタスクを取得し、返す。
-func (m *mysql) GetTask(ctx context.Context, id int) (*Task, error) {
-	q, _, err := m.dialect.From("tasks").Select(&Task{}).Where(goqu.Ex{"id": id}).ToSQL()
+func (m *mysql) GetTask(ctx context.Context, id int) (*task, error) {
+	q, _, err := m.dialect.From("tasks").Select(&task{}).Where(goqu.Ex{"id": id}).ToSQL()
 	if err != nil {
 		return nil, fmt.Errorf("failed to create select sql. %w", err)
 	}
 
-	var t Task
+	var t task
 	if err := m.db.QueryRowContext(ctx, q).Scan(&t.CompletedOn, &t.CreatedAt, &t.DueOn, &t.EstimatedPomoNum, &t.ID, &t.Title, &t.UpdatedAt, &t.UserID); err != nil {
 		return nil, fmt.Errorf("failed to get task row. %w", err)
 	}
@@ -65,8 +65,8 @@ func (m *mysql) GetTask(ctx context.Context, id int) (*Task, error) {
 }
 
 // GetTasks はDBからタスク一覧を取得し、返す。
-func (m *mysql) GetTasks(ctx context.Context, userID int, opt *GetTasksRequest) ([]*Task, error) {
-	ds := m.dialect.From("tasks").Select(&Task{}).Where(goqu.Ex{"user_id": userID})
+func (m *mysql) GetTasks(ctx context.Context, userID int, opt *getTasksRequest) ([]*task, error) {
+	ds := m.dialect.From("tasks").Select(&task{}).Where(goqu.Ex{"user_id": userID})
 	if opt.IsCompleted != nil {
 		if *opt.IsCompleted {
 			ds = ds.Where(goqu.C("completed_on").IsNotNull())
@@ -92,9 +92,9 @@ func (m *mysql) GetTasks(ctx context.Context, userID int, opt *GetTasksRequest) 
 	defer rows.Close()
 	LogInfo(q)
 
-	tasks := make([]*Task, 0, 30)
+	tasks := make([]*task, 0, 30)
 	for rows.Next() {
-		var t Task
+		var t task
 		if err := rows.Scan(&t.CompletedOn, &t.CreatedAt, &t.DueOn, &t.EstimatedPomoNum, &t.ID, &t.Title, &t.UpdatedAt, &t.UserID); err != nil {
 			return nil, fmt.Errorf("failed to scan row. %w", err)
 		}
@@ -105,7 +105,7 @@ func (m *mysql) GetTasks(ctx context.Context, userID int, opt *GetTasksRequest) 
 }
 
 // UpdateTask はDBのタスクを更新する。
-func (m *mysql) UpdateTask(ctx context.Context, task *Task) error {
+func (m *mysql) UpdateTask(ctx context.Context, task *task) error {
 	q, _, err := m.dialect.Update("tasks").Set(task).Where(goqu.Ex{"id": task.ID}).ToSQL()
 	if err != nil {
 		return fmt.Errorf("failed to create update sql. %w", err)
