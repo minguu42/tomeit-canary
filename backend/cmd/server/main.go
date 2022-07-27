@@ -13,8 +13,6 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	tomeit "github.com/minguu42/tomeit/pkg"
-	"github.com/minguu42/tomeit/pkg/firebase"
-	"github.com/minguu42/tomeit/pkg/mysql"
 )
 
 func main() {
@@ -55,17 +53,17 @@ func _main() error {
 		return errors.New("environment variable GOOGLE_CREDENTIALS_JSON does not exist")
 	}
 
-	dbOperator, err := mysql.NewDBOperator(ctx, dsn)
+	mysql, err := tomeit.NewMySQL(ctx, dsn)
 	if err != nil {
-		return fmt.Errorf("failed to create dbOperator. %w", err)
+		return fmt.Errorf("failed to init mysql. %w", err)
 	}
-	tomeit.SetDBOperator(dbOperator)
+	tomeit.SetDBOperator(mysql)
 
-	authenticator, err := firebase.NewAuthenticator(ctx, googleCredentialsJSON)
+	firebaseAuth, err := tomeit.NewFirebaseAuth(ctx, googleCredentialsJSON)
 	if err != nil {
-		return fmt.Errorf("failed to create authenticator. %w", err)
+		return fmt.Errorf("failed to init firebase auth. %w", err)
 	}
-	tomeit.SetAuthenticator(authenticator)
+	tomeit.SetAuthenticator(firebaseAuth)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
