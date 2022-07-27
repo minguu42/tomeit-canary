@@ -1,4 +1,4 @@
-package mysql
+package tomeit
 
 import (
 	"context"
@@ -6,14 +6,13 @@ import (
 	"time"
 
 	"github.com/doug-martin/goqu/v9"
-	tomeit "github.com/minguu42/tomeit/pkg"
 )
 
-// CreateTask はMySQLにtomeit.Taskを作成し、返す。
-func (o *dbOperator) CreateTask(ctx context.Context, userID int, title string, estimatedPomoNum int, dueOn *time.Time) (*tomeit.Task, error) {
+// CreateTask はDBにタスクを作成し、返す。
+func (m *mysql) CreateTask(ctx context.Context, userID int, title string, estimatedPomoNum int, dueOn *time.Time) (*task, error) {
 	createdAt := time.Now()
-	q, _, err := o.dialect.Insert("tasks").Rows(
-		tomeit.Task{
+	q, _, err := m.dialect.Insert("tasks").Rows(
+		task{
 			UserID:           userID,
 			Title:            title,
 			EstimatedPomoNum: estimatedPomoNum,
@@ -26,18 +25,18 @@ func (o *dbOperator) CreateTask(ctx context.Context, userID int, title string, e
 		return nil, fmt.Errorf("failed to create insert sql. %w", err)
 	}
 
-	result, err := o.db.ExecContext(ctx, q)
+	result, err := m.db.ExecContext(ctx, q)
 	if err != nil {
 		return nil, fmt.Errorf("failed to exec insert sql. %w", err)
 	}
-	tomeit.LogInfo(q)
+	LogInfo(q)
 
 	id, err := result.LastInsertId()
 	if err != nil {
 		return nil, fmt.Errorf("failed to get id. %w", err)
 	}
 
-	return &tomeit.Task{
+	return &task{
 		ID:               int(id),
 		UserID:           userID,
 		Title:            title,
@@ -49,25 +48,25 @@ func (o *dbOperator) CreateTask(ctx context.Context, userID int, title string, e
 	}, nil
 }
 
-// GetTask はMySQLからtomeit.Taskを取得し、返す。
-func (o *dbOperator) GetTask(ctx context.Context, id int) (*tomeit.Task, error) {
-	q, _, err := o.dialect.From("tasks").Select(&tomeit.Task{}).Where(goqu.Ex{"id": id}).ToSQL()
+// GetTask はDBからタスクを取得し、返す。
+func (m *mysql) GetTask(ctx context.Context, id int) (*task, error) {
+	q, _, err := m.dialect.From("tasks").Select(&task{}).Where(goqu.Ex{"id": id}).ToSQL()
 	if err != nil {
 		return nil, fmt.Errorf("failed to create select sql. %w", err)
 	}
 
-	var t tomeit.Task
-	if err := o.db.QueryRowContext(ctx, q).Scan(&t.CompletedOn, &t.CreatedAt, &t.DueOn, &t.EstimatedPomoNum, &t.ID, &t.Title, &t.UpdatedAt, &t.UserID); err != nil {
+	var t task
+	if err := m.db.QueryRowContext(ctx, q).Scan(&t.CompletedOn, &t.CreatedAt, &t.DueOn, &t.EstimatedPomoNum, &t.ID, &t.Title, &t.UpdatedAt, &t.UserID); err != nil {
 		return nil, fmt.Errorf("failed to get task row. %w", err)
 	}
-	tomeit.LogInfo(q)
+	LogInfo(q)
 
 	return &t, nil
 }
 
-// GetTasks はMySQLからtomeit.Taskの一覧を取得し、返す。
-func (o *dbOperator) GetTasks(ctx context.Context, userID int, opt *tomeit.GetTasksRequest) ([]*tomeit.Task, error) {
-	ds := o.dialect.From("tasks").Select(&tomeit.Task{}).Where(goqu.Ex{"user_id": userID})
+// GetTasks はDBからタスク一覧を取得し、返す。
+func (m *mysql) GetTasks(ctx context.Context, userID int, opt *getTasksRequest) ([]*task, error) {
+	ds := m.dialect.From("tasks").Select(&task{}).Where(goqu.Ex{"user_id": userID})
 	if opt.IsCompleted != nil {
 		if *opt.IsCompleted {
 			ds = ds.Where(goqu.C("completed_on").IsNotNull())
@@ -86,16 +85,16 @@ func (o *dbOperator) GetTasks(ctx context.Context, userID int, opt *tomeit.GetTa
 		return nil, fmt.Errorf("failed to create select sql. %w", err)
 	}
 
-	rows, err := o.db.QueryContext(ctx, q)
+	rows, err := m.db.QueryContext(ctx, q)
 	if err != nil {
 		return nil, fmt.Errorf("failed to exec select sql. %w", err)
 	}
 	defer rows.Close()
-	tomeit.LogInfo(q)
+	LogInfo(q)
 
-	tasks := make([]*tomeit.Task, 0, 30)
+	tasks := make([]*task, 0, 30)
 	for rows.Next() {
-		var t tomeit.Task
+		var t task
 		if err := rows.Scan(&t.CompletedOn, &t.CreatedAt, &t.DueOn, &t.EstimatedPomoNum, &t.ID, &t.Title, &t.UpdatedAt, &t.UserID); err != nil {
 			return nil, fmt.Errorf("failed to scan row. %w", err)
 		}
@@ -105,30 +104,30 @@ func (o *dbOperator) GetTasks(ctx context.Context, userID int, opt *tomeit.GetTa
 	return tasks, nil
 }
 
-// UpdateTask はMySQLのtomeit.Taskを更新する。
-func (o *dbOperator) UpdateTask(ctx context.Context, task *tomeit.Task) error {
-	q, _, err := o.dialect.Update("tasks").Set(task).Where(goqu.Ex{"id": task.ID}).ToSQL()
+// UpdateTask はDBのタスクを更新する。
+func (m *mysql) UpdateTask(ctx context.Context, task *task) error {
+	q, _, err := m.dialect.Update("tasks").Set(task).Where(goqu.Ex{"id": task.ID}).ToSQL()
 	if err != nil {
 		return fmt.Errorf("failed to create update sql. %w", err)
 	}
 
-	if _, err := o.db.ExecContext(ctx, q); err != nil {
+	if _, err := m.db.ExecContext(ctx, q); err != nil {
 		return fmt.Errorf("failed to exec update sql. %w", err)
 	}
-	tomeit.LogInfo(q)
+	LogInfo(q)
 	return nil
 }
 
-// DeleteTask はMySQLのtomeit.Taskを削除する。
-func (o *dbOperator) DeleteTask(ctx context.Context, id int) error {
-	q, _, err := o.dialect.Delete("tasks").Where(goqu.Ex{"id": id}).ToSQL()
+// DeleteTask はDBのタスクを削除する。
+func (m *mysql) DeleteTask(ctx context.Context, id int) error {
+	q, _, err := m.dialect.Delete("tasks").Where(goqu.Ex{"id": id}).ToSQL()
 	if err != nil {
 		return fmt.Errorf("failed to create delete sql. %w", err)
 	}
 
-	if _, err := o.db.ExecContext(ctx, q); err != nil {
+	if _, err := m.db.ExecContext(ctx, q); err != nil {
 		return fmt.Errorf("failed to exec delete sql. %w", err)
 	}
-	tomeit.LogInfo(q)
+	LogInfo(q)
 	return nil
 }

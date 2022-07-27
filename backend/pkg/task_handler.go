@@ -42,7 +42,7 @@ func PostTasks(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
-	user := ctx.Value(userKey{}).(*User)
+	user := ctx.Value(userKey{}).(*user)
 
 	task, err := dbOperator.CreateTask(ctx, user.ID, req.Title, req.EstimatedPomoNum, dueOn)
 	if err != nil {
@@ -64,7 +64,7 @@ func PostTasks(w http.ResponseWriter, r *http.Request) {
 
 // GetTasks は'GET /tasks'エンドポイントに対応するハンドラ
 func GetTasks(w http.ResponseWriter, r *http.Request) {
-	var req GetTasksRequest
+	var req getTasksRequest
 	for k, v := range r.URL.Query() {
 		switch k {
 		case "isCompleted":
@@ -87,7 +87,7 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
-	user := ctx.Value(userKey{}).(*User)
+	user := ctx.Value(userKey{}).(*user)
 
 	tasks, err := dbOperator.GetTasks(ctx, user.ID, &req)
 	if err != nil {
@@ -119,7 +119,7 @@ func PatchTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
-	user := ctx.Value(userKey{}).(*User)
+	user := ctx.Value(userKey{}).(*user)
 
 	task, err := dbOperator.GetTask(ctx, req.TaskID)
 	switch {
@@ -187,7 +187,7 @@ func DeleteTask(w http.ResponseWriter, r *http.Request) {
 	req.TaskID = taskID
 
 	ctx := r.Context()
-	user := ctx.Value(userKey{}).(*User)
+	user := ctx.Value(userKey{}).(*user)
 
 	task, err := dbOperator.GetTask(ctx, req.TaskID)
 	switch {
