@@ -276,3 +276,45 @@ func TestPatchTask(t *testing.T) {
 		}
 	}
 }
+
+func TestDeleteTask(t *testing.T) {
+	SetDBOperator(&dbOperatorMock{})
+
+	type want struct {
+		statusCode int
+	}
+	testcases := []struct {
+		name string
+		want want
+	}{
+		{
+			name: "タスクを削除する",
+			want: want{statusCode: 204},
+		},
+	}
+
+	for i, tc := range testcases {
+		w := httptest.NewRecorder()
+		r := httptest.NewRequest("DELETE", "/tasks/1", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey,
+			&chi.Context{URLParams: chi.RouteParams{
+				Keys:   []string{"taskID"},
+				Values: []string{"1"},
+			}}))
+		r = r.WithContext(context.WithValue(r.Context(), userKey{},
+			&user{
+				ID:        1,
+				DigestUID: "a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a",
+				RestCount: 0,
+				CreatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+				UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+			}))
+
+		DeleteTask(w, r)
+
+		resp := w.Result()
+		if resp.StatusCode != tc.want.statusCode {
+			t.Errorf("#%d: Response status code should be %d, but %d", i+1, tc.want.statusCode, resp.StatusCode)
+		}
+	}
+}
