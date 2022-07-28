@@ -50,9 +50,3 @@ func (a firebaseAuth) VerifyIDToken(ctx context.Context, idToken string) (uid st
 
 	return token.UID, nil
 }
-
-//type authenticatorMock struct{}
-//
-//func (a *authenticatorMock) VerifyIDToken(_ context.Context, _ string) (uid string, err error) {
-//	return "someUID", nil
-//}
