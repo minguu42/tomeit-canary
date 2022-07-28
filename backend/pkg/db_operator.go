@@ -86,12 +86,12 @@ func (o *dbOperatorMock) CreateTask(_ context.Context, _ int, _ string, _ int, _
 	return &task{
 		ID:               1,
 		UserID:           1,
-		Title:            "タスク1",
+		Title:            "数学の課題を終わらせる",
 		EstimatedPomoNum: 4,
 		DueOn:            &dueOn,
 		CompletedOn:      nil,
-		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
-		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+		CreatedAt:        time.Date(2021, 7, 9, 16, 30, 9, 0, time.UTC),
+		UpdatedAt:        time.Date(2021, 7, 9, 16, 30, 9, 0, time.UTC),
 	}, nil
 }
 
@@ -100,12 +100,12 @@ func (o *dbOperatorMock) GetTask(_ context.Context, _ int) (*task, error) {
 	return &task{
 		ID:               1,
 		UserID:           1,
-		Title:            "タスク1",
+		Title:            "数学の課題を終わらせる",
 		EstimatedPomoNum: 4,
 		DueOn:            &dueOn,
 		CompletedOn:      nil,
-		CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
-		UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+		CreatedAt:        time.Date(2021, 7, 9, 16, 30, 9, 0, time.UTC),
+		UpdatedAt:        time.Date(2021, 7, 9, 16, 30, 9, 0, time.UTC),
 	}, nil
 }
 
@@ -115,22 +115,22 @@ func (o *dbOperatorMock) GetTasks(_ context.Context, _ int, _ *getTasksRequest) 
 		{
 			ID:               1,
 			UserID:           1,
-			Title:            "タスク1",
+			Title:            "数学の課題を終わらせる",
 			EstimatedPomoNum: 4,
 			DueOn:            &dueOn,
 			CompletedOn:      nil,
-			CreatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
-			UpdatedAt:        time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+			CreatedAt:        time.Date(2021, 7, 9, 16, 30, 9, 0, time.UTC),
+			UpdatedAt:        time.Date(2021, 7, 9, 16, 30, 9, 0, time.UTC),
 		},
 		{
 			ID:               2,
 			UserID:           1,
-			Title:            "タスク2",
+			Title:            "録画しておいた映画を観る",
 			EstimatedPomoNum: 0,
 			DueOn:            nil,
 			CompletedOn:      nil,
-			CreatedAt:        time.Date(2021, 7, 10, 0, 0, 0, 0, time.UTC),
-			UpdatedAt:        time.Date(2021, 7, 10, 0, 0, 0, 0, time.UTC),
+			CreatedAt:        time.Date(2021, 7, 10, 21, 0, 49, 0, time.UTC),
+			UpdatedAt:        time.Date(2021, 7, 10, 21, 0, 49, 0, time.UTC),
 		},
 	}, nil
 }
