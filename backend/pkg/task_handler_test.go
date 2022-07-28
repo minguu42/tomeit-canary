@@ -8,6 +8,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/go-chi/chi/v5"
+
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -201,6 +203,76 @@ func TestGetTasks(t *testing.T) {
 			if diff := cmp.Diff(tc.want.response, got); diff != "" {
 				t.Errorf("#%d: Response body is mismatch (-want +got):\n%s", i+1, diff)
 			}
+		}
+	}
+}
+
+func TestPatchTask(t *testing.T) {
+	SetDBOperator(&dbOperatorMock{})
+
+	type want struct {
+		statusCode int
+	}
+	var (
+		estimatedPomoNum = 2
+		dueOn            = "2021-07-11T00:00:00Z"
+		badDueOn         = "2021-07-11"
+		completedOn      = "2021-07-12T00:00:00Z"
+		badCompletedOn   = "2021-07-12"
+	)
+	testcases := []struct {
+		name    string
+		request patchTaskRequest
+		want    want
+	}{
+		{
+			name: "タスクを更新する",
+			request: patchTaskRequest{
+				Title:            "",
+				EstimatedPomoNum: &estimatedPomoNum,
+				DueOn:            &dueOn,
+				CompletedOn:      &completedOn,
+			},
+			want: want{statusCode: 200},
+		},
+		{
+			name:    "DueOnフィールドはRFC 3339 date-time形式である",
+			request: patchTaskRequest{DueOn: &badDueOn},
+			want:    want{statusCode: 400},
+		},
+		{
+			name:    "CompletedOnフィールドはRFC 3339 date-time形式である",
+			request: patchTaskRequest{CompletedOn: &badCompletedOn},
+			want:    want{statusCode: 400},
+		},
+	}
+
+	for i, tc := range testcases {
+		data, err := json.Marshal(tc.request)
+		if err != nil {
+			t.Fatalf("#%d: failed to encode request. %v", i+1, err)
+		}
+		w := httptest.NewRecorder()
+		r := httptest.NewRequest("PATCH", "/tasks/1", bytes.NewReader(data))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey,
+			&chi.Context{URLParams: chi.RouteParams{
+				Keys:   []string{"taskID"},
+				Values: []string{"1"},
+			}}))
+		r = r.WithContext(context.WithValue(r.Context(), userKey{},
+			&user{
+				ID:        1,
+				DigestUID: "a2c4ba85c41f186283948b1a54efacea04cb2d3f54a88d5826a7e6a917b28c5a",
+				RestCount: 0,
+				CreatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+				UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
+			}))
+
+		PatchTask(w, r)
+
+		resp := w.Result()
+		if resp.StatusCode != tc.want.statusCode {
+			t.Errorf("#%d: Response status code should be %d, but %d", i+1, tc.want.statusCode, resp.StatusCode)
 		}
 	}
 }
