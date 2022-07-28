@@ -74,7 +74,7 @@ func TestPostTasks(t *testing.T) {
 			want: want{statusCode: 400},
 		},
 		{
-			name: "DueOnフィールドの形式はRFC 3339のDate-Timesである",
+			name: "DueOnフィールドはRFC 3339 date-time形式である",
 			request: postTaskRequest{
 				Title:            "数学の課題を終わらせる",
 				EstimatedPomoNum: 4,
