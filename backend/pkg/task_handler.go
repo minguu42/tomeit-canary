@@ -132,7 +132,7 @@ func PatchTask(w http.ResponseWriter, r *http.Request) {
 		LogError("failed to get task.", err)
 		return
 	}
-	if user.HasTask(task) {
+	if !user.HasTask(task) {
 		writeErrorResponse(w, newErrNotFound(errors.New("task is not found")))
 		LogInfo("user does not have access to the task")
 		return
@@ -200,7 +200,7 @@ func DeleteTask(w http.ResponseWriter, r *http.Request) {
 		LogError("failed to get task.", err)
 		return
 	}
-	if user.HasTask(task) {
+	if !user.HasTask(task) {
 		writeErrorResponse(w, newErrNotFound(errors.New("task is not found")))
 		LogInfo("user does not have access to the task")
 		return
