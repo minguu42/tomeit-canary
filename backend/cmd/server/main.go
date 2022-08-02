@@ -78,12 +78,12 @@ func _main() error {
 	r.Use(middleware.Recoverer)
 
 	r.Route("/tasks", func(r chi.Router) {
-		r.Post("/", tomeit.PostTasks)
+		r.Post("/", tomeit.CreateTask)
 		r.Get("/", tomeit.GetTasks)
-		r.Patch("/{taskID}", tomeit.PatchTask)
+		r.Patch("/{taskID}", tomeit.UpdateTask)
 		r.Delete("/{taskID}", tomeit.DeleteTask)
 	})
-	r.Get("/healthz", tomeit.GetHealthz)
+	r.Get("/healthz", tomeit.HealthCheck)
 
 	if err := http.ListenAndServe(":8080", r); err != nil {
 		return fmt.Errorf("failed to run server: %w", err)

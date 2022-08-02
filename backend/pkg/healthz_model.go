@@ -1,5 +1,5 @@
 package tomeit
 
-type healthzResponse struct {
+type healthCheckResponse struct {
 	Status string `json:"status"`
 }
