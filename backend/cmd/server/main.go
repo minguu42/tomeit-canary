@@ -83,7 +83,7 @@ func _main() error {
 		r.Patch("/{taskID}", tomeit.UpdateTask)
 		r.Delete("/{taskID}", tomeit.DeleteTask)
 	})
-	r.Get("/healthz", tomeit.GetHealthz)
+	r.Get("/healthz", tomeit.HealthCheck)
 
 	if err := http.ListenAndServe(":8080", r); err != nil {
 		return fmt.Errorf("failed to run server: %w", err)
