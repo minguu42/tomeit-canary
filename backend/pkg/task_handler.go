@@ -11,9 +11,9 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-// PostTasks は'POST /tasks'エンドポイントに対応するハンドラ
-func PostTasks(w http.ResponseWriter, r *http.Request) {
-	var req postTaskRequest
+// CreateTask は'POST /tasks'エンドポイントに対応するハンドラ
+func CreateTask(w http.ResponseWriter, r *http.Request) {
+	var req createTaskRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		writeErrorResponse(w, newErrBadRequest(err))
 		LogInfo("failed to decode request.", err)

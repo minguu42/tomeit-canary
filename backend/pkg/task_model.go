@@ -14,7 +14,7 @@ type (
 		UpdatedAt        time.Time  `db:"updated_at"   goqu:"skipupdate"`
 	}
 
-	postTaskRequest struct {
+	createTaskRequest struct {
 		Title            string `json:"title"`
 		EstimatedPomoNum int    `json:"estimatedPomoNum"`
 		DueOn            string `json:"dueOn"`

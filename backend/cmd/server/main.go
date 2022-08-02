@@ -78,7 +78,7 @@ func _main() error {
 	r.Use(middleware.Recoverer)
 
 	r.Route("/tasks", func(r chi.Router) {
-		r.Post("/", tomeit.PostTasks)
+		r.Post("/", tomeit.CreateTask)
 		r.Get("/", tomeit.GetTasks)
 		r.Patch("/{taskID}", tomeit.PatchTask)
 		r.Delete("/{taskID}", tomeit.DeleteTask)

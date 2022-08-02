@@ -23,12 +23,12 @@ func TestPostTasks(t *testing.T) {
 	}
 	testcases := []struct {
 		name    string
-		request postTaskRequest
+		request createTaskRequest
 		want    want
 	}{
 		{
 			name: "新しいタスクを作成する",
-			request: postTaskRequest{
+			request: createTaskRequest{
 				Title:            "数学の課題を終わらせる",
 				EstimatedPomoNum: 4,
 				DueOn:            "2021-07-10T00:00:00Z",
@@ -50,7 +50,7 @@ func TestPostTasks(t *testing.T) {
 		},
 		{
 			name: "Titleフィールドは必須である",
-			request: postTaskRequest{
+			request: createTaskRequest{
 				Title:            "",
 				EstimatedPomoNum: 4,
 				DueOn:            "2021-07-10T00:00:00Z",
@@ -59,7 +59,7 @@ func TestPostTasks(t *testing.T) {
 		},
 		{
 			name: "EstimatedPomoNumフィールドは0以上4以下の数値である",
-			request: postTaskRequest{
+			request: createTaskRequest{
 				Title:            "数学の課題を終わらせる",
 				EstimatedPomoNum: -1,
 				DueOn:            "2021-07-10T00:00:00Z",
@@ -68,7 +68,7 @@ func TestPostTasks(t *testing.T) {
 		},
 		{
 			name: "EstimatedPomoNumフィールドは0以上4以下の数値である",
-			request: postTaskRequest{
+			request: createTaskRequest{
 				Title:            "数学の課題を終わらせる",
 				EstimatedPomoNum: 5,
 				DueOn:            "2021-07-10T00:00:00Z",
@@ -77,7 +77,7 @@ func TestPostTasks(t *testing.T) {
 		},
 		{
 			name: "DueOnフィールドはRFC 3339 date-time形式である",
-			request: postTaskRequest{
+			request: createTaskRequest{
 				Title:            "数学の課題を終わらせる",
 				EstimatedPomoNum: 4,
 				DueOn:            "2021-07-10",
@@ -102,7 +102,7 @@ func TestPostTasks(t *testing.T) {
 				UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 			}))
 
-		PostTasks(w, r)
+		CreateTask(w, r)
 
 		resp := w.Result()
 		if resp.StatusCode != tc.want.statusCode {
