@@ -23,7 +23,7 @@ type (
 		IsCompleted *bool      `json:"-"`
 		CompletedOn *time.Time `json:"-"`
 	}
-	patchTaskRequest struct {
+	updateTaskRequest struct {
 		TaskID           int     `json:"-"`
 		Title            string  `json:"title"`
 		EstimatedPomoNum *int    `json:"estimatedPomoNum"`

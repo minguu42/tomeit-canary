@@ -80,7 +80,7 @@ func _main() error {
 	r.Route("/tasks", func(r chi.Router) {
 		r.Post("/", tomeit.CreateTask)
 		r.Get("/", tomeit.GetTasks)
-		r.Patch("/{taskID}", tomeit.PatchTask)
+		r.Patch("/{taskID}", tomeit.UpdateTask)
 		r.Delete("/{taskID}", tomeit.DeleteTask)
 	})
 	r.Get("/healthz", tomeit.GetHealthz)

@@ -102,9 +102,9 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// PatchTask は'PATCH /tasks/{taskID}'エンドポイントに対応するハンドラ
-func PatchTask(w http.ResponseWriter, r *http.Request) {
-	var req patchTaskRequest
+// UpdateTask は'PATCH /tasks/{taskID}'エンドポイントに対応するハンドラ
+func UpdateTask(w http.ResponseWriter, r *http.Request) {
+	var req updateTaskRequest
 	taskID, err := strconv.Atoi(chi.URLParam(r, "taskID"))
 	if err != nil {
 		writeErrorResponse(w, newErrBadRequest(err))

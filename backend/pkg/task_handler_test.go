@@ -222,12 +222,12 @@ func TestPatchTask(t *testing.T) {
 	)
 	testcases := []struct {
 		name    string
-		request patchTaskRequest
+		request updateTaskRequest
 		want    want
 	}{
 		{
 			name: "タスクを更新する",
-			request: patchTaskRequest{
+			request: updateTaskRequest{
 				Title:            "",
 				EstimatedPomoNum: &estimatedPomoNum,
 				DueOn:            &dueOn,
@@ -237,12 +237,12 @@ func TestPatchTask(t *testing.T) {
 		},
 		{
 			name:    "DueOnフィールドはRFC 3339 date-time形式である",
-			request: patchTaskRequest{DueOn: &badDueOn},
+			request: updateTaskRequest{DueOn: &badDueOn},
 			want:    want{statusCode: 400},
 		},
 		{
 			name:    "CompletedOnフィールドはRFC 3339 date-time形式である",
-			request: patchTaskRequest{CompletedOn: &badCompletedOn},
+			request: updateTaskRequest{CompletedOn: &badCompletedOn},
 			want:    want{statusCode: 400},
 		},
 	}
@@ -268,7 +268,7 @@ func TestPatchTask(t *testing.T) {
 				UpdatedAt: time.Date(2021, 7, 9, 0, 0, 0, 0, time.UTC),
 			}))
 
-		PatchTask(w, r)
+		UpdateTask(w, r)
 
 		resp := w.Result()
 		if resp.StatusCode != tc.want.statusCode {
