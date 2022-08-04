@@ -6,7 +6,6 @@ import TaskAddForm from "@/components/models/task/TaskAddForm";
 import TaskList from "@/components/models/task/TaskList";
 import TaskSideSheet from "@/components/models/task/TaskSideSheet";
 import s from "./TaskPage.module.css";
-import { useRequiredLogin } from "@/components/functional/Auth";
 
 type Props = {
   title: string;
@@ -14,8 +13,6 @@ type Props = {
 };
 
 const TaskPage: FC<Props> = ({ title, filter }) => {
-  useRequiredLogin();
-
   return (
     <>
       <Head>

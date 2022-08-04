@@ -3,13 +3,10 @@ import Head from "next/head";
 import Image from "next/image";
 
 import GoogleLoginButton from "@/components/common/GoogleLoginButton/GoogleLoginButton";
-import { useLoggedInAlready } from "@/components/functional/Auth";
 import s from "./Landing.module.css";
 import { imageLoader } from "@/lib/loader";
 
 export const Landing: NextPage = () => {
-  useLoggedInAlready();
-
   return (
     <>
       <Head>
