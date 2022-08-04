@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { useTheme } from "@/components/functional/Theme";
+import { useTheme } from "@/components/features/Theme";
 
 type Props = {
   children: JSX.Element;
