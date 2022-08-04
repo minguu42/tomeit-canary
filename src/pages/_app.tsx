@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 
 import Theme from "@/components/functional/Theme";
-import Auth from "@/components/functional/Auth";
+import Auth from "@/components/features/Auth";
 import Layout from "@/components/common/Layout";
 import "@/styles/globals.css";
 
