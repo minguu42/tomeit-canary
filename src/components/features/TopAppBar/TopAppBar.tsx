@@ -1,7 +1,6 @@
 import { FC } from "react";
 import Image from "next/image";
 
-
 import {
   DarkModeIcon,
   LightModeIcon,
