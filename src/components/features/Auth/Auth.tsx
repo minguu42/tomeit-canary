@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import Loading from "@/components/common/Loading";
-import {useAccessControl, useAuth} from "@/components/features/Auth";
+import { useAccessControl, useAuth } from "@/components/features/Auth";
 
 type Props = {
   children: JSX.Element;
@@ -9,7 +9,7 @@ type Props = {
 
 const Auth: FC<Props> = ({ children }) => {
   const isLoading = useAuth();
-  useAccessControl()
+  useAccessControl();
 
   return isLoading ? <Loading /> : children;
 };
