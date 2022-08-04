@@ -3,7 +3,6 @@ import { RecoilRoot } from "recoil";
 
 import Theme from "@/components/features/Theme";
 import Auth from "@/components/features/Auth";
-import Layout from "@/components/common/Layout";
 import "@/styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
@@ -11,9 +10,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     <RecoilRoot>
       <Theme>
         <Auth>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <Component {...pageProps} />
         </Auth>
       </Theme>
     </RecoilRoot>
