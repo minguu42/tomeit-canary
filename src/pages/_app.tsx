@@ -3,7 +3,7 @@ import { RecoilRoot } from "recoil";
 
 import Theme from "@/components/features/Theme";
 import Auth from "@/components/features/Auth";
-import "@/styles/globals.css";
+import "@/pages/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
