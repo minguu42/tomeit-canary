@@ -1,4 +1,4 @@
-import { isTaskResponse, TaskResponse } from "@/types/task";
+import { isTaskResponse, TaskResponse } from "./task";
 
 export type PomodoroResponse = {
   id: number;
@@ -53,3 +53,9 @@ export const isRestCountResponse = (arg: unknown): arg is restCountResponse => {
   const n = arg as restCountResponse;
   return typeof n?.restCount === "number";
 };
+
+// 定数定義
+export const POMODORO_TIME = 1500;
+export const SHORT_REST_TIME = 300;
+export const LONG_REST_TIME = 900;
+export const INIT_REST_COUNT = 4;
