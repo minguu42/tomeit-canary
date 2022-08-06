@@ -1,7 +1,12 @@
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Task } from "@/models/task";
-import {POMODORO_TIME, SHORT_REST_TIME, LONG_REST_TIME, INIT_REST_COUNT} from "@/models/pomodoro";
+import {
+  POMODORO_TIME,
+  SHORT_REST_TIME,
+  LONG_REST_TIME,
+  INIT_REST_COUNT,
+} from "@/models/pomodoro";
 
 type PomodoroTimerAtom = {
   time: number;
