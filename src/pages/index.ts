@@ -1,3 +1,3 @@
-import Landing from "@/components/pages/Landing";
+import TasksPage from "@/components/pages/TasksPage";
 
-export default Landing;
+export default TasksPage;

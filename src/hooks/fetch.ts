@@ -2,7 +2,7 @@ import useSWR, { useSWRConfig } from "swr";
 
 import { getIDToken } from "@/lib/auth";
 import { formatDateStringToRFC3339 } from "@/lib/formatDate";
-import { isTaskResponse, isTasksResponse, newTask, Task } from "@/types/task";
+import { isTaskResponse, isTasksResponse, newTask, Task } from "../models/task";
 
 const TOMEIT_API_URL =
   process.env.NEXT_PUBLIC_TOMEIT_API_URL ?? "http://localhost:8080/v0";
