@@ -1,9 +1,10 @@
 import { NextPage } from "next";
 
 import TopAppBar from "@/components/features/TopAppBar";
-import s from "./TasksPage.module.css";
+import s from "./Tasks.module.css";
 
-const TasksPage: NextPage = () => {
+// Tasksはタスク管理ページに対応するページコンポーネント
+const Tasks: NextPage = () => {
   return (
     <div className={s.background}>
       <TopAppBar />
@@ -11,4 +12,4 @@ const TasksPage: NextPage = () => {
   );
 };
 
-export default TasksPage;
+export default Tasks;
