@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build && next export",
     "start": "next start",
-    "check-style": "prettier --check --ignore-path .gitignore '{**/*,*}.{js,ts,jsx,tsx,json,yml}'",
-    "fmt": "prettier --ignore-path .gitignore -l -w '{**/*,*}.{js,ts,jsx,tsx,json,yml}'",
+    "check-style": "prettier --check --ignore-path .gitignore '{**/*,*}.{js,ts,jsx,tsx,css,json,yml}'",
+    "fmt": "prettier --ignore-path .gitignore -l -w '{**/*,*}.{js,ts,jsx,tsx,css,json,yml}'",
     "lint": "next lint"
   },
   "dependencies": {
