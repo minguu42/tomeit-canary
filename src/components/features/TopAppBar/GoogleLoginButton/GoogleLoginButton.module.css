@@ -31,19 +31,19 @@
 
 .container:hover > .layer {
   background-color: rgb(
-    var(--c-on-surface-rgb) / var(--s-hover-state-layer-opacity)
+    var(--c-on-surface) / var(--s-hover-state-layer-opacity)
   );
 }
 
 .container:focus > .layer {
   background-color: rgb(
-    var(--c-on-surface-rgb) / var(--s-focus-state-layer-opacity)
+    var(--c-on-surface) / var(--s-focus-state-layer-opacity)
   );
 }
 
 .container:active > .layer {
   background-color: rgb(
-    var(--c-on-surface-rgb) / var(--s-pressed-state-layer-opacity)
+    var(--c-on-surface) / var(--s-pressed-state-layer-opacity)
   );
 }
 

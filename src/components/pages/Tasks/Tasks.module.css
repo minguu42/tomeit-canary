@@ -1,4 +1,4 @@
 .background {
   min-height: 100vh;
-  background-color: var(--c-background);
+  background-color: rgb(var(--c-background));
 }

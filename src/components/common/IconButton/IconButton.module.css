@@ -6,13 +6,13 @@
   justify-content: center;
   width: 48px;
   height: 48px;
-  color: rgb(var(--c-on-surface-rgb));
+  color: rgb(var(--c-on-surface));
   background-color: transparent;
   border-radius: 14px;
 }
 
 .containerVariant {
-  color: rgb(var(--c-on-surface-variant-rgb));
+  color: rgb(var(--c-on-surface-variant));
 }
 
 .layer {
@@ -26,36 +26,36 @@
 
 .container:hover > .layer {
   background-color: rgb(
-    var(--c-on-surface-rgb) / var(--s-hover-state-layer-opacity)
+    var(--c-on-surface) / var(--s-hover-state-layer-opacity)
   );
 }
 
 .container:focus > .layer {
   background-color: rgb(
-    var(--c-on-surface-rgb) / var(--s-focus-state-layer-opacity)
+    var(--c-on-surface) / var(--s-focus-state-layer-opacity)
   );
 }
 
 .container:active > .layer {
   background-color: rgb(
-    var(--c-on-surface-rgb) / var(--s-pressed-state-layer-opacity)
+    var(--c-on-surface) / var(--s-pressed-state-layer-opacity)
   );
 }
 
 .container:hover > .layerVariant {
   background-color: rgb(
-    var(--c-on-surface-variant-rgb) / var(--s-hover-state-layer-opacity)
+    var(--c-on-surface-variant) / var(--s-hover-state-layer-opacity)
   );
 }
 
 .container:focus > .layerVariant {
   background-color: rgb(
-    var(--c-on-surface-variant-rgb) / var(--s-focus-state-layer-opacity)
+    var(--c-on-surface-variant) / var(--s-focus-state-layer-opacity)
   );
 }
 
 .container:active > .layerVariant {
   background-color: rgb(
-    var(--c-on-surface-variant-rgb) / var(--s-pressed-state-layer-opacity)
+    var(--c-on-surface-variant) / var(--s-pressed-state-layer-opacity)
   );
 }
