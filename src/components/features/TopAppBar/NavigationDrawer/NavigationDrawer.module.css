@@ -1,0 +1,109 @@
+.scrim {
+  z-index: 1;
+}
+
+.container {
+  background-color: rgb(var(--c-surface));
+  z-index: 2;
+  width: 360px;
+  min-height: 100vh;
+  border-radius: 0 16px 16px 0;
+}
+
+.indicator {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 0 12px;
+  padding: 0 24px 0 16px;
+  height: 56px;
+  width: 336px;
+  border-radius: 28px;
+}
+
+.stateLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  left: 0;
+  letter-spacing: 0;
+  height: 56px;
+  width: 336px;
+  border-radius: 28px;
+}
+
+.icon {
+  color: var(--c-on-surface-variant);
+}
+
+.labelText {
+  flex: 1 1 0;
+  font-size: var(--t-label-large-size);
+  font-weight: var(--t-label-large-weight);
+  line-height: var(--t-label-large-line-height);
+  color: rgb(var(--c-on-surface-variant));
+  letter-spacing: var(--t-label-large-letter-spacing);
+}
+
+.badgeLabelText {
+  font-size: var(--t-label-large-size);
+  font-weight: var(--t-label-large-weight);
+  line-height: var(--t-label-large-line-height);
+  color: rgb(var(--c-on-surface-variant));
+  letter-spacing: var(--t-label-large-letter-spacing);
+}
+
+.indicator:hover > .stateLayer {
+  background-color: rgb(
+    var(--c-on-surface) / var(--s-hover-state-layer-opacity)
+  );
+}
+
+.indicator:focus > .stateLayer {
+  background-color: rgb(
+    var(--c-on-surface) / var(--s-focus-state-layer-opacity)
+  );
+}
+
+.indicator:active > .stateLayer {
+  background-color: rgb(
+    var(--c-on-surface) / var(--s-pressed-state-layer-opacity)
+  );
+}
+
+.activeIndicator {
+  background-color: rgb(var(--c-secondary-container));
+}
+
+.activeIndicator:hover > .stateLayer {
+  background-color: rgb(
+    var(--c-on-secondary-container) / var(--s-hover-state-layer-opacity)
+  );
+}
+
+.activeIndicator:focus > .stateLayer {
+  background-color: rgb(
+    var(--c-on-secondary-container) / var(--s-focus-state-layer-opacity)
+  );
+}
+
+.activeIndicator:active > .stateLayer {
+  background-color: rgb(
+    var(--c-on-secondary-container) / var(--s-pressed-state-layer-opacity)
+  );
+}
+
+.activeIndicator > .icon {
+  color: var(--c-on-secondary-container);
+}
+
+.activeIndicator > .labelText {
+  color: rgb(var(--c-on-secondary-container));
+}
+
+.divider {
+  margin: 0 28px;
+  border: 1px solid rgb(var(--c-outline));
+}
