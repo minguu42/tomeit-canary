@@ -13,8 +13,9 @@ const nextConfig = {
       "src/globalStates",
       "src/hooks",
       "src/lib",
+      "src/models",
       "src/pages",
-      "src/types",
+      "src/styles",
     ],
   },
 };
