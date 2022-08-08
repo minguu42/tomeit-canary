@@ -11,6 +11,8 @@ type Props = {
   onThemeIconClick: () => void;
 };
 
+// TopAppBarの仕様はM3のSmall top app barに従う
+// https://m3.material.io/components/top-app-bar/specs
 const TopAppBar: FC<Props> = ({
   headline,
   isDarkTheme,
