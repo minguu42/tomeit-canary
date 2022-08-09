@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import s from "./IconButton.module.css";
+import * as s from "./IconButton.css";
 
 type Props = {
   icon: JSX.Element;

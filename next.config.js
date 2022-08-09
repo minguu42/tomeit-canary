@@ -1,4 +1,8 @@
-module.exports = {
+const { createVanillaExtractPlugin } = require("@vanilla-extract/next-plugin");
+const withVanillaExtract = createVanillaExtractPlugin();
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
   images: {
     loader: "custom",
@@ -9,8 +13,11 @@ module.exports = {
       "src/globalStates",
       "src/hooks",
       "src/lib",
+      "src/models",
       "src/pages",
-      "src/types",
+      "src/styles",
     ],
   },
 };
+
+module.exports = withVanillaExtract(nextConfig);

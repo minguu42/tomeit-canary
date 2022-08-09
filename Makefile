@@ -1,14 +1,12 @@
 .DEFAULT_GOAL := help
 
 dev:  ## http://localhost:3000で開発用Webサーバを起動する
-	@open http://localhost:3000/
 	@npm run dev
 
 dev-backend:  ## http://localhost:8080で開発用APIサーバを起動する
 	@docker compose --env-file .env.development up api
 
 docs: ## http://localhost:8000でドキュメント用サーバを起動する
-	@open http://localhost:8000/
 	@docker compose --env-file .env.development up -d docs
 
 build:  ## Next.js アプリをビルドする
