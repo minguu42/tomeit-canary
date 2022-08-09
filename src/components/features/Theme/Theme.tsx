@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 
-import { darkTheme, lightTheme } from "@/styles/theme.css";
+import { darkTheme, lightTheme } from "@/styles/tokens/theme.css";
 
 type Props = {
   children: JSX.Element;

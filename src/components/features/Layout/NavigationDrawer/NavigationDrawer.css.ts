@@ -1,10 +1,10 @@
 import { style, styleVariants } from "@vanilla-extract/css";
 
-import tokens from "@/styles/tokens.css";
+import { stateLayerOpacity, color, typography } from "@/styles/tokens";
 
 export const container = style({
   width: "360px",
-  backgroundColor: `rgb(${tokens.color.surface._})`,
+  backgroundColor: `rgb(${color.surface._})`,
   borderRadius: "0 16px 16px 0",
   "@media": {
     "screen and (min-width: 0) and (max-width: 839px)": {
@@ -36,7 +36,7 @@ export const indicator = styleVariants({
   _: [indicatorBase],
   active: [
     indicatorBase,
-    { backgroundColor: `rgb(${tokens.color.secondary.container})` },
+    { backgroundColor: `rgb(${color.secondary.container})` },
   ],
 });
 
@@ -51,58 +51,58 @@ export const stateLayer = style({
   borderRadius: "28px",
   selectors: {
     [`${indicator._}:hover > &`]: {
-      backgroundColor: `rgb(${tokens.color.on.surface._} / ${tokens.stateLayerOpacity.hover})`,
+      backgroundColor: `rgb(${color.on.surface._} / ${stateLayerOpacity.hover})`,
     },
     [`${indicator._}:focus > &`]: {
-      backgroundColor: `rgb(${tokens.color.on.surface._} / ${tokens.stateLayerOpacity.focus})`,
+      backgroundColor: `rgb(${color.on.surface._} / ${stateLayerOpacity.focus})`,
     },
     [`${indicator._}:active > &`]: {
-      backgroundColor: `rgb(${tokens.color.on.surface._} / ${tokens.stateLayerOpacity.pressed})`,
+      backgroundColor: `rgb(${color.on.surface._} / ${stateLayerOpacity.pressed})`,
     },
     [`${indicator.active}:hover > &`]: {
-      backgroundColor: `rgb(${tokens.color.on.secondary.container} / ${tokens.stateLayerOpacity.hover})`,
+      backgroundColor: `rgb(${color.on.secondary.container} / ${stateLayerOpacity.hover})`,
     },
     [`${indicator.active}:focus > &`]: {
-      backgroundColor: `rgb(${tokens.color.on.secondary.container} / ${tokens.stateLayerOpacity.focus})`,
+      backgroundColor: `rgb(${color.on.secondary.container} / ${stateLayerOpacity.focus})`,
     },
     [`${indicator.active}:active > &`]: {
-      backgroundColor: `rgb(${tokens.color.on.secondary.container} / ${tokens.stateLayerOpacity.pressed})`,
+      backgroundColor: `rgb(${color.on.secondary.container} / ${stateLayerOpacity.pressed})`,
     },
   },
 });
 
 export const icon = style({
-  color: `rgb(${tokens.color.on.surface.variant})`,
+  color: `rgb(${color.on.surface.variant})`,
   selectors: {
     [`${indicator.active} > &`]: {
-      color: `rgb(${tokens.color.on.secondary.container})`,
+      color: `rgb(${color.on.secondary.container})`,
     },
   },
 });
 
 export const labelText = style([
-  tokens.typography.label.large,
+  typography.label.large,
   {
     flex: "1 1 0",
-    color: `rgb(${tokens.color.on.surface.variant})`,
+    color: `rgb(${color.on.surface.variant})`,
     selectors: {
       [`${indicator.active} > &`]: {
-        color: `rgb(${tokens.color.on.secondary.container})`,
+        color: `rgb(${color.on.secondary.container})`,
       },
     },
   },
 ]);
 
 export const badgeLabelText = style([
-  tokens.typography.label.large,
+  typography.label.large,
   {
-    color: `rgb(${tokens.color.on.surface.variant})`,
+    color: `rgb(${color.on.surface.variant})`,
   },
 ]);
 
 export const divider = style({
   margin: "0 28px",
-  border: `1px solid rgb(${tokens.color.outline})`,
+  border: `1px solid rgb(${color.outline})`,
 });
 
 export const scrim = style({

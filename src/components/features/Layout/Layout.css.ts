@@ -1,10 +1,10 @@
 import { style } from "@vanilla-extract/css";
 
-import tokens from "@/styles/tokens.css";
+import { color } from "@/styles/tokens";
 
 export const background = style({
   minHeight: "100vh",
-  backgroundColor: `rgb(${tokens.color.background})`,
+  backgroundColor: `rgb(${color.background})`,
 });
 
 export const sideLayout = style({

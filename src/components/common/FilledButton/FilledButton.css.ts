@@ -1,6 +1,11 @@
 import { style } from "@vanilla-extract/css";
 
-import tokens from "@/styles/tokens.css";
+import {
+  stateLayerOpacity,
+  color,
+  elevation,
+  typography,
+} from "@/styles/tokens";
 
 export const container = style({
   position: "relative",
@@ -11,13 +16,13 @@ export const container = style({
   height: "40px",
   borderRadius: "20px",
   padding: "0 24px 0 16px",
-  backgroundColor: `rgb(${tokens.color.primary._})`,
+  backgroundColor: `rgb(${color.primary._})`,
   selectors: {
     "&:disabled": {
-      backgroundColor: `rgb(${tokens.color.on.surface._} / 0.12)`,
+      backgroundColor: `rgb(${color.on.surface._} / 0.12)`,
     },
     "&:hover": {
-      boxShadow: tokens.elevation.level1,
+      boxShadow: elevation.level1,
     },
   },
 });
@@ -31,33 +36,33 @@ export const stateLayer = style({
   borderRadius: "20px",
   selectors: {
     [`${container}:hover > &`]: {
-      backgroundColor: `rgb(${tokens.color.on.primary._} / ${tokens.stateLayerOpacity.hover})`,
+      backgroundColor: `rgb(${color.on.primary._} / ${stateLayerOpacity.hover})`,
     },
     [`${container}:focus > &`]: {
-      backgroundColor: `rgb(${tokens.color.on.primary._} / ${tokens.stateLayerOpacity.focus})`,
+      backgroundColor: `rgb(${color.on.primary._} / ${stateLayerOpacity.focus})`,
     },
     [`${container}:active > &`]: {
-      backgroundColor: `rgb(${tokens.color.on.primary._} / ${tokens.stateLayerOpacity.pressed})`,
+      backgroundColor: `rgb(${color.on.primary._} / ${stateLayerOpacity.pressed})`,
     },
   },
 });
 
 export const icon = style({
-  color: `rgb(${tokens.color.on.primary._})`,
+  color: `rgb(${color.on.primary._})`,
   selectors: {
     [`${container}:disabled > &`]: {
-      color: `rgb(${tokens.color.on.surface._} / 0.38)`,
+      color: `rgb(${color.on.surface._} / 0.38)`,
     },
   },
 });
 
 export const labelText = style([
-  tokens.typography.label.large,
+  typography.label.large,
   {
-    color: `rgb(${tokens.color.on.primary._})`,
+    color: `rgb(${color.on.primary._})`,
     selectors: {
       [`${container}:disabled > &`]: {
-        color: `rgb(${tokens.color.on.surface._} / 0.38)`,
+        color: `rgb(${color.on.surface._} / 0.38)`,
       },
     },
   },
