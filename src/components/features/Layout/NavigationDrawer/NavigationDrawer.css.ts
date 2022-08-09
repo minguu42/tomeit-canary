@@ -2,16 +2,22 @@ import { style, styleVariants } from "@vanilla-extract/css";
 
 import tokens from "@/styles/tokens.css";
 
-export const scrim = style({
-  zIndex: 1,
-});
-
 export const container = style({
-  backgroundColor: `rgb(${tokens.color.surface._})`,
-  zIndex: 2,
   width: "360px",
-  minHeight: "100vh",
+  backgroundColor: `rgb(${tokens.color.surface._})`,
   borderRadius: "0 16px 16px 0",
+  "@media": {
+    "screen and (min-width: 0) and (max-width: 839px)": {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      zIndex: 2,
+      minHeight: "100vh",
+    },
+    "screen and (min-width: 840px)": {
+      minHeight: "calc(100vh - 64px)",
+    },
+  },
 });
 
 export const indicatorBase = style({
@@ -97,4 +103,21 @@ export const badgeLabelText = style([
 export const divider = style({
   margin: "0 28px",
   border: `1px solid rgb(${tokens.color.outline})`,
+});
+
+export const scrim = style({
+  "@media": {
+    "screen and (min-width: 0) and (max-width: 839px)": {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      zIndex: 1,
+      width: "100%",
+      height: "100%",
+      backgroundColor: `rgb(50 47 55 / 0.4)`,
+    },
+    "screen and (min-width: 840px)": {
+      display: "none",
+    },
+  },
 });
