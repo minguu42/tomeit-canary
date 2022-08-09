@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 
 import { LightModeIcon } from "@/components/icons";
+import Indicator from "@/components/features/NavigationDrawer/Indicator";
 import * as s from "./NavigationDrawer.css";
 import {
   useIsNavigationDrawerOpenAtom,
@@ -20,30 +21,18 @@ export const NavigationDrawer: FC = () => {
   return (
     <>
       <div className={s.container}>
-        <div
-          className={
-            activeIndicator === "今日やること"
-              ? s.indicator.active
-              : s.indicator._
-          }
-        >
-          <div className={s.stateLayer} />
-          <LightModeIcon className={s.icon} />
-          <h3 className={s.labelText}>今日やること</h3>
-          <p className={s.badgeLabelText}>24</p>
-        </div>
-        <div
-          className={
-            activeIndicator === "タスク管理"
-              ? s.indicator.active
-              : s.indicator._
-          }
-        >
-          <div className={s.stateLayer} />
-          <LightModeIcon className={s.icon} />
-          <h3 className={s.labelText}>タスク管理</h3>
-          <p className={s.badgeLabelText}>100+</p>
-        </div>
+        <Indicator
+          isActive={activeIndicator === "今日やること"}
+          icon={<LightModeIcon />}
+          labelText="今日やること"
+          badgeLabelText="24"
+        />
+        <Indicator
+          isActive={activeIndicator === "タスク管理"}
+          icon={<LightModeIcon />}
+          labelText="タスク管理"
+          badgeLabelText="100+"
+        />
       </div>
       <button className={s.scrim} onClick={toggleNavigationDrawer} />
     </>
