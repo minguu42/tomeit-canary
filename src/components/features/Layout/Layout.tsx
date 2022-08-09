@@ -3,9 +3,11 @@ import { FC, useState } from "react";
 import TopAppBar from "@/components/features/Layout/TopAppBar";
 import NavigationDrawer from "@/components/features/Layout/NavigationDrawer";
 import * as s from "./Layout.css";
+import { useTheme } from "@/hooks/useTheme";
 
 const Layout: FC = () => {
   const [isNavigationDrawerOpen, setIsNavigationDrawerOpen] = useState(false);
+  const { toggleTheme } = useTheme();
 
   const toggleNavigationDrawer = () => {
     setIsNavigationDrawerOpen((prev) => !prev);
@@ -17,7 +19,7 @@ const Layout: FC = () => {
         headline="Tomeit"
         isDarkTheme={false}
         onMenuIconClick={toggleNavigationDrawer}
-        onThemeIconClick={() => window.alert("テーマの切り替え")}
+        onThemeIconClick={toggleTheme}
       />
       <div className={s.sideLayout}>
         <NavigationDrawer
