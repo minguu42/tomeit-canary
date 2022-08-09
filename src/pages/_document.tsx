@@ -16,10 +16,9 @@ class MyDocument extends Document {
       <Html lang="ja">
         <Head>
           <link
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Roboto:wght@400;500&display=swap"
             rel="stylesheet"
           />
-          <meta name="color-scheme" content="light dark" />
         </Head>
         <body>
           <Main />

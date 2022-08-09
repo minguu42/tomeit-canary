@@ -1,3 +1,3 @@
-import TasksPage from "@/components/pages/TasksPage";
+import Tasks from "@/components/pages/Tasks";
 
-export default TasksPage;
+export default Tasks;

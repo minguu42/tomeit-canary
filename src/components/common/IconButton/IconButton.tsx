@@ -1,26 +1,26 @@
 import { FC } from "react";
-import cn from "classnames";
 
-import s from "./IconButton.module.css";
+import * as s from "./IconButton.css";
 
 type Props = {
   icon: JSX.Element;
-  onClick: () => void;
   label: string;
-  type?: "variant";
+  onClick: () => void;
+  disabled?: boolean;
 };
 
-const IconButton: FC<Props> = ({ icon, label, onClick, type }) => {
-  return (
-    <button
-      onClick={onClick}
-      aria-label={label}
-      className={cn(s.container, { [s.containerVariant]: type === "variant" })}
-    >
-      <div className={cn(s.layer, { [s.layerVariant]: type === "variant" })} />
-      {icon}
-    </button>
-  );
-};
+// IconButtonはM3のStandard icon buttonに従う
+// https://m3.material.io/components/icon-buttons/specs
+const IconButton: FC<Props> = ({ icon, label, onClick, disabled }) => (
+  <button
+    onClick={onClick}
+    aria-label={label}
+    className={s.container}
+    disabled={disabled}
+  >
+    <div className={s.stateLayer} />
+    {icon}
+  </button>
+);
 
 export default IconButton;
