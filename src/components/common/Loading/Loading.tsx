@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import s from "./Loading.module.css";
+import * as s from "./Loading.css";
 
 const Loading: FC = () => {
   return (
