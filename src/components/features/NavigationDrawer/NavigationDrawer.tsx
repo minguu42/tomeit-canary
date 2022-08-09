@@ -1,23 +1,22 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import { LightModeIcon } from "@/components/icons";
 import * as s from "./NavigationDrawer.css";
-
-type Props = {
-  isOpen: boolean;
-  activeIndicator: string;
-  onScrimClick: () => void;
-};
+import {
+  useIsNavigationDrawerOpenAtom,
+  useIsNavigationDrawerOpenMutators,
+} from "@/globalStates/isNavigationDrawerOpenAtom";
 
 // NavigationDrawerはM3のNavigation drawerに従う
 // https://m3.material.io/components/navigation-drawer/specs
 // Headlineは省略する。
-export const NavigationDrawer: FC<Props> = ({
-  isOpen,
-  activeIndicator,
-  onScrimClick,
-}) => {
+export const NavigationDrawer: FC = () => {
+  const isOpen = useIsNavigationDrawerOpenAtom();
+  const { toggleNavigationDrawer } = useIsNavigationDrawerOpenMutators();
+  const [activeIndicator] = useState("今日やること");
+
   if (!isOpen) return <></>;
+
   return (
     <>
       <div className={s.container}>
@@ -46,7 +45,7 @@ export const NavigationDrawer: FC<Props> = ({
           <p className={s.badgeLabelText}>100+</p>
         </div>
       </div>
-      <button className={s.scrim} onClick={onScrimClick} />
+      <button className={s.scrim} onClick={toggleNavigationDrawer} />
     </>
   );
 };
