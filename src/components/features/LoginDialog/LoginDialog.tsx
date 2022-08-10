@@ -6,6 +6,7 @@ import {
   useIsLoginDialogOpenAtom,
   useIsLoginDialogOpenMutators,
 } from "@/globalStates/isLoginDialogOpenAtom";
+import { login } from "@/lib/auth";
 
 const LoginDialog: FC = () => {
   const isOpen = useIsLoginDialogOpenAtom();
@@ -21,7 +22,7 @@ const LoginDialog: FC = () => {
           Tomeitは集中したい人のためのタスク管理アプリです。ログインしてデバイス間でデータを共有しましょう！
         </p>
         <div className={s.alignCenter}>
-          <GoogleLoginButton login={() => window.alert("Googleでログイン")} />
+          <GoogleLoginButton login={() => void login()} />
         </div>
       </div>
       <button onClick={toggleLoginDialog} className={s.scrim} />
