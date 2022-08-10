@@ -11,6 +11,7 @@ export const container = style({
   minWidth: 280,
   maxWidth: 560,
   padding: 24,
+  borderRadius: 28,
   backgroundColor: `rgb(${color.surface._})`,
   boxShadow: elevation.level3,
 });
