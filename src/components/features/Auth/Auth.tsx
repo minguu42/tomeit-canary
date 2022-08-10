@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import Loading from "@/components/common/Loading";
-import { useAccessControl, useAuth } from "@/components/features/Auth";
+import { useAccessControl, useAuth } from "./Auth.hooks";
 
 type Props = {
   children: JSX.Element;
