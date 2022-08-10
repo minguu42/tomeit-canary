@@ -1,3 +1,4 @@
+export { default as AccountCircleIcon } from "./AccountCircle";
 export { default as DarkModeIcon } from "./DarkMode";
 export { default as LightModeIcon } from "./LightMode";
 export { default as LoginIcon } from "./Login";
