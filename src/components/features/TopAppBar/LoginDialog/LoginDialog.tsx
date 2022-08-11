@@ -1,17 +1,15 @@
-import { FC } from "react";
+import { FC, MouseEventHandler } from "react";
 
-import GoogleLoginButton from "@/components/features/LoginDialog/GoogleLoginButton";
+import GoogleLoginButton from "@/components/features/TopAppBar/LoginDialog/GoogleLoginButton";
 import * as s from "./LoginDialog.css";
-import {
-  useIsLoginDialogOpenAtom,
-  useIsLoginDialogOpenMutators,
-} from "@/globalStates/isLoginDialogOpenAtom";
 import { login } from "@/lib/auth";
 
-const LoginDialog: FC = () => {
-  const isOpen = useIsLoginDialogOpenAtom();
-  const { toggleLoginDialog } = useIsLoginDialogOpenMutators();
+type Props = {
+  isOpen: boolean;
+  onScrimClick: MouseEventHandler<HTMLButtonElement>;
+};
 
+const LoginDialog: FC<Props> = ({ isOpen, onScrimClick }) => {
   if (!isOpen) return <></>;
 
   return (
@@ -25,7 +23,7 @@ const LoginDialog: FC = () => {
           <GoogleLoginButton login={() => void login()} />
         </div>
       </div>
-      <button onClick={toggleLoginDialog} className={s.scrim} />
+      <button onClick={onScrimClick} className={s.scrim} />
     </>
   );
 };

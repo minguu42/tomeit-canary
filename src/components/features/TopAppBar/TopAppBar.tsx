@@ -2,6 +2,8 @@ import { FC, useState } from "react";
 
 import FilledButton from "@/components/common/FilledButton";
 import IconButton from "@/components/common/IconButton";
+import Account from "@/components/features/TopAppBar/Account";
+import LoginDialog from "@/components/features/TopAppBar/LoginDialog";
 import {
   DarkModeIcon,
   LightModeIcon,
@@ -9,9 +11,7 @@ import {
   MenuIcon,
   MenuOpenIcon,
 } from "@/components/icons";
-import Account from "@/components/features/TopAppBar/Account";
 import * as s from "./TopAppBar.css";
-import { useIsLoginDialogOpenMutators } from "@/globalStates/isLoginDialogOpenAtom";
 import {
   useIsNavigationDrawerOpenAtom,
   useIsNavigationDrawerOpenMutators,
@@ -28,8 +28,12 @@ const TopAppBar: FC = () => {
   const isNavigationDrawerOpen = useIsNavigationDrawerOpenAtom();
   const { toggleNavigationDrawer } = useIsNavigationDrawerOpenMutators();
   const { isDarkTheme, toggleTheme } = useTheme();
-  const { toggleLoginDialog } = useIsLoginDialogOpenMutators();
+  const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+
+  const toggleLoginDialog = (): void => {
+    setIsLoginDialogOpen((prev) => !prev);
+  };
 
   const toggleAccountMenu = (): void => {
     setIsAccountMenuOpen((prev) => !prev);
@@ -62,6 +66,10 @@ const TopAppBar: FC = () => {
           onLogoutButtonClick={() => void logout()}
         />
       )}
+      <LoginDialog
+        isOpen={isLoginDialogOpen}
+        onScrimClick={toggleLoginDialog}
+      />
     </header>
   );
 };
