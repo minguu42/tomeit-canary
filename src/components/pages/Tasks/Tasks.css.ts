@@ -11,6 +11,6 @@ export const sideLayout = style({
   display: "flex",
 });
 
-export const main = style({
+export const body = style({
   flex: "1 1 0",
 });
