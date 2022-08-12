@@ -13,7 +13,7 @@ const Tasks: NextPage = () => {
       <div className={s.sideLayout}>
         <NavigationDrawer />
         <div className={s.body}>
-            <TaskList />
+          <TaskList />
         </div>
       </div>
     </div>

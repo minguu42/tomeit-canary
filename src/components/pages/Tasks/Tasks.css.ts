@@ -13,4 +13,5 @@ export const sideLayout = style({
 
 export const body = style({
   flex: "1 1 0",
+  margin: "0 4px",
 });
