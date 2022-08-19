@@ -9,7 +9,7 @@ export const textFieldContainer = style({
   display: "flex",
   alignItems: "center",
   height: 56,
-  borderRadius: 4,
+  borderRadius: "4px 4px 0 0",
   backgroundColor: `rgb(${color.surface.variant})`,
 });
 
@@ -44,7 +44,45 @@ export const textField = style([
 
 export const sub = style({
   display: "flex",
+  gap: 16,
   alignItems: "center",
-  height: 52,
+  height: 48,
+  padding: "4px 16px 4px 12px",
+  borderRadius: "0 0 4px 4px",
   backgroundColor: `rgb(${color.surface.variant})`,
 });
+
+export const dateField = style([
+  typography.label.large,
+  {
+    border: "none",
+    color: `rgb(${color.on.surface.variant})`,
+    backgroundColor: "transparent",
+    selectors: {
+      "&:focus-visible": {
+        outline: "none",
+        color: `rgb(${color.primary._})`,
+        borderBottom: `2px solid rgb(${color.primary._})`,
+      },
+    },
+  },
+]);
+
+export const numberField = style([
+  typography.label.large,
+  {
+    padding: "0 4px",
+    border: "none",
+    color: `rgb(${color.on.surface.variant})`,
+    backgroundColor: "transparent",
+    selectors: {
+      "&:focus-visible": {
+        outline: "none",
+        color: `rgb(${color.primary._})`,
+        borderBottom: `2px solid rgb(${color.primary._})`,
+      },
+    },
+  },
+]);
+
+export const spacer = style({ flex: "1 1 0" });
