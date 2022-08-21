@@ -7,3 +7,4 @@ export { default as LoginIcon } from "./Login";
 export { default as LogoutIcon } from "./Logout";
 export { default as MenuIcon } from "./Menu";
 export { default as MenuOpenIcon } from "./MenuOpen";
+export { default as TimerIcon } from "./Timer";
