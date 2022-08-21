@@ -1,6 +1,7 @@
 export { default as AccountCircleIcon } from "./AccountCircle";
 export { default as AddTaskIcon } from "./AddTask";
 export { default as CircleIcon } from "./Circle";
+export { default as CalendarMonthIcon } from "./CalendarMonth";
 export { default as DarkModeIcon } from "./DarkMode";
 export { default as LightModeIcon } from "./LightMode";
 export { default as LoginIcon } from "./Login";
