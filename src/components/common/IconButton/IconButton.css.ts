@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { stateLayerOpacity, color } from "@/styles/tokens";
+import { state, color } from "@/styles/tokens";
 
 export const container = style({
   position: "relative",
@@ -14,7 +14,7 @@ export const container = style({
 
   selectors: {
     "&:disabled": {
-      color: `rgb(${color.on.surface._} / 38%)`,
+      color: `rgb(${color.on.surface._} / ${state.content.disabled})`,
     },
   },
 });
@@ -31,13 +31,16 @@ export const stateLayer = style({
 
   selectors: {
     [`${container}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.surface.variant} / ${stateLayerOpacity.hover})`,
+      backgroundColor: `rgb(${color.on.surface.variant} / ${state.layer.hover})`,
     },
-    [`${container}:focus > &`]: {
-      backgroundColor: `rgb(${color.on.surface.variant} / ${stateLayerOpacity.focus})`,
+    [`${container}:focus-visible > &`]: {
+      backgroundColor: `rgb(${color.on.surface.variant} / ${state.layer.focus})`,
     },
     [`${container}:active > &`]: {
-      backgroundColor: `rgb(${color.on.surface.variant} / ${stateLayerOpacity.pressed})`,
+      backgroundColor: `rgb(${color.on.surface.variant} / ${state.layer.active})`,
+    },
+    [`${container}:disabled > &`]: {
+      backgroundColor: "transparent",
     },
   },
 });

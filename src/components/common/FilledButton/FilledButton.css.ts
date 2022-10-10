@@ -1,11 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import {
-  stateLayerOpacity,
-  color,
-  elevation,
-  typography,
-} from "@/styles/tokens";
+import { state, color, elevation, typography } from "@/styles/tokens";
 
 export const container = style({
   position: "relative",
@@ -36,13 +31,13 @@ export const stateLayer = style({
   borderRadius: "20px",
   selectors: {
     [`${container}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.primary._} / ${stateLayerOpacity.hover})`,
+      backgroundColor: `rgb(${color.on.primary._} / ${state.layer.hover})`,
     },
-    [`${container}:focus > &`]: {
-      backgroundColor: `rgb(${color.on.primary._} / ${stateLayerOpacity.focus})`,
+    [`${container}:focus-visible > &`]: {
+      backgroundColor: `rgb(${color.on.primary._} / ${state.layer.focus})`,
     },
     [`${container}:active > &`]: {
-      backgroundColor: `rgb(${color.on.primary._} / ${stateLayerOpacity.pressed})`,
+      backgroundColor: `rgb(${color.on.primary._} / ${state.layer.active})`,
     },
   },
 });
@@ -51,7 +46,7 @@ export const icon = style({
   color: `rgb(${color.on.primary._})`,
   selectors: {
     [`${container}:disabled > &`]: {
-      color: `rgb(${color.on.surface._} / 0.38)`,
+      color: `rgb(${color.on.surface._} / ${state.content.disabled})`,
     },
   },
 });
@@ -62,7 +57,7 @@ export const labelText = style([
     color: `rgb(${color.on.primary._})`,
     selectors: {
       [`${container}:disabled > &`]: {
-        color: `rgb(${color.on.surface._} / 0.38)`,
+        color: `rgb(${color.on.surface._} / ${state.content.disabled})`,
       },
     },
   },

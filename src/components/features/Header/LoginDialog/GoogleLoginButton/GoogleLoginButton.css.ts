@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, elevation, stateLayerOpacity } from "@/styles/tokens";
+import { color, elevation, state } from "@/styles/tokens";
 
 export const container = style({
   position: "relative",
@@ -27,13 +27,13 @@ export const stateLayer = style({
   borderRadius: "inherit",
   selectors: {
     [`${container}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${stateLayerOpacity.hover})`,
+      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.hover})`,
     },
-    [`${container}:focus > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${stateLayerOpacity.hover})`,
+    [`${container}:focus-visible > &`]: {
+      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.focus})`,
     },
     [`${container}:active > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${stateLayerOpacity.hover})`,
+      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.active})`,
     },
   },
 });

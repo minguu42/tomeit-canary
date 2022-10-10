@@ -1,5 +1,5 @@
 import { style, styleVariants } from "@vanilla-extract/css";
-import { color, stateLayerOpacity, typography } from "@/styles/tokens";
+import { color, state, typography } from "@/styles/tokens";
 
 const indicatorBase = style({
   position: "relative",
@@ -30,22 +30,22 @@ export const stateLayer = style({
   borderRadius: "28px",
   selectors: {
     [`${indicator._}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${stateLayerOpacity.hover})`,
+      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.hover})`,
     },
-    [`${indicator._}:focus > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${stateLayerOpacity.focus})`,
+    [`${indicator._}:focus-visible > &`]: {
+      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.focus})`,
     },
     [`${indicator._}:active > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${stateLayerOpacity.pressed})`,
+      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.active})`,
     },
     [`${indicator.active}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.secondary.container} / ${stateLayerOpacity.hover})`,
+      backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.hover})`,
     },
-    [`${indicator.active}:focus > &`]: {
-      backgroundColor: `rgb(${color.on.secondary.container} / ${stateLayerOpacity.focus})`,
+    [`${indicator.active}:focus-visible > &`]: {
+      backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.focus})`,
     },
     [`${indicator.active}:active > &`]: {
-      backgroundColor: `rgb(${color.on.secondary.container} / ${stateLayerOpacity.pressed})`,
+      backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.active})`,
     },
   },
 });
