@@ -21,7 +21,6 @@ import {
   useIsNavigationDrawerOpenMutators,
 } from "@/globalStates/isNavigationDrawerOpenAtom";
 import { useUserAtom } from "@/globalStates/userAtom";
-import { logout } from "@/lib/auth";
 
 const Header: FC = () => {
   const [heading] = useState("Tomeit");
@@ -31,14 +30,9 @@ const Header: FC = () => {
   const isDarkTheme = useIsDarkTheme();
   const { toggleTheme } = useIsDarkThemeMutators();
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
-  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
 
   const toggleLoginDialog = (): void => {
     setIsLoginDialogOpen((prev) => !prev);
-  };
-
-  const toggleAccountMenu = (): void => {
-    setIsAccountMenuOpen((prev) => !prev);
   };
 
   if (user === null) {
@@ -83,11 +77,7 @@ const Header: FC = () => {
         label="テーマの切り替え"
         onClick={toggleTheme}
       />
-      <AccountMenu
-        isMenuOpen={isAccountMenuOpen}
-        toggleMenu={toggleAccountMenu}
-        onLogoutButtonClick={() => void logout()}
-      />
+      <AccountMenu />
     </header>
   );
 };

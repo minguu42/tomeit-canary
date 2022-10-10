@@ -1,40 +1,45 @@
-import { FC, MouseEventHandler } from "react";
+import { FC, useState } from "react";
 
 import StandardIconButton from "@/components/common/StandardIconButton";
 import { AccountCircleIcon, LogoutIcon } from "@/components/icons";
 import * as s from "./AccountMenu.css";
+import { logout } from "@/lib/auth";
 
-type Props = {
-  isMenuOpen: boolean;
-  toggleMenu: () => void;
-  onLogoutButtonClick: MouseEventHandler<HTMLButtonElement>;
-};
+const AccountMenu: FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-const AccountMenu: FC<Props> = ({
-  isMenuOpen,
-  toggleMenu,
-  onLogoutButtonClick,
-}) => (
-  <div className={s.layout}>
+  const toggleMenu = (): void => {
+    setIsOpen((prev) => !prev);
+  };
+
+  if (isOpen) {
+    return (
+      <div className={s.layout}>
+        <StandardIconButton
+          icon={<AccountCircleIcon />}
+          label="アカウントメニューの切り替え"
+          onClick={toggleMenu}
+        />
+        <div className={s.container}>
+          <button onClick={() => void logout()} className={s.listItem}>
+            <div className={s.stateLayer} />
+            <p className={s.leadingIcon}>
+              <LogoutIcon />
+            </p>
+            <p className={s.labelText}>ログアウト</p>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
     <StandardIconButton
       icon={<AccountCircleIcon />}
       label="アカウントメニューの切り替え"
       onClick={toggleMenu}
     />
-    {isMenuOpen ? (
-      <div className={s.container}>
-        <button onClick={onLogoutButtonClick} className={s.listItem}>
-          <div className={s.stateLayer} />
-          <p className={s.leadingIcon}>
-            <LogoutIcon />
-          </p>
-          <p className={s.labelText}>ログアウト</p>
-        </button>
-      </div>
-    ) : (
-      <></>
-    )}
-  </div>
-);
+  );
+};
 
 export default AccountMenu;
