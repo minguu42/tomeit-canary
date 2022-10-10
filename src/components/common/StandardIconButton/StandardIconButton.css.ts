@@ -7,8 +7,8 @@ export const container = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "48px",
-  height: "48px",
+  width: 48,
+  height: 48,
   color: `rgb(${color.on.surface.variant})`,
   backgroundColor: "transparent",
 
@@ -21,12 +21,10 @@ export const container = style({
 
 export const stateLayer = style({
   position: "absolute",
-  top: "4px",
-  right: "4px",
-  bottom: "4px",
-  left: "4px",
-  width: "40px",
-  height: "40px",
+  top: 4,
+  left: 4,
+  width: 40,
+  height: 40,
   borderRadius: "50%",
 
   selectors: {
@@ -39,8 +37,6 @@ export const stateLayer = style({
     [`${container}:active > &`]: {
       backgroundColor: `rgb(${color.on.surface.variant} / ${state.layer.active})`,
     },
-    [`${container}:disabled > &`]: {
-      backgroundColor: "transparent",
-    },
+    [`${container}:disabled > &`]: { backgroundColor: "transparent" },
   },
 });
