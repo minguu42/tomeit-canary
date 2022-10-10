@@ -2,8 +2,8 @@ import { FC, useState } from "react";
 
 import FilledButton from "@/components/common/FilledButton";
 import IconButton from "@/components/common/IconButton";
-import Account from "@/components/features/TopAppBar/Account";
-import LoginDialog from "@/components/features/TopAppBar/LoginDialog";
+import Account from "@/components/features/Header/Account";
+import LoginDialog from "@/components/features/Header/LoginDialog";
 import {
   DarkModeIcon,
   LightModeIcon,
@@ -11,7 +11,7 @@ import {
   MenuIcon,
   MenuOpenIcon,
 } from "@/components/icons";
-import * as s from "./TopAppBar.css";
+import * as s from "./Header.css";
 import {
   useIsDarkTheme,
   useIsDarkThemeMutators,
@@ -23,9 +23,7 @@ import {
 import { useUserAtom } from "@/globalStates/userAtom";
 import { logout } from "@/lib/auth";
 
-// TopAppBarの仕様はM3のSmall top app barに従う
-// https://m3.material.io/components/top-app-bar/specs
-const TopAppBar: FC = () => {
+const Header: FC = () => {
   const [headline] = useState("Tomeit");
   const user = useUserAtom();
   const isNavigationDrawerOpen = useIsNavigationDrawerOpenAtom();
@@ -78,4 +76,4 @@ const TopAppBar: FC = () => {
   );
 };
 
-export default TopAppBar;
+export default Header;
