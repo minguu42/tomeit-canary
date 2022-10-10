@@ -4,14 +4,14 @@ import { color, typography } from "@/styles/tokens";
 
 export const container = style({
   display: "flex",
-  gap: "4px",
+  gap: 4,
   alignItems: "center",
-  height: "64px",
+  height: 64,
   padding: "0 4px",
   backgroundColor: `rgb(${color.surface._})`,
 });
 
-export const headline = style([
+export const heading = style([
   typography.title.large,
   { color: `rgb(${color.on.surface._})` },
 ]);
