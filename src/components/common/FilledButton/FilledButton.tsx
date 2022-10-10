@@ -12,7 +12,7 @@ type Props = {
 const FilledButton: FC<Props> = ({ icon, labelText, onClick, disabled }) => (
   <button onClick={onClick} disabled={disabled} className={s.container}>
     <div className={s.stateLayer} />
-    <div className={s.icon}>{icon}</div>
+    {icon}
     <p className={s.labelText}>{labelText}</p>
   </button>
 );
