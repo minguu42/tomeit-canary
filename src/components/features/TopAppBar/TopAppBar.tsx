@@ -13,11 +13,14 @@ import {
 } from "@/components/icons";
 import * as s from "./TopAppBar.css";
 import {
+  useIsDarkTheme,
+  useIsDarkThemeMutators,
+} from "@/globalStates/isDarkTheme";
+import {
   useIsNavigationDrawerOpenAtom,
   useIsNavigationDrawerOpenMutators,
 } from "@/globalStates/isNavigationDrawerOpenAtom";
 import { useUserAtom } from "@/globalStates/userAtom";
-import { useTheme } from "@/hooks/useTheme";
 import { logout } from "@/lib/auth";
 
 // TopAppBarの仕様はM3のSmall top app barに従う
@@ -27,7 +30,8 @@ const TopAppBar: FC = () => {
   const user = useUserAtom();
   const isNavigationDrawerOpen = useIsNavigationDrawerOpenAtom();
   const { toggleNavigationDrawer } = useIsNavigationDrawerOpenMutators();
-  const { isDarkTheme, toggleTheme } = useTheme();
+  const isDarkTheme = useIsDarkTheme();
+  const { toggleTheme } = useIsDarkThemeMutators();
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
 
