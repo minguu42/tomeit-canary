@@ -2,7 +2,7 @@ import { FC, MouseEventHandler } from "react";
 
 import StandardIconButton from "@/components/common/StandardIconButton";
 import { AccountCircleIcon, LogoutIcon } from "@/components/icons";
-import * as s from "./Account.css";
+import * as s from "./AccountMenu.css";
 
 type Props = {
   isMenuOpen: boolean;
@@ -10,7 +10,7 @@ type Props = {
   onLogoutButtonClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-const Account: FC<Props> = ({
+const AccountMenu: FC<Props> = ({
   isMenuOpen,
   toggleMenu,
   onLogoutButtonClick,
@@ -37,4 +37,4 @@ const Account: FC<Props> = ({
   </div>
 );
 
-export default Account;
+export default AccountMenu;

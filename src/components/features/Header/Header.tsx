@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 
 import FilledButton from "@/components/common/FilledButton";
 import StandardIconButton from "@/components/common/StandardIconButton";
-import Account from "@/components/features/Header/Account";
+import AccountMenu from "@/components/features/Header/AccountMenu";
 import LoginDialog from "@/components/features/Header/LoginDialog";
 import {
   DarkModeIcon,
@@ -83,7 +83,7 @@ const Header: FC = () => {
         label="テーマの切り替え"
         onClick={toggleTheme}
       />
-      <Account
+      <AccountMenu
         isMenuOpen={isAccountMenuOpen}
         toggleMenu={toggleAccountMenu}
         onLogoutButtonClick={() => void logout()}
