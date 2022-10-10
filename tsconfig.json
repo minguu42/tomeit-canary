@@ -20,6 +20,7 @@
       "@/globalStates/*": ["globalStates/*"],
       "@/hooks/*": ["hooks/*"],
       "@/lib/*": ["lib/*"],
+      "@/models/*": ["models/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
       "@/types/*": ["types/*"]
