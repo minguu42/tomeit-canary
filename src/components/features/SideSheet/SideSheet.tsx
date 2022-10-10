@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { CircleIcon, TimerIcon } from "@/components/icons";
-import IconButton from "@/components/common/IconButton";
+import StandardIconButton from "@/components/common/StandardIconButton";
 import Content from "@/components/features/SideSheet/Content";
 import * as s from "./SideSheet.css";
 
@@ -9,7 +9,7 @@ const SideSheet: FC = () => {
   return (
     <div className={s.container}>
       <div className={s.name}>
-        <IconButton
+        <StandardIconButton
           icon={<CircleIcon />}
           label="完了"
           onClick={() => window.alert("完了")}

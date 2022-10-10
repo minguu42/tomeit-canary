@@ -1,6 +1,6 @@
 import { FC, MouseEventHandler } from "react";
 
-import IconButton from "@/components/common/IconButton";
+import StandardIconButton from "@/components/common/StandardIconButton";
 import { AccountCircleIcon, LogoutIcon } from "@/components/icons";
 import * as s from "./Account.css";
 
@@ -16,7 +16,7 @@ const Account: FC<Props> = ({
   onLogoutButtonClick,
 }) => (
   <div className={s.layout}>
-    <IconButton
+    <StandardIconButton
       icon={<AccountCircleIcon />}
       label="アカウントメニューの切り替え"
       onClick={toggleMenu}

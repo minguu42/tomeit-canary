@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import IconButton from "@/components/common/IconButton";
+import StandardIconButton from "@/components/common/StandardIconButton";
 import {
   CalendarMonthIcon,
   CircleIcon,
@@ -49,7 +49,7 @@ const TaskListItem: FC<Props> = ({ task }) => {
 
   return (
     <li className={s.container}>
-      <IconButton
+      <StandardIconButton
         icon={<CircleIcon />}
         label="タスクの完了"
         onClick={() => window.alert("タスクの完了")}
