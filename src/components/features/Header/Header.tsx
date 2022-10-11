@@ -20,11 +20,11 @@ import {
   useIsDrawerOpenAtom,
   useIsDrawerOpenMutators,
 } from "@/globalStates/isDrawerOpen";
-import { useUserAtom } from "@/globalStates/userAtom";
+import { useUser } from "@/globalStates/user";
 
 const Header: FC = () => {
   const [heading] = useState("Tomeit");
-  const user = useUserAtom();
+  const user = useUser();
   const isNavigationDrawerOpen = useIsDrawerOpenAtom();
   const { toggleDrawer } = useIsDrawerOpenMutators();
   const isDarkTheme = useIsDarkTheme();

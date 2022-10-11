@@ -20,4 +20,4 @@ export const spacer = style({ flex: "1 1 0" });
 
 export const space4 = style({
   width: 8,
-})
+});

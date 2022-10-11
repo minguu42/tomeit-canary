@@ -2,28 +2,28 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-import { useUserAtom, useUserMutators } from "@/globalStates/userAtom";
+import { useUser, useUserMutators } from "@/globalStates/user";
 import { app } from "@/lib/firebase";
 
 const REDIRECT_TARGET_URL_AT_NOT_LOGIN = "/";
 
 export const useAuth = (): boolean => {
   const [isLoading, setIsLoading] = useState(true);
-  const { setUser, unsetUser } = useUserMutators();
+  const { setUser } = useUserMutators();
 
   useEffect(() => {
     const auth = getAuth(app);
     return onAuthStateChanged(auth, (user) => {
-      user != null ? setUser(user) : unsetUser();
+      setUser(user);
       setIsLoading(false);
     });
-  }, [setUser, unsetUser]);
+  }, [setUser]);
 
   return isLoading;
 };
 
 export const useAccessControl = (): void => {
-  const user = useUserAtom();
+  const user = useUser();
   const router = useRouter();
 
   useEffect(() => {
