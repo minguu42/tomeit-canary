@@ -55,6 +55,7 @@ const Header: FC = () => {
           labelText="ログイン"
           onClick={toggleLoginDialog}
         />
+        <div className={s.space4} />
         <LoginDialog
           isOpen={isLoginDialogOpen}
           onScrimClick={toggleLoginDialog}
