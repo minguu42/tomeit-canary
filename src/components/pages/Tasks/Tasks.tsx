@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 
 import Header from "@/components/features/Header";
-import NavigationDrawer from "@/components/features/NavigationDrawer";
+import Drawer from "@/components/features/Drawer";
 import TaskList from "@/components/features/TaskList";
 import SideSheet from "@/components/features/SideSheet";
 import * as s from "./Tasks.css";
@@ -12,7 +12,7 @@ const Tasks: NextPage = () => {
     <div className={s.background}>
       <Header />
       <div className={s.sideLayout}>
-        <NavigationDrawer />
+        <Drawer />
         <div className={s.body}>
           <TaskList />
         </div>

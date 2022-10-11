@@ -1,17 +1,14 @@
 import { FC, useState } from "react";
 
 import { LightModeIcon } from "@/components/icons";
-import Indicator from "@/components/features/NavigationDrawer/Indicator";
-import * as s from "./NavigationDrawer.css";
+import Indicator from "@/components/features/Drawer/Indicator";
+import * as s from "./Drawer.css";
 import {
   useIsNavigationDrawerOpenAtom,
   useIsNavigationDrawerOpenMutators,
 } from "@/globalStates/isNavigationDrawerOpenAtom";
 
-// NavigationDrawerはM3のNavigation drawerに従う
-// https://m3.material.io/components/navigation-drawer/specs
-// Headlineは省略する。
-export const NavigationDrawer: FC = () => {
+export const Drawer: FC = () => {
   const isOpen = useIsNavigationDrawerOpenAtom();
   const { toggleNavigationDrawer } = useIsNavigationDrawerOpenMutators();
   const [activeIndicator] = useState("今日やること");
@@ -39,4 +36,4 @@ export const NavigationDrawer: FC = () => {
   );
 };
 
-export default NavigationDrawer;
+export default Drawer;
