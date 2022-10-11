@@ -4,13 +4,13 @@ import { LightModeIcon } from "@/components/icons";
 import Indicator from "@/components/features/Drawer/Indicator";
 import * as s from "./Drawer.css";
 import {
-  useIsNavigationDrawerOpenAtom,
-  useIsNavigationDrawerOpenMutators,
-} from "@/globalStates/isNavigationDrawerOpenAtom";
+  useIsDrawerOpenAtom,
+  useIsDrawerOpenMutators,
+} from "@/globalStates/isDrawerOpen";
 
 export const Drawer: FC = () => {
-  const isOpen = useIsNavigationDrawerOpenAtom();
-  const { toggleNavigationDrawer } = useIsNavigationDrawerOpenMutators();
+  const isOpen = useIsDrawerOpenAtom();
+  const { toggleDrawer } = useIsDrawerOpenMutators();
   const [activeIndicator] = useState("今日やること");
 
   if (!isOpen) return <></>;
@@ -31,7 +31,7 @@ export const Drawer: FC = () => {
           badgeLabelText="100+"
         />
       </div>
-      <button className={s.scrim} onClick={toggleNavigationDrawer} />
+      <button className={s.scrim} onClick={toggleDrawer} />
     </>
   );
 };

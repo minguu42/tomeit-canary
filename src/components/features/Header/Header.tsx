@@ -17,16 +17,16 @@ import {
   useIsDarkThemeMutators,
 } from "@/globalStates/isDarkTheme";
 import {
-  useIsNavigationDrawerOpenAtom,
-  useIsNavigationDrawerOpenMutators,
-} from "@/globalStates/isNavigationDrawerOpenAtom";
+  useIsDrawerOpenAtom,
+  useIsDrawerOpenMutators,
+} from "@/globalStates/isDrawerOpen";
 import { useUserAtom } from "@/globalStates/userAtom";
 
 const Header: FC = () => {
   const [heading] = useState("Tomeit");
   const user = useUserAtom();
-  const isNavigationDrawerOpen = useIsNavigationDrawerOpenAtom();
-  const { toggleNavigationDrawer } = useIsNavigationDrawerOpenMutators();
+  const isNavigationDrawerOpen = useIsDrawerOpenAtom();
+  const { toggleDrawer } = useIsDrawerOpenMutators();
   const isDarkTheme = useIsDarkTheme();
   const { toggleTheme } = useIsDarkThemeMutators();
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
@@ -41,7 +41,7 @@ const Header: FC = () => {
         <StandardIconButton
           icon={isNavigationDrawerOpen ? <MenuOpenIcon /> : <MenuIcon />}
           label="ドロワーの切り替え"
-          onClick={toggleNavigationDrawer}
+          onClick={toggleDrawer}
         />
         <h2 className={s.heading}>{heading}</h2>
         <div className={s.spacer} />
@@ -68,7 +68,7 @@ const Header: FC = () => {
       <StandardIconButton
         icon={isNavigationDrawerOpen ? <MenuOpenIcon /> : <MenuIcon />}
         label="ナビゲーションドロワーの切り替え"
-        onClick={toggleNavigationDrawer}
+        onClick={toggleDrawer}
       />
       <h2 className={s.heading}>{heading}</h2>
       <div className={s.spacer} />
