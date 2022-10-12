@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Header from "@/components/features/Header";
 import Drawer from "@/components/features/Drawer";
 import TaskList from "@/components/features/TaskList";
+import SideSheet from "@/components/features/SideSheet";
 import * as s from "./Tasks.css";
 
 const Tasks: NextPage = () => {
@@ -11,9 +12,10 @@ const Tasks: NextPage = () => {
       <Header />
       <div className={s.sideLayout}>
         <Drawer />
-        <div className={s.body}>
+        <main className={s.main}>
           <TaskList />
-        </div>
+        </main>
+        <SideSheet />
       </div>
     </div>
   );
