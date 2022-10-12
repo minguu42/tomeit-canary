@@ -2,64 +2,58 @@ import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
 
 import AddTaskForm from "@/components/features/TaskList/AddTaskForm";
 import TaskListItem from "@/components/features/TaskList/TaskListItem";
+import { useTasks, useTasksMutators } from "@/globalStates/tasks";
 import { Task } from "@/types/task";
 
-const tasks: Task[] = [
-  {
-    id: 1,
-    title: "タスク1",
-    estimatedCount: 2,
-    actualCount: 4,
-    dueOn: new Date(),
-    hasDoToday: true,
-    completedOn: null,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 2,
-    title: "タスク2",
-    estimatedCount: 0,
-    actualCount: 0,
-    dueOn: null,
-    hasDoToday: false,
-    completedOn: null,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
-
 const TaskList: FC = () => {
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
   const [dueOn, setDueOn] = useState("");
-  const [primary, setPrimary] = useState("");
+  const [estimatedCount, setEstimatedCount] = useState("");
+  const tasks = useTasks();
+  const { addTask } = useTasksMutators();
 
   const onNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setName(e.target.value);
+    setTitle(e.target.value);
   };
 
   const onDueOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setDueOn(e.target.value);
   };
 
-  const onPrimaryChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setPrimary(e.target.value);
+  const onEstimatedCountChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setEstimatedCount(e.target.value);
   };
 
   const onSubmitButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    window.alert(`name: ${name}, dueOn: ${dueOn}, primary: ${primary}`);
+
+    const newTask: Task = {
+      id: Math.random() * 1000_000_000 + 1,
+      title: title,
+      estimatedCount: Number(estimatedCount),
+      actualCount: 0,
+      dueOn: dueOn !== "" ? new Date(dueOn) : null,
+      hasDoToday: false,
+      completedOn: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    addTask(newTask);
+
+    setTitle("");
+    setDueOn("");
+    setEstimatedCount("");
   };
 
   return (
     <>
       <AddTaskForm
-        name={name}
+        name={title}
         dueOn={dueOn}
-        primary={primary}
+        primary={estimatedCount}
         onNameChange={onNameChange}
         onDueOnChange={onDueOnChange}
-        onPrimaryChange={onPrimaryChange}
+        onPrimaryChange={onEstimatedCountChange}
         onSubmitButtonClick={onSubmitButtonClick}
       />
       <ul>
