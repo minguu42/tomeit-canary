@@ -1,7 +1,10 @@
 import { useCallback } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
-const isDarkTheme = atom({ key: "isDarkTheme", default: false });
+const isDarkTheme = atom({
+  key: "isDarkTheme",
+  default: false,
+});
 
 export const useIsDarkTheme = (): boolean => useRecoilValue(isDarkTheme);
 
