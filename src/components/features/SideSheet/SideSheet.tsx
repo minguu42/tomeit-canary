@@ -1,13 +1,18 @@
-import { ChangeEventHandler, FC, useState } from "react";
+import { FC } from "react";
 
 import StandardIconButton from "@/components/common/StandardIconButton";
 import Content from "@/components/features/SideSheet/Content";
 import { CircleIcon, TimerIcon } from "@/components/icons";
 import * as s from "./SideSheet.css";
-import { useRemarkedTask } from "@/globalStates/remarkedTask";
+import {
+  useRemarkedTask,
+  useRemarkedTaskMutators,
+} from "@/globalStates/remarkedTask";
 import { formatDate } from "@/lib/formatDate";
 import { Task } from "@/types/task";
 import TitleField from "@/components/features/SideSheet/TitleField";
+import ActionFiled from "@/components/features/SideSheet/ActionField";
+import { useTasksMutators } from "@/globalStates/tasks";
 
 type Props = {
   task: Task;
@@ -15,6 +20,15 @@ type Props = {
 
 const SideSheet: FC<Props> = () => {
   const remarkedTask = useRemarkedTask();
+  const { unsetRemarkedTask } = useRemarkedTaskMutators();
+  const { deleteTask } = useTasksMutators();
+
+  const handleDeleteField = () => {
+    if (remarkedTask === null) return;
+
+    deleteTask(remarkedTask.id);
+    unsetRemarkedTask();
+  };
 
   if (remarkedTask === null) {
     return <></>;
@@ -52,6 +66,11 @@ const SideSheet: FC<Props> = () => {
             ? formatDate(remarkedTask.dueOn, "locale")
             : ""
         }
+      />
+      <ActionFiled
+        leadingIcon={<TimerIcon />}
+        label="削除"
+        onClick={handleDeleteField}
       />
     </div>
   );

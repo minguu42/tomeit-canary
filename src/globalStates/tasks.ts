@@ -13,6 +13,7 @@ export const useTasks = (): Task[] => useRecoilValue(tasks);
 type tasksMutators = {
   addTask: (task: Task) => void;
   changeTaskTitle: (id: number, newTitle: string) => void;
+  deleteTask: (id: number) => void;
 };
 
 export const useTasksMutators = (): tasksMutators => {
@@ -39,5 +40,15 @@ export const useTasksMutators = (): tasksMutators => {
     [setTasks]
   );
 
-  return { addTask, changeTaskTitle };
+  const deleteTask = useCallback(
+    (id: number) => {
+      setTasks((prev) => {
+        const index = prev.findIndex((task) => task.id === id);
+        return [...prev.slice(0, index), ...prev.slice(index + 1)];
+      });
+    },
+    [setTasks]
+  );
+
+  return { addTask, changeTaskTitle, deleteTask };
 };
