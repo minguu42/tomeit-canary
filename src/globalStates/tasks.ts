@@ -1,7 +1,7 @@
+import { useCallback } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Task } from "@/types/task";
-import { useCallback } from "react";
 
 const tasks = atom<Task[]>({
   key: "tasks",
@@ -12,6 +12,7 @@ export const useTasks = (): Task[] => useRecoilValue(tasks);
 
 type tasksMutators = {
   addTask: (task: Task) => void;
+  changeTaskTitle: (id: number, newTitle: string) => void;
 };
 
 export const useTasksMutators = (): tasksMutators => {
@@ -24,5 +25,19 @@ export const useTasksMutators = (): tasksMutators => {
     [setTasks]
   );
 
-  return { addTask };
+  const changeTaskTitle = useCallback(
+    (id: number, newTitle: string) => {
+      setTasks((prev) => {
+        const index = prev.findIndex((task) => task.id === id);
+        const newTask: Task = {
+          ...prev[index],
+          title: newTitle,
+        };
+        return [...prev.slice(0, index), newTask, ...prev.slice(index + 1)];
+      });
+    },
+    [setTasks]
+  );
+
+  return { addTask, changeTaskTitle };
 };
