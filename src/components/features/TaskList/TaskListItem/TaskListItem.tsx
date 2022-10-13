@@ -22,7 +22,7 @@ type Props = {
 const TaskListItem: FC<Props> = ({ task }) => {
   const remarkedTask = useRemarkedTask();
   const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
-  const handleClick = (task: Task) => {
+  const handleClick = () => {
     if (remarkedTask === null) {
       setRemarkedTask(task);
       return;
@@ -73,7 +73,7 @@ const TaskListItem: FC<Props> = ({ task }) => {
         label="タスクの完了"
         onClick={() => window.alert("タスクの完了")}
       />
-      <button className={s.main} onClick={() => handleClick(task)}>
+      <button className={s.main} onClick={handleClick}>
         <p className={s.title}>{task.title}</p>
         {flagsExist && (
           <div className={s.flags}>
