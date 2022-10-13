@@ -10,12 +10,31 @@ import {
 import * as s from "./TaskListItem.css";
 import { formatDate } from "@/lib/formatDate";
 import { Task } from "@/types/task";
+import {
+  useRemarkedTask,
+  useRemarkedTaskMutators,
+} from "@/globalStates/remarkedTask";
 
 type Props = {
   task: Task;
 };
 
 const TaskListItem: FC<Props> = ({ task }) => {
+  const remarkedTask = useRemarkedTask();
+  const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
+  const handleClick = (task: Task) => {
+    if (remarkedTask === null) {
+      setRemarkedTask(task);
+      return;
+    }
+
+    if (task.id === remarkedTask.id) {
+      unsetRemarkedTask();
+    } else {
+      setRemarkedTask(task);
+    }
+  };
+
   const flagsExist =
     task.actualCount !== 0 ||
     task.estimatedCount !== 0 ||
@@ -54,7 +73,7 @@ const TaskListItem: FC<Props> = ({ task }) => {
         label="タスクの完了"
         onClick={() => window.alert("タスクの完了")}
       />
-      <div className={s.main}>
+      <button className={s.main} onClick={() => handleClick(task)}>
         <p className={s.title}>{task.title}</p>
         {flagsExist && (
           <div className={s.flags}>
@@ -64,7 +83,7 @@ const TaskListItem: FC<Props> = ({ task }) => {
             {task.dueOn !== null && dueOnFlag}
           </div>
         )}
-      </div>
+      </button>
     </li>
   );
 };
