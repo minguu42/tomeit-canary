@@ -9,16 +9,11 @@ import {
   useRemarkedTaskMutators,
 } from "@/globalStates/remarkedTask";
 import { formatDate } from "@/lib/formatDate";
-import { Task } from "@/types/task";
 import TitleField from "@/components/features/SideSheet/TitleField";
 import ActionFiled from "@/components/features/SideSheet/ActionField";
 import { useTasksMutators } from "@/globalStates/tasks";
 
-type Props = {
-  task: Task;
-};
-
-const SideSheet: FC<Props> = () => {
+const SideSheet: FC = () => {
   const remarkedTask = useRemarkedTask();
   const { unsetRemarkedTask } = useRemarkedTaskMutators();
   const { deleteTask } = useTasksMutators();
