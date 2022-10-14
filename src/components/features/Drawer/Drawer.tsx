@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { FC } from "react";
+import { useRouter } from "next/router";
 
 import { LightModeIcon } from "@/components/icons";
 import Indicator from "@/components/features/Drawer/Indicator";
@@ -11,26 +12,28 @@ import {
 export const Drawer: FC = () => {
   const isOpen = useIsDrawerOpenAtom();
   const { toggleDrawer } = useIsDrawerOpenMutators();
-  const [activeIndicator] = useState("今日やること");
+  const router = useRouter();
 
   if (!isOpen) return <></>;
 
   return (
     <>
-      <div className={s.container}>
+      <ul className={s.container}>
         <Indicator
-          isActive={activeIndicator === "今日やること"}
+          url="/focus"
+          isActive={router.pathname === "/focus"}
           icon={<LightModeIcon />}
           labelText="今日やること"
           badgeLabelText="24"
         />
         <Indicator
-          isActive={activeIndicator === "タスク管理"}
+          url="/"
+          isActive={router.pathname === "/"}
           icon={<LightModeIcon />}
           labelText="タスク管理"
           badgeLabelText="100+"
         />
-      </div>
+      </ul>
       <button className={s.scrim} onClick={toggleDrawer} />
     </>
   );

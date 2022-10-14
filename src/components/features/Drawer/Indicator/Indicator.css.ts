@@ -21,33 +21,49 @@ export const indicator = styleVariants({
   ],
 });
 
-export const stateLayer = style({
+const stateLayerBase = style({
   position: "absolute",
   top: 0,
-  right: 0,
-  bottom: 0,
   left: 0,
-  borderRadius: "28px",
-  selectors: {
-    [`${indicator._}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.hover})`,
+  width: "100%",
+  height: "100%",
+  borderRadius: "inherit",
+  backgroundColor: "transparent",
+});
+
+export const stateLayer = styleVariants({
+  _: [
+    stateLayerBase,
+    {
+      selectors: {
+        [`${indicator._}:hover > &`]: {
+          backgroundColor: `rgb(${color.on.surface._} / ${state.layer.hover})`,
+        },
+        [`${indicator._}:focus-visible > &`]: {
+          backgroundColor: `rgb(${color.on.surface._} / ${state.layer.focus})`,
+        },
+        [`${indicator._}:active > &`]: {
+          backgroundColor: `rgb(${color.on.surface._} / ${state.layer.active})`,
+        },
+      },
     },
-    [`${indicator._}:focus-visible > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.focus})`,
+  ],
+  active: [
+    stateLayerBase,
+    {
+      selectors: {
+        [`${indicator.active}:hover > &`]: {
+          backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.hover})`,
+        },
+        [`${indicator.active}:focus-visible > &`]: {
+          backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.focus})`,
+        },
+        [`${indicator.active}:active > &`]: {
+          backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.active})`,
+        },
+      },
     },
-    [`${indicator._}:active > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.active})`,
-    },
-    [`${indicator.active}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.hover})`,
-    },
-    [`${indicator.active}:focus-visible > &`]: {
-      backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.focus})`,
-    },
-    [`${indicator.active}:active > &`]: {
-      backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.active})`,
-    },
-  },
+  ],
 });
 
 export const icon = style({
