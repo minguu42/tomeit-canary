@@ -4,6 +4,7 @@ import Header from "@/components/features/Header";
 import Drawer from "@/components/features/Drawer";
 import TaskList from "@/components/features/TaskList";
 import SideSheet from "@/components/features/SideSheet";
+import PomodoroPlayer from "@/components/features/PomodoroPlayer";
 import * as s from "./Focus.css";
 
 const Focus: NextPage = () => {
@@ -17,6 +18,7 @@ const Focus: NextPage = () => {
         </main>
         <SideSheet />
       </div>
+      <PomodoroPlayer />
     </div>
   );
 };
