@@ -16,4 +16,4 @@ export const container = style({
 
 export const mgr16 = style({
   marginRight: 16,
-})
+});
