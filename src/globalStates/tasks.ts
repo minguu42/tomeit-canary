@@ -13,6 +13,7 @@ export const useTasks = (): Task[] => useRecoilValue(tasks);
 type tasksMutators = {
   addTask: (task: Task) => void;
   changeTaskTitle: (id: number, newTitle: string) => void;
+  toggleHasDoToday: (id: number) => void;
   deleteTask: (id: number) => void;
 };
 
@@ -40,6 +41,20 @@ export const useTasksMutators = (): tasksMutators => {
     [setTasks]
   );
 
+  const toggleHasDoToday = useCallback(
+    (id: number) => {
+      setTasks((prev) => {
+        const index = prev.findIndex((task) => task.id === id);
+        const newTask: Task = {
+          ...prev[index],
+          hasDoToday: !prev[index].hasDoToday,
+        };
+        return [...prev.slice(0, index), newTask, ...prev.slice(index + 1)];
+      });
+    },
+    [setTasks]
+  );
+
   const deleteTask = useCallback(
     (id: number) => {
       setTasks((prev) => {
@@ -50,5 +65,5 @@ export const useTasksMutators = (): tasksMutators => {
     [setTasks]
   );
 
-  return { addTask, changeTaskTitle, deleteTask };
+  return { addTask, changeTaskTitle, toggleHasDoToday, deleteTask };
 };

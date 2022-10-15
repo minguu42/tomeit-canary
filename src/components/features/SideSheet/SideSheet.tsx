@@ -12,11 +12,22 @@ import { formatDate } from "@/lib/formatDate";
 import TitleField from "@/components/features/SideSheet/TitleField";
 import ActionFiled from "@/components/features/SideSheet/ActionField";
 import { useTasksMutators } from "@/globalStates/tasks";
+import { Task } from "@/types/task";
 
 const SideSheet: FC = () => {
   const remarkedTask = useRemarkedTask();
-  const { unsetRemarkedTask } = useRemarkedTaskMutators();
-  const { deleteTask } = useTasksMutators();
+  const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
+  const { toggleHasDoToday, deleteTask } = useTasksMutators();
+
+  const handleToggleHasDoTodayField = () => {
+    if (remarkedTask === null) return;
+    toggleHasDoToday(remarkedTask.id);
+    const newRemarkedTask: Task = {
+      ...remarkedTask,
+      hasDoToday: !remarkedTask.hasDoToday,
+    };
+    setRemarkedTask(newRemarkedTask);
+  };
 
   const handleDeleteField = () => {
     if (remarkedTask === null) return;
@@ -62,6 +73,19 @@ const SideSheet: FC = () => {
             : ""
         }
       />
+      {remarkedTask.hasDoToday ? (
+        <ActionFiled
+          leadingIcon={<TimerIcon />}
+          label="「今日やること」から外す"
+          onClick={handleToggleHasDoTodayField}
+        />
+      ) : (
+        <ActionFiled
+          leadingIcon={<TimerIcon />}
+          label="「今日やること」に追加"
+          onClick={handleToggleHasDoTodayField}
+        />
+      )}
       <ActionFiled
         leadingIcon={<TimerIcon />}
         label="削除"
