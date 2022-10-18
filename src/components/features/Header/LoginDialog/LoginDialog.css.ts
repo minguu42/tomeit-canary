@@ -41,5 +41,5 @@ export const scrim = style({
   zIndex: 5,
   height: "100vh",
   width: "100vw",
-  backgroundColor: `rgb(50 47 55 / 0.4)`,
+  backgroundColor: "rgb(50 47 55 / 0.4)",
 });

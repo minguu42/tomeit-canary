@@ -14,7 +14,7 @@ const Focus: NextPage = () => {
       <div className={s.sideLayout}>
         <Drawer />
         <main className={s.main}>
-          <TaskList isFocusPage />
+          <TaskList isFocusPage={true} />
         </main>
         <SideSheet />
       </div>

@@ -11,10 +11,7 @@ export const container = style({
   backgroundColor: `rgb(${color.surface._})`,
 });
 
-export const heading = style([
-  typography.title.large,
-  { color: `rgb(${color.on.surface._})` },
-]);
+export const heading = style([typography.title.large, { color: `rgb(${color.on.surface._})` }]);
 
 export const spacer = style({ flex: "1 1 0" });
 

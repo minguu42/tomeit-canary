@@ -27,7 +27,8 @@ export const useAccessControl = (): void => {
   const router = useRouter();
 
   useEffect(() => {
-    if (user === null && router.pathname === "/account")
+    if (user === null && router.pathname === "/account") {
       void router.push(REDIRECT_TARGET_URL_AT_NOT_LOGIN);
+    }
   }, [router, user]);
 };

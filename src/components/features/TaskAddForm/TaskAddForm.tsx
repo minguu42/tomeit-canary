@@ -20,9 +20,7 @@ const TaskAddForm: FC = () => {
     setDueOn(e.target.value);
   };
 
-  const handleEstimatedCountChange: ChangeEventHandler<HTMLInputElement> = (
-    e
-  ) => {
+  const handleEstimatedCountChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEstimatedCount(e.target.value);
   };
 
@@ -60,12 +58,7 @@ const TaskAddForm: FC = () => {
         />
       </div>
       <div className={s.sub}>
-        <input
-          type="date"
-          value={dueOn}
-          onChange={handleDueOnChange}
-          className={s.dateField}
-        />
+        <input type="date" value={dueOn} onChange={handleDueOnChange} className={s.dateField} />
         <input
           type="number"
           value={estimatedCount}

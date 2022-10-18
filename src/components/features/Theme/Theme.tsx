@@ -12,11 +12,7 @@ const Theme: FC<Props> = ({ children }) => {
   const isLoading = useTheme();
   const isDarkTheme = useIsDarkTheme();
 
-  return isLoading ? (
-    <></>
-  ) : (
-    <div className={isDarkTheme ? darkTheme : lightTheme}>{children}</div>
-  );
+  return isLoading ? <></> : <div className={isDarkTheme ? darkTheme : lightTheme}>{children}</div>;
 };
 
 export default Theme;

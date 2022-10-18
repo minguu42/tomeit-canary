@@ -24,7 +24,7 @@ export const useRemarkedTaskMutators = (): RemarkedTaskMutators => {
     (task: Task) => {
       setAtom(task);
     },
-    [setAtom]
+    [setAtom],
   );
 
   const unsetRemarkedTask = useCallback(() => {

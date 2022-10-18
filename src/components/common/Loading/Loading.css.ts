@@ -10,7 +10,4 @@ export const background = style({
   backgroundColor: color.background,
 });
 
-export const message = style([
-  typography.title.large,
-  { color: color.on.background },
-]);
+export const message = style([typography.title.large, { color: color.on.background }]);

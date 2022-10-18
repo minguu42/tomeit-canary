@@ -10,7 +10,9 @@ type Props = {
 };
 
 const LoginDialog: FC<Props> = ({ isOpen, onScrimClick }) => {
-  if (!isOpen) return <></>;
+  if (!isOpen) {
+    return <></>;
+  }
 
   return (
     <>

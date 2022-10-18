@@ -23,7 +23,7 @@ export const usePlayingTaskMutators = (): PlayingTaskMutators => {
     (task: Task) => {
       setAtom(task);
     },
-    [setAtom]
+    [setAtom],
   );
 
   const unsetPlayingTask = useCallback(() => {

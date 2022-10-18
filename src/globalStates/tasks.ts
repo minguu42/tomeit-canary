@@ -24,7 +24,7 @@ export const useTasksMutators = (): tasksMutators => {
     (task: Task) => {
       setTasks((prev) => [...prev, task]);
     },
-    [setTasks]
+    [setTasks],
   );
 
   const changeTaskTitle = useCallback(
@@ -38,7 +38,7 @@ export const useTasksMutators = (): tasksMutators => {
         return [...prev.slice(0, index), newTask, ...prev.slice(index + 1)];
       });
     },
-    [setTasks]
+    [setTasks],
   );
 
   const toggleHasDoToday = useCallback(
@@ -52,7 +52,7 @@ export const useTasksMutators = (): tasksMutators => {
         return [...prev.slice(0, index), newTask, ...prev.slice(index + 1)];
       });
     },
-    [setTasks]
+    [setTasks],
   );
 
   const deleteTask = useCallback(
@@ -62,7 +62,7 @@ export const useTasksMutators = (): tasksMutators => {
         return [...prev.slice(0, index), ...prev.slice(index + 1)];
       });
     },
-    [setTasks]
+    [setTasks],
   );
 
   return { addTask, changeTaskTitle, toggleHasDoToday, deleteTask };

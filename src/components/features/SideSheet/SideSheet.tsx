@@ -4,10 +4,7 @@ import StandardIconButton from "@/components/common/StandardIconButton";
 import Content from "@/components/features/SideSheet/Content";
 import { CircleIcon, TimerIcon } from "@/components/icons";
 import * as s from "./SideSheet.css";
-import {
-  useRemarkedTask,
-  useRemarkedTaskMutators,
-} from "@/globalStates/remarkedTask";
+import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
 import { formatDate } from "@/lib/formatDate";
 import TitleField from "@/components/features/SideSheet/TitleField";
 import ActionFiled from "@/components/features/SideSheet/ActionField";
@@ -20,7 +17,9 @@ const SideSheet: FC = () => {
   const { toggleHasDoToday, deleteTask } = useTasksMutators();
 
   const handleToggleHasDoTodayField = () => {
-    if (remarkedTask === null) return;
+    if (remarkedTask === null) {
+      return;
+    }
     toggleHasDoToday(remarkedTask.id);
     const newRemarkedTask: Task = {
       ...remarkedTask,
@@ -30,7 +29,9 @@ const SideSheet: FC = () => {
   };
 
   const handleDeleteField = () => {
-    if (remarkedTask === null) return;
+    if (remarkedTask === null) {
+      return;
+    }
 
     deleteTask(remarkedTask.id);
     unsetRemarkedTask();
@@ -48,10 +49,7 @@ const SideSheet: FC = () => {
           label="完了"
           onClick={() => window.alert(remarkedTask.title)}
         />
-        <TitleField
-          taskID={remarkedTask.id}
-          initialTitle={remarkedTask.title}
-        />
+        <TitleField taskID={remarkedTask.id} initialTitle={remarkedTask.title} />
       </div>
       <div className={s.divider} />
       <Content
@@ -67,11 +65,7 @@ const SideSheet: FC = () => {
       <Content
         leadingIcon={<TimerIcon />}
         name="期限"
-        value={
-          remarkedTask.dueOn !== null
-            ? formatDate(remarkedTask.dueOn, "locale")
-            : ""
-        }
+        value={remarkedTask.dueOn !== null ? formatDate(remarkedTask.dueOn, "locale") : ""}
       />
       {remarkedTask.hasDoToday ? (
         <ActionFiled
@@ -86,11 +80,7 @@ const SideSheet: FC = () => {
           onClick={handleToggleHasDoTodayField}
         />
       )}
-      <ActionFiled
-        leadingIcon={<TimerIcon />}
-        label="削除"
-        onClick={handleDeleteField}
-      />
+      <ActionFiled leadingIcon={<TimerIcon />} label="削除" onClick={handleDeleteField} />
     </div>
   );
 };
