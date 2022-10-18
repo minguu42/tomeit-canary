@@ -73,8 +73,8 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
         label="タスクの完了"
         onClick={() => window.alert("タスクの完了")}
       />
-      <button  onClick={handleClick}>
-        <p >{task.title}</p>
+      <button onClick={handleClick}>
+        <p>{task.title}</p>
         {flagsExist && (
           <div>
             {task.actualCount !== 0 && actualCountFlag}
