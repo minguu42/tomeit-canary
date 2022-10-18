@@ -12,7 +12,6 @@ const nextConfig = {
     dirs: [
       "src/components",
       "src/globalStates",
-      "src/hooks",
       "src/lib",
       "src/pages",
       "src/styles",
