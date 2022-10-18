@@ -15,10 +15,7 @@ const indicatorBase = style({
 
 export const indicator = styleVariants({
   _: [indicatorBase],
-  active: [
-    indicatorBase,
-    { backgroundColor: `rgb(${color.secondary.container})` },
-  ],
+  active: [indicatorBase, { backgroundColor: `rgb(${color.secondary.container})` }],
 });
 
 const stateLayerBase = style({

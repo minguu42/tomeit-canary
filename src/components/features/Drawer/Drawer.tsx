@@ -4,10 +4,7 @@ import { useRouter } from "next/router";
 import { LightModeIcon } from "@/components/icons";
 import Indicator from "@/components/features/Drawer/Indicator";
 import * as s from "./Drawer.css";
-import {
-  useIsDrawerOpenAtom,
-  useIsDrawerOpenMutators,
-} from "@/globalStates/isDrawerOpen";
+import { useIsDrawerOpenAtom, useIsDrawerOpenMutators } from "@/globalStates/isDrawerOpen";
 
 export const Drawer: FC = () => {
   const isOpen = useIsDrawerOpenAtom();

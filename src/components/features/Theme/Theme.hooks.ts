@@ -9,9 +9,7 @@ export const useTheme = (): boolean => {
   useEffect(() => {
     let theme = window.localStorage.getItem("theme");
     if (theme === null) {
-      theme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
+      theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
     setIsDarkTheme(theme === "dark");
     setIsLoading(false);

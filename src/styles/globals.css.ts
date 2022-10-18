@@ -16,14 +16,11 @@ globalStyle(":where(a)", {
   textDecoration: "none",
 });
 
-globalStyle(
-  `:where(button, [type="button"], [type="reset"], [type="submit"], [role="button"])`,
-  {
-    color: "inherit",
-    cursor: "pointer",
-    borderWidth: "0",
-  }
-);
+globalStyle(`:where(button, [type="button"], [type="reset"], [type="submit"], [role="button"])`, {
+  color: "inherit",
+  cursor: "pointer",
+  borderWidth: "0",
+});
 
 globalStyle(":where(nav, ol, ul, menu)", {
   listStyleType: "none",

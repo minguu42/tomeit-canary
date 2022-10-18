@@ -1,10 +1,4 @@
-import {
-  ChangeEventHandler,
-  FC,
-  FormEventHandler,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } from "react";
 
 import { useTasksMutators } from "@/globalStates/tasks";
 

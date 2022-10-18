@@ -49,9 +49,6 @@ export const stateLayer = style({
   },
 });
 
-export const labelText = style([
-  typography.label.large,
-  { color: `rgb(${color.on.surface._})` },
-]);
+export const labelText = style([typography.label.large, { color: `rgb(${color.on.surface._})` }]);
 
 export const leadingIcon = style({ color: `rgb(${color.on.surface.variant})` });

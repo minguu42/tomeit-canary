@@ -2,11 +2,7 @@ import { FC, useEffect, useState } from "react";
 
 import * as s from "./PomodoroPlayer.css";
 import StandardIconButton from "@/components/common/StandardIconButton";
-import {
-  PauseCircleIcon,
-  PlayCircleIcon,
-  StopCircleIcon,
-} from "@/components/icons";
+import { PauseCircleIcon, PlayCircleIcon, StopCircleIcon } from "@/components/icons";
 import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
 import { usePlayingTask } from "@/globalStates/playingTask";
 

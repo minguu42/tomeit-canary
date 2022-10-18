@@ -11,13 +11,7 @@ type Props = {
   badgeLabelText?: string;
 };
 
-const Indicator: FC<Props> = ({
-  url,
-  isActive,
-  icon,
-  labelText,
-  badgeLabelText,
-}) => (
+const Indicator: FC<Props> = ({ url, isActive, icon, labelText, badgeLabelText }) => (
   <li>
     <Link href={url}>
       <a className={isActive ? s.indicator.active : s.indicator._}>

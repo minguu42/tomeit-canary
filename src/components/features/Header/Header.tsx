@@ -4,22 +4,10 @@ import FilledButton from "@/components/common/FilledButton";
 import StandardIconButton from "@/components/common/StandardIconButton";
 import AccountMenu from "@/components/features/Header/AccountMenu";
 import LoginDialog from "@/components/features/Header/LoginDialog";
-import {
-  DarkModeIcon,
-  LightModeIcon,
-  LoginIcon,
-  MenuIcon,
-  MenuOpenIcon,
-} from "@/components/icons";
+import { DarkModeIcon, LightModeIcon, LoginIcon, MenuIcon, MenuOpenIcon } from "@/components/icons";
 import * as s from "./Header.css";
-import {
-  useIsDarkTheme,
-  useIsDarkThemeMutators,
-} from "@/globalStates/isDarkTheme";
-import {
-  useIsDrawerOpenAtom,
-  useIsDrawerOpenMutators,
-} from "@/globalStates/isDrawerOpen";
+import { useIsDarkTheme, useIsDarkThemeMutators } from "@/globalStates/isDarkTheme";
+import { useIsDrawerOpenAtom, useIsDrawerOpenMutators } from "@/globalStates/isDrawerOpen";
 import { useUser } from "@/globalStates/user";
 
 const Header: FC = () => {
@@ -50,16 +38,9 @@ const Header: FC = () => {
           label="テーマの切り替え"
           onClick={toggleTheme}
         />
-        <FilledButton
-          icon={<LoginIcon />}
-          labelText="ログイン"
-          onClick={toggleLoginDialog}
-        />
+        <FilledButton icon={<LoginIcon />} labelText="ログイン" onClick={toggleLoginDialog} />
         <div className={s.space4} />
-        <LoginDialog
-          isOpen={isLoginDialogOpen}
-          onScrimClick={toggleLoginDialog}
-        />
+        <LoginDialog isOpen={isLoginDialogOpen} onScrimClick={toggleLoginDialog} />
       </header>
     );
   }

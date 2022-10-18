@@ -1,9 +1,4 @@
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  signOut,
-} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, signOut } from "firebase/auth";
 
 import { app } from "@/lib/firebase";
 

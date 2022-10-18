@@ -11,10 +11,7 @@ import {
 import * as s from "./TaskListItem.css";
 import { formatDate } from "@/lib/formatDate";
 import { Task } from "@/types/task";
-import {
-  useRemarkedTask,
-  useRemarkedTaskMutators,
-} from "@/globalStates/remarkedTask";
+import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
 import { usePlayingTaskMutators } from "@/globalStates/playingTask";
 
 type Props = {
@@ -43,10 +40,7 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
   };
 
   const flagsExist =
-    task.actualCount !== 0 ||
-    task.estimatedCount !== 0 ||
-    task.hasDoToday ||
-    task.dueOn !== null;
+    task.actualCount !== 0 || task.estimatedCount !== 0 || task.hasDoToday || task.dueOn !== null;
   const actualCountFlag = (
     <div className={s.actualCountFlag}>
       <TimerIcon size={18} />
