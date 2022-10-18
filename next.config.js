@@ -4,6 +4,7 @@ const withVanillaExtract = createVanillaExtractPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: true,
   images: {
     loader: "custom",
   },
@@ -13,9 +14,9 @@ const nextConfig = {
       "src/globalStates",
       "src/hooks",
       "src/lib",
-      "src/models",
       "src/pages",
       "src/styles",
+      "src/types",
     ],
   },
 };

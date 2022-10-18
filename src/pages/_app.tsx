@@ -1,20 +1,21 @@
-import type { AppProps } from "next/app";
+import { FC } from "react";
+import { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 
 import Auth from "@/components/features/Auth";
 import Theme from "@/components/features/Theme";
 import "@/styles/globals.css";
 
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <RecoilRoot>
-      <Theme>
-        <Auth>
+      <Auth>
+        <Theme>
           <Component {...pageProps} />
-        </Auth>
-      </Theme>
+        </Theme>
+      </Auth>
     </RecoilRoot>
   );
-}
+};
 
 export default MyApp;

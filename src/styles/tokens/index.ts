@@ -1,4 +1,4 @@
-export { stateLayerOpacity } from "./stateLayer.css";
+export { state } from "./state.css";
 import { theme } from "./theme.css";
 export const color = theme.color;
 export const elevation = theme.elevation;

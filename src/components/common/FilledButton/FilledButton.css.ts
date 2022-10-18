@@ -1,28 +1,26 @@
 import { style } from "@vanilla-extract/css";
 
-import {
-  stateLayerOpacity,
-  color,
-  elevation,
-  typography,
-} from "@/styles/tokens";
+import { state, color, elevation, typography } from "@/styles/tokens";
 
 export const container = style({
   position: "relative",
   display: "flex",
   gap: 8,
-  justifyContent: "center",
   alignItems: "center",
-  height: "40px",
-  borderRadius: "20px",
+  justifyContent: "center",
+  height: 40,
+  borderRadius: 20,
   padding: "0 24px 0 16px",
+  color: `rgb(${color.on.primary._})`,
   backgroundColor: `rgb(${color.primary._})`,
   selectors: {
-    "&:disabled": {
-      backgroundColor: `rgb(${color.on.surface._} / 0.12)`,
-    },
     "&:hover": {
       boxShadow: elevation.level1,
+    },
+    "&:disabled": {
+      color: `rgb(${color.on.surface._} / ${state.content.disabled})`,
+      backgroundColor: `rgb(${color.on.surface._} / ${state.container.disabled})`,
+      boxShadow: "none",
     },
   },
 });
@@ -33,26 +31,18 @@ export const stateLayer = style({
   left: 0,
   width: "100%",
   height: "100%",
-  borderRadius: "20px",
+  borderRadius: "inherit",
   selectors: {
     [`${container}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.primary._} / ${stateLayerOpacity.hover})`,
+      backgroundColor: `rgb(${color.on.primary._} / ${state.layer.hover})`,
     },
-    [`${container}:focus > &`]: {
-      backgroundColor: `rgb(${color.on.primary._} / ${stateLayerOpacity.focus})`,
+    [`${container}:focus-visible > &`]: {
+      backgroundColor: `rgb(${color.on.primary._} / ${state.layer.focus})`,
     },
     [`${container}:active > &`]: {
-      backgroundColor: `rgb(${color.on.primary._} / ${stateLayerOpacity.pressed})`,
+      backgroundColor: `rgb(${color.on.primary._} / ${state.layer.active})`,
     },
-  },
-});
-
-export const icon = style({
-  color: `rgb(${color.on.primary._})`,
-  selectors: {
-    [`${container}:disabled > &`]: {
-      color: `rgb(${color.on.surface._} / 0.38)`,
-    },
+    [`${container}:disabled > &`]: { backgroundColor: "transparent" },
   },
 });
 
@@ -62,7 +52,7 @@ export const labelText = style([
     color: `rgb(${color.on.primary._})`,
     selectors: {
       [`${container}:disabled > &`]: {
-        color: `rgb(${color.on.surface._} / 0.38)`,
+        color: `rgb(${color.on.surface._} / ${state.content.disabled})`,
       },
     },
   },

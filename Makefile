@@ -12,7 +12,7 @@ docs: ## http://localhost:8000でドキュメント用サーバを起動する
 build:  ## Next.js アプリをビルドする
 	@npm run build
 
-fmt:  ## js, ts, jsx, tsx, json, mdファイルを自動整形する
+fmt:  ## js, ts, jsx, tsx, json, ymlファイルを自動整形する
 	@npm run fmt
 
 lint:  ## js, ts, jsx, tsxファイルを静的解析する

@@ -1,38 +1,24 @@
-import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
-import AddTaskForm from "@/components/features/TaskList/AddTaskForm";
+import { FC } from "react";
 
-const TaskList: FC = () => {
-  const [name, setName] = useState("");
-  const [dueOn, setDueOn] = useState("");
-  const [primary, setPrimary] = useState("");
+import TaskListItem from "@/components/features/TaskList/TaskListItem";
+import { useTasks } from "@/globalStates/tasks";
 
-  const onNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setName(e.target.value);
-  };
+type Props = {
+  isFocusPage?: boolean;
+};
 
-  const onDueOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setDueOn(e.target.value);
-  };
-
-  const onPrimaryChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setPrimary(e.target.value);
-  };
-
-  const onSubmitButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    window.alert(`name: ${name}, dueOn: ${dueOn}, primary: ${primary}`);
-  };
+const TaskList: FC<Props> = ({ isFocusPage }) => {
+  let tasks = useTasks();
+  if (isFocusPage) {
+    tasks = tasks.filter((t) => t.hasDoToday);
+  }
 
   return (
-    <AddTaskForm
-      name={name}
-      dueOn={dueOn}
-      primary={primary}
-      onNameChange={onNameChange}
-      onDueOnChange={onDueOnChange}
-      onPrimaryChange={onPrimaryChange}
-      onSubmitButtonClick={onSubmitButtonClick}
-    />
+    <ul>
+      {tasks.map((task) => (
+        <TaskListItem task={task} key={task.id} isFocusPage={isFocusPage} />
+      ))}
+    </ul>
   );
 };
 

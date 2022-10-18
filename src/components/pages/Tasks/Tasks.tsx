@@ -1,20 +1,23 @@
 import { NextPage } from "next";
 
-import TopAppBar from "@/components/features/TopAppBar";
-import NavigationDrawer from "@/components/features/NavigationDrawer";
+import Header from "@/components/features/Header";
+import Drawer from "@/components/features/Drawer";
+import TaskAddForm from "@/components/features/TaskAddForm";
 import TaskList from "@/components/features/TaskList";
+import SideSheet from "@/components/features/SideSheet";
 import * as s from "./Tasks.css";
 
-// Tasksはタスク管理ページに対応するページコンポーネント
 const Tasks: NextPage = () => {
   return (
     <div className={s.background}>
-      <TopAppBar />
+      <Header />
       <div className={s.sideLayout}>
-        <NavigationDrawer />
-        <div className={s.body}>
+        <Drawer />
+        <main className={s.main}>
+          <TaskAddForm />
           <TaskList />
-        </div>
+        </main>
+        <SideSheet />
       </div>
     </div>
   );
