@@ -5,6 +5,7 @@ import {
   CalendarMonthIcon,
   CircleIcon,
   DescriptionIcon,
+  PlayCircleIcon,
   TimerIcon,
 } from "@/components/icons";
 import * as s from "./TaskListItem.css";
@@ -14,14 +15,17 @@ import {
   useRemarkedTask,
   useRemarkedTaskMutators,
 } from "@/globalStates/remarkedTask";
+import {usePlayingTaskMutators} from "@/globalStates/playingTask";
 
 type Props = {
   task: Task;
+  isFocusPage?: boolean;
 };
 
-const TaskListItem: FC<Props> = ({ task }) => {
+const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
   const remarkedTask = useRemarkedTask();
   const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
+  const { setPlayingTask } = usePlayingTaskMutators();
   const handleClick = () => {
     if (remarkedTask === null) {
       setRemarkedTask(task);
@@ -34,6 +38,9 @@ const TaskListItem: FC<Props> = ({ task }) => {
       setRemarkedTask(task);
     }
   };
+  const handlePlayButtonClick = () => {
+    setPlayingTask(task);
+  }
 
   const flagsExist =
     task.actualCount !== 0 ||
@@ -84,6 +91,13 @@ const TaskListItem: FC<Props> = ({ task }) => {
           </div>
         )}
       </button>
+      {isFocusPage && (
+        <StandardIconButton
+          icon={<PlayCircleIcon />}
+          label="ポモドーロの実行"
+          onClick={handlePlayButtonClick}
+        />
+      )}
     </li>
   );
 };

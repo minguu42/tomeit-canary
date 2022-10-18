@@ -10,10 +10,23 @@ import {
 import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
 import { usePlayingTask } from "@/globalStates/playingTask";
 
+const POMODORO_TIME = 1;
+const SHORT_REST_TIME = 3;
+const LONG_REST_TIME = 9;
+const INIT_REST_COUNT = 4;
+
 const PomodoroPlayer: FC = () => {
-  const [time, setTime] = useState(1500);
+  const [time, setTime] = useState(POMODORO_TIME);
   const [isActive, setIsActive] = useState(false);
+  const [isNextPomodoro, setIsNextPomodoro] = useState(false);
+  const [restCount, setRestCount] = useState(INIT_REST_COUNT);
   const playingTask = usePlayingTask();
+
+  useEffect(() => {
+    if (playingTask !== null) {
+      setIsActive(true);
+    }
+  }, [playingTask])
 
   useEffect(() => {
     if (isActive) {
@@ -23,6 +36,21 @@ const PomodoroPlayer: FC = () => {
       return () => clearInterval(id);
     }
   }, [isActive]);
+
+  useEffect(() => {
+    if (time === 0) {
+      setIsActive(false);
+      if (isNextPomodoro) {
+        setTime(POMODORO_TIME)
+        setRestCount((prev) => prev === 1 ? 4 : prev - 1);
+      } else if (!isNextPomodoro && restCount !== 1) {
+        setTime(SHORT_REST_TIME)
+      } else if (!isNextPomodoro && restCount === 1) {
+        setTime(LONG_REST_TIME)
+      }
+      setIsNextPomodoro((prev) => !prev)
+    }
+  }, [isNextPomodoro, restCount, time])
 
   const startPomodoro = () => {
     setIsActive(true);
