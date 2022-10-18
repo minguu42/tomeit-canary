@@ -15,7 +15,7 @@ import {
   useRemarkedTask,
   useRemarkedTaskMutators,
 } from "@/globalStates/remarkedTask";
-import {usePlayingTaskMutators} from "@/globalStates/playingTask";
+import { usePlayingTaskMutators } from "@/globalStates/playingTask";
 
 type Props = {
   task: Task;
@@ -40,7 +40,7 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
   };
   const handlePlayButtonClick = () => {
     setPlayingTask(task);
-  }
+  };
 
   const flagsExist =
     task.actualCount !== 0 ||

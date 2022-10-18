@@ -26,7 +26,7 @@ const PomodoroPlayer: FC = () => {
     if (playingTask !== null) {
       setIsActive(true);
     }
-  }, [playingTask])
+  }, [playingTask]);
 
   useEffect(() => {
     if (isActive) {
@@ -41,16 +41,16 @@ const PomodoroPlayer: FC = () => {
     if (time === 0) {
       setIsActive(false);
       if (isNextPomodoro) {
-        setTime(POMODORO_TIME)
-        setRestCount((prev) => prev === 1 ? 4 : prev - 1);
+        setTime(POMODORO_TIME);
+        setRestCount((prev) => (prev === 1 ? 4 : prev - 1));
       } else if (!isNextPomodoro && restCount !== 1) {
-        setTime(SHORT_REST_TIME)
+        setTime(SHORT_REST_TIME);
       } else if (!isNextPomodoro && restCount === 1) {
-        setTime(LONG_REST_TIME)
+        setTime(LONG_REST_TIME);
       }
-      setIsNextPomodoro((prev) => !prev)
+      setIsNextPomodoro((prev) => !prev);
     }
-  }, [isNextPomodoro, restCount, time])
+  }, [isNextPomodoro, restCount, time]);
 
   const startPomodoro = () => {
     setIsActive(true);
