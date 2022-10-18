@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build && next export",
     "start": "next start",
-    "check-style": "prettier --check --ignore-path .gitignore '{**/*,*}.{js,ts,jsx,tsx,json,yml}'",
-    "fmt": "prettier --ignore-path .gitignore -l -w '{**/*,*}.{js,ts,jsx,tsx,json,yml}'",
+    "check-style": "rome ci src",
+    "fmt": "rome format --write src",
     "lint": "next lint"
   },
   "dependencies": {
