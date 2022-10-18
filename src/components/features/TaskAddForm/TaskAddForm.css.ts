@@ -33,7 +33,7 @@ export const textField = style([
     color: `rgb(${color.on.surface.variant})`,
     backgroundColor: "transparent",
     selectors: {
-      [`&:focus-visible`]: {
+      ["&:focus-visible"]: {
         outline: "none",
         color: `rgb(${color.primary._})`,
         borderBottom: `2px solid rgb(${color.primary._})`,

@@ -17,7 +17,9 @@ const SideSheet: FC = () => {
   const { toggleHasDoToday, deleteTask } = useTasksMutators();
 
   const handleToggleHasDoTodayField = () => {
-    if (remarkedTask === null) return;
+    if (remarkedTask === null) {
+      return;
+    }
     toggleHasDoToday(remarkedTask.id);
     const newRemarkedTask: Task = {
       ...remarkedTask,
@@ -27,7 +29,9 @@ const SideSheet: FC = () => {
   };
 
   const handleDeleteField = () => {
-    if (remarkedTask === null) return;
+    if (remarkedTask === null) {
+      return;
+    }
 
     deleteTask(remarkedTask.id);
     unsetRemarkedTask();

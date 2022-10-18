@@ -19,7 +19,7 @@ const GoogleLoginButton: FC<Props> = ({ login }) => (
         layout="fixed"
         alt=""
         loader={imageLoader}
-        unoptimized
+        unoptimized={true}
       />
     </div>
     Sign in with Google

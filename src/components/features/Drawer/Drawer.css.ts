@@ -34,7 +34,7 @@ export const scrim = style({
       zIndex: 1,
       width: "100%",
       height: "100%",
-      backgroundColor: `rgb(50 47 55 / 0.4)`,
+      backgroundColor: "rgb(50 47 55 / 0.4)",
     },
     "screen and (min-width: 840px)": {
       display: "none",

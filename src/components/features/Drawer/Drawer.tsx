@@ -11,7 +11,9 @@ export const Drawer: FC = () => {
   const { toggleDrawer } = useIsDrawerOpenMutators();
   const router = useRouter();
 
-  if (!isOpen) return <></>;
+  if (!isOpen) {
+    return <></>;
+  }
 
   return (
     <>
