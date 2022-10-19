@@ -7,7 +7,7 @@ import {
   DescriptionIcon,
   PlayCircleIcon,
   TimerIcon,
-} from "@/components/icons";
+} from "@/components/common/icons";
 import { formatDate } from "@/lib/formatDate";
 import { Task } from "@/types/task";
 import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";

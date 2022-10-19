@@ -4,7 +4,7 @@ import FilledButton from "@/components/common/FilledButton";
 import StandardIconButton from "@/components/common/StandardIconButton";
 import AccountMenu from "@/components/features/Header/AccountMenu";
 import LoginDialog from "@/components/features/Header/LoginDialog";
-import { DarkModeIcon, LightModeIcon, LoginIcon, MenuIcon, MenuOpenIcon } from "@/components/icons";
+import { DarkModeIcon, LightModeIcon, LoginIcon, MenuIcon, MenuOpenIcon } from "@/components/common/icons";
 import * as s from "./Header.css";
 import { useIsDarkTheme, useIsDarkThemeMutators } from "@/globalStates/isDarkTheme";
 import { useIsDrawerOpenAtom, useIsDrawerOpenMutators } from "@/globalStates/isDrawerOpen";

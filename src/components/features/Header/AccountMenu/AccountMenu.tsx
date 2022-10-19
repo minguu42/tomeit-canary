@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 
 import StandardIconButton from "@/components/common/StandardIconButton";
-import { AccountCircleIcon, LogoutIcon } from "@/components/icons";
+import { AccountCircleIcon, LogoutIcon } from "@/components/common/icons";
 import * as s from "./AccountMenu.css";
 import { logout } from "@/lib/auth";
 

@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import StandardIconButton from "@/components/common/StandardIconButton";
 import Content from "@/components/features/SideSheet/Content";
-import { CircleIcon, TimerIcon } from "@/components/icons";
+import { CircleIcon, TimerIcon } from "@/components/common/icons";
 import * as s from "./SideSheet.css";
 import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
 import { formatDate } from "@/lib/formatDate";

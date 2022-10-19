@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
 
-import { AddTaskIcon } from "@/components/icons";
+import { AddTaskIcon } from "@/components/common/icons";
 import FilledTonalButton from "@/components/common/FilledTonalButton";
 import * as s from "./TaskAddForm.css";
 import { Task } from "@/types/task";

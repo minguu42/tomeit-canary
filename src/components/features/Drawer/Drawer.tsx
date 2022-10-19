@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useRouter } from "next/router";
 
-import { LightModeIcon } from "@/components/icons";
+import { LightModeIcon } from "@/components/common/icons";
 import Indicator from "@/components/features/Drawer/Indicator";
 import * as s from "./Drawer.css";
 import { useIsDrawerOpenAtom, useIsDrawerOpenMutators } from "@/globalStates/isDrawerOpen";
