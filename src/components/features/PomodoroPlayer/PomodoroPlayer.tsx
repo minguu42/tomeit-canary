@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 
 import * as s from "./PomodoroPlayer.css";
-import StandardIconButton from "@/components/common/StandardIconButton";
+import IconButton from "@/components/common/IconButton";
 import { PauseCircleIcon, PlayCircleIcon, StopCircleIcon } from "@/components/common/icons";
 import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
 import { usePlayingTask } from "@/globalStates/playingTask";
@@ -68,32 +68,16 @@ const PomodoroPlayer: FC = () => {
   return (
     <div className={s.container}>
       {!isActive && time === 1500 && (
-        <StandardIconButton
-          icon={<PlayCircleIcon />}
-          label="ポモドーロの開始"
-          onClick={startPomodoro}
-        />
+        <IconButton icon={<PlayCircleIcon />} label="ポモドーロの開始" onClick={startPomodoro} />
       )}
       {!isActive && time !== 1500 && (
         <>
-          <StandardIconButton
-            icon={<PlayCircleIcon />}
-            label="ポモドーロの開始"
-            onClick={startPomodoro}
-          />
-          <StandardIconButton
-            icon={<StopCircleIcon />}
-            label="ポモドーロの中止"
-            onClick={stopPomodoro}
-          />
+          <IconButton icon={<PlayCircleIcon />} label="ポモドーロの開始" onClick={startPomodoro} />
+          <IconButton icon={<StopCircleIcon />} label="ポモドーロの中止" onClick={stopPomodoro} />
         </>
       )}
       {isActive && (
-        <StandardIconButton
-          icon={<PauseCircleIcon />}
-          label="ポモドーロの停止"
-          onClick={pausePomodoro}
-        />
+        <IconButton icon={<PauseCircleIcon />} label="ポモドーロの停止" onClick={pausePomodoro} />
       )}
       <h3 className={s.mgr16}>{formatSecondsToMinutesSeconds(time)}</h3>
       <p>{playingTask.title}</p>

@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 
-import StandardIconButton from "@/components/common/StandardIconButton";
+import IconButton from "@/components/common/IconButton";
 import { AccountCircleIcon, LogoutIcon } from "@/components/common/icons";
 import * as s from "./AccountMenu.css";
 import { logout } from "@/lib/auth";
@@ -15,7 +15,7 @@ const AccountMenu: FC = () => {
   if (isOpen) {
     return (
       <div className={s.layout}>
-        <StandardIconButton
+        <IconButton
           icon={<AccountCircleIcon />}
           label="アカウントメニューの切り替え"
           onClick={toggleMenu}
@@ -34,7 +34,7 @@ const AccountMenu: FC = () => {
   }
 
   return (
-    <StandardIconButton
+    <IconButton
       icon={<AccountCircleIcon />}
       label="アカウントメニューの切り替え"
       onClick={toggleMenu}
