@@ -3,6 +3,7 @@ import { style } from "@vanilla-extract/css";
 import { color } from "@/styles/tokens";
 
 export const container = style({
+  paddingTop: 8,
   width: "360px",
   backgroundColor: `rgb(${color.surface._})`,
   borderRadius: "0 16px 16px 0",
