@@ -4,6 +4,7 @@ import { RecoilRoot } from "recoil";
 
 import Auth from "@/components/features/Auth";
 import Theme from "@/components/features/Theme";
+import Layout from "@/components/layouts/Layout";
 import "@/styles/globals.css";
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
@@ -11,7 +12,9 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
     <RecoilRoot>
       <Auth>
         <Theme>
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </Theme>
       </Auth>
     </RecoilRoot>
