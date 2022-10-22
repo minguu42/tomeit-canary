@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 
-import Header from "@/components/features/Header";
-import Drawer from "@/components/features/Drawer";
+import Header from "@/components/layouts/Layout/Header";
+import Drawer from "@/components/layouts/Layout/Drawer";
 import TaskAddForm from "@/components/features/TaskAddForm";
 import TaskList from "@/components/features/TaskList";
 import SideSheet from "@/components/features/SideSheet";

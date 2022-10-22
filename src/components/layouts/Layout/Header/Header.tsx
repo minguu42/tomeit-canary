@@ -2,8 +2,8 @@ import { FC, useState } from "react";
 
 import FilledButton from "@/components/common/FilledButton";
 import IconButton from "@/components/common/IconButton";
-import AccountMenu from "@/components/features/Header/AccountMenu";
-import LoginDialog from "@/components/features/Header/LoginDialog";
+import AccountMenu from "@/components/layouts/Layout/Header/AccountMenu";
+import LoginDialog from "@/components/layouts/Layout/Header/LoginDialog";
 import {
   DarkModeIcon,
   LightModeIcon,
