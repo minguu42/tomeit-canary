@@ -1,13 +1,13 @@
 import { FC } from "react";
 
-import StandardIconButton from "@/components/common/StandardIconButton";
-import Content from "@/components/features/SideSheet/Content";
-import { CircleIcon, TimerIcon } from "@/components/icons";
+import IconButton from "@/components/common/IconButton";
+import Content from "@/components/layouts/Layout/SideSheet/Content";
+import { CircleIcon, TimerIcon } from "@/components/common/icons";
 import * as s from "./SideSheet.css";
 import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
 import { formatDate } from "@/lib/formatDate";
-import TitleField from "@/components/features/SideSheet/TitleField";
-import ActionFiled from "@/components/features/SideSheet/ActionField";
+import TitleField from "@/components/layouts/Layout/SideSheet/TitleField";
+import ActionFiled from "@/components/layouts/Layout/SideSheet/ActionField";
 import { useTasksMutators } from "@/globalStates/tasks";
 import { Task } from "@/types/task";
 
@@ -44,7 +44,7 @@ const SideSheet: FC = () => {
   return (
     <div className={s.container}>
       <div className={s.name}>
-        <StandardIconButton
+        <IconButton
           icon={<CircleIcon />}
           label="完了"
           onClick={() => window.alert(remarkedTask.title)}

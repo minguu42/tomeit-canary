@@ -4,9 +4,8 @@ import { state, color } from "@/styles/tokens";
 
 export const container = style({
   position: "relative",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+  display: "grid",
+  placeItems: "center",
   width: 48,
   height: 48,
   color: `rgb(${color.on.surface.variant})`,

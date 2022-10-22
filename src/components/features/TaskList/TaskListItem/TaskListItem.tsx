@@ -1,13 +1,13 @@
 import { FC } from "react";
 
-import StandardIconButton from "@/components/common/StandardIconButton";
+import IconButton from "@/components/common/IconButton";
 import {
   CalendarMonthIcon,
   CircleIcon,
   DescriptionIcon,
   PlayCircleIcon,
   TimerIcon,
-} from "@/components/icons";
+} from "@/components/common/icons";
 import { formatDate } from "@/lib/formatDate";
 import { Task } from "@/types/task";
 import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
@@ -68,7 +68,7 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
 
   return (
     <li>
-      <StandardIconButton
+      <IconButton
         icon={<CircleIcon />}
         label="タスクの完了"
         onClick={() => window.alert("タスクの完了")}
@@ -85,7 +85,7 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
         )}
       </button>
       {isFocusPage && (
-        <StandardIconButton
+        <IconButton
           icon={<PlayCircleIcon />}
           label="ポモドーロの実行"
           onClick={handlePlayButtonClick}

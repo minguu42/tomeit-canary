@@ -1,14 +1,16 @@
 import { FC } from "react";
 import { useRouter } from "next/router";
 
-import { LightModeIcon } from "@/components/icons";
-import Indicator from "@/components/features/Drawer/Indicator";
+import { LightModeIcon } from "@/components/common/icons";
+import Indicator from "@/components/layouts/Layout/Drawer/Indicator";
 import * as s from "./Drawer.css";
-import { useIsDrawerOpenAtom, useIsDrawerOpenMutators } from "@/globalStates/isDrawerOpen";
 
-export const Drawer: FC = () => {
-  const isOpen = useIsDrawerOpenAtom();
-  const { toggleDrawer } = useIsDrawerOpenMutators();
+type Props = {
+  isOpen: boolean;
+  toggleDrawer: () => void;
+};
+
+export const Drawer: FC<Props> = ({ isOpen, toggleDrawer }) => {
   const router = useRouter();
 
   if (!isOpen) {
