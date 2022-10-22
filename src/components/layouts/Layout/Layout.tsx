@@ -18,7 +18,7 @@ const Layout: FC<Props> = ({ children }) => {
 
   return (
     <div className={s.container}>
-      <Header />
+      <Header isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
       <div className={s.sideLayout}>
         <Drawer isOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
         <div className={s.main}>{children}</div>

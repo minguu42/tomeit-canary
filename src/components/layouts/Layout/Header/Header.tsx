@@ -13,14 +13,16 @@ import {
 } from "@/components/common/icons";
 import * as s from "./Header.css";
 import { useIsDarkTheme, useIsDarkThemeMutators } from "@/globalStates/isDarkTheme";
-import { useIsDrawerOpenAtom, useIsDrawerOpenMutators } from "@/globalStates/isDrawerOpen";
 import { useUser } from "@/globalStates/user";
 
-const Header: FC = () => {
+type Props = {
+  isDrawerOpen: boolean;
+  toggleDrawer: () => void;
+};
+
+const Header: FC<Props> = ({ isDrawerOpen, toggleDrawer }) => {
   const [heading] = useState("Tomeit");
   const user = useUser();
-  const isNavigationDrawerOpen = useIsDrawerOpenAtom();
-  const { toggleDrawer } = useIsDrawerOpenMutators();
   const isDarkTheme = useIsDarkTheme();
   const { toggleTheme } = useIsDarkThemeMutators();
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
@@ -33,7 +35,7 @@ const Header: FC = () => {
     return (
       <header className={s.container}>
         <IconButton
-          icon={isNavigationDrawerOpen ? <MenuOpenIcon /> : <MenuIcon />}
+          icon={isDrawerOpen ? <MenuOpenIcon /> : <MenuIcon />}
           label="ドロワーの切り替え"
           onClick={toggleDrawer}
         />
@@ -54,7 +56,7 @@ const Header: FC = () => {
   return (
     <header className={s.container}>
       <IconButton
-        icon={isNavigationDrawerOpen ? <MenuOpenIcon /> : <MenuIcon />}
+        icon={isDrawerOpen ? <MenuOpenIcon /> : <MenuIcon />}
         label="ナビゲーションドロワーの切り替え"
         onClick={toggleDrawer}
       />
