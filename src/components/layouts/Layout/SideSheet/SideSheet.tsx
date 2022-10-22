@@ -1,13 +1,13 @@
 import { FC } from "react";
 
 import IconButton from "@/components/common/IconButton";
-import Content from "@/components/features/SideSheet/Content";
+import Content from "@/components/layouts/Layout/SideSheet/Content";
 import { CircleIcon, TimerIcon } from "@/components/common/icons";
 import * as s from "./SideSheet.css";
 import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
 import { formatDate } from "@/lib/formatDate";
-import TitleField from "@/components/features/SideSheet/TitleField";
-import ActionFiled from "@/components/features/SideSheet/ActionField";
+import TitleField from "@/components/layouts/Layout/SideSheet/TitleField";
+import ActionFiled from "@/components/layouts/Layout/SideSheet/ActionField";
 import { useTasksMutators } from "@/globalStates/tasks";
 import { Task } from "@/types/task";
 

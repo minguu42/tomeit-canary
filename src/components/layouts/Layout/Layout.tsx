@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 
 import Header from "@/components/layouts/Layout/Header";
 import Drawer from "@/components/layouts/Layout/Drawer";
+import SideSheet from "@/components/layouts/Layout/SideSheet";
 import * as s from "./Layout.css";
 
 type Props = {
@@ -21,6 +22,7 @@ const Layout: FC<Props> = ({ children }) => {
       <div className={s.sideLayout}>
         <Drawer isOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
         <div className={s.main}>{children}</div>
+        <SideSheet />
       </div>
     </div>
   );
