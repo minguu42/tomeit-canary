@@ -23,7 +23,7 @@ export const mainContainer = style({
   flexDirection: "column",
   justifyContent: "center",
   height: 56,
-  backgroundColor: `transparent`,
+  backgroundColor: "transparent",
 });
 
 export const stateLayer = style({
