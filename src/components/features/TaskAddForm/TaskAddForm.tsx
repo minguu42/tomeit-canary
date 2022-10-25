@@ -48,7 +48,9 @@ const TaskAddForm: FC = () => {
   return (
     <form className={s.container}>
       <div className={s.textFieldContainer}>
-        <AddTaskIcon className={s.leadingIcon} />
+        <div className={s.leadingIcon}>
+          <AddTaskIcon />
+        </div>
         <input
           type="text"
           value={title}
