@@ -1,17 +1,11 @@
 import { FC } from "react";
 
 import IconButton from "@/components/common/IconButton";
-import {
-  CalendarMonthIcon,
-  CircleIcon,
-  DescriptionIcon,
-  PlayCircleIcon,
-  TimerIcon,
-} from "@/components/common/icons";
-import { formatDate } from "@/lib/formatDate";
-import { Task } from "@/types/task";
-import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
+import { CircleIcon, PlayCircleIcon } from "@/components/common/icons";
+import * as s from "./TaskListItem.css";
 import { usePlayingTaskMutators } from "@/globalStates/playingTask";
+import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
+import { Task } from "@/types/task";
 
 type Props = {
   task: Task;
@@ -22,6 +16,7 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
   const remarkedTask = useRemarkedTask();
   const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
   const { setPlayingTask } = usePlayingTaskMutators();
+
   const handleClick = () => {
     if (remarkedTask === null) {
       setRemarkedTask(task);
@@ -34,63 +29,33 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
       setRemarkedTask(task);
     }
   };
+
   const handlePlayButtonClick = () => {
     setPlayingTask(task);
   };
 
-  const flagsExist =
-    task.actualCount !== 0 || task.estimatedCount !== 0 || task.hasDoToday || task.dueOn !== null;
-  const actualCountFlag = (
-    <div>
-      <TimerIcon size={18} />
-      <p>{task.actualCount}</p>
-    </div>
-  );
-  const estimatedCountFlag = (
-    <div>
-      {task.actualCount !== 0 && <p>/</p>}
-      <TimerIcon size={18} />
-      <p>{task.estimatedCount}</p>
-    </div>
-  );
-  const hasDoTodayFlag = (
-    <div>
-      <DescriptionIcon size={18} />
-      <p>今日やること</p>
-    </div>
-  );
-  const dueOnFlag = (
-    <div>
-      <CalendarMonthIcon size={18} />
-      <p>{task.dueOn !== null && formatDate(task.dueOn, "locale")}</p>
-    </div>
-  );
-
   return (
-    <li>
-      <IconButton
-        icon={<CircleIcon />}
-        label="タスクの完了"
-        onClick={() => window.alert("タスクの完了")}
-      />
-      <button onClick={handleClick}>
-        <p>{task.title}</p>
-        {flagsExist && (
-          <div>
-            {task.actualCount !== 0 && actualCountFlag}
-            {task.estimatedCount !== 0 && estimatedCountFlag}
-            {task.hasDoToday && hasDoTodayFlag}
-            {task.dueOn !== null && dueOnFlag}
-          </div>
-        )}
+    <li className={s.container}>
+      <div className={s.zIndex1}>
+        <IconButton
+          icon={<CircleIcon />}
+          label="タスクの完了"
+          onClick={() => window.alert("タスクの完了")}
+        />
+      </div>
+      <button onClick={handleClick} className={s.mainContainer}>
+        <h3 className={s.heading}>{task.title}</h3>
       </button>
       {isFocusPage && (
-        <IconButton
-          icon={<PlayCircleIcon />}
-          label="ポモドーロの実行"
-          onClick={handlePlayButtonClick}
-        />
+        <div className={s.zIndex1}>
+          <IconButton
+            icon={<PlayCircleIcon />}
+            label="ポモドーロの実行"
+            onClick={handlePlayButtonClick}
+          />
+        </div>
       )}
+      <div className={s.stateLayer} />
     </li>
   );
 };
