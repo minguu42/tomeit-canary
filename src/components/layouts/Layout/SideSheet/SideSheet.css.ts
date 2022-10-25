@@ -4,7 +4,7 @@ import { color, typography } from "@/styles/tokens";
 
 export const container = style({
   width: 400,
-  backgroundColor: `rgb(${color.surface._})`,
+  backgroundColor: `rgb(${color.surface})`,
   borderRadius: "16px 0 0 16px",
   "@media": {
     "screen and (min-width: 840px)": {
@@ -18,7 +18,7 @@ export const name = style([
   {
     display: "flex",
     alignItems: "center",
-    color: `rgb(${color.on.surface._})`,
+    color: `rgb(${color.on.surface})`,
   },
 ]);
 

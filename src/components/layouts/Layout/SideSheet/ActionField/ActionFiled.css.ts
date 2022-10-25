@@ -12,8 +12,8 @@ export const container = style([
     width: 336,
     height: 56,
     padding: "0 12px",
-    color: `rgb(${color.on.surface.variant})`,
-    backgroundColor: `rgb(${color.surface._})`,
+    color: `rgb(${color.on.surfaceVariant})`,
+    backgroundColor: `rgb(${color.surface})`,
   },
 ]);
 
@@ -28,13 +28,13 @@ export const stateLayer = style({
 
   selectors: {
     [`${container}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.surface.variant} / ${state.layer.hover})`,
+      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.hover})`,
     },
     [`${container}:focus-visible > &`]: {
-      backgroundColor: `rgb(${color.on.surface.variant} / ${state.layer.focus})`,
+      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.focus})`,
     },
     [`${container}:active > &`]: {
-      backgroundColor: `rgb(${color.on.surface.variant} / ${state.layer.active})`,
+      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.active})`,
     },
   },
 });

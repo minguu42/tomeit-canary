@@ -10,8 +10,8 @@ export const container = style({
   paddingRight: "8px",
   fontSize: "0.875rem",
   fontWeight: 600,
-  color: `rgb(${color.on.surface._})`,
-  backgroundColor: `rgb(${color.surface._})`,
+  color: `rgb(${color.on.surface})`,
+  backgroundColor: `rgb(${color.surface})`,
   border: `1px solid rgb(${color.outline})`,
   borderRadius: "2px",
   boxShadow: elevation.level1,
@@ -27,13 +27,13 @@ export const stateLayer = style({
   borderRadius: "inherit",
   selectors: {
     [`${container}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.hover})`,
+      backgroundColor: `rgb(${color.on.surface} / ${state.layer.hover})`,
     },
     [`${container}:focus-visible > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.focus})`,
+      backgroundColor: `rgb(${color.on.surface} / ${state.layer.focus})`,
     },
     [`${container}:active > &`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.active})`,
+      backgroundColor: `rgb(${color.on.surface} / ${state.layer.active})`,
     },
   },
 });

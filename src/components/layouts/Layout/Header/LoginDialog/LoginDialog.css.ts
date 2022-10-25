@@ -12,20 +12,20 @@ export const container = style({
   maxWidth: 560,
   padding: 24,
   borderRadius: 28,
-  backgroundColor: `rgb(${color.surface._})`,
+  backgroundColor: `rgb(${color.surface})`,
   boxShadow: elevation.level3,
 });
 
 export const headline = style([
   typography.headline.small,
-  { marginBottom: 16, color: `rgb(${color.on.surface._})` },
+  { marginBottom: 16, color: `rgb(${color.on.surface})` },
 ]);
 
 export const supportingText = style([
   typography.body.medium,
   {
     marginBottom: 24,
-    color: `rgb(${color.on.surface.variant})`,
+    color: `rgb(${color.on.surfaceVariant})`,
   },
 ]);
 

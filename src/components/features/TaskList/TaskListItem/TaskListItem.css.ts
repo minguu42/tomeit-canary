@@ -9,7 +9,7 @@ export const container = style({
   alignItems: "center",
   height: 56,
   padding: "0 24px 0 4px",
-  backgroundColor: `rgb(${color.surface._})`,
+  backgroundColor: `rgb(${color.surface})`,
 });
 
 export const zIndex1 = style({
@@ -37,13 +37,13 @@ export const stateLayer = style({
 
   selectors: {
     [`${mainContainer}:hover~&`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.hover})`,
+      backgroundColor: `rgb(${color.on.surface} / ${state.layer.hover})`,
     },
     [`${mainContainer}:focus-visible~&`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.focus})`,
+      backgroundColor: `rgb(${color.on.surface} / ${state.layer.focus})`,
     },
     [`${mainContainer}:active~&`]: {
-      backgroundColor: `rgb(${color.on.surface._} / ${state.layer.active})`,
+      backgroundColor: `rgb(${color.on.surface} / ${state.layer.active})`,
     },
     [`${mainContainer}:disabled~&`]: { backgroundColor: "transparent" },
   },
@@ -52,7 +52,7 @@ export const stateLayer = style({
 export const heading = style([
   typography.body.large,
   {
-    color: `rgb(${color.on.surface._})`,
+    color: `rgb(${color.on.surface})`,
   },
 ]);
 

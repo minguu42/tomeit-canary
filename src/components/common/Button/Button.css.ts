@@ -18,15 +18,15 @@ export const containerFilled = style([
   containerBase,
   {
     padding: "0 24px",
-    color: `rgb(${color.on.primary._})`,
-    backgroundColor: `rgb(${color.primary._})`,
+    color: `rgb(${color.on.primary})`,
+    backgroundColor: `rgb(${color.primary})`,
 
     ":hover": {
       boxShadow: elevation.level1,
     },
     ":disabled": {
-      color: `rgb(${color.on.surface._} / ${state.content.disabled})`,
-      backgroundColor: `rgb(${color.on.surface._} / ${state.container.disabled})`,
+      color: `rgb(${color.on.surface} / ${state.content.disabled})`,
+      backgroundColor: `rgb(${color.on.surface} / ${state.container.disabled})`,
       boxShadow: "none",
     },
   },
@@ -36,15 +36,15 @@ export const containerTonal = style([
   containerBase,
   {
     padding: "0 24px",
-    color: `rgb(${color.on.secondary.container})`,
-    backgroundColor: `rgb(${color.secondary.container})`,
+    color: `rgb(${color.on.secondaryContainer})`,
+    backgroundColor: `rgb(${color.secondaryContainer})`,
 
     ":hover": {
       boxShadow: elevation.level1,
     },
     ":disabled": {
-      color: `rgb(${color.on.surface._} / ${state.content.disabled})`,
-      backgroundColor: `rgb(${color.on.surface._} / ${state.container.disabled})`,
+      color: `rgb(${color.on.surface} / ${state.content.disabled})`,
+      backgroundColor: `rgb(${color.on.surface} / ${state.container.disabled})`,
       boxShadow: "none",
     },
   },
@@ -65,13 +65,13 @@ export const stateLayerFilled = style([
   {
     selectors: {
       [`${containerFilled}:hover > &`]: {
-        backgroundColor: `rgb(${color.on.primary._} / ${state.layer.hover})`,
+        backgroundColor: `rgb(${color.on.primary} / ${state.layer.hover})`,
       },
       [`${containerFilled}:focus-visible > &`]: {
-        backgroundColor: `rgb(${color.on.primary._} / ${state.layer.focus})`,
+        backgroundColor: `rgb(${color.on.primary} / ${state.layer.focus})`,
       },
       [`${containerFilled}:active > &`]: {
-        backgroundColor: `rgb(${color.on.primary._} / ${state.layer.active})`,
+        backgroundColor: `rgb(${color.on.primary} / ${state.layer.active})`,
       },
       [`${containerFilled}:disabled > &`]: { backgroundColor: "transparent" },
     },
@@ -83,13 +83,13 @@ export const stateLayerTonal = style([
   {
     selectors: {
       [`${containerTonal}:hover > &`]: {
-        backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.hover})`,
+        backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.hover})`,
       },
       [`${containerTonal}:focus-visible > &`]: {
-        backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.focus})`,
+        backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.focus})`,
       },
       [`${containerTonal}:active > &`]: {
-        backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.active})`,
+        backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.active})`,
       },
       [`${containerTonal}:disabled > &`]: {
         backgroundColor: "transparent",

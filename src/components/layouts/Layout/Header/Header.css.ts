@@ -8,10 +8,10 @@ export const container = style({
   alignItems: "center",
   height: 64,
   padding: "0 4px",
-  backgroundColor: `rgb(${color.surface._})`,
+  backgroundColor: `rgb(${color.surface})`,
 });
 
-export const heading = style([typography.title.large, { color: `rgb(${color.on.surface._})` }]);
+export const heading = style([typography.title.large, { color: `rgb(${color.on.surface})` }]);
 
 export const spacer = style({ flex: "1 1 0" });
 

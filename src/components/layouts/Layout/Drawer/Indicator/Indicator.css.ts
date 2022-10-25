@@ -15,7 +15,7 @@ const indicatorBase = style({
 
 export const indicator = styleVariants({
   _: [indicatorBase],
-  active: [indicatorBase, { backgroundColor: `rgb(${color.secondary.container})` }],
+  active: [indicatorBase, { backgroundColor: `rgb(${color.secondaryContainer})` }],
 });
 
 const stateLayerBase = style({
@@ -34,13 +34,13 @@ export const stateLayer = styleVariants({
     {
       selectors: {
         [`${indicator._}:hover > &`]: {
-          backgroundColor: `rgb(${color.on.surface._} / ${state.layer.hover})`,
+          backgroundColor: `rgb(${color.on.surface} / ${state.layer.hover})`,
         },
         [`${indicator._}:focus-visible > &`]: {
-          backgroundColor: `rgb(${color.on.surface._} / ${state.layer.focus})`,
+          backgroundColor: `rgb(${color.on.surface} / ${state.layer.focus})`,
         },
         [`${indicator._}:active > &`]: {
-          backgroundColor: `rgb(${color.on.surface._} / ${state.layer.active})`,
+          backgroundColor: `rgb(${color.on.surface} / ${state.layer.active})`,
         },
       },
     },
@@ -50,13 +50,13 @@ export const stateLayer = styleVariants({
     {
       selectors: {
         [`${indicator.active}:hover > &`]: {
-          backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.hover})`,
+          backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.hover})`,
         },
         [`${indicator.active}:focus-visible > &`]: {
-          backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.focus})`,
+          backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.focus})`,
         },
         [`${indicator.active}:active > &`]: {
-          backgroundColor: `rgb(${color.on.secondary.container} / ${state.layer.active})`,
+          backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.active})`,
         },
       },
     },
@@ -64,10 +64,10 @@ export const stateLayer = styleVariants({
 });
 
 export const icon = style({
-  color: `rgb(${color.on.surface.variant})`,
+  color: `rgb(${color.on.surfaceVariant})`,
   selectors: {
     [`${indicator.active} > &`]: {
-      color: `rgb(${color.on.secondary.container})`,
+      color: `rgb(${color.on.secondaryContainer})`,
     },
   },
 });
@@ -76,10 +76,10 @@ export const labelText = style([
   typography.label.large,
   {
     flex: "1 1 0",
-    color: `rgb(${color.on.surface.variant})`,
+    color: `rgb(${color.on.surfaceVariant})`,
     selectors: {
       [`${indicator.active} > &`]: {
-        color: `rgb(${color.on.secondary.container})`,
+        color: `rgb(${color.on.secondaryContainer})`,
       },
     },
   },
@@ -88,6 +88,6 @@ export const labelText = style([
 export const badgeLabelText = style([
   typography.label.large,
   {
-    color: `rgb(${color.on.surface.variant})`,
+    color: `rgb(${color.on.surfaceVariant})`,
   },
 ]);
