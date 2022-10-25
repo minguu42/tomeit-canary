@@ -20,7 +20,8 @@ export const mainContainer = style({
   zIndex: 1,
   flex: "1 1 0",
   display: "flex",
-  alignItems: "center",
+  flexDirection: "column",
+  justifyContent: "center",
   height: 56,
   backgroundColor: `transparent`,
 });
@@ -52,5 +53,12 @@ export const heading = style([
   typography.body.large,
   {
     color: `rgb(${color.on.surface._})`,
+  },
+]);
+
+export const flags = style([
+  typography.body.small,
+  {
+    textAlign: "center",
   },
 ]);

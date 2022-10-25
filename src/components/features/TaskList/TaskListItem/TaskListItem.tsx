@@ -1,10 +1,17 @@
 import { FC } from "react";
 
 import IconButton from "@/components/common/IconButton";
-import { CircleIcon, PlayCircleIcon } from "@/components/common/icons";
+import {
+  CalendarMonthIcon,
+  CircleIcon,
+  DescriptionIcon,
+  PlayArrowIcon,
+  TimerIcon,
+} from "@/components/common/icons";
 import * as s from "./TaskListItem.css";
 import { usePlayingTaskMutators } from "@/globalStates/playingTask";
 import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
+import { formatDate } from "@/lib/formatDate";
 import { Task } from "@/types/task";
 
 type Props = {
@@ -34,6 +41,28 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
     setPlayingTask(task);
   };
 
+  const flagsExist =
+    task.actualCount !== 0 || task.estimatedCount !== 0 || task.hasDoToday || task.dueOn !== null;
+
+  const actualCountFlag = (
+    <div>
+      <TimerIcon size={18} />
+      {task.actualCount}
+    </div>
+  );
+  const hasDoTodayFlag = (
+    <div className={s.flags}>
+      <DescriptionIcon size={18} />
+      今日やること
+    </div>
+  );
+  const dueOnFlag = (
+    <div>
+      <CalendarMonthIcon size={18} />
+      {task.dueOn !== null && formatDate(task.dueOn, "locale")}
+    </div>
+  );
+
   return (
     <li className={s.container}>
       <div className={s.zIndex1}>
@@ -45,11 +74,18 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
       </div>
       <button onClick={handleClick} className={s.mainContainer}>
         <h3 className={s.heading}>{task.title}</h3>
+        {flagsExist && (
+          <div className={s.flags}>
+            {task.actualCount !== 0 && actualCountFlag}
+            {task.hasDoToday && hasDoTodayFlag}
+            {task.dueOn !== null && dueOnFlag}
+          </div>
+        )}
       </button>
       {isFocusPage && (
         <div className={s.zIndex1}>
           <IconButton
-            icon={<PlayCircleIcon />}
+            icon={<PlayArrowIcon />}
             label="ポモドーロの実行"
             onClick={handlePlayButtonClick}
           />
