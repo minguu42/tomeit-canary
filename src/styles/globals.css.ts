@@ -26,10 +26,6 @@ globalStyle(":where(nav, ol, ul, menu)", {
   listStyleType: "none",
 });
 
-globalStyle(":where(svg:not([fill]))", {
-  fill: "currentcolor",
-});
-
 globalStyle(`:where([aria-hidden="false"], [disabled])`, {
   cursor: "not-allowed",
 });

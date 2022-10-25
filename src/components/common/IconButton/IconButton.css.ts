@@ -8,12 +8,12 @@ export const container = style({
   placeItems: "center",
   width: 48,
   height: 48,
-  color: `rgb(${color.on.surface.variant})`,
+  color: `rgb(${color.on.surfaceVariant})`,
   backgroundColor: "transparent",
 
   selectors: {
     "&:disabled": {
-      color: `rgb(${color.on.surface._} / ${state.content.disabled})`,
+      color: `rgb(${color.on.surface} / ${state.content.disabled})`,
     },
   },
 });
@@ -28,13 +28,13 @@ export const stateLayer = style({
 
   selectors: {
     [`${container}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.surface.variant} / ${state.layer.hover})`,
+      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.hover})`,
     },
     [`${container}:focus-visible > &`]: {
-      backgroundColor: `rgb(${color.on.surface.variant} / ${state.layer.focus})`,
+      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.focus})`,
     },
     [`${container}:active > &`]: {
-      backgroundColor: `rgb(${color.on.surface.variant} / ${state.layer.active})`,
+      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.active})`,
     },
     [`${container}:disabled > &`]: { backgroundColor: "transparent" },
   },

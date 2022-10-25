@@ -1,19 +1,19 @@
 import { FC, useState } from "react";
 
-import FilledButton from "@/components/common/FilledButton";
+import Button from "@/components/common/Button";
 import IconButton from "@/components/common/IconButton";
-import AccountMenu from "@/components/layouts/Layout/Header/AccountMenu";
 import LoginDialog from "@/components/layouts/Layout/Header/LoginDialog";
 import {
   DarkModeIcon,
   LightModeIcon,
-  LoginIcon,
+  LogoutIcon,
   MenuIcon,
   MenuOpenIcon,
 } from "@/components/common/icons";
 import * as s from "./Header.css";
 import { useIsDarkTheme, useIsDarkThemeMutators } from "@/globalStates/isDarkTheme";
 import { useUser } from "@/globalStates/user";
+import { logout } from "@/lib/auth";
 
 type Props = {
   isDrawerOpen: boolean;
@@ -46,7 +46,7 @@ const Header: FC<Props> = ({ isDrawerOpen, toggleDrawer }) => {
           label="テーマの切り替え"
           onClick={toggleTheme}
         />
-        <FilledButton icon={<LoginIcon />} labelText="ログイン" onClick={toggleLoginDialog} />
+        <Button type="filled" labelText="ログイン" onClick={toggleLoginDialog} />
         <div className={s.space4} />
         <LoginDialog isOpen={isLoginDialogOpen} onScrimClick={toggleLoginDialog} />
       </header>
@@ -67,7 +67,7 @@ const Header: FC<Props> = ({ isDrawerOpen, toggleDrawer }) => {
         label="テーマの切り替え"
         onClick={toggleTheme}
       />
-      <AccountMenu />
+      <IconButton icon={<LogoutIcon />} label="ログアウト" onClick={() => void logout()} />
     </header>
   );
 };

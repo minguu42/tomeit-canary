@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useRouter } from "next/router";
 
-import { LightModeIcon } from "@/components/common/icons";
+import { FireIcon, LightModeIcon, TaskIcon } from "@/components/common/icons";
 import Indicator from "@/components/layouts/Layout/Drawer/Indicator";
 import * as s from "./Drawer.css";
 
@@ -23,16 +23,14 @@ export const Drawer: FC<Props> = ({ isOpen, toggleDrawer }) => {
         <Indicator
           url="/focus"
           isActive={router.pathname === "/focus"}
-          icon={<LightModeIcon />}
+          icon={<FireIcon />}
           labelText="今日やること"
-          badgeLabelText="24"
         />
         <Indicator
           url="/"
           isActive={router.pathname === "/"}
-          icon={<LightModeIcon />}
-          labelText="タスク管理"
-          badgeLabelText="100+"
+          icon={<TaskIcon />}
+          labelText="タスク"
         />
       </ul>
       <button className={s.scrim} onClick={toggleDrawer} />

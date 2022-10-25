@@ -1,10 +1,10 @@
 import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
 
+import Button from "@/components/common/Button";
 import { AddTaskIcon } from "@/components/common/icons";
-import FilledTonalButton from "@/components/common/FilledTonalButton";
 import * as s from "./TaskAddForm.css";
-import { Task } from "@/types/task";
 import { useTasksMutators } from "@/globalStates/tasks";
+import { Task } from "@/types/task";
 
 const TaskAddForm: FC = () => {
   const [title, setTitle] = useState("");
@@ -48,7 +48,9 @@ const TaskAddForm: FC = () => {
   return (
     <form className={s.container}>
       <div className={s.textFieldContainer}>
-        <AddTaskIcon className={s.leadingIcon} />
+        <div className={s.leadingIcon}>
+          <AddTaskIcon />
+        </div>
         <input
           type="text"
           value={title}
@@ -69,7 +71,7 @@ const TaskAddForm: FC = () => {
           className={s.numberField}
         />
         <div className={s.spacer} />
-        <FilledTonalButton labelText="追加" onClick={handleSubmitButtonClick} />
+        <Button type="tonal" labelText="追加" onClick={handleSubmitButtonClick} />
       </div>
     </form>
   );
