@@ -1,4 +1,3 @@
-export { default as AccountCircleIcon } from "./AccountCircle";
 export { default as AddTaskIcon } from "./AddTask";
 export { default as CircleIcon } from "./Circle";
 export { default as CalendarMonthIcon } from "./CalendarMonth";
