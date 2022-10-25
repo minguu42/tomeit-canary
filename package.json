@@ -8,7 +8,7 @@
     "start": "next start",
     "check-style": "rome ci src",
     "fmt": "rome format --write src",
-    "lint": "next lint && rome check --apply src"
+    "lint": "next lint && rome check src"
   },
   "dependencies": {
     "@vanilla-extract/css": "^1.9.1",
