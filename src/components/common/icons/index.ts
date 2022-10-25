@@ -10,6 +10,7 @@ export { default as LogoutIcon } from "./Logout";
 export { default as MenuIcon } from "./Menu";
 export { default as MenuOpenIcon } from "./MenuOpen";
 export { default as PauseCircleIcon } from "./PauseCircle";
+export { default as PlayArrowIcon } from "./PlayArrow";
 export { default as PlayCircleIcon } from "./PlayCircle";
 export { default as StopCircleIcon } from "./StopCircle";
 export { default as TaskIcon } from "./Task";
