@@ -9,8 +9,9 @@ import {
   TimerIcon,
 } from "@/components/common/icons";
 import * as s from "./TaskListItem.css";
-import { usePlayingTaskMutators } from "@/globalStates/playingTask";
+import { usePlayingTask, usePlayingTaskMutators } from "@/globalStates/playingTask";
 import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
+import { useTasksMutators } from "@/globalStates/tasks";
 import { formatDate } from "@/lib/formatDate";
 import { Task } from "@/types/task";
 
@@ -22,7 +23,9 @@ type Props = {
 const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
   const remarkedTask = useRemarkedTask();
   const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
-  const { setPlayingTask } = usePlayingTaskMutators();
+  const playingTask = usePlayingTask();
+  const { setPlayingTask, unsetPlayingTask } = usePlayingTaskMutators();
+  const { doneTask } = useTasksMutators();
 
   const handleClick = () => {
     if (remarkedTask === null) {
@@ -35,6 +38,18 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
     } else {
       setRemarkedTask(task);
     }
+  };
+
+  const handleCircleButtonClick = () => {
+    if (task.id === remarkedTask?.id) {
+      unsetRemarkedTask();
+    }
+
+    if (task.id === playingTask?.id) {
+      unsetPlayingTask();
+    }
+
+    doneTask(task.id);
   };
 
   const handlePlayButtonClick = () => {
@@ -66,11 +81,7 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
   return (
     <li className={s.container}>
       <div className={s.zIndex1}>
-        <IconButton
-          icon={<CircleIcon />}
-          label="タスクの完了"
-          onClick={() => window.alert("タスクの完了")}
-        />
+        <IconButton icon={<CircleIcon />} label="タスクの完了" onClick={handleCircleButtonClick} />
       </div>
       <button onClick={handleClick} className={s.mainContainer}>
         <h3 className={s.heading}>{task.title}</h3>

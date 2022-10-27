@@ -14,6 +14,7 @@ type tasksMutators = {
   addTask: (task: Task) => void;
   changeTaskTitle: (id: number, newTitle: string) => void;
   toggleHasDoToday: (id: number) => void;
+  doneTask: (id: number) => void;
   deleteTask: (id: number) => void;
 };
 
@@ -55,6 +56,17 @@ export const useTasksMutators = (): tasksMutators => {
     [setTasks],
   );
 
+  const doneTask = (id: number) => {
+    setTasks((prev) => {
+      const index = prev.findIndex((t) => t.id === id);
+      const newTask: Task = {
+        ...prev[index],
+        completedOn: new Date(),
+      };
+      return [...prev.slice(0, index), newTask, ...prev.slice(index + 1)];
+    });
+  };
+
   const deleteTask = useCallback(
     (id: number) => {
       setTasks((prev) => {
@@ -65,5 +77,5 @@ export const useTasksMutators = (): tasksMutators => {
     [setTasks],
   );
 
-  return { addTask, changeTaskTitle, toggleHasDoToday, deleteTask };
+  return { addTask, changeTaskTitle, toggleHasDoToday, doneTask, deleteTask };
 };
