@@ -3,6 +3,7 @@ export { default as CircleIcon } from "./Circle";
 export { default as CalendarMonthIcon } from "./CalendarMonth";
 export { default as DarkModeIcon } from "./DarkMode";
 export { default as DescriptionIcon } from "./Description";
+export { default as DoneIcon } from "./Done";
 export { default as FireIcon } from "./Fire";
 export { default as LightModeIcon } from "./LightMode";
 export { default as LogoutIcon } from "./Logout";
