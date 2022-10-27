@@ -17,10 +17,9 @@ import { Task } from "@/types/task";
 
 type Props = {
   task: Task;
-  isFocusPage?: boolean;
 };
 
-const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
+const TaskListItem: FC<Props> = ({ task }) => {
   const remarkedTask = useRemarkedTask();
   const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
   const playingTask = usePlayingTask();
@@ -93,15 +92,13 @@ const TaskListItem: FC<Props> = ({ task, isFocusPage }) => {
           </div>
         )}
       </button>
-      {isFocusPage && (
-        <div className={s.zIndex1}>
-          <IconButton
-            icon={<PlayArrowIcon />}
-            label="ポモドーロの実行"
-            onClick={handlePlayButtonClick}
-          />
-        </div>
-      )}
+      <div className={s.zIndex1}>
+        <IconButton
+          icon={<PlayArrowIcon />}
+          label="ポモドーロの実行"
+          onClick={handlePlayButtonClick}
+        />
+      </div>
       <div className={s.stateLayer} />
     </li>
   );
