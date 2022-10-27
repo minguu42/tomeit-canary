@@ -12,6 +12,7 @@ export { default as PauseIcon } from "./Pause";
 export { default as PauseCircleIcon } from "./PauseCircle";
 export { default as PlayArrowIcon } from "./PlayArrow";
 export { default as PlayCircleIcon } from "./PlayCircle";
+export { default as SkipNextIcon } from "./SkipNext";
 export { default as StopIcon } from "./Stop";
 export { default as StopCircleIcon } from "./StopCircle";
 export { default as TaskIcon } from "./Task";
