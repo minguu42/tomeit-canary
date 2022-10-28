@@ -2,13 +2,14 @@ import { FC, useEffect, useState } from "react";
 
 import * as s from "./PomodoroPlayer.css";
 import IconButton from "@/components/common/IconButton";
-import { PauseCircleIcon, PlayCircleIcon, StopCircleIcon } from "@/components/common/icons";
+import { PauseIcon, PlayArrowIcon, StopIcon } from "@/components/common/icons";
 import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
 import { usePlayingTask } from "@/globalStates/playingTask";
+import Done from "@/components/common/icons/Done";
 
-const POMODORO_TIME = 1;
-const SHORT_REST_TIME = 3;
-const LONG_REST_TIME = 9;
+const POMODORO_TIME = 1500;
+const SHORT_REST_TIME = 300;
+const LONG_REST_TIME = 900;
 const INIT_REST_COUNT = 4;
 
 const PomodoroPlayer: FC = () => {
@@ -57,8 +58,12 @@ const PomodoroPlayer: FC = () => {
   };
 
   const stopPomodoro = () => {
-    setTime(1500);
+    setTime(POMODORO_TIME);
     setIsActive(false);
+  };
+
+  const doneRest = () => {
+    setTime(0);
   };
 
   if (playingTask === null) {
@@ -67,17 +72,22 @@ const PomodoroPlayer: FC = () => {
 
   return (
     <div className={s.container}>
-      {!isActive && time === 1500 && (
-        <IconButton icon={<PlayCircleIcon />} label="ポモドーロの開始" onClick={startPomodoro} />
-      )}
-      {!isActive && time !== 1500 && (
+      {!isActive &&
+        (time === POMODORO_TIME ||
+          ((time === SHORT_REST_TIME || time === LONG_REST_TIME) && isNextPomodoro)) && (
+          <IconButton icon={<PlayArrowIcon />} label="ポモドーロの開始" onClick={startPomodoro} />
+        )}
+      {!isActive && time !== POMODORO_TIME && !isNextPomodoro && (
         <>
-          <IconButton icon={<PlayCircleIcon />} label="ポモドーロの開始" onClick={startPomodoro} />
-          <IconButton icon={<StopCircleIcon />} label="ポモドーロの中止" onClick={stopPomodoro} />
+          <IconButton icon={<PlayArrowIcon />} label="ポモドーロの再開" onClick={startPomodoro} />
+          <IconButton icon={<StopIcon />} label="ポモドーロの中止" onClick={stopPomodoro} />
         </>
       )}
-      {isActive && (
-        <IconButton icon={<PauseCircleIcon />} label="ポモドーロの停止" onClick={pausePomodoro} />
+      {isActive && !isNextPomodoro && (
+        <IconButton icon={<PauseIcon />} label="ポモドーロの停止" onClick={pausePomodoro} />
+      )}
+      {isActive && isNextPomodoro && (
+        <IconButton icon={<Done />} label="休憩の完了" onClick={doneRest} />
       )}
       <h3 className={s.mgr16}>{formatSecondsToMinutesSeconds(time)}</h3>
       <p>{playingTask.title}</p>

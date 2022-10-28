@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import Header from "@/components/layouts/Layout/Header";
 import Drawer from "@/components/layouts/Layout/Drawer";
 import SideSheet from "@/components/layouts/Layout/SideSheet";
+import PomodoroPlayer from "@/components/layouts/Layout/PomodoroPlayer";
 import * as s from "./Layout.css";
 
 type Props = {
@@ -24,6 +25,7 @@ const Layout: FC<Props> = ({ children }) => {
         <div className={s.main}>{children}</div>
         <SideSheet />
       </div>
+      <PomodoroPlayer />
     </div>
   );
 };
