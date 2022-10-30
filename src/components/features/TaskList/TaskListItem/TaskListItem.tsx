@@ -8,7 +8,6 @@ import {
   CircleIcon,
   DescriptionIcon,
   PlayArrowIcon,
-  TimerIcon,
 } from "@/components/common/icons";
 import * as s from "./TaskListItem.css";
 import { usePlayingTask, usePlayingTaskMutators } from "@/globalStates/playingTask";
