@@ -8,7 +8,7 @@ globalStyle("*", {
 });
 
 globalStyle(":where(html)", {
-  fontFamily: `"Roboto", "Noto Sans JP", sans-serif`,
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif',
 });
 
 globalStyle(":where(a)", {
