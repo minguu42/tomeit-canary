@@ -1,6 +1,7 @@
 import { globalStyle } from "@vanilla-extract/css";
 
 globalStyle("*", {
+  zIndex: 1,
   boxSizing: "border-box",
   padding: "0",
   margin: "0",
