@@ -12,12 +12,7 @@ export const container = style({
   backgroundColor: `rgb(${color.surface})`,
 });
 
-export const zIndex1 = style({
-  zIndex: 1,
-});
-
 export const mainContainer = style({
-  zIndex: 1,
   flex: "1 1 0",
   display: "flex",
   flexDirection: "column",
@@ -59,6 +54,8 @@ export const heading = style([
 export const flags = style([
   typography.body.small,
   {
-    textAlign: "center",
+    display: "flex",
+    gap: 8,
+    alignItems: "center",
   },
 ]);
