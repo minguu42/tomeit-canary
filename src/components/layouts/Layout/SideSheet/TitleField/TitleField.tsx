@@ -1,5 +1,6 @@
 import { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } from "react";
 
+import * as s from "./TitleField.css";
 import { useTasksMutators } from "@/globalStates/tasks";
 
 type Props = {
@@ -25,8 +26,8 @@ const TitleField: FC<Props> = ({ taskID, initialTitle }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={title} onChange={handleTitleChange} />
+    <form onSubmit={handleSubmit} className={s.container}>
+      <input type="text" value={title} onChange={handleTitleChange} className={s.textbox} />
     </form>
   );
 };
