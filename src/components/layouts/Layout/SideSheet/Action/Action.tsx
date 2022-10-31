@@ -1,6 +1,6 @@
 import { FC, MouseEventHandler } from "react";
 
-import * as s from "./ActionFiled.css";
+import * as s from "./Action.css";
 
 type Props = {
   leadingIcon: JSX.Element;
@@ -8,7 +8,7 @@ type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-const ActionFiled: FC<Props> = ({ leadingIcon, label, onClick }) => {
+const Action: FC<Props> = ({ leadingIcon, label, onClick }) => {
   return (
     <button onClick={onClick} className={s.container}>
       <div className={s.stateLayer} />
@@ -18,4 +18,4 @@ const ActionFiled: FC<Props> = ({ leadingIcon, label, onClick }) => {
   );
 };
 
-export default ActionFiled;
+export default Action;
