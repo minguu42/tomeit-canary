@@ -1,6 +1,7 @@
 import { globalStyle } from "@vanilla-extract/css";
 
 globalStyle("*", {
+  zIndex: 1,
   boxSizing: "border-box",
   padding: "0",
   margin: "0",
@@ -8,7 +9,7 @@ globalStyle("*", {
 });
 
 globalStyle(":where(html)", {
-  fontFamily: `"Roboto", "Noto Sans JP", sans-serif`,
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif',
 });
 
 globalStyle(":where(a)", {

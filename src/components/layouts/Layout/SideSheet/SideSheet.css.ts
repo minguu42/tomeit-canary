@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, typography } from "@/styles/tokens";
+import { color } from "@/styles/tokens";
 
 export const container = style({
   width: 400,
@@ -13,15 +13,9 @@ export const container = style({
   },
 });
 
-export const name = style([
-  typography.title.small,
-  {
-    display: "flex",
-    alignItems: "center",
-    color: `rgb(${color.on.surface})`,
-  },
-]);
-
-export const divider = style({
-  border: `1px solid rgb(${color.outline})`,
+export const header = style({
+  display: "flex",
+  alignItems: "center",
+  height: 56,
+  padding: "0 4px",
 });

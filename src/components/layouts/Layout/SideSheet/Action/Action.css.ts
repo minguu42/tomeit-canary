@@ -3,18 +3,19 @@ import { style } from "@vanilla-extract/css";
 import { color, state, typography } from "@/styles/tokens";
 
 export const container = style([
-  typography.label.large,
   {
     position: "relative",
     display: "flex",
     gap: 12,
     alignItems: "center",
-    width: 336,
+    width: 384,
     height: 56,
-    padding: "0 12px",
+    padding: "0 16px",
+    borderRadius: 28,
     color: `rgb(${color.on.surfaceVariant})`,
     backgroundColor: `rgb(${color.surface})`,
   },
+  typography.label.large,
 ]);
 
 export const stateLayer = style({

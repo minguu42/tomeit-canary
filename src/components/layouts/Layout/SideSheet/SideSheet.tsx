@@ -1,13 +1,22 @@
 import { FC } from "react";
 
 import IconButton from "@/components/common/IconButton";
-import Content from "@/components/layouts/Layout/SideSheet/Content";
-import { CircleIcon, TimerIcon } from "@/components/common/icons";
+import {
+  AddIcon,
+  AlarmIcon,
+  AlarmOnIcon,
+  CalendarMonthIcon,
+  CircleIcon,
+  CloseIcon,
+  DeleteIcon,
+  RemoveIcon,
+} from "@/components/common/icons";
+import TitleField from "@/components/layouts/Layout/SideSheet/TitleField";
+import NumberField from "@/components/layouts/Layout/SideSheet/NumberField/NumberField";
+import DateField from "@/components/layouts/Layout/SideSheet/DateField";
+import Action from "@/components/layouts/Layout/SideSheet/Action";
 import * as s from "./SideSheet.css";
 import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
-import { formatDate } from "@/lib/formatDate";
-import TitleField from "@/components/layouts/Layout/SideSheet/TitleField";
-import ActionFiled from "@/components/layouts/Layout/SideSheet/ActionField";
 import { useTasksMutators } from "@/globalStates/tasks";
 import { Task } from "@/types/task";
 
@@ -28,7 +37,7 @@ const SideSheet: FC = () => {
     setRemarkedTask(newRemarkedTask);
   };
 
-  const handleDeleteField = () => {
+  const handleDeleteActionClick = () => {
     if (remarkedTask === null) {
       return;
     }
@@ -43,44 +52,36 @@ const SideSheet: FC = () => {
 
   return (
     <div className={s.container}>
-      <div className={s.name}>
+      <div className={s.header}>
         <IconButton
           icon={<CircleIcon />}
-          label="完了"
-          onClick={() => window.alert(remarkedTask.title)}
+          label="タスクの完了"
+          onClick={() => window.alert("タスクの完了")}
         />
         <TitleField taskID={remarkedTask.id} initialTitle={remarkedTask.title} />
+        <IconButton icon={<CloseIcon />} label="サイドシートを閉じる" onClick={unsetRemarkedTask} />
       </div>
-      <div className={s.divider} />
-      <Content
-        leadingIcon={<TimerIcon />}
+      <NumberField
+        icon={<AlarmIcon />}
         name="推定ポモドーロ数"
-        value={String(remarkedTask.estimatedCount)}
+        value={remarkedTask.estimatedCount}
       />
-      <Content
-        leadingIcon={<TimerIcon />}
-        name="実ポモドーロ数"
-        value={String(remarkedTask.actualCount)}
-      />
-      <Content
-        leadingIcon={<TimerIcon />}
-        name="期限"
-        value={remarkedTask.dueOn !== null ? formatDate(remarkedTask.dueOn, "locale") : ""}
-      />
+      <NumberField icon={<AlarmOnIcon />} name="実ポモドーロ数" value={remarkedTask.actualCount} />
+      <DateField icon={<CalendarMonthIcon />} name="期限" value={remarkedTask.dueOn} />
       {remarkedTask.hasDoToday ? (
-        <ActionFiled
-          leadingIcon={<TimerIcon />}
+        <Action
+          leadingIcon={<RemoveIcon />}
           label="「今日やること」から外す"
           onClick={handleToggleHasDoTodayField}
         />
       ) : (
-        <ActionFiled
-          leadingIcon={<TimerIcon />}
+        <Action
+          leadingIcon={<AddIcon />}
           label="「今日やること」に追加"
           onClick={handleToggleHasDoTodayField}
         />
       )}
-      <ActionFiled leadingIcon={<TimerIcon />} label="削除" onClick={handleDeleteField} />
+      <Action leadingIcon={<DeleteIcon />} label="タスクの削除" onClick={handleDeleteActionClick} />
     </div>
   );
 };
