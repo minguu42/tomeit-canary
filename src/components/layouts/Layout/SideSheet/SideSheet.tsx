@@ -59,11 +59,7 @@ const SideSheet: FC = () => {
           onClick={() => window.alert("タスクの完了")}
         />
         <TitleField taskID={remarkedTask.id} initialTitle={remarkedTask.title} />
-        <IconButton
-          icon={<CloseIcon />}
-          label="サイドシートを閉じる"
-          onClick={() => window.alert("サイドシートを閉じる")}
-        />
+        <IconButton icon={<CloseIcon />} label="サイドシートを閉じる" onClick={unsetRemarkedTask} />
       </div>
       <NumberField
         icon={<AlarmIcon />}
