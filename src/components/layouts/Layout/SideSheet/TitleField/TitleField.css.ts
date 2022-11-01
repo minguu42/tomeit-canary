@@ -12,7 +12,7 @@ export const textbox = style([
     width: "100%",
     border: "0",
     paddingLeft: 4,
-    color: `${color.on.surface}`,
+    color: `rgb(${color.on.surface})`,
     backgroundColor: "transparent",
   },
   typography.title.large,
