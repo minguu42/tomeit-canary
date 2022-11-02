@@ -6,7 +6,7 @@ import { useTasks } from "@/globalStates/tasks";
 
 const Focus: NextPage = () => {
   const tasks = useTasks();
-  const filteredTasks = tasks.filter((t) => t.hasDoToday);
+  const filteredTasks = tasks.filter((t) => t.hasDoToday && t.completedOn === null);
 
   return (
     <main className={s.main}>
