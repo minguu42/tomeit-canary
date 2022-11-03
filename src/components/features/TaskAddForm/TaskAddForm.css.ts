@@ -46,27 +46,11 @@ export const sub = style({
   display: "flex",
   gap: 16,
   alignItems: "center",
-  height: 48,
+  height: 56,
   padding: "4px 16px 4px 12px",
   borderRadius: "0 0 4px 4px",
   backgroundColor: `rgb(${color.surfaceVariant})`,
 });
-
-export const dateField = style([
-  typography.label.large,
-  {
-    border: "none",
-    color: `rgb(${color.on.surfaceVariant})`,
-    backgroundColor: "transparent",
-    selectors: {
-      "&:focus-visible": {
-        outline: "none",
-        color: `rgb(${color.primary})`,
-        borderBottom: `2px solid rgb(${color.primary})`,
-      },
-    },
-  },
-]);
 
 export const numberField = style([
   typography.label.large,
