@@ -14,7 +14,7 @@ const TitleField: FC<Props> = ({ taskID, initialTitle }) => {
 
   useEffect(() => {
     setTitle(initialTitle);
-  }, []);
+  }, [initialTitle]);
 
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value);

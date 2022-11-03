@@ -109,7 +109,7 @@ const Menu: FC<Props> = ({ setValue }) => {
         <div className={s.header}>
           <select value={displayingMonth} onChange={handleChange} className={s.selector}>
             {generateSelectItems(displayingMonth).map((v) => (
-              <option value={v}>{formatYearMonth(v)}</option>
+              <option value={v} key={v}>{formatYearMonth(v)}</option>
             ))}
           </select>
           <div className={s.spacer} />
@@ -135,12 +135,12 @@ const Menu: FC<Props> = ({ setValue }) => {
             <li className={s.calendarItem}>土</li>
           </ul>
           <ul className={s.dateListContainer}>
-            {generateDates(displayingMonth).map((date) => {
+            {generateDates(displayingMonth).map((date, i) => {
               if (date === "") {
-                return <li className={s.calendarItem} />;
+                return <li key={i} className={s.calendarItem} />;
               }
               return (
-                <li>
+                <li key={i}>
                   <button
                     onClick={(e) => {
                       e.preventDefault();
