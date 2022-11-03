@@ -1,11 +1,22 @@
-import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
+import {
+  ChangeEventHandler,
+  Dispatch,
+  FC,
+  MouseEventHandler,
+  SetStateAction,
+  useState,
+} from "react";
 
 import IconButton from "@/components/common/IconButton";
 import { NavigateBeforeIcon, NavigateNextIcon } from "@/components/common/icons";
 import * as s from "./Menu.css";
 import { formatDate } from "@/lib/formatDate";
 
-const Menu: FC = () => {
+type Props = {
+  setValue: Dispatch<SetStateAction<string>>;
+};
+
+const Menu: FC<Props> = ({ setValue }) => {
   const [displayingMonth, setDisplayingMonth] = useState(formatDate(new Date(), "yyyy-mm"));
 
   const generateSelectItems = (yearMonth: string): string[] => {
@@ -123,10 +134,26 @@ const Menu: FC = () => {
             <li className={s.calendarItem}>金</li>
             <li className={s.calendarItem}>土</li>
           </ul>
-          <ul className={s.dateContainer}>
-            {generateDates(displayingMonth).map((date) => (
-              <li className={s.calendarItem}>{date}</li>
-            ))}
+          <ul className={s.dateListContainer}>
+            {generateDates(displayingMonth).map((date) => {
+              if (date === "") {
+                return <li className={s.calendarItem} />;
+              }
+              return (
+                <li>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setValue(`${displayingMonth}-${date}`);
+                    }}
+                    className={s.dateContainer}
+                  >
+                    <div className={s.dateStateLayer} />
+                    {date}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

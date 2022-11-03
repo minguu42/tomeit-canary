@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, typography } from "@/styles/tokens";
+import { color, state, typography } from "@/styles/tokens";
 
 export const container = style({
   position: "absolute",
@@ -50,7 +50,7 @@ export const weekdaysLabelContainer = style({
   gap: 4,
 });
 
-export const dateContainer = style({
+export const dateListContainer = style({
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(40px, 1fr))",
   gap: "0 4px",
@@ -66,3 +66,37 @@ export const calendarItem = style([
   },
   typography.body.large,
 ]);
+
+export const dateContainer = style([
+  {
+    position: "relative",
+    display: "grid",
+    placeItems: "center",
+    width: 40,
+    height: 40,
+    color: `rgb(${color.on.surface})`,
+    backgroundColor: "transparent",
+  },
+  typography.body.large,
+]);
+
+export const dateStateLayer = style({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  borderRadius: "50%",
+
+  selectors: {
+    [`${dateContainer}:hover &`]: {
+      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.hover})`,
+    },
+    [`${dateContainer}:focus-visible &`]: {
+      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.focus})`,
+    },
+    [`${dateContainer}:active &`]: {
+      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.active})`,
+    },
+  },
+});
