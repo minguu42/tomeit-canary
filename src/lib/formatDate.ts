@@ -6,7 +6,7 @@ export const formatSecondsToMinutesSeconds = (seconds: number): string => {
   return `${mm}:${ss}`;
 };
 
-type DateFormat = "RFC3339" | "locale";
+type DateFormat = "RFC3339" | "yyyy-mm" | "locale";
 export const formatDate = (date: Date, format: DateFormat): string => {
   if (format === "RFC3339") {
     const yyyy = String(date.getFullYear());
@@ -21,6 +21,10 @@ export const formatDate = (date: Date, format: DateFormat): string => {
     const offset = String(Math.abs(timezoneOffsetInHours)).padStart(2, "0");
 
     return `${yyyy}-${MM}-${dd}T${hh}:${mm}:${ss}${symbol}${offset}:00`;
+  } else if (format === "yyyy-mm") {
+    const yyyy = String(date.getFullYear());
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    return `${yyyy}-${mm}`;
   } else {
     return date.toLocaleDateString("ja-JP", {
       weekday: "long",
