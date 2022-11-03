@@ -109,7 +109,9 @@ const Menu: FC<Props> = ({ setValue }) => {
         <div className={s.header}>
           <select value={displayingMonth} onChange={handleChange} className={s.selector}>
             {generateSelectItems(displayingMonth).map((v) => (
-              <option value={v} key={v}>{formatYearMonth(v)}</option>
+              <option value={v} key={v}>
+                {formatYearMonth(v)}
+              </option>
             ))}
           </select>
           <div className={s.spacer} />
