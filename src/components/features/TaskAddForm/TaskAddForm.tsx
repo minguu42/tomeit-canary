@@ -1,10 +1,11 @@
 import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
 
 import Button from "@/components/common/Button";
-import { AddTaskIcon } from "@/components/common/icons";
+import { AddTaskIcon, CalendarMonthIcon } from "@/components/common/icons";
 import * as s from "./TaskAddForm.css";
 import { useTasksMutators } from "@/globalStates/tasks";
 import { Task } from "@/types/task";
+import DatePicker from "@/components/common/DatePicker/DatePicker";
 
 const TaskAddForm: FC = () => {
   const [title, setTitle] = useState("");
@@ -60,7 +61,12 @@ const TaskAddForm: FC = () => {
         />
       </div>
       <div className={s.sub}>
-        <input type="date" value={dueOn} onChange={handleDueOnChange} className={s.dateField} />
+        <DatePicker
+          value={dueOn}
+          setValue={setDueOn}
+          icon={<CalendarMonthIcon />}
+          label="期限の入力"
+        />
         <input
           type="number"
           value={estimatedCount}
