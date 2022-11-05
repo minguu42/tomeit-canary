@@ -11,6 +11,7 @@ import IconButton from "@/components/common/IconButton";
 import { NavigateBeforeIcon, NavigateNextIcon } from "@/components/common/icons";
 import * as s from "./DatePicker.css";
 import { formatDate } from "@/lib/formatDate";
+import DateButton from "@/components/common/DateFiled/DatePicker/DateButton";
 
 type Props = {
   setValue: Dispatch<SetStateAction<string>>;
@@ -25,7 +26,7 @@ const DatePicker: FC<Props> = ({ setValue }) => {
       (month) => `${year}-${String(month).padStart(2, "0")}`,
     );
   };
-  // getDaysInMonth年月を受け取って、その日数を返す
+
   const getDaysInMonth = (year: number, month: number): number => {
     if ([1, 3, 5, 7, 8, 10, 12].indexOf(month) !== -1) {
       return 31;
@@ -107,7 +108,7 @@ const DatePicker: FC<Props> = ({ setValue }) => {
     <div className={s.container}>
       <div className={s.surfaceTint}>
         <div className={s.header}>
-          <select value={displayingMonth} onChange={handleChange} className={s.selector}>
+          <select value={displayingMonth} onChange={handleChange} className={s.menuButton}>
             {generateSelectItems(displayingMonth).map((v) => (
               <option value={v} key={v}>
                 {formatYearMonth(v)}
@@ -126,38 +127,26 @@ const DatePicker: FC<Props> = ({ setValue }) => {
             onClick={handleNextButtonClick}
           />
         </div>
-        <div className={s.calendarContainer}>
-          <ul className={s.weekdaysLabelContainer}>
-            <li className={s.calendarItem}>日</li>
-            <li className={s.calendarItem}>月</li>
-            <li className={s.calendarItem}>火</li>
-            <li className={s.calendarItem}>水</li>
-            <li className={s.calendarItem}>木</li>
-            <li className={s.calendarItem}>金</li>
-            <li className={s.calendarItem}>土</li>
-          </ul>
-          <ul className={s.dateListContainer}>
-            {generateDates(displayingMonth).map((date, i) => {
-              if (date === "") {
-                return <li key={i} className={s.calendarItem} />;
-              }
-              return (
-                <li key={i}>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setValue(`${displayingMonth}-${date}`);
-                    }}
-                    className={s.dateContainer}
-                  >
-                    <div className={s.dateStateLayer} />
-                    {date}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <ul className={s.weekdays}>
+          <li className={s.weekdaysItem}>日</li>
+          <li className={s.weekdaysItem}>月</li>
+          <li className={s.weekdaysItem}>火</li>
+          <li className={s.weekdaysItem}>水</li>
+          <li className={s.weekdaysItem}>木</li>
+          <li className={s.weekdaysItem}>金</li>
+          <li className={s.weekdaysItem}>土</li>
+        </ul>
+        <ul className={s.dateList}>
+          {generateDates(displayingMonth).map((date, i) => (
+            <DateButton
+              date={date}
+              handleClick={(e) => {
+                e.preventDefault();
+                setValue(`${displayingMonth}-${date}`);
+              }}
+            />
+          ))}
+        </ul>
       </div>
     </div>
   );
