@@ -2,39 +2,34 @@ import { style } from "@vanilla-extract/css";
 
 import { color, typography } from "@/styles/tokens";
 
-export const container = style({});
-
 export const textFieldContainer = style({
   position: "relative",
   display: "flex",
   alignItems: "center",
   height: 56,
   borderRadius: "4px 4px 0 0",
-  backgroundColor: `rgb(${color.surfaceVariant})`,
-});
-
-export const leadingIcon = style({
-  position: "absolute",
-  marginLeft: 12,
+  paddingLeft: 12,
   color: `rgb(${color.on.surfaceVariant})`,
-  zIndex: 1,
-  backgroundColor: "transparent",
+  backgroundColor: `rgb(${color.surfaceVariant})`,
 });
 
 export const textField = style([
   typography.body.large,
   {
     position: "absolute",
+    top: 0,
+    left: 0,
     width: "100%",
-    height: 56,
+    height: "100%",
     padding: "0 16px 0 52px",
-    border: "none",
+    border: "0",
     borderBottom: `1px solid rgb(${color.on.surfaceVariant})`,
     color: `rgb(${color.on.surfaceVariant})`,
     backgroundColor: "transparent",
+
     selectors: {
       ["&:focus-visible"]: {
-        outline: "none",
+        outline: "0",
         color: `rgb(${color.primary})`,
         borderBottom: `2px solid rgb(${color.primary})`,
       },
@@ -51,22 +46,5 @@ export const sub = style({
   borderRadius: "0 0 4px 4px",
   backgroundColor: `rgb(${color.surfaceVariant})`,
 });
-
-export const numberField = style([
-  typography.label.large,
-  {
-    padding: "0 4px",
-    border: "none",
-    color: `rgb(${color.on.surfaceVariant})`,
-    backgroundColor: "transparent",
-    selectors: {
-      "&:focus-visible": {
-        outline: "none",
-        color: `rgb(${color.primary})`,
-        borderBottom: `2px solid rgb(${color.primary})`,
-      },
-    },
-  },
-]);
 
 export const spacer = style({ flex: "1 1 0" });
