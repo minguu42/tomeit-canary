@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
 
 import Button from "@/components/common/Button";
-import DatePicker from "@/components/common/DatePicker/DatePicker";
+import DateFiled from "@/components/common/DateFiled/DateFiled";
 import { AddTaskIcon, AlarmIcon, CalendarMonthIcon } from "@/components/common/icons";
 import NumberPicker from "@/components/common/NumberPicker";
 import * as s from "./TaskAddForm.css";
@@ -52,7 +52,7 @@ const TaskAddForm: FC = () => {
         />
       </div>
       <div className={s.sub}>
-        <DatePicker
+        <DateFiled
           value={dueOn}
           setValue={setDueOn}
           icon={<CalendarMonthIcon />}
