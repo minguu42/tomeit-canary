@@ -7,7 +7,8 @@ export const container = style({
   display: "flex",
   alignItems: "center",
   width: 60,
-  height: 28,
+  height: 36,
+  marginLeft: 12,
   color: `rgb(${color.on.surfaceVariant})`,
   backgroundColor: `rgb(${color.surfaceVariant})`,
 });
@@ -28,7 +29,7 @@ export const field = style([
       "&:focus-visible": {
         outline: "0",
         color: `rgb(${color.primary})`,
-        borderBottom: `2px solid rgb(${color.primary})`,
+        borderBottom: `1px solid rgb(${color.primary})`,
       },
     },
   },
