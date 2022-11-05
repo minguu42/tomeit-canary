@@ -39,10 +39,9 @@ export const textField = style([
 
 export const sub = style({
   display: "flex",
-  gap: 16,
   alignItems: "center",
   height: 56,
-  padding: "4px 16px 4px 12px",
+  paddingRight: 16,
   borderRadius: "0 0 4px 4px",
   backgroundColor: `rgb(${color.surfaceVariant})`,
 });
