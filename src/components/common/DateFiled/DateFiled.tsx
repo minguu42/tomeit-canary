@@ -1,6 +1,6 @@
 import { Dispatch, FC, MouseEventHandler, SetStateAction, useState } from "react";
 
-import Menu from "@/components/common/DateFiled/Menu";
+import DatePicker from "@/components/common/DateFiled/DatePicker";
 import IconButton from "@/components/common/IconButton";
 import * as s from "./DateFiled.css";
 
@@ -22,7 +22,7 @@ const DateFiled: FC<Props> = ({ value, setValue, icon, label }) => {
   return (
     <div className={s.container}>
       <IconButton icon={icon} label={label} onClick={toggleMenu} />
-      {isMenuOpen && <Menu setValue={setValue} />}
+      {isMenuOpen && <DatePicker setValue={setValue} />}
       {value.split("-").join("/")}
     </div>
   );

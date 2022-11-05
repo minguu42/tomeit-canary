@@ -9,14 +9,14 @@ import {
 
 import IconButton from "@/components/common/IconButton";
 import { NavigateBeforeIcon, NavigateNextIcon } from "@/components/common/icons";
-import * as s from "./Menu.css";
+import * as s from "./DatePicker.css";
 import { formatDate } from "@/lib/formatDate";
 
 type Props = {
   setValue: Dispatch<SetStateAction<string>>;
 };
 
-const Menu: FC<Props> = ({ setValue }) => {
+const DatePicker: FC<Props> = ({ setValue }) => {
   const [displayingMonth, setDisplayingMonth] = useState(formatDate(new Date(), "yyyy-mm"));
 
   const generateSelectItems = (yearMonth: string): string[] => {
@@ -163,4 +163,4 @@ const Menu: FC<Props> = ({ setValue }) => {
   );
 };
 
-export default Menu;
+export default DatePicker;
