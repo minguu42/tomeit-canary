@@ -3,7 +3,7 @@ import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
 import Button from "@/components/common/Button";
 import DateFiled from "@/components/common/DateFiled/DateFiled";
 import { AddTaskIcon, AlarmIcon, CalendarMonthIcon } from "@/components/common/icons";
-import NumberPicker from "@/components/common/NumberPicker";
+import NumberFiled from "@/components/common/NumberFiled";
 import * as s from "./TaskAddForm.css";
 import { useTasksMutators } from "@/globalStates/tasks";
 import { Task } from "@/types/task";
@@ -58,7 +58,7 @@ const TaskAddForm: FC = () => {
           icon={<CalendarMonthIcon />}
           label="期限の入力"
         />
-        <NumberPicker
+        <NumberFiled
           value={estimatedCount}
           defaultValue={0}
           min={0}

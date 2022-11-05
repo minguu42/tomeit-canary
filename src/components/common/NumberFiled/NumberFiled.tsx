@@ -1,6 +1,6 @@
 import { ChangeEventHandler, Dispatch, FC, SetStateAction } from "react";
 
-import * as s from "./NumberPicker.css";
+import * as s from "./NumberFiled.css";
 
 type Props = {
   value: number;
@@ -11,7 +11,7 @@ type Props = {
   icon: JSX.Element;
 };
 
-const NumberPicker: FC<Props> = ({ value, defaultValue, min, max, setValue, icon }) => {
+const NumberFiled: FC<Props> = ({ value, defaultValue, min, max, setValue, icon }) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setValue(Number(e.target.value));
   };
@@ -32,4 +32,4 @@ const NumberPicker: FC<Props> = ({ value, defaultValue, min, max, setValue, icon
   );
 };
 
-export default NumberPicker;
+export default NumberFiled;
