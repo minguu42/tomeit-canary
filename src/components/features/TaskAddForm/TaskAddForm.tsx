@@ -18,6 +18,10 @@ const TaskAddForm: FC = () => {
   const handleSubmitButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
 
+    if (title === "") {
+      return;
+    }
+
     const newTask: Task = {
       id: Math.random() * 1_000_000_000 + 1,
       title: title,
