@@ -1,39 +1,33 @@
-import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
+import { FC, MouseEventHandler, useState } from "react";
 
 import Button from "@/components/common/Button";
-import { AddTaskIcon, CalendarMonthIcon } from "@/components/common/icons";
+import DateField from "@/components/common/DateField/DateField";
+import { AddTaskIcon, AlarmIcon, CalendarMonthIcon } from "@/components/common/icons";
+import NumberField from "@/components/common/NumberField";
+import TextFiled from "@/components/common/TextField";
 import * as s from "./TaskAddForm.css";
 import { useTasksMutators } from "@/globalStates/tasks";
 import { Task } from "@/types/task";
-import DatePicker from "@/components/common/DatePicker/DatePicker";
 
 const TaskAddForm: FC = () => {
   const [title, setTitle] = useState("");
-  const [dueOn, setDueOn] = useState("");
-  const [estimatedCount, setEstimatedCount] = useState("");
+  const [dueOn, setDueOn] = useState<Date | null>(null);
+  const [estimatedCount, setEstimatedCount] = useState(0);
   const { addTask } = useTasksMutators();
-
-  const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handleDueOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setDueOn(e.target.value);
-  };
-
-  const handleEstimatedCountChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setEstimatedCount(e.target.value);
-  };
 
   const handleSubmitButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
 
+    if (title === "") {
+      return;
+    }
+
     const newTask: Task = {
-      id: Math.random() * 1000_000_000 + 1,
+      id: Math.random() * 1_000_000_000 + 1,
       title: title,
-      estimatedCount: Number(estimatedCount),
+      estimatedCount: estimatedCount,
       actualCount: 0,
-      dueOn: dueOn !== "" ? new Date(dueOn) : null,
+      dueOn: dueOn,
       hasDoToday: false,
       completedOn: null,
       createdAt: new Date(),
@@ -42,39 +36,32 @@ const TaskAddForm: FC = () => {
     addTask(newTask);
 
     setTitle("");
-    setDueOn("");
-    setEstimatedCount("");
+    setDueOn(null);
+    setEstimatedCount(0);
   };
 
   return (
-    <form className={s.container}>
-      <div className={s.textFieldContainer}>
-        <div className={s.leadingIcon}>
-          <AddTaskIcon />
-        </div>
-        <input
-          type="text"
-          value={title}
-          placeholder="タスクの追加"
-          onChange={handleTitleChange}
-          className={s.textField}
-        />
-      </div>
+    <form>
+      <TextFiled
+        value={title}
+        placeholder="タスクの追加"
+        setValue={setTitle}
+        icon={<AddTaskIcon />}
+      />
       <div className={s.sub}>
-        <DatePicker
+        <DateField
           value={dueOn}
           setValue={setDueOn}
           icon={<CalendarMonthIcon />}
           label="期限の入力"
         />
-        <input
-          type="number"
+        <NumberField
           value={estimatedCount}
           defaultValue={0}
           min={0}
           max={6}
-          onChange={handleEstimatedCountChange}
-          className={s.numberField}
+          setValue={setEstimatedCount}
+          icon={<AlarmIcon />}
         />
         <div className={s.spacer} />
         <Button type="tonal" labelText="追加" onClick={handleSubmitButtonClick} />
