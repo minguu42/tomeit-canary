@@ -6,7 +6,7 @@ export const formatSecondsToMinutesSeconds = (seconds: number): string => {
   return `${mm}:${ss}`;
 };
 
-type DateFormat = "RFC3339" | "yyyy-mm-dd" | "yyyy-mm" | "locale" | "年月";
+type DateFormat = "RFC3339" | "yyyy-mm-dd" | "locale" | "年月";
 export const formatDate = (date: Date, format: DateFormat): string => {
   if (format === "RFC3339") {
     const yyyy = String(date.getFullYear());
@@ -26,10 +26,6 @@ export const formatDate = (date: Date, format: DateFormat): string => {
     const mm = String(date.getMonth() + 1).padStart(2, "0");
     const dd = String(date.getDate()).padStart(2, "0");
     return `${yyyy}-${mm}-${dd}`;
-  } else if (format === "yyyy-mm") {
-    const yyyy = String(date.getFullYear());
-    const mm = String(date.getMonth() + 1).padStart(2, "0");
-    return `${yyyy}-${mm}`;
   } else if (format === "年月") {
     const yyyy = String(date.getFullYear());
     const mm = String(date.getMonth() + 1);
