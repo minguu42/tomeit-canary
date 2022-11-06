@@ -93,7 +93,11 @@ const SideSheet: FC = () => {
             onClick={handleCheckCircleButtonClick}
           />
         )}
-        <TitleField taskID={remarkedTask.id} initialTitle={remarkedTask.title} />
+        <TitleField
+          taskID={remarkedTask.id}
+          initialTitle={remarkedTask.title}
+          isCompleted={remarkedTask.completedOn !== null}
+        />
         <IconButton icon={<CloseIcon />} label="サイドシートを閉じる" onClick={unsetRemarkedTask} />
       </div>
       <NumberField

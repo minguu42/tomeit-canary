@@ -6,9 +6,10 @@ import { useTasksMutators } from "@/globalStates/tasks";
 type Props = {
   taskID: number;
   initialTitle: string;
+  isCompleted: boolean;
 };
 
-const TitleField: FC<Props> = ({ taskID, initialTitle }) => {
+const TitleField: FC<Props> = ({ taskID, initialTitle, isCompleted }) => {
   const [title, setTitle] = useState("");
   const { changeTaskTitle } = useTasksMutators();
 
@@ -27,7 +28,12 @@ const TitleField: FC<Props> = ({ taskID, initialTitle }) => {
 
   return (
     <form onSubmit={handleSubmit} className={s.container}>
-      <input type="text" value={title} onChange={handleTitleChange} className={s.textbox} />
+      <input
+        type="text"
+        value={title}
+        onChange={handleTitleChange}
+        className={isCompleted ? s.textboxCompleted : s.textbox}
+      />
     </form>
   );
 };
