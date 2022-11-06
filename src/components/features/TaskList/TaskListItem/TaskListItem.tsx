@@ -5,6 +5,7 @@ import {
   AlarmIcon,
   AlarmOnIcon,
   CalendarMonthIcon,
+  CheckCircleIcon,
   CircleIcon,
   DescriptionIcon,
   PlayArrowIcon,
@@ -26,7 +27,7 @@ const TaskListItem: FC<Props> = ({ task }) => {
   const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
   const playingTask = usePlayingTask();
   const { setPlayingTask, unsetPlayingTask } = usePlayingTaskMutators();
-  const { doneTask } = useTasksMutators();
+  const { doneTask, undoneTask } = useTasksMutators();
 
   const handleClick = () => {
     if (remarkedTask === null) {
@@ -53,6 +54,10 @@ const TaskListItem: FC<Props> = ({ task }) => {
     doneTask(task.id);
   };
 
+  const handleCheckCircleButtonClick = () => {
+    undoneTask(task.id);
+  };
+
   const handlePlayButtonClick = () => {
     setPlayingTask(task);
   };
@@ -63,7 +68,11 @@ const TaskListItem: FC<Props> = ({ task }) => {
   if (task.completedOn !== null) {
     return (
       <li className={s.container}>
-        <IconButton icon={<CircleIcon />} label="タスクの完了" onClick={handleCircleButtonClick} />
+        <IconButton
+          icon={<CheckCircleIcon />}
+          label="タスクの完了を取り消し"
+          onClick={handleCheckCircleButtonClick}
+        />
         <button onClick={handleClick} className={s.mainContainerCompleted}>
           <h3 className={s.heading}>{task.title}</h3>
           {flagsExist && (
