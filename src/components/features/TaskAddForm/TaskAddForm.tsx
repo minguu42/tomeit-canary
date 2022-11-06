@@ -1,9 +1,10 @@
-import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
+import { FC, MouseEventHandler, useState } from "react";
 
 import Button from "@/components/common/Button";
 import DateFiled from "@/components/common/DateFiled/DateFiled";
 import { AddTaskIcon, AlarmIcon, CalendarMonthIcon } from "@/components/common/icons";
 import NumberFiled from "@/components/common/NumberFiled";
+import TextFiled from "@/components/common/TextField";
 import * as s from "./TaskAddForm.css";
 import { useTasksMutators } from "@/globalStates/tasks";
 import { Task } from "@/types/task";
@@ -13,10 +14,6 @@ const TaskAddForm: FC = () => {
   const [dueOn, setDueOn] = useState<Date | null>(null);
   const [estimatedCount, setEstimatedCount] = useState(0);
   const { addTask } = useTasksMutators();
-
-  const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setTitle(e.target.value);
-  };
 
   const handleSubmitButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -41,16 +38,12 @@ const TaskAddForm: FC = () => {
 
   return (
     <form>
-      <div className={s.textFieldContainer}>
-        <AddTaskIcon />
-        <input
-          type="text"
-          value={title}
-          placeholder="タスクの追加"
-          onChange={handleTitleChange}
-          className={s.textField}
-        />
-      </div>
+      <TextFiled
+        value={title}
+        placeholder="タスクの追加"
+        setValue={setTitle}
+        icon={<AddTaskIcon />}
+      />
       <div className={s.sub}>
         <DateFiled
           value={dueOn}
