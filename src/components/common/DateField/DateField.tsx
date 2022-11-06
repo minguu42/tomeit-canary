@@ -1,8 +1,8 @@
 import { Dispatch, FC, MouseEventHandler, SetStateAction, useState } from "react";
 
-import DatePicker from "@/components/common/DateFiled/DatePicker";
+import DatePicker from "@/components/common/DateField/DatePicker";
 import IconButton from "@/components/common/IconButton";
-import * as s from "./DateFiled.css";
+import * as s from "./DateField.css";
 import { formatDate } from "@/lib/formatDate";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
   label: string;
 };
 
-const DateFiled: FC<Props> = ({ value, setValue, icon, label }) => {
+const DateField: FC<Props> = ({ value, setValue, icon, label }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -29,4 +29,4 @@ const DateFiled: FC<Props> = ({ value, setValue, icon, label }) => {
   );
 };
 
-export default DateFiled;
+export default DateField;
