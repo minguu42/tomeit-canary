@@ -10,7 +10,7 @@ import { Task } from "@/types/task";
 
 const TaskAddForm: FC = () => {
   const [title, setTitle] = useState("");
-  const [dueOn, setDueOn] = useState("");
+  const [dueOn, setDueOn] = useState<Date | null>(null);
   const [estimatedCount, setEstimatedCount] = useState(0);
   const { addTask } = useTasksMutators();
 
@@ -26,7 +26,7 @@ const TaskAddForm: FC = () => {
       title: title,
       estimatedCount: estimatedCount,
       actualCount: 0,
-      dueOn: dueOn !== "" ? new Date(dueOn) : null,
+      dueOn: dueOn,
       hasDoToday: false,
       completedOn: null,
       createdAt: new Date(),
@@ -35,7 +35,7 @@ const TaskAddForm: FC = () => {
     addTask(newTask);
 
     setTitle("");
-    setDueOn("");
+    setDueOn(null);
     setEstimatedCount(0);
   };
 

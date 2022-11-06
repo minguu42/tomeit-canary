@@ -3,12 +3,12 @@ import { FC, MouseEventHandler } from "react";
 import * as s from "./DateButton.css";
 
 type Props = {
-  date: string;
+  date: Date | null;
   handleClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 const DateButton: FC<Props> = ({ date, handleClick }) => {
-  if (date === "") {
+  if (date === null) {
     return <li className={s.container} />;
   }
 
@@ -16,7 +16,7 @@ const DateButton: FC<Props> = ({ date, handleClick }) => {
     <li>
       <button onClick={handleClick} className={s.container}>
         <div className={s.stateLayer} />
-        {date}
+        {date.getDate()}
       </button>
     </li>
   );
