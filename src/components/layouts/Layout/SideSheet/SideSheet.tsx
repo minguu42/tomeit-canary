@@ -6,6 +6,7 @@ import {
   AlarmIcon,
   AlarmOnIcon,
   CalendarMonthIcon,
+  CheckCircleIcon,
   CircleIcon,
   CloseIcon,
   DeleteIcon,
@@ -23,7 +24,7 @@ import { Task } from "@/types/task";
 const SideSheet: FC = () => {
   const remarkedTask = useRemarkedTask();
   const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
-  const { toggleHasDoToday, deleteTask } = useTasksMutators();
+  const { toggleHasDoToday, doneTask, undoneTask, deleteTask } = useTasksMutators();
 
   const handleToggleHasDoTodayField = () => {
     if (remarkedTask === null) {
@@ -33,6 +34,32 @@ const SideSheet: FC = () => {
     const newRemarkedTask: Task = {
       ...remarkedTask,
       hasDoToday: !remarkedTask.hasDoToday,
+    };
+    setRemarkedTask(newRemarkedTask);
+  };
+
+  const handleCircleButtonClick = () => {
+    if (remarkedTask === null) {
+      return;
+    }
+
+    doneTask(remarkedTask.id);
+    const newRemarkedTask: Task = {
+      ...remarkedTask,
+      completedOn: new Date(),
+    };
+    setRemarkedTask(newRemarkedTask);
+  };
+
+  const handleCheckCircleButtonClick = () => {
+    if (remarkedTask === null) {
+      return;
+    }
+
+    undoneTask(remarkedTask.id);
+    const newRemarkedTask: Task = {
+      ...remarkedTask,
+      completedOn: null,
     };
     setRemarkedTask(newRemarkedTask);
   };
@@ -53,12 +80,24 @@ const SideSheet: FC = () => {
   return (
     <div className={s.container}>
       <div className={s.header}>
-        <IconButton
-          icon={<CircleIcon />}
-          label="タスクの完了"
-          onClick={() => window.alert("タスクの完了")}
+        {remarkedTask.completedOn === null ? (
+          <IconButton
+            icon={<CircleIcon />}
+            label="タスクの完了"
+            onClick={handleCircleButtonClick}
+          />
+        ) : (
+          <IconButton
+            icon={<CheckCircleIcon />}
+            label="タスクの完了を取り消し"
+            onClick={handleCheckCircleButtonClick}
+          />
+        )}
+        <TitleField
+          taskID={remarkedTask.id}
+          initialTitle={remarkedTask.title}
+          isCompleted={remarkedTask.completedOn !== null}
         />
-        <TitleField taskID={remarkedTask.id} initialTitle={remarkedTask.title} />
         <IconButton icon={<CloseIcon />} label="サイドシートを閉じる" onClick={unsetRemarkedTask} />
       </div>
       <NumberField

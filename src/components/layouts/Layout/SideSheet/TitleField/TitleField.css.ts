@@ -17,3 +17,10 @@ export const textbox = style([
   },
   typography.title.large,
 ]);
+
+export const textboxCompleted = style([
+  textbox,
+  {
+    textDecoration: `line-through rgb(${color.on.surface})`,
+  },
+]);

@@ -2,10 +2,9 @@ import { FC, useEffect, useState } from "react";
 
 import * as s from "./PomodoroPlayer.css";
 import IconButton from "@/components/common/IconButton";
-import { PauseIcon, PlayArrowIcon, StopIcon } from "@/components/common/icons";
+import { DoneIcon, PauseIcon, PlayArrowIcon, StopIcon } from "@/components/common/icons";
 import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
 import { usePlayingTask } from "@/globalStates/playingTask";
-import Done from "@/components/common/icons/Done";
 
 const POMODORO_TIME = 1500;
 const SHORT_BREAK_TIME = 300;
@@ -87,7 +86,7 @@ const PomodoroPlayer: FC = () => {
         <IconButton icon={<PauseIcon />} label="ポモドーロの停止" onClick={pausePomodoro} />
       )}
       {isActive && isNextPomodoro && (
-        <IconButton icon={<Done />} label="休憩の完了" onClick={skipBreak} />
+        <IconButton icon={<DoneIcon />} label="休憩の完了" onClick={skipBreak} />
       )}
       <h3 className={s.mgr16}>{formatSecondsToMinutesSeconds(time)}</h3>
       <p>{playingTask.title}</p>
