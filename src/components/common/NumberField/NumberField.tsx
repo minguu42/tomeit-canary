@@ -4,14 +4,13 @@ import * as s from "./NumberField.css";
 
 type Props = {
   value: number;
-  defaultValue: number;
   min: number;
   max: number;
   setValue: Dispatch<SetStateAction<number>>;
   icon: JSX.Element;
 };
 
-const NumberField: FC<Props> = ({ value, defaultValue, min, max, setValue, icon }) => {
+const NumberField: FC<Props> = ({ value, min, max, setValue, icon }) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setValue(Number(e.target.value));
   };
@@ -22,7 +21,6 @@ const NumberField: FC<Props> = ({ value, defaultValue, min, max, setValue, icon 
       <input
         type="number"
         value={value}
-        defaultValue={defaultValue}
         min={min}
         max={max}
         onChange={handleChange}

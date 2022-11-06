@@ -57,7 +57,6 @@ const TaskAddForm: FC = () => {
         />
         <NumberField
           value={estimatedCount}
-          defaultValue={0}
           min={0}
           max={6}
           setValue={setEstimatedCount}
