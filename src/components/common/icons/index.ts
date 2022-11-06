@@ -3,6 +3,7 @@ export { default as AddTaskIcon } from "./AddTask";
 export { default as AlarmIcon } from "./Alarm";
 export { default as AlarmOnIcon } from "./AlarmOn";
 export { default as CalendarMonthIcon } from "./CalendarMonth";
+export { default as CheckCircleIcon } from "./CheckCircle";
 export { default as CircleIcon } from "./Circle";
 export { default as CloseIcon } from "./Close";
 export { default as DarkModeIcon } from "./DarkMode";
