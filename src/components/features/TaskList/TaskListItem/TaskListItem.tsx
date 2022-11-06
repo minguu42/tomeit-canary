@@ -60,6 +60,37 @@ const TaskListItem: FC<Props> = ({ task }) => {
   const flagsExist =
     task.actualCount !== 0 || task.estimatedCount !== 0 || task.hasDoToday || task.dueOn !== null;
 
+  if (task.completedOn !== null) {
+    return (
+      <li className={s.container}>
+        <IconButton icon={<CircleIcon />} label="タスクの完了" onClick={handleCircleButtonClick} />
+        <button onClick={handleClick} className={s.mainContainerCompleted}>
+          <h3 className={s.heading}>{task.title}</h3>
+          {flagsExist && (
+            <div className={s.flags}>
+              {task.actualCount !== 0 && (
+                <Flag icon={<AlarmOnIcon size={18} />} labelText={String(task.actualCount)} />
+              )}
+              {task.estimatedCount !== 0 && (
+                <Flag icon={<AlarmIcon size={18} />} labelText={String(task.estimatedCount)} />
+              )}
+              {task.hasDoToday && (
+                <Flag icon={<DescriptionIcon size={18} />} labelText="今日やること" />
+              )}
+              {task.dueOn !== null && (
+                <Flag
+                  icon={<CalendarMonthIcon size={18} />}
+                  labelText={formatDate(task.dueOn, "locale")}
+                />
+              )}
+            </div>
+          )}
+        </button>
+        <div className={s.stateLayer} />
+      </li>
+    );
+  }
+
   return (
     <li className={s.container}>
       <IconButton icon={<CircleIcon />} label="タスクの完了" onClick={handleCircleButtonClick} />

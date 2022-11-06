@@ -59,3 +59,10 @@ export const flags = style([
     alignItems: "center",
   },
 ]);
+
+export const mainContainerCompleted = style([
+  mainContainer,
+  {
+    textDecoration: `line-through rgb(${color.on.surface})`,
+  },
+]);
