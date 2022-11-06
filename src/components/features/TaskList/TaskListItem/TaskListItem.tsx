@@ -43,10 +43,6 @@ const TaskListItem: FC<Props> = ({ task }) => {
   };
 
   const handleCircleButtonClick = () => {
-    if (task.id === remarkedTask?.id) {
-      unsetRemarkedTask();
-    }
-
     if (task.id === playingTask?.id) {
       unsetPlayingTask();
     }
