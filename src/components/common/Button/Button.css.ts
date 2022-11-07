@@ -57,9 +57,9 @@ export const stateLayerFilled = style([
     backgroundColor: `rgb(${color.on.primary})`,
 
     selectors: {
-      [`${containerFilled}:hover > &`]: { opacity: `${state.layer.hover}` },
-      [`${containerFilled}:focus-visible > &`]: { opacity: `${state.layer.focus}` },
-      [`${containerFilled}:active > &`]: { opacity: `${state.layer.active}` },
+      [`${containerFilled}:hover > &`]: { opacity: state.layer.hover },
+      [`${containerFilled}:focus-visible > &`]: { opacity: state.layer.focus },
+      [`${containerFilled}:active > &`]: { opacity: state.layer.active },
       [`${containerFilled}:disabled > &`]: { opacity: 0 },
     },
   },
@@ -71,9 +71,9 @@ export const stateLayerTonal = style([
     backgroundColor: `rgb(${color.on.secondaryContainer})`,
 
     selectors: {
-      [`${containerTonal}:hover > &`]: { opacity: `${state.layer.hover}` },
-      [`${containerTonal}:focus-visible > &`]: { opacity: `${state.layer.focus}` },
-      [`${containerTonal}:active > &`]: { opacity: `${state.layer.active}` },
+      [`${containerTonal}:hover > &`]: { opacity: state.layer.hover },
+      [`${containerTonal}:focus-visible > &`]: { opacity: state.layer.focus },
+      [`${containerTonal}:active > &`]: { opacity: state.layer.active },
       [`${containerTonal}:disabled > &`]: { opacity: 0 },
     },
   },
