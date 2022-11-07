@@ -14,8 +14,8 @@ type Props = {
 const Indicator: FC<Props> = ({ url, isActive, icon, labelText, badgeLabelText }) => (
   <li>
     <Link href={url}>
-      <a className={isActive ? s.indicator.active : s.indicator._}>
-        <div className={isActive ? s.stateLayer.active : s.stateLayer._} />
+      <a className={isActive ? s.containerActive : s.container}>
+        <div className={isActive ? s.stateLayerActive : s.stateLayer} />
         <div className={s.icon}>{icon}</div>
         <h3 className={s.labelText}>{labelText}</h3>
         <p className={s.badgeLabelText}>{badgeLabelText}</p>

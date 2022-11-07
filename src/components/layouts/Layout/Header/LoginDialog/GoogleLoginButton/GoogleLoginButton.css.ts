@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 import { color, elevation, state } from "@/styles/tokens";
+import { stateLayerBase } from "@/styles/utils.css";
 
 export const container = style({
   position: "relative",
@@ -17,26 +18,18 @@ export const container = style({
   boxShadow: elevation.level1,
 });
 
-export const stateLayer = style({
-  position: "absolute",
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  zIndex: 1,
-  borderRadius: "inherit",
-  selectors: {
-    [`${container}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.surface} / ${state.layer.hover})`,
-    },
-    [`${container}:focus-visible > &`]: {
-      backgroundColor: `rgb(${color.on.surface} / ${state.layer.focus})`,
-    },
-    [`${container}:active > &`]: {
-      backgroundColor: `rgb(${color.on.surface} / ${state.layer.active})`,
+export const stateLayer = style([
+  stateLayerBase,
+  {
+    backgroundColor: `rgb(${color.on.surface})`,
+
+    selectors: {
+      [`${container}:hover > &`]: { opacity: state.layer.hover },
+      [`${container}:focus-visible > &`]: { opacity: state.layer.focus },
+      [`${container}:active > &`]: { opacity: state.layer.active },
     },
   },
-});
+]);
 
 export const logoBackground = style({
   display: "flex",
