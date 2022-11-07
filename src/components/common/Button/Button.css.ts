@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, elevation, state, typography } from "@/styles/tokens";
+import { color, elevation, stateLayerOpacity, typography } from "@/styles/tokens";
 import { stateLayerBase } from "@/styles/utils.css";
 
 const containerBase = style([
@@ -57,9 +57,9 @@ export const stateLayerFilled = style([
     backgroundColor: color.on.primary,
 
     selectors: {
-      [`${containerFilled}:hover > &`]: { opacity: state.layer.hover },
-      [`${containerFilled}:focus-visible > &`]: { opacity: state.layer.focus },
-      [`${containerFilled}:active > &`]: { opacity: state.layer.active },
+      [`${containerFilled}:hover > &`]: { opacity: stateLayerOpacity.hover },
+      [`${containerFilled}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },
+      [`${containerFilled}:active > &`]: { opacity: stateLayerOpacity.active },
       [`${containerFilled}:disabled > &`]: { opacity: 0 },
     },
   },
@@ -71,9 +71,9 @@ export const stateLayerTonal = style([
     backgroundColor: color.on.secondaryContainer,
 
     selectors: {
-      [`${containerTonal}:hover > &`]: { opacity: state.layer.hover },
-      [`${containerTonal}:focus-visible > &`]: { opacity: state.layer.focus },
-      [`${containerTonal}:active > &`]: { opacity: state.layer.active },
+      [`${containerTonal}:hover > &`]: { opacity: stateLayerOpacity.hover },
+      [`${containerTonal}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },
+      [`${containerTonal}:active > &`]: { opacity: stateLayerOpacity.active },
       [`${containerTonal}:disabled > &`]: { opacity: 0 },
     },
   },

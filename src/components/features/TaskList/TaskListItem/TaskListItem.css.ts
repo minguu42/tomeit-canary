@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, state, typography } from "@/styles/tokens";
+import { color, stateLayerOpacity, typography } from "@/styles/tokens";
 import { stateLayerBase } from "@/styles/utils.css";
 
 export const container = style({
@@ -36,9 +36,9 @@ export const stateLayer = style([
     backgroundColor: color.on.surface,
 
     selectors: {
-      [`${main}:hover > &`]: { opacity: state.layer.hover },
-      [`${main}:focus-visible > &`]: { opacity: state.layer.focus },
-      [`${main}:active > &`]: { opacity: state.layer.active },
+      [`${main}:hover > &`]: { opacity: stateLayerOpacity.hover },
+      [`${main}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },
+      [`${main}:active > &`]: { opacity: stateLayerOpacity.active },
     },
   },
 ]);
