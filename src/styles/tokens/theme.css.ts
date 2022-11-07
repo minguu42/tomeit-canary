@@ -13,6 +13,7 @@ export const theme = createThemeContract({
     background: null,
     error: null,
     errorContainer: null,
+    disabled: null,
     on: {
       primary: null,
       primaryContainer: null,
@@ -25,6 +26,7 @@ export const theme = createThemeContract({
       background: null,
       error: null,
       errorContainer: null,
+      disabled: null,
     },
     outline: null,
     outlineVariant: null,
@@ -57,6 +59,7 @@ export const lightTheme = createTheme(theme, {
     background: "#FFFBFE",
     error: "#B3261E",
     errorContainer: "#F9DEDC",
+    disabled: "#958E9E",
     on: {
       primary: "#FFFFFF",
       primaryContainer: "#21005E",
@@ -69,6 +72,7 @@ export const lightTheme = createTheme(theme, {
       background: "#1C1B1F",
       error: "#FFFFFF",
       errorContainer: "#410E0B",
+      disabled: "#C7BED3",
     },
     outline: "#79747E",
     outlineVariant: "#C4C7C5",
@@ -101,6 +105,7 @@ export const darkTheme = createTheme(theme, {
     background: "#1C1B1F",
     error: "#F2B8B5",
     errorContainer: "#8C1D18",
+    disabled: "#353336",
     on: {
       primary: "#371E73",
       primaryContainer: "#EADDFF",
@@ -113,6 +118,7 @@ export const darkTheme = createTheme(theme, {
       background: "#E6E1E5",
       error: "#601410",
       errorContainer: "#F9DEDC",
+      disabled: "#68666A",
     },
     outline: "#938F99",
     outlineVariant: "#444746",
