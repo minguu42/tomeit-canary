@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, state, typography } from "@/styles/tokens";
+import { color, typography } from "@/styles/tokens";
 
 export const container = style({
   position: "absolute",
