@@ -13,8 +13,8 @@ export const container = style([
     height: 56,
     padding: "0 16px",
     borderRadius: 28,
-    color: `rgb(${color.on.surfaceVariant})`,
-    backgroundColor: `rgb(${color.surface})`,
+    color: color.on.surfaceVariant,
+    backgroundColor: color.surface,
   },
   typography.label.large,
 ]);
@@ -22,7 +22,7 @@ export const container = style([
 export const stateLayer = style([
   stateLayerBase,
   {
-    backgroundColor: `rgb(${color.on.surfaceVariant})`,
+    backgroundColor: color.on.surfaceVariant,
 
     selectors: {
       [`${container}:hover > &`]: { opacity: state.layer.hover },

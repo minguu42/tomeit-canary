@@ -18,14 +18,14 @@ export const container = style({
 export const containerActive = style([
   container,
   {
-    backgroundColor: `rgb(${color.secondaryContainer})`,
+    backgroundColor: color.secondaryContainer,
   },
 ]);
 
 export const stateLayer = style([
   stateLayerBase,
   {
-    backgroundColor: `rgb(${color.on.surface})`,
+    backgroundColor: color.on.surface,
 
     selectors: {
       [`${container}:hover > &`]: { opacity: state.layer.hover },
@@ -38,7 +38,7 @@ export const stateLayer = style([
 export const stateLayerActive = style([
   stateLayerBase,
   {
-    backgroundColor: `rgb(${color.on.secondaryContainer})`,
+    backgroundColor: color.on.secondaryContainer,
 
     selectors: {
       [`${containerActive}:hover > &`]: { opacity: state.layer.hover },
@@ -49,10 +49,10 @@ export const stateLayerActive = style([
 ]);
 
 export const icon = style({
-  color: `rgb(${color.on.surfaceVariant})`,
+  color: color.on.surfaceVariant,
   selectors: {
     [`${containerActive} > &`]: {
-      color: `rgb(${color.on.secondaryContainer})`,
+      color: color.on.secondaryContainer,
     },
   },
 });
@@ -61,10 +61,10 @@ export const labelText = style([
   typography.label.large,
   {
     flex: "1 1 0",
-    color: `rgb(${color.on.surfaceVariant})`,
+    color: color.on.surfaceVariant,
     selectors: {
       [`${containerActive} > &`]: {
-        color: `rgb(${color.on.secondaryContainer})`,
+        color: color.on.secondaryContainer,
       },
     },
   },
@@ -73,6 +73,6 @@ export const labelText = style([
 export const badgeLabelText = style([
   typography.label.large,
   {
-    color: `rgb(${color.on.surfaceVariant})`,
+    color: color.on.surfaceVariant,
   },
 ]);

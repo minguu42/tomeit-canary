@@ -12,20 +12,20 @@ export const container = style({
   maxWidth: 560,
   padding: 24,
   borderRadius: 28,
-  backgroundColor: `rgb(${color.surface})`,
+  backgroundColor: color.surface,
   boxShadow: elevation.level3,
 });
 
 export const headline = style([
   typography.headline.small,
-  { marginBottom: 16, color: `rgb(${color.on.surface})` },
+  { marginBottom: 16, color: color.on.surface },
 ]);
 
 export const supportingText = style([
   typography.body.medium,
   {
     marginBottom: 24,
-    color: `rgb(${color.on.surfaceVariant})`,
+    color: color.on.surfaceVariant,
   },
 ]);
 
@@ -41,5 +41,5 @@ export const scrim = style({
   zIndex: 5,
   height: "100vh",
   width: "100vw",
-  backgroundColor: "rgb(50 47 55 / 0.4)",
+  backgroundColor: color.scrim,
 });

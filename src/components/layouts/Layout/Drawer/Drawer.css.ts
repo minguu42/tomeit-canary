@@ -5,7 +5,7 @@ import { color } from "@/styles/tokens";
 export const container = style({
   paddingTop: 8,
   width: "360px",
-  backgroundColor: `rgb(${color.surface})`,
+  backgroundColor: color.surface,
   borderRadius: "0 16px 16px 0",
   "@media": {
     "screen and (min-width: 0) and (max-width: 839px)": {
@@ -23,7 +23,7 @@ export const container = style({
 
 export const divider = style({
   margin: "0 28px",
-  border: `1px solid rgb(${color.outline})`,
+  border: `1px solid ${color.outline}`,
 });
 
 export const scrim = style({
@@ -35,7 +35,7 @@ export const scrim = style({
       zIndex: 1,
       width: "100%",
       height: "100%",
-      backgroundColor: "rgb(50 47 55 / 0.4)",
+      backgroundColor: color.scrim,
     },
     "screen and (min-width: 840px)": {
       display: "none",

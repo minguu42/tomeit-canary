@@ -18,11 +18,11 @@ export const outline = style({
   width: 40,
   height: 40,
   borderRadius: "50%",
-  color: `rgb(${color.on.surfaceVariant})`,
+  color: color.on.surfaceVariant,
 
   selectors: {
     [`${container}:disabled > &`]: {
-      color: `rgb(${color.on.surface} / ${state.content.disabled})`,
+      color: color.on.disabled,
     },
   },
 });
@@ -30,7 +30,7 @@ export const outline = style({
 export const stateLayer = style([
   stateLayerBase,
   {
-    backgroundColor: `rgb(${color.on.surfaceVariant})`,
+    backgroundColor: color.on.surfaceVariant,
 
     selectors: {
       [`${container}:hover &`]: { opacity: state.layer.hover },

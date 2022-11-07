@@ -4,7 +4,7 @@ import { color } from "@/styles/tokens";
 
 export const container = style({
   width: 400,
-  backgroundColor: `rgb(${color.surface})`,
+  backgroundColor: color.surface,
   borderRadius: "16px 0 0 16px",
   "@media": {
     "screen and (min-width: 840px)": {

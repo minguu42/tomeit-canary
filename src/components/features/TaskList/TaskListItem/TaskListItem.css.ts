@@ -6,7 +6,7 @@ import { stateLayerBase } from "@/styles/utils.css";
 export const container = style({
   position: "relative",
   height: 56,
-  backgroundColor: `rgb(${color.surface})`,
+  backgroundColor: color.surface,
 });
 
 export const main = style({
@@ -26,14 +26,14 @@ export const main = style({
 export const mainCompleted = style([
   main,
   {
-    textDecoration: `line-through rgb(${color.on.surface})`,
+    textDecoration: `line-through ${color.on.surface}`,
   },
 ]);
 
 export const stateLayer = style([
   stateLayerBase,
   {
-    backgroundColor: `rgb(${color.on.surface})`,
+    backgroundColor: color.on.surface,
 
     selectors: {
       [`${main}:hover > &`]: { opacity: state.layer.hover },
@@ -58,7 +58,7 @@ export const rightIconLayout = style({
 export const heading = style([
   typography.body.large,
   {
-    color: `rgb(${color.on.surface})`,
+    color: color.on.surface,
   },
 ]);
 

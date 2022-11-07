@@ -19,15 +19,15 @@ export const containerFilled = style([
   containerBase,
   {
     padding: "0 24px",
-    color: `rgb(${color.on.primary})`,
-    backgroundColor: `rgb(${color.primary})`,
+    color: color.on.primary,
+    backgroundColor: color.primary,
 
     ":hover": {
       boxShadow: elevation.level1,
     },
     ":disabled": {
-      color: `rgb(${color.on.surface} / ${state.content.disabled})`,
-      backgroundColor: `rgb(${color.on.surface} / ${state.container.disabled})`,
+      color: color.on.disabled,
+      backgroundColor: color.disabled,
       boxShadow: "none",
     },
   },
@@ -37,15 +37,15 @@ export const containerTonal = style([
   containerBase,
   {
     padding: "0 24px",
-    color: `rgb(${color.on.secondaryContainer})`,
-    backgroundColor: `rgb(${color.secondaryContainer})`,
+    color: color.on.secondaryContainer,
+    backgroundColor: color.secondaryContainer,
 
     ":hover": {
       boxShadow: elevation.level1,
     },
     ":disabled": {
-      color: `rgb(${color.on.surface} / ${state.content.disabled})`,
-      backgroundColor: `rgb(${color.on.surface} / ${state.container.disabled})`,
+      color: color.on.disabled,
+      backgroundColor: color.disabled,
       boxShadow: "none",
     },
   },
@@ -54,7 +54,7 @@ export const containerTonal = style([
 export const stateLayerFilled = style([
   stateLayerBase,
   {
-    backgroundColor: `rgb(${color.on.primary})`,
+    backgroundColor: color.on.primary,
 
     selectors: {
       [`${containerFilled}:hover > &`]: { opacity: state.layer.hover },
@@ -68,7 +68,7 @@ export const stateLayerFilled = style([
 export const stateLayerTonal = style([
   stateLayerBase,
   {
-    backgroundColor: `rgb(${color.on.secondaryContainer})`,
+    backgroundColor: color.on.secondaryContainer,
 
     selectors: {
       [`${containerTonal}:hover > &`]: { opacity: state.layer.hover },

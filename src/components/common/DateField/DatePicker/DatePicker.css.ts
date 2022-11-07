@@ -9,30 +9,23 @@ export const container = style({
   left: 4,
   width: 328,
   height: 428,
-  borderRadius: 16,
-  backgroundColor: `rgb(${color.surface})`,
-});
-
-export const surfaceTint = style({
-  width: "100%",
-  height: "100%",
   padding: "0 12px",
-  borderRadius: "inherit",
-  backgroundColor: `rgb(${color.primary} / 0.11)`, // surface3
+  borderRadius: 16,
+  backgroundColor: color.surface3,
 });
 
 export const header = style({
   display: "flex",
   alignItems: "center",
   height: 56,
-  color: `rgb(${color.on.surfaceVariant})`,
+  color: color.on.surfaceVariant,
 });
 
 export const menuButton = style([
   {
     padding: "0 4px",
     border: "0",
-    color: `rgb(${color.on.surfaceVariant})`,
+    color: color.on.surfaceVariant,
     backgroundColor: "transparent",
   },
   typography.label.large,
@@ -59,7 +52,7 @@ export const weekdaysItem = style([
     placeItems: "center",
     width: 40,
     height: 40,
-    color: `rgb(${color.on.surface})`,
+    color: color.on.surface,
   },
   typography.body.large,
 ]);

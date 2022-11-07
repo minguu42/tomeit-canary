@@ -4,7 +4,7 @@ import { color } from "@/styles/tokens";
 
 export const container = style({
   minHeight: "100vh",
-  backgroundColor: `rgb(${color.background})`,
+  backgroundColor: color.background,
 });
 
 export const sideLayout = style({

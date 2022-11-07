@@ -8,7 +8,7 @@ export const sub = style({
   height: 56,
   paddingRight: 16,
   borderRadius: "0 0 4px 4px",
-  backgroundColor: `rgb(${color.surfaceVariant})`,
+  backgroundColor: color.surfaceVariant,
 });
 
 export const spacer = style({ flex: "1 1 0" });

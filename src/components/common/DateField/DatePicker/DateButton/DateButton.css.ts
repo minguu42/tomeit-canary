@@ -11,7 +11,7 @@ export const container = style([
     width: 40,
     height: 40,
     borderRadius: "50%",
-    color: `rgb(${color.on.surface})`,
+    color: color.on.surface,
     backgroundColor: "transparent",
   },
   typography.body.large,
@@ -20,7 +20,7 @@ export const container = style([
 export const stateLayer = style([
   stateLayerBase,
   {
-    backgroundColor: `rgb(${color.on.surfaceVariant})`,
+    backgroundColor: color.on.surfaceVariant,
 
     selectors: {
       [`${container}:hover > &`]: { opacity: state.layer.hover },

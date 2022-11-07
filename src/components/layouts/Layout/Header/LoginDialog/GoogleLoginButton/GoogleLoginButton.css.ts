@@ -11,9 +11,9 @@ export const container = style({
   paddingRight: "8px",
   fontSize: "0.875rem",
   fontWeight: 600,
-  color: `rgb(${color.on.surface})`,
-  backgroundColor: `rgb(${color.surface})`,
-  border: `1px solid rgb(${color.outline})`,
+  color: color.on.surface,
+  backgroundColor: color.surface,
+  border: `1px solid ${color.outline}`,
   borderRadius: "2px",
   boxShadow: elevation.level1,
 });
@@ -21,7 +21,7 @@ export const container = style({
 export const stateLayer = style([
   stateLayerBase,
   {
-    backgroundColor: `rgb(${color.on.surface})`,
+    backgroundColor: color.on.surface,
 
     selectors: {
       [`${container}:hover > &`]: { opacity: state.layer.hover },

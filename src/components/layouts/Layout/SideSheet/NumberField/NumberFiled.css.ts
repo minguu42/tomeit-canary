@@ -8,7 +8,7 @@ export const container = style({
   alignItems: "center",
   height: 56,
   padding: "0 24px 0 16px",
-  color: `rgb(${color.on.surfaceVariant})`,
+  color: color.on.surfaceVariant,
 });
 
 export const name = style([

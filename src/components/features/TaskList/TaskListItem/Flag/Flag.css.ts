@@ -6,7 +6,7 @@ export const container = style([
   {
     display: "flex",
     alignItems: "center",
-    color: `rgb(${color.on.surfaceVariant})`,
+    color: color.on.surfaceVariant,
   },
   typography.body.medium,
 ]);

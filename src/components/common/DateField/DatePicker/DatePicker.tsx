@@ -79,53 +79,47 @@ const DatePicker: FC<Props> = ({ setValue }) => {
 
   return (
     <div className={s.container}>
-      <div className={s.surfaceTint}>
-        <div className={s.header}>
-          <select
-            value={formatDate(displayingDate, "yyyy-mm-dd")}
-            onChange={handleSelectChange}
-            className={s.menuButton}
-          >
-            {getSelectOptionValues(displayingDate).map((d) => (
-              <option key={d.toUTCString()} value={formatDate(d, "yyyy-mm-dd")}>
-                {formatDate(d, "年月")}
-              </option>
-            ))}
-          </select>
-          <div className={s.spacer} />
-          <IconButton
-            icon={<NavigateBeforeIcon />}
-            label="前の月へ"
-            onClick={handleBeforeButtonClick}
-          />
-          <IconButton
-            icon={<NavigateNextIcon />}
-            label="次の月へ"
-            onClick={handleNextButtonClick}
-          />
-        </div>
-        <ul className={s.weekdays}>
-          <li className={s.weekdaysItem}>日</li>
-          <li className={s.weekdaysItem}>月</li>
-          <li className={s.weekdaysItem}>火</li>
-          <li className={s.weekdaysItem}>水</li>
-          <li className={s.weekdaysItem}>木</li>
-          <li className={s.weekdaysItem}>金</li>
-          <li className={s.weekdaysItem}>土</li>
-        </ul>
-        <ul className={s.dateList}>
-          {getDates(displayingDate).map((date, i) => (
-            <DateButton
-              key={i}
-              date={date}
-              handleClick={(e) => {
-                e.preventDefault();
-                setValue(date);
-              }}
-            />
+      <div className={s.header}>
+        <select
+          value={formatDate(displayingDate, "yyyy-mm-dd")}
+          onChange={handleSelectChange}
+          className={s.menuButton}
+        >
+          {getSelectOptionValues(displayingDate).map((d) => (
+            <option key={d.toUTCString()} value={formatDate(d, "yyyy-mm-dd")}>
+              {formatDate(d, "年月")}
+            </option>
           ))}
-        </ul>
+        </select>
+        <div className={s.spacer} />
+        <IconButton
+          icon={<NavigateBeforeIcon />}
+          label="前の月へ"
+          onClick={handleBeforeButtonClick}
+        />
+        <IconButton icon={<NavigateNextIcon />} label="次の月へ" onClick={handleNextButtonClick} />
       </div>
+      <ul className={s.weekdays}>
+        <li className={s.weekdaysItem}>日</li>
+        <li className={s.weekdaysItem}>月</li>
+        <li className={s.weekdaysItem}>火</li>
+        <li className={s.weekdaysItem}>水</li>
+        <li className={s.weekdaysItem}>木</li>
+        <li className={s.weekdaysItem}>金</li>
+        <li className={s.weekdaysItem}>土</li>
+      </ul>
+      <ul className={s.dateList}>
+        {getDates(displayingDate).map((date, i) => (
+          <DateButton
+            key={i}
+            date={date}
+            handleClick={(e) => {
+              e.preventDefault();
+              setValue(date);
+            }}
+          />
+        ))}
+      </ul>
     </div>
   );
 };
