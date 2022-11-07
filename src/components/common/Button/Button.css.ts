@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 import { color, elevation, state, typography } from "@/styles/tokens";
+import { stateLayerBase } from "@/styles/utils.css";
 
 const containerBase = style([
   {
@@ -50,30 +51,16 @@ export const containerTonal = style([
   },
 ]);
 
-const stateLayerBase = style({
-  position: "absolute",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  borderRadius: "inherit",
-  backgroundColor: "transparent",
-});
-
 export const stateLayerFilled = style([
   stateLayerBase,
   {
+    backgroundColor: `rgb(${color.on.primary})`,
+
     selectors: {
-      [`${containerFilled}:hover > &`]: {
-        backgroundColor: `rgb(${color.on.primary} / ${state.layer.hover})`,
-      },
-      [`${containerFilled}:focus-visible > &`]: {
-        backgroundColor: `rgb(${color.on.primary} / ${state.layer.focus})`,
-      },
-      [`${containerFilled}:active > &`]: {
-        backgroundColor: `rgb(${color.on.primary} / ${state.layer.active})`,
-      },
-      [`${containerFilled}:disabled > &`]: { backgroundColor: "transparent" },
+      [`${containerFilled}:hover > &`]: { opacity: `${state.layer.hover}` },
+      [`${containerFilled}:focus-visible > &`]: { opacity: `${state.layer.focus}` },
+      [`${containerFilled}:active > &`]: { opacity: `${state.layer.active}` },
+      [`${containerFilled}:disabled > &`]: { opacity: 0 },
     },
   },
 ]);
@@ -81,19 +68,13 @@ export const stateLayerFilled = style([
 export const stateLayerTonal = style([
   stateLayerBase,
   {
+    backgroundColor: `rgb(${color.on.secondaryContainer})`,
+
     selectors: {
-      [`${containerTonal}:hover > &`]: {
-        backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.hover})`,
-      },
-      [`${containerTonal}:focus-visible > &`]: {
-        backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.focus})`,
-      },
-      [`${containerTonal}:active > &`]: {
-        backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.active})`,
-      },
-      [`${containerTonal}:disabled > &`]: {
-        backgroundColor: "transparent",
-      },
+      [`${containerTonal}:hover > &`]: { opacity: `${state.layer.hover}` },
+      [`${containerTonal}:focus-visible > &`]: { opacity: `${state.layer.focus}` },
+      [`${containerTonal}:active > &`]: { opacity: `${state.layer.active}` },
+      [`${containerTonal}:disabled > &`]: { opacity: 0 },
     },
   },
 ]);
