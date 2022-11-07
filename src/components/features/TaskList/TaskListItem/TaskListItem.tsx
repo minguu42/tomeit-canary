@@ -64,12 +64,8 @@ const TaskListItem: FC<Props> = ({ task }) => {
   if (task.completedOn !== null) {
     return (
       <li className={s.container}>
-        <IconButton
-          icon={<CheckCircleIcon />}
-          label="タスクの完了を取り消し"
-          onClick={handleCheckCircleButtonClick}
-        />
-        <button onClick={handleClick} className={s.mainContainerCompleted}>
+        <button onClick={handleClick} className={s.mainCompleted}>
+          <div className={s.stateLayer} />
           <h3 className={s.heading}>{task.title}</h3>
           {flagsExist && (
             <div className={s.flags}>
@@ -91,15 +87,21 @@ const TaskListItem: FC<Props> = ({ task }) => {
             </div>
           )}
         </button>
-        <div className={s.stateLayer} />
+        <div className={s.leftIconLayout}>
+          <IconButton
+            icon={<CheckCircleIcon />}
+            label="タスクの完了を取り消し"
+            onClick={handleCheckCircleButtonClick}
+          />
+        </div>
       </li>
     );
   }
 
   return (
     <li className={s.container}>
-      <IconButton icon={<CircleIcon />} label="タスクの完了" onClick={handleCircleButtonClick} />
-      <button onClick={handleClick} className={s.mainContainer}>
+      <button onClick={handleClick} className={s.main}>
+        <div className={s.stateLayer} />
         <h3 className={s.heading}>{task.title}</h3>
         {flagsExist && (
           <div className={s.flags}>
@@ -121,12 +123,16 @@ const TaskListItem: FC<Props> = ({ task }) => {
           </div>
         )}
       </button>
-      <IconButton
-        icon={<PlayArrowIcon />}
-        label="ポモドーロの実行"
-        onClick={handlePlayButtonClick}
-      />
-      <div className={s.stateLayer} />
+      <div className={s.leftIconLayout}>
+        <IconButton icon={<CircleIcon />} label="タスクの完了" onClick={handleCircleButtonClick} />
+      </div>
+      <div className={s.rightIconLayout}>
+        <IconButton
+          icon={<PlayArrowIcon />}
+          label="ポモドーロの実行"
+          onClick={handlePlayButtonClick}
+        />
+      </div>
     </li>
   );
 };
