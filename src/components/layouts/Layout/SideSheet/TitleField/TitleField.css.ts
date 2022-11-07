@@ -12,7 +12,7 @@ export const textbox = style([
     width: "100%",
     border: "0",
     paddingLeft: 4,
-    color: `rgb(${color.on.surface})`,
+    color: color.on.surface,
     backgroundColor: "transparent",
   },
   typography.title.large,
@@ -21,6 +21,6 @@ export const textbox = style([
 export const textboxCompleted = style([
   textbox,
   {
-    textDecoration: `line-through rgb(${color.on.surface})`,
+    textDecoration: `line-through ${color.on.surface}`,
   },
 ]);

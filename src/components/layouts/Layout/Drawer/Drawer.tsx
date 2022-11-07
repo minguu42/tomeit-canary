@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useRouter } from "next/router";
 
-import { FireIcon, LightModeIcon, TaskIcon } from "@/components/common/icons";
+import { FireIcon, TaskIcon } from "@/components/common/icons";
 import Indicator from "@/components/layouts/Layout/Drawer/Indicator";
 import * as s from "./Drawer.css";
 

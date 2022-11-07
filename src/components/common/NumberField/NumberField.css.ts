@@ -9,8 +9,8 @@ export const container = style({
   width: 60,
   height: 36,
   marginLeft: 12,
-  color: `rgb(${color.on.surfaceVariant})`,
-  backgroundColor: `rgb(${color.surfaceVariant})`,
+  color: color.on.surfaceVariant,
+  backgroundColor: color.surfaceVariant,
 });
 
 export const field = style([
@@ -22,14 +22,14 @@ export const field = style([
     height: "100%",
     paddingLeft: 28,
     border: "0",
-    color: `rgb(${color.on.surfaceVariant})`,
+    color: color.on.surfaceVariant,
     backgroundColor: "transparent",
 
     selectors: {
       "&:focus-visible": {
         outline: "0",
-        color: `rgb(${color.primary})`,
-        borderBottom: `1px solid rgb(${color.primary})`,
+        color: color.primary,
+        borderBottom: `1px solid ${color.primary}`,
       },
     },
   },

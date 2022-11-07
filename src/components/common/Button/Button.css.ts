@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, elevation, state, typography } from "@/styles/tokens";
+import { color, elevation, stateLayerOpacity, typography } from "@/styles/tokens";
+import { stateLayerBase } from "@/styles/utils.css";
 
 const containerBase = style([
   {
@@ -18,15 +19,15 @@ export const containerFilled = style([
   containerBase,
   {
     padding: "0 24px",
-    color: `rgb(${color.on.primary})`,
-    backgroundColor: `rgb(${color.primary})`,
+    color: color.on.primary,
+    backgroundColor: color.primary,
 
     ":hover": {
       boxShadow: elevation.level1,
     },
     ":disabled": {
-      color: `rgb(${color.on.surface} / ${state.content.disabled})`,
-      backgroundColor: `rgb(${color.on.surface} / ${state.container.disabled})`,
+      color: color.on.disabled,
+      backgroundColor: color.disabled,
       boxShadow: "none",
     },
   },
@@ -36,44 +37,30 @@ export const containerTonal = style([
   containerBase,
   {
     padding: "0 24px",
-    color: `rgb(${color.on.secondaryContainer})`,
-    backgroundColor: `rgb(${color.secondaryContainer})`,
+    color: color.on.secondaryContainer,
+    backgroundColor: color.secondaryContainer,
 
     ":hover": {
       boxShadow: elevation.level1,
     },
     ":disabled": {
-      color: `rgb(${color.on.surface} / ${state.content.disabled})`,
-      backgroundColor: `rgb(${color.on.surface} / ${state.container.disabled})`,
+      color: color.on.disabled,
+      backgroundColor: color.disabled,
       boxShadow: "none",
     },
   },
 ]);
 
-const stateLayerBase = style({
-  position: "absolute",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  borderRadius: "inherit",
-  backgroundColor: "transparent",
-});
-
 export const stateLayerFilled = style([
   stateLayerBase,
   {
+    backgroundColor: color.on.primary,
+
     selectors: {
-      [`${containerFilled}:hover > &`]: {
-        backgroundColor: `rgb(${color.on.primary} / ${state.layer.hover})`,
-      },
-      [`${containerFilled}:focus-visible > &`]: {
-        backgroundColor: `rgb(${color.on.primary} / ${state.layer.focus})`,
-      },
-      [`${containerFilled}:active > &`]: {
-        backgroundColor: `rgb(${color.on.primary} / ${state.layer.active})`,
-      },
-      [`${containerFilled}:disabled > &`]: { backgroundColor: "transparent" },
+      [`${containerFilled}:hover > &`]: { opacity: stateLayerOpacity.hover },
+      [`${containerFilled}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },
+      [`${containerFilled}:active > &`]: { opacity: stateLayerOpacity.active },
+      [`${containerFilled}:disabled > &`]: { opacity: 0 },
     },
   },
 ]);
@@ -81,19 +68,13 @@ export const stateLayerFilled = style([
 export const stateLayerTonal = style([
   stateLayerBase,
   {
+    backgroundColor: color.on.secondaryContainer,
+
     selectors: {
-      [`${containerTonal}:hover > &`]: {
-        backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.hover})`,
-      },
-      [`${containerTonal}:focus-visible > &`]: {
-        backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.focus})`,
-      },
-      [`${containerTonal}:active > &`]: {
-        backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.active})`,
-      },
-      [`${containerTonal}:disabled > &`]: {
-        backgroundColor: "transparent",
-      },
+      [`${containerTonal}:hover > &`]: { opacity: stateLayerOpacity.hover },
+      [`${containerTonal}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },
+      [`${containerTonal}:active > &`]: { opacity: stateLayerOpacity.active },
+      [`${containerTonal}:disabled > &`]: { opacity: 0 },
     },
   },
 ]);

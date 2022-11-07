@@ -7,5 +7,5 @@ export const container = style({
   display: "flex",
   alignItems: "center",
   height: 56,
-  color: `rgb(${color.on.surfaceVariant})`,
+  color: color.on.surfaceVariant,
 });

@@ -11,7 +11,7 @@ export const container = style({
   height: 64,
   width: "100%",
   padding: "0 4px",
-  backgroundColor: `rgb(${color.primaryContainer})`,
+  backgroundColor: color.primaryContainer,
 });
 
 export const mgr16 = style({

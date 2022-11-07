@@ -8,19 +8,19 @@ export const container = style({
   alignItems: "center",
   height: 56,
   padding: "0 24px 0 16px",
-  color: `rgb(${color.on.surfaceVariant})`,
+  color: color.on.surfaceVariant,
 });
 
 export const name = style([
   {
-    color: `${color.on.surfaceVariant}`,
+    color: color.on.surfaceVariant,
   },
   typography.body.large,
 ]);
 
 export const value = style([
   {
-    color: `${color.on.surface}`,
+    color: color.on.surface,
   },
   typography.body.large,
 ]);

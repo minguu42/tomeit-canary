@@ -1,7 +1,9 @@
-import { style, styleVariants } from "@vanilla-extract/css";
-import { color, state, typography } from "@/styles/tokens";
+import { style } from "@vanilla-extract/css";
 
-const indicatorBase = style({
+import { color, stateLayerOpacity, typography } from "@/styles/tokens";
+import { stateLayerBase } from "@/styles/utils.css";
+
+export const container = style({
   position: "relative",
   display: "flex",
   gap: 12,
@@ -13,61 +15,44 @@ const indicatorBase = style({
   borderRadius: 28,
 });
 
-export const indicator = styleVariants({
-  _: [indicatorBase],
-  active: [indicatorBase, { backgroundColor: `rgb(${color.secondaryContainer})` }],
-});
+export const containerActive = style([
+  container,
+  {
+    backgroundColor: color.secondaryContainer,
+  },
+]);
 
-const stateLayerBase = style({
-  position: "absolute",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  borderRadius: "inherit",
-  backgroundColor: "transparent",
-});
+export const stateLayer = style([
+  stateLayerBase,
+  {
+    backgroundColor: color.on.surface,
 
-export const stateLayer = styleVariants({
-  _: [
-    stateLayerBase,
-    {
-      selectors: {
-        [`${indicator._}:hover > &`]: {
-          backgroundColor: `rgb(${color.on.surface} / ${state.layer.hover})`,
-        },
-        [`${indicator._}:focus-visible > &`]: {
-          backgroundColor: `rgb(${color.on.surface} / ${state.layer.focus})`,
-        },
-        [`${indicator._}:active > &`]: {
-          backgroundColor: `rgb(${color.on.surface} / ${state.layer.active})`,
-        },
-      },
+    selectors: {
+      [`${container}:hover > &`]: { opacity: stateLayerOpacity.hover },
+      [`${container}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },
+      [`${container}:active > &`]: { opacity: stateLayerOpacity.active },
     },
-  ],
-  active: [
-    stateLayerBase,
-    {
-      selectors: {
-        [`${indicator.active}:hover > &`]: {
-          backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.hover})`,
-        },
-        [`${indicator.active}:focus-visible > &`]: {
-          backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.focus})`,
-        },
-        [`${indicator.active}:active > &`]: {
-          backgroundColor: `rgb(${color.on.secondaryContainer} / ${state.layer.active})`,
-        },
-      },
+  },
+]);
+
+export const stateLayerActive = style([
+  stateLayerBase,
+  {
+    backgroundColor: color.on.secondaryContainer,
+
+    selectors: {
+      [`${containerActive}:hover > &`]: { opacity: stateLayerOpacity.hover },
+      [`${containerActive}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },
+      [`${containerActive}:active > &`]: { opacity: stateLayerOpacity.active },
     },
-  ],
-});
+  },
+]);
 
 export const icon = style({
-  color: `rgb(${color.on.surfaceVariant})`,
+  color: color.on.surfaceVariant,
   selectors: {
-    [`${indicator.active} > &`]: {
-      color: `rgb(${color.on.secondaryContainer})`,
+    [`${containerActive} > &`]: {
+      color: color.on.secondaryContainer,
     },
   },
 });
@@ -76,10 +61,10 @@ export const labelText = style([
   typography.label.large,
   {
     flex: "1 1 0",
-    color: `rgb(${color.on.surfaceVariant})`,
+    color: color.on.surfaceVariant,
     selectors: {
-      [`${indicator.active} > &`]: {
-        color: `rgb(${color.on.secondaryContainer})`,
+      [`${containerActive} > &`]: {
+        color: color.on.secondaryContainer,
       },
     },
   },
@@ -88,6 +73,6 @@ export const labelText = style([
 export const badgeLabelText = style([
   typography.label.large,
   {
-    color: `rgb(${color.on.surfaceVariant})`,
+    color: color.on.surfaceVariant,
   },
 ]);

@@ -1,41 +1,42 @@
 import { style } from "@vanilla-extract/css";
 
-import { state, color } from "@/styles/tokens";
+import { stateLayerOpacity, color } from "@/styles/tokens";
+import { stateLayerBase } from "@/styles/utils.css";
 
 export const container = style({
-  position: "relative",
   display: "grid",
   placeItems: "center",
   width: 48,
   height: 48,
-  color: `rgb(${color.on.surfaceVariant})`,
   backgroundColor: "transparent",
-
-  selectors: {
-    "&:disabled": {
-      color: `rgb(${color.on.surface} / ${state.content.disabled})`,
-    },
-  },
 });
 
-export const stateLayer = style({
-  position: "absolute",
-  top: 4,
-  left: 4,
+export const outline = style({
+  position: "relative",
+  display: "grid",
+  placeItems: "center",
   width: 40,
   height: 40,
   borderRadius: "50%",
+  color: color.on.surfaceVariant,
 
   selectors: {
-    [`${container}:hover > &`]: {
-      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.hover})`,
+    [`${container}:disabled > &`]: {
+      color: color.on.disabled,
     },
-    [`${container}:focus-visible > &`]: {
-      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.focus})`,
-    },
-    [`${container}:active > &`]: {
-      backgroundColor: `rgb(${color.on.surfaceVariant} / ${state.layer.active})`,
-    },
-    [`${container}:disabled > &`]: { backgroundColor: "transparent" },
   },
 });
+
+export const stateLayer = style([
+  stateLayerBase,
+  {
+    backgroundColor: color.on.surfaceVariant,
+
+    selectors: {
+      [`${container}:hover &`]: { opacity: stateLayerOpacity.hover },
+      [`${container}:focus-visible &`]: { opacity: stateLayerOpacity.focus },
+      [`${container}:active &`]: { opacity: stateLayerOpacity.active },
+      [`${container}:disabled &`]: { opacity: 0 },
+    },
+  },
+]);

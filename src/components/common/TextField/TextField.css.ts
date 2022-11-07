@@ -9,8 +9,8 @@ export const container = style({
   height: 56,
   borderRadius: "4px 4px 0 0",
   paddingLeft: 12,
-  color: `rgb(${color.on.surfaceVariant})`,
-  backgroundColor: `rgb(${color.surfaceVariant})`,
+  color: color.on.surfaceVariant,
+  backgroundColor: color.surfaceVariant,
 });
 
 export const inputText = style([
@@ -22,15 +22,15 @@ export const inputText = style([
     height: "100%",
     padding: "0 16px 0 52px",
     border: "0",
-    borderBottom: `1px solid rgb(${color.on.surfaceVariant})`,
-    color: `rgb(${color.on.surfaceVariant})`,
+    borderBottom: `1px solid ${color.on.surfaceVariant}`,
+    color: color.on.surfaceVariant,
     backgroundColor: "transparent",
 
     selectors: {
       ["&:focus-visible"]: {
         outline: "0",
-        color: `rgb(${color.primary})`,
-        borderBottom: `2px solid rgb(${color.primary})`,
+        color: color.primary,
+        borderBottom: `2px solid ${color.primary}`,
       },
     },
   },
