@@ -96,8 +96,14 @@ export const DatePicker: FC<Props> = ({ setValue }) => {
           icon={<NavigateBeforeIcon />}
           label="前の月へ"
           onClick={handleBeforeButtonClick}
+          type="button"
         />
-        <IconButton icon={<NavigateNextIcon />} label="次の月へ" onClick={handleNextButtonClick} />
+        <IconButton
+          icon={<NavigateNextIcon />}
+          label="次の月へ"
+          onClick={handleNextButtonClick}
+          type="button"
+        />
       </div>
       <ul className={s.weekdays}>
         <li className={s.weekdaysItem}>日</li>

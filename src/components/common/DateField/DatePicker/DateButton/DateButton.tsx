@@ -14,7 +14,7 @@ export const DateButton: FC<Props> = ({ date, handleClick }) => {
 
   return (
     <li>
-      <button onClick={handleClick} className={s.container}>
+      <button onClick={handleClick} className={s.container} type="button">
         <div className={s.stateLayer} />
         {date.getDate()}
       </button>

@@ -22,7 +22,7 @@ export const DateField: FC<Props> = ({ value, setValue, icon, label }) => {
 
   return (
     <div className={s.container}>
-      <IconButton icon={icon} label={label} onClick={toggleMenu} />
+      <IconButton icon={icon} label={label} type="button" onClick={toggleMenu} />
       {isMenuOpen && <DatePicker setValue={setValue} />}
       {value !== null ? formatDate(value, "yyyy-mm-dd").split("-").join("/") : ""}
     </div>

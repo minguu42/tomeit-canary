@@ -46,7 +46,7 @@ export const Header: FC<Props> = ({ isDrawerOpen, toggleDrawer }) => {
           label="テーマの切り替え"
           onClick={toggleTheme}
         />
-        <Button type="filled" labelText="ログイン" onClick={toggleLoginDialog} />
+        <Button variant="filled" labelText="ログイン" onClick={toggleLoginDialog} />
         <div className={s.space4} />
         <LoginDialog isOpen={isLoginDialogOpen} onScrimClick={toggleLoginDialog} />
       </header>

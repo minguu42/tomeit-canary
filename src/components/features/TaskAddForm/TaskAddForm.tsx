@@ -63,7 +63,7 @@ export const TaskAddForm: FC = () => {
           icon={<AlarmIcon />}
         />
         <div className={s.spacer} />
-        <Button type="tonal" labelText="追加" onClick={handleSubmitButtonClick} />
+        <Button variant="tonal" labelText="追加" onClick={handleSubmitButtonClick} />
       </div>
     </form>
   );
