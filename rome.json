@@ -3,5 +3,12 @@
     "indentStyle": "space",
     "indentSize": 2,
     "lineWidth": 100
+  },
+  "linter": {
+    "rules": {
+      "a11y": {
+        "recommended": false
+      }
+    }
   }
 }
