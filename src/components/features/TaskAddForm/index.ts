@@ -1,1 +1,1 @@
-export { default } from "./TaskAddForm";
+export * from "./TaskAddForm";

@@ -1,1 +1,1 @@
-export { default } from "./DateButton";
+export * from "./DateButton";

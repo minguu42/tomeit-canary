@@ -1,15 +1,15 @@
 import { FC, MouseEventHandler, useState } from "react";
 
-import Button from "@/components/common/Button";
-import DateField from "@/components/common/DateField/DateField";
+import { Button } from "@/components/common/Button";
+import { DateField } from "@/components/common/DateField/DateField";
 import { AddTaskIcon, AlarmIcon, CalendarMonthIcon } from "@/components/common/icons";
-import NumberField from "@/components/common/NumberField";
-import TextFiled from "@/components/common/TextField";
+import { NumberField } from "@/components/common/NumberField";
+import { TextFiled } from "@/components/common/TextField";
 import * as s from "./TaskAddForm.css";
 import { useTasksMutators } from "@/globalStates/tasks";
 import { Task } from "@/types/task";
 
-const TaskAddForm: FC = () => {
+export const TaskAddForm: FC = () => {
   const [title, setTitle] = useState("");
   const [dueOn, setDueOn] = useState<Date | null>(null);
   const [estimatedCount, setEstimatedCount] = useState(0);
@@ -63,10 +63,8 @@ const TaskAddForm: FC = () => {
           icon={<AlarmIcon />}
         />
         <div className={s.spacer} />
-        <Button type="tonal" labelText="追加" onClick={handleSubmitButtonClick} />
+        <Button variant="tonal" labelText="追加" onClick={handleSubmitButtonClick} />
       </div>
     </form>
   );
 };
-
-export default TaskAddForm;

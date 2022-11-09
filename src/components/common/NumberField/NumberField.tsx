@@ -10,7 +10,7 @@ type Props = {
   icon: JSX.Element;
 };
 
-const NumberField: FC<Props> = ({ value, min, max, setValue, icon }) => {
+export const NumberField: FC<Props> = ({ value, min, max, setValue, icon }) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setValue(Number(e.target.value));
   };
@@ -29,5 +29,3 @@ const NumberField: FC<Props> = ({ value, min, max, setValue, icon }) => {
     </div>
   );
 };
-
-export default NumberField;

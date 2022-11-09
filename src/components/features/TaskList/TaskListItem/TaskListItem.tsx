@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import IconButton from "@/components/common/IconButton";
+import { IconButton } from "@/components/common/IconButton";
 import {
   AlarmIcon,
   AlarmOnIcon,
@@ -10,19 +10,19 @@ import {
   DescriptionIcon,
   PlayArrowIcon,
 } from "@/components/common/icons";
+import { Flag } from "@/components/features/TaskList/TaskListItem/Flag";
 import * as s from "./TaskListItem.css";
 import { usePlayingTask, usePlayingTaskMutators } from "@/globalStates/playingTask";
 import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
 import { useTasksMutators } from "@/globalStates/tasks";
 import { formatDate } from "@/lib/formatDate";
 import { Task } from "@/types/task";
-import Flag from "@/components/features/TaskList/TaskListItem/Flag";
 
 type Props = {
   task: Task;
 };
 
-const TaskListItem: FC<Props> = ({ task }) => {
+export const TaskListItem: FC<Props> = ({ task }) => {
   const remarkedTask = useRemarkedTask();
   const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
   const playingTask = usePlayingTask();
@@ -136,5 +136,3 @@ const TaskListItem: FC<Props> = ({ task }) => {
     </li>
   );
 };
-
-export default TaskListItem;

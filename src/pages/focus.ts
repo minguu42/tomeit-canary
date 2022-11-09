@@ -1,3 +1,3 @@
-import Focus from "@/components/pages/Focus";
+import { Focus } from "@/components/pages/Focus";
 
 export default Focus;

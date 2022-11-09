@@ -7,8 +7,8 @@ import {
   useState,
 } from "react";
 
-import IconButton from "@/components/common/IconButton";
-import DateButton from "@/components/common/DateField/DatePicker/DateButton";
+import { IconButton } from "@/components/common/IconButton";
+import { DateButton } from "@/components/common/DateField/DatePicker/DateButton";
 import { NavigateBeforeIcon, NavigateNextIcon } from "@/components/common/icons";
 import * as s from "./DatePicker.css";
 import { formatDate } from "@/lib/formatDate";
@@ -17,7 +17,7 @@ type Props = {
   setValue: Dispatch<SetStateAction<Date | null>>;
 };
 
-const DatePicker: FC<Props> = ({ setValue }) => {
+export const DatePicker: FC<Props> = ({ setValue }) => {
   const now = new Date();
   const [displayingDate, setDisplayingDate] = useState(
     new Date(now.getFullYear(), now.getMonth(), 1),
@@ -96,8 +96,14 @@ const DatePicker: FC<Props> = ({ setValue }) => {
           icon={<NavigateBeforeIcon />}
           label="前の月へ"
           onClick={handleBeforeButtonClick}
+          type="button"
         />
-        <IconButton icon={<NavigateNextIcon />} label="次の月へ" onClick={handleNextButtonClick} />
+        <IconButton
+          icon={<NavigateNextIcon />}
+          label="次の月へ"
+          onClick={handleNextButtonClick}
+          type="button"
+        />
       </div>
       <ul className={s.weekdays}>
         <li className={s.weekdaysItem}>日</li>
@@ -123,5 +129,3 @@ const DatePicker: FC<Props> = ({ setValue }) => {
     </div>
   );
 };
-
-export default DatePicker;

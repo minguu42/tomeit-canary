@@ -8,7 +8,7 @@ type Props = {
   value: number;
 };
 
-const NumberField: FC<Props> = ({ icon, name, value }) => (
+export const NumberField: FC<Props> = ({ icon, name, value }) => (
   <div className={s.container}>
     {icon}
     <div className={s.name}>{name}</div>
@@ -16,5 +16,3 @@ const NumberField: FC<Props> = ({ icon, name, value }) => (
     <div className={s.value}>{value}</div>
   </div>
 );
-
-export default NumberField;

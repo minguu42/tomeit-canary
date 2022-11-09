@@ -9,7 +9,7 @@ type Props = {
   icon: JSX.Element;
 };
 
-const TextFiled: FC<Props> = ({ value, placeholder, setValue, icon }) => {
+export const TextFiled: FC<Props> = ({ value, placeholder, setValue, icon }) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setValue(e.target.value);
   };
@@ -27,5 +27,3 @@ const TextFiled: FC<Props> = ({ value, placeholder, setValue, icon }) => {
     </div>
   );
 };
-
-export default TextFiled;

@@ -1,10 +1,10 @@
 import { NextPage } from "next";
 
-import TaskList from "@/components/features/TaskList";
+import { TaskList } from "@/components/features/TaskList";
 import * as s from "./Focus.css";
 import { useTasks } from "@/globalStates/tasks";
 
-const Focus: NextPage = () => {
+export const Focus: NextPage = () => {
   const tasks = useTasks();
   const filteredTasks = tasks.filter((t) => t.hasDoToday);
 
@@ -14,5 +14,3 @@ const Focus: NextPage = () => {
     </main>
   );
 };
-
-export default Focus;

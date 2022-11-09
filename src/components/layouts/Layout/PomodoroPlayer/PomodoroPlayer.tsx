@@ -1,17 +1,17 @@
 import { FC, useEffect, useState } from "react";
 
-import * as s from "./PomodoroPlayer.css";
-import IconButton from "@/components/common/IconButton";
+import { IconButton } from "@/components/common/IconButton";
 import { DoneIcon, PauseIcon, PlayArrowIcon, StopIcon } from "@/components/common/icons";
-import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
+import * as s from "./PomodoroPlayer.css";
 import { usePlayingTask } from "@/globalStates/playingTask";
+import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
 
 const POMODORO_TIME = 1500;
 const SHORT_BREAK_TIME = 300;
 const LONG_BREAK_TIME = 900;
 const INIT_BREAK_COUNT = 4;
 
-const PomodoroPlayer: FC = () => {
+export const PomodoroPlayer: FC = () => {
   const [time, setTime] = useState(POMODORO_TIME);
   const [isActive, setIsActive] = useState(false);
   const [isNextPomodoro, setIsNextPomodoro] = useState(false);
@@ -93,5 +93,3 @@ const PomodoroPlayer: FC = () => {
     </div>
   );
 };
-
-export default PomodoroPlayer;

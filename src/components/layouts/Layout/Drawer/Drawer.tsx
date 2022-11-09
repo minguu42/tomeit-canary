@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useRouter } from "next/router";
 
 import { FireIcon, TaskIcon } from "@/components/common/icons";
-import Indicator from "@/components/layouts/Layout/Drawer/Indicator";
+import { Indicator } from "@/components/layouts/Layout/Drawer/Indicator";
 import * as s from "./Drawer.css";
 
 type Props = {
@@ -37,5 +37,3 @@ export const Drawer: FC<Props> = ({ isOpen, toggleDrawer }) => {
     </>
   );
 };
-
-export default Drawer;

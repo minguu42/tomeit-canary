@@ -1,1 +1,1 @@
-export { default } from "./TaskListItem";
+export * from "./TaskListItem";

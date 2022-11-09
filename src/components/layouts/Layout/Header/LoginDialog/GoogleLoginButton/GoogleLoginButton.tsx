@@ -8,7 +8,7 @@ type Props = {
   login: () => void;
 };
 
-const GoogleLoginButton: FC<Props> = ({ login }) => (
+export const GoogleLoginButton: FC<Props> = ({ login }) => (
   <button onClick={login} className={s.container}>
     <div className={s.stateLayer} />
     <div className={s.logoBackground}>
@@ -25,5 +25,3 @@ const GoogleLoginButton: FC<Props> = ({ login }) => (
     Sign in with Google
   </button>
 );
-
-export default GoogleLoginButton;
