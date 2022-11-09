@@ -1,7 +1,7 @@
 import { FC } from "react";
+import Link from "next/link";
 
 import * as s from "./Indicator.css";
-import Link from "next/link";
 
 type Props = {
   url: string;
@@ -11,7 +11,7 @@ type Props = {
   badgeLabelText?: string;
 };
 
-const Indicator: FC<Props> = ({ url, isActive, icon, labelText, badgeLabelText }) => (
+export const Indicator: FC<Props> = ({ url, isActive, icon, labelText, badgeLabelText }) => (
   <li>
     <Link href={url}>
       <a className={isActive ? s.containerActive : s.container}>
@@ -23,5 +23,3 @@ const Indicator: FC<Props> = ({ url, isActive, icon, labelText, badgeLabelText }
     </Link>
   </li>
 );
-
-export default Indicator;

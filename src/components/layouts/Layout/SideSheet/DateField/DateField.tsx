@@ -9,7 +9,7 @@ type Props = {
   value: Date | null;
 };
 
-const DateFiled: FC<Props> = ({ icon, name, value }) => (
+export const DateField: FC<Props> = ({ icon, name, value }) => (
   <div className={s.container}>
     {icon}
     <div className={s.name}>{name}</div>
@@ -17,5 +17,3 @@ const DateFiled: FC<Props> = ({ icon, name, value }) => (
     <div className={s.value}>{value !== null ? formatDate(value, "locale") : "なし"}</div>
   </div>
 );
-
-export default DateFiled;

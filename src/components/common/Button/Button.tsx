@@ -9,7 +9,7 @@ type Props = {
   disabled?: boolean;
 };
 
-const Button: FC<Props> = ({ type, labelText, onClick, disabled }) => {
+export const Button: FC<Props> = ({ type, labelText, onClick, disabled }) => {
   let container;
   let stateLayer;
   if (type === "filled") {
@@ -26,5 +26,3 @@ const Button: FC<Props> = ({ type, labelText, onClick, disabled }) => {
     </button>
   );
 };
-
-export default Button;

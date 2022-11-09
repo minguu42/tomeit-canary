@@ -9,7 +9,7 @@ type Props = {
   isCompleted: boolean;
 };
 
-const TitleField: FC<Props> = ({ taskID, initialTitle, isCompleted }) => {
+export const TitleField: FC<Props> = ({ taskID, initialTitle, isCompleted }) => {
   const [title, setTitle] = useState("");
   const { changeTaskTitle } = useTasksMutators();
 
@@ -37,5 +37,3 @@ const TitleField: FC<Props> = ({ taskID, initialTitle, isCompleted }) => {
     </form>
   );
 };
-
-export default TitleField;

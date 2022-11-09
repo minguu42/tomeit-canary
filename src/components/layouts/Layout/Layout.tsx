@@ -1,16 +1,16 @@
 import { FC, useState } from "react";
 
-import Header from "@/components/layouts/Layout/Header";
-import Drawer from "@/components/layouts/Layout/Drawer";
-import SideSheet from "@/components/layouts/Layout/SideSheet";
-import PomodoroPlayer from "@/components/layouts/Layout/PomodoroPlayer";
+import { Header } from "@/components/layouts/Layout/Header";
+import { Drawer } from "@/components/layouts/Layout/Drawer";
+import { SideSheet } from "@/components/layouts/Layout/SideSheet";
+import { PomodoroPlayer } from "@/components/layouts/Layout/PomodoroPlayer";
 import * as s from "./Layout.css";
 
 type Props = {
   children: JSX.Element;
 };
 
-const Layout: FC<Props> = ({ children }) => {
+export const Layout: FC<Props> = ({ children }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -29,5 +29,3 @@ const Layout: FC<Props> = ({ children }) => {
     </div>
   );
 };
-
-export default Layout;

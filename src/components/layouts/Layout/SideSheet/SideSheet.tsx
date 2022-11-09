@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import IconButton from "@/components/common/IconButton";
+import { IconButton } from "@/components/common/IconButton";
 import {
   AddIcon,
   AlarmIcon,
@@ -12,16 +12,16 @@ import {
   DeleteIcon,
   RemoveIcon,
 } from "@/components/common/icons";
-import TitleField from "@/components/layouts/Layout/SideSheet/TitleField";
-import NumberField from "@/components/layouts/Layout/SideSheet/NumberField/NumberField";
-import DateField from "@/components/layouts/Layout/SideSheet/DateField";
-import Action from "@/components/layouts/Layout/SideSheet/Action";
+import { TitleField } from "@/components/layouts/Layout/SideSheet/TitleField";
+import { NumberField } from "@/components/layouts/Layout/SideSheet/NumberField/NumberField";
+import { DateField } from "@/components/layouts/Layout/SideSheet/DateField";
+import { Action } from "@/components/layouts/Layout/SideSheet/Action";
 import * as s from "./SideSheet.css";
 import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
 import { useTasksMutators } from "@/globalStates/tasks";
 import { Task } from "@/types/task";
 
-const SideSheet: FC = () => {
+export const SideSheet: FC = () => {
   const remarkedTask = useRemarkedTask();
   const { setRemarkedTask, unsetRemarkedTask } = useRemarkedTaskMutators();
   const { toggleHasDoToday, doneTask, undoneTask, deleteTask } = useTasksMutators();
@@ -124,5 +124,3 @@ const SideSheet: FC = () => {
     </div>
   );
 };
-
-export default SideSheet;

@@ -9,7 +9,7 @@ type Props = {
   disabled?: boolean;
 };
 
-const IconButton: FC<Props> = ({ icon, label, onClick, disabled }) => (
+export const IconButton: FC<Props> = ({ icon, label, onClick, disabled }) => (
   <button aria-label={label} onClick={onClick} disabled={disabled} className={s.container}>
     <div className={s.outline}>
       <div className={s.stateLayer} />
@@ -17,5 +17,3 @@ const IconButton: FC<Props> = ({ icon, label, onClick, disabled }) => (
     </div>
   </button>
 );
-
-export default IconButton;

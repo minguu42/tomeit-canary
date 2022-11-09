@@ -1,1 +1,1 @@
-export { default } from "./PomodoroPlayer";
+export * from "./PomodoroPlayer";

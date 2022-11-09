@@ -1,6 +1,6 @@
 import { FC, MouseEventHandler } from "react";
 
-import GoogleLoginButton from "@/components/layouts/Layout/Header/LoginDialog/GoogleLoginButton";
+import { GoogleLoginButton } from "@/components/layouts/Layout/Header/LoginDialog/GoogleLoginButton";
 import * as s from "./LoginDialog.css";
 import { login } from "@/lib/auth";
 
@@ -9,7 +9,7 @@ type Props = {
   onScrimClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-const LoginDialog: FC<Props> = ({ isOpen, onScrimClick }) => {
+export const LoginDialog: FC<Props> = ({ isOpen, onScrimClick }) => {
   if (!isOpen) {
     return <></>;
   }
@@ -29,5 +29,3 @@ const LoginDialog: FC<Props> = ({ isOpen, onScrimClick }) => {
     </>
   );
 };
-
-export default LoginDialog;

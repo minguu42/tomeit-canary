@@ -8,7 +8,7 @@ type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-const Action: FC<Props> = ({ leadingIcon, label, onClick }) => {
+export const Action: FC<Props> = ({ leadingIcon, label, onClick }) => {
   return (
     <button onClick={onClick} className={s.container}>
       <div className={s.stateLayer} />
@@ -17,5 +17,3 @@ const Action: FC<Props> = ({ leadingIcon, label, onClick }) => {
     </button>
   );
 };
-
-export default Action;

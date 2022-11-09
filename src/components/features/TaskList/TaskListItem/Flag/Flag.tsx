@@ -7,11 +7,9 @@ type Props = {
   labelText: string;
 };
 
-const Flag: FC<Props> = ({ icon, labelText }) => (
+export const Flag: FC<Props> = ({ icon, labelText }) => (
   <div className={s.container}>
     {icon}
     {labelText}
   </div>
 );
-
-export default Flag;

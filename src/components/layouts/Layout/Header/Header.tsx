@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 
-import Button from "@/components/common/Button";
-import IconButton from "@/components/common/IconButton";
-import LoginDialog from "@/components/layouts/Layout/Header/LoginDialog";
+import { Button } from "@/components/common/Button";
+import { IconButton } from "@/components/common/IconButton";
+import { LoginDialog } from "@/components/layouts/Layout/Header/LoginDialog";
 import {
   DarkModeIcon,
   LightModeIcon,
@@ -20,7 +20,7 @@ type Props = {
   toggleDrawer: () => void;
 };
 
-const Header: FC<Props> = ({ isDrawerOpen, toggleDrawer }) => {
+export const Header: FC<Props> = ({ isDrawerOpen, toggleDrawer }) => {
   const [heading] = useState("Tomeit");
   const user = useUser();
   const isDarkTheme = useIsDarkTheme();
@@ -71,5 +71,3 @@ const Header: FC<Props> = ({ isDrawerOpen, toggleDrawer }) => {
     </header>
   );
 };
-
-export default Header;

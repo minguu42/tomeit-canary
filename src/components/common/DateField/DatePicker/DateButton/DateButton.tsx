@@ -7,7 +7,7 @@ type Props = {
   handleClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-const DateButton: FC<Props> = ({ date, handleClick }) => {
+export const DateButton: FC<Props> = ({ date, handleClick }) => {
   if (date === null) {
     return <li className={s.container} />;
   }
@@ -21,5 +21,3 @@ const DateButton: FC<Props> = ({ date, handleClick }) => {
     </li>
   );
 };
-
-export default DateButton;
