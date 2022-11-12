@@ -1,16 +1,17 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, typography } from "@/styles/tokens";
+import { color, elevation, fontValue } from "@/styles/tokens";
 
 export const container = style({
   position: "absolute",
-  zIndex: 3,
   top: 48,
   left: 4,
+  zIndex: 3,
   width: 328,
   height: 428,
   padding: "0 12px",
   borderRadius: 16,
+  boxShadow: elevation.level3,
   backgroundColor: color.surface3,
 });
 
@@ -21,15 +22,13 @@ export const header = style({
   color: color.on.surfaceVariant,
 });
 
-export const menuButton = style([
-  {
-    padding: "0 4px",
-    border: "0",
-    color: color.on.surfaceVariant,
-    backgroundColor: "transparent",
-  },
-  typography.label.large,
-]);
+export const menuButton = style({
+  padding: "0 4px",
+  border: "0",
+  font: fontValue.label.large,
+  color: color.on.surfaceVariant,
+  backgroundColor: "transparent",
+});
 
 export const spacer = style({
   flex: "1 1 0",
@@ -46,13 +45,11 @@ export const dateList = style({
   gap: "0 4px",
 });
 
-export const weekdaysItem = style([
-  {
-    display: "grid",
-    placeItems: "center",
-    width: 40,
-    height: 40,
-    color: color.on.surface,
-  },
-  typography.body.large,
-]);
+export const weekdaysItem = style({
+  display: "grid",
+  placeItems: "center",
+  width: 40,
+  height: 40,
+  font: fontValue.body.large,
+  color: color.on.surface,
+});

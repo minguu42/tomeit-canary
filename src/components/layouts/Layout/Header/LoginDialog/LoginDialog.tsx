@@ -16,6 +16,7 @@ export const LoginDialog: FC<Props> = ({ isOpen, onScrimClick }) => {
 
   return (
     <>
+      <button onClick={onScrimClick} className={s.scrim} />
       <div className={s.container}>
         <h2 className={s.headline}>ログイン</h2>
         <p className={s.supportingText}>
@@ -25,7 +26,6 @@ export const LoginDialog: FC<Props> = ({ isOpen, onScrimClick }) => {
           <GoogleLoginButton login={() => void login()} />
         </div>
       </div>
-      <button onClick={onScrimClick} className={s.scrim} />
     </>
   );
 };

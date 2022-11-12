@@ -1,12 +1,10 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, typography } from "@/styles/tokens";
+import { color, fontValue } from "@/styles/tokens";
 
-export const container = style([
-  {
-    display: "flex",
-    alignItems: "center",
-    color: color.on.surfaceVariant,
-  },
-  typography.body.medium,
-]);
+export const container = style({
+  display: "flex",
+  alignItems: "center",
+  font: fontValue.body.medium,
+  color: color.on.surfaceVariant,
+});

@@ -21,9 +21,7 @@ export const outline = style({
   color: color.on.surfaceVariant,
 
   selectors: {
-    [`${container}:disabled > &`]: {
-      color: color.on.disabled,
-    },
+    [`${container}:disabled > &`]: { color: color.on.disabled },
   },
 });
 

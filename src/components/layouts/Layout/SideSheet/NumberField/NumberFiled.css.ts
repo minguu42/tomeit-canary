@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, typography } from "@/styles/tokens";
+import { color, fontValue } from "@/styles/tokens";
 
 export const container = style({
   display: "flex",
@@ -11,19 +11,15 @@ export const container = style({
   color: color.on.surfaceVariant,
 });
 
-export const name = style([
-  {
-    color: `${color.on.surfaceVariant}`,
-  },
-  typography.body.large,
-]);
+export const name = style({
+  font: fontValue.body.large,
+  color: `${color.on.surfaceVariant}`,
+});
 
-export const value = style([
-  {
-    color: `${color.on.surface}`,
-  },
-  typography.body.large,
-]);
+export const value = style({
+  font: fontValue.body.large,
+  color: `${color.on.surface}`,
+});
 
 export const spacer = style({
   flex: "1 1 0",

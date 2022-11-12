@@ -1,33 +1,32 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, elevation, typography } from "@/styles/tokens";
+import { color, elevation, fontValue } from "@/styles/tokens";
 
 export const container = style({
   position: "absolute",
   top: "40%",
   left: "50%",
-  transform: "translate(-50%, -50%)",
-  zIndex: 6,
+  zIndex: 5,
   minWidth: 280,
   maxWidth: 560,
   padding: 24,
   borderRadius: 28,
-  backgroundColor: color.surface,
   boxShadow: elevation.level3,
+  backgroundColor: color.surface,
+  transform: "translate(-50%, -50%)",
 });
 
-export const headline = style([
-  typography.headline.small,
-  { marginBottom: 16, color: color.on.surface },
-]);
+export const headline = style({
+  marginBottom: 16,
+  font: fontValue.title.large,
+  color: color.on.surface,
+});
 
-export const supportingText = style([
-  typography.body.medium,
-  {
-    marginBottom: 24,
-    color: color.on.surfaceVariant,
-  },
-]);
+export const supportingText = style({
+  marginBottom: 24,
+  font: fontValue.body.medium,
+  color: color.on.surfaceVariant,
+});
 
 export const alignCenter = style({
   display: "flex",

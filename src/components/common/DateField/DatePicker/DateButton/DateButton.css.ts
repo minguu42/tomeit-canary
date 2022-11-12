@@ -1,21 +1,19 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, stateLayerOpacity, typography } from "@/styles/tokens";
+import { color, fontValue, stateLayerOpacity } from "@/styles/tokens";
 import { stateLayerBase } from "@/styles/utils.css";
 
-export const container = style([
-  {
-    position: "relative",
-    display: "grid",
-    placeItems: "center",
-    width: 40,
-    height: 40,
-    borderRadius: "50%",
-    color: color.on.surface,
-    backgroundColor: "transparent",
-  },
-  typography.body.large,
-]);
+export const container = style({
+  position: "relative",
+  display: "grid",
+  placeItems: "center",
+  width: 40,
+  height: 40,
+  borderRadius: "50%",
+  font: fontValue.label.large,
+  color: color.on.surface,
+  backgroundColor: "transparent",
+});
 
 export const stateLayer = style([
   stateLayerBase,
