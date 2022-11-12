@@ -4,6 +4,7 @@ export * from "./AlarmIcon";
 export * from "./AlarmOnIcon";
 export * from "./CalendarIcon";
 export * from "./CheckCircleIcon";
+export * from "./CircleIcon";
 export * from "./CloseIcon";
 export * from "./DarkModeIcon";
 export * from "./DeleteIcon";

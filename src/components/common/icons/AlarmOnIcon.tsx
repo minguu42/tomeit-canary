@@ -5,7 +5,7 @@ type Props = {
   className?: string;
 };
 
-const AlarmOnIcon: FC<Props> = ({ size, className }) => (
+export const AlarmOnIcon: FC<Props> = ({ size, className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"

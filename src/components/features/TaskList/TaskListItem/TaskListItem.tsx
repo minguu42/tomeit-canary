@@ -8,7 +8,7 @@ import {
   CheckCircleIcon,
   CircleIcon,
   DescriptionIcon,
-  PlayArrowIcon,
+  PlayIcon,
 } from "@/components/common/icons";
 import { Flag } from "@/components/features/TaskList/TaskListItem/Flag";
 import * as s from "./TaskListItem.css";
@@ -127,11 +127,7 @@ export const TaskListItem: FC<Props> = ({ task }) => {
         <IconButton icon={<CircleIcon />} label="タスクの完了" onClick={handleCircleButtonClick} />
       </div>
       <div className={s.rightIconLayout}>
-        <IconButton
-          icon={<PlayArrowIcon />}
-          label="ポモドーロの実行"
-          onClick={handlePlayButtonClick}
-        />
+        <IconButton icon={<PlayIcon />} label="ポモドーロの実行" onClick={handlePlayButtonClick} />
       </div>
     </li>
   );
