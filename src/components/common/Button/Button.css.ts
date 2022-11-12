@@ -1,19 +1,16 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, elevation, stateLayerOpacity, typography } from "@/styles/tokens";
+import { color, elevation, stateLayerOpacity, fontValue } from "@/styles/tokens";
 import { stateLayerBase } from "@/styles/utils.css";
 
-const containerBase = style([
-  {
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    height: 40,
-    borderRadius: 20,
-  },
-  typography.label.large,
-]);
+const containerBase = style({
+  position: "relative",
+  display: "grid",
+  placeItems: "center",
+  height: 40,
+  borderRadius: 20,
+  font: fontValue.label.large,
+});
 
 export const containerFilled = style([
   containerBase,
@@ -23,12 +20,14 @@ export const containerFilled = style([
     backgroundColor: color.primary,
 
     ":hover": {
+      zIndex: 1,
       boxShadow: elevation.level1,
     },
     ":disabled": {
+      zIndex: "initial",
+      boxShadow: "none",
       color: color.on.disabled,
       backgroundColor: color.disabled,
-      boxShadow: "none",
     },
   },
 ]);
@@ -41,12 +40,14 @@ export const containerTonal = style([
     backgroundColor: color.secondaryContainer,
 
     ":hover": {
+      zIndex: 1,
       boxShadow: elevation.level1,
     },
     ":disabled": {
+      zIndex: "initial",
+      boxShadow: "none",
       color: color.on.disabled,
       backgroundColor: color.disabled,
-      boxShadow: "none",
     },
   },
 ]);
