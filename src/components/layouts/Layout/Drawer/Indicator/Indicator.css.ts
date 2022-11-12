@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, fontValue, stateLayerOpacity } from "@/styles/tokens";
+import { color, typography, stateLayerOpacity } from "@/styles/tokens";
 import { stateLayerBase } from "@/styles/utils.css";
 
 export const container = style({
@@ -57,7 +57,7 @@ export const icon = style({
 
 export const labelText = style({
   flex: "1 1 0",
-  font: fontValue.label.large,
+  font: typography.label.large,
   color: color.on.surfaceVariant,
   selectors: {
     [`${containerActive} > &`]: {
@@ -67,6 +67,6 @@ export const labelText = style({
 });
 
 export const badgeLabelText = style({
-  font: fontValue.label.large,
+  font: typography.label.large,
   color: color.on.surfaceVariant,
 });

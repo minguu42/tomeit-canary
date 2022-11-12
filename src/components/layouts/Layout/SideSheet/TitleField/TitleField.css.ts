@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, fontValue } from "@/styles/tokens";
+import { color, typography } from "@/styles/tokens";
 
 export const container = style({
   flex: "1 1 0",
@@ -11,7 +11,7 @@ export const textbox = style({
   width: "100%",
   border: "0",
   paddingLeft: 4,
-  font: fontValue.title.large,
+  font: typography.title.large,
   color: color.on.surface,
   backgroundColor: "transparent",
 });

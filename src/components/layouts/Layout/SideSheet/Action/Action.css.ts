@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, fontValue, stateLayerOpacity } from "@/styles/tokens";
+import { color, typography, stateLayerOpacity } from "@/styles/tokens";
 import { stateLayerBase } from "@/styles/utils.css";
 
 export const container = style({
@@ -12,7 +12,7 @@ export const container = style({
   height: 56,
   padding: "0 16px",
   borderRadius: 28,
-  font: fontValue.label.large,
+  font: typography.label.large,
   color: color.on.surfaceVariant,
   backgroundColor: color.surface,
 });

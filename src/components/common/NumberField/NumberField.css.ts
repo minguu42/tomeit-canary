@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, fontValue } from "@/styles/tokens";
+import { color, typography } from "@/styles/tokens";
 
 export const container = style({
   position: "relative",
@@ -21,7 +21,7 @@ export const field = style({
   height: "100%",
   paddingLeft: 28,
   border: "none",
-  font: fontValue.label.large,
+  font: typography.label.large,
   color: color.on.surfaceVariant,
   backgroundColor: "transparent",
 

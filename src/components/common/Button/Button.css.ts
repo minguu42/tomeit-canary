@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, elevation, stateLayerOpacity, fontValue } from "@/styles/tokens";
+import { color, elevation, stateLayerOpacity, typography } from "@/styles/tokens";
 import { stateLayerBase } from "@/styles/utils.css";
 
 const containerBase = style({
@@ -9,7 +9,7 @@ const containerBase = style({
   placeItems: "center",
   height: 40,
   borderRadius: 20,
-  font: fontValue.label.large,
+  font: typography.label.large,
 });
 
 export const containerFilled = style([

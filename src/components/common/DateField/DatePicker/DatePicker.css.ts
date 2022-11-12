@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, elevation, fontValue } from "@/styles/tokens";
+import { color, elevation, typography } from "@/styles/tokens";
 
 export const container = style({
   position: "absolute",
@@ -25,7 +25,7 @@ export const header = style({
 export const menuButton = style({
   padding: "0 4px",
   border: "0",
-  font: fontValue.label.large,
+  font: typography.label.large,
   color: color.on.surfaceVariant,
   backgroundColor: "transparent",
 });
@@ -50,6 +50,6 @@ export const weekdaysItem = style({
   placeItems: "center",
   width: 40,
   height: 40,
-  font: fontValue.body.large,
+  font: typography.body.large,
   color: color.on.surface,
 });

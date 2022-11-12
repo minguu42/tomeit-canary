@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, fontValue } from "@/styles/tokens";
+import { color, typography } from "@/styles/tokens";
 
 export const container = style({
   display: "flex",
@@ -12,7 +12,7 @@ export const container = style({
 });
 
 export const heading = style({
-  font: fontValue.title.large,
+  font: typography.title.large,
   color: color.on.surface,
 });
 

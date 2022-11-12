@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, fontValue } from "@/styles/tokens";
+import { color, typography } from "@/styles/tokens";
 
 export const container = style({
   position: "relative",
@@ -22,7 +22,7 @@ export const inputText = style({
   padding: "0 16px 0 52px",
   border: "none",
   borderBottom: `1px solid ${color.on.surfaceVariant}`,
-  font: fontValue.body.large,
+  font: typography.body.large,
   color: color.on.surfaceVariant,
   backgroundColor: "transparent",
 

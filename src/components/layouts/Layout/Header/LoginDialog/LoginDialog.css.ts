@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, elevation, fontValue } from "@/styles/tokens";
+import { color, elevation, typography } from "@/styles/tokens";
 
 export const container = style({
   position: "absolute",
@@ -18,13 +18,13 @@ export const container = style({
 
 export const headline = style({
   marginBottom: 16,
-  font: fontValue.title.large,
+  font: typography.title.large,
   color: color.on.surface,
 });
 
 export const supportingText = style({
   marginBottom: 24,
-  font: fontValue.body.medium,
+  font: typography.body.medium,
   color: color.on.surfaceVariant,
 });
 

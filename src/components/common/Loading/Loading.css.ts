@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, fontValue } from "@/styles/tokens";
+import { color, typography } from "@/styles/tokens";
 
 export const background = style({
   display: "grid",
@@ -10,6 +10,6 @@ export const background = style({
 });
 
 export const message = style({
-  font: fontValue.title.large,
+  font: typography.title.large,
   color: color.on.background,
 });
