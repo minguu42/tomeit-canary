@@ -9,7 +9,8 @@ const containerBase = style({
   placeItems: "center",
   height: 40,
   borderRadius: 20,
-  font: typography.label.large,
+  fontSize: typography.label.large.size,
+  fontWeight: typography.label.large.weight,
 });
 
 export const containerFilled = style([
@@ -18,7 +19,6 @@ export const containerFilled = style([
     padding: "0 24px",
     color: color.on.primary,
     backgroundColor: color.primary,
-
     ":hover": {
       zIndex: 1,
       boxShadow: elevation.level1,
@@ -38,7 +38,6 @@ export const containerTonal = style([
     padding: "0 24px",
     color: color.on.secondaryContainer,
     backgroundColor: color.secondaryContainer,
-
     ":hover": {
       zIndex: 1,
       boxShadow: elevation.level1,
@@ -56,7 +55,6 @@ export const stateLayerFilled = style([
   stateLayerBase,
   {
     backgroundColor: color.on.primary,
-
     selectors: {
       [`${containerFilled}:hover > &`]: { opacity: stateLayerOpacity.hover },
       [`${containerFilled}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },
@@ -70,7 +68,6 @@ export const stateLayerTonal = style([
   stateLayerBase,
   {
     backgroundColor: color.on.secondaryContainer,
-
     selectors: {
       [`${containerTonal}:hover > &`]: { opacity: stateLayerOpacity.hover },
       [`${containerTonal}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },

@@ -12,12 +12,14 @@ export const container = style({
 });
 
 export const name = style({
-  font: typography.body.large,
+  fontSize: typography.body.large.size,
+  fontWeight: typography.body.large.weight,
   color: color.on.surfaceVariant,
 });
 
 export const value = style({
-  font: typography.body.large,
+  fontSize: typography.body.large.size,
+  fontWeight: typography.body.large.weight,
   color: color.on.surface,
 });
 

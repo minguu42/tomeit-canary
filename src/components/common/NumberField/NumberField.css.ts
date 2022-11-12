@@ -21,10 +21,10 @@ export const field = style({
   height: "100%",
   paddingLeft: 28,
   border: "none",
-  font: typography.label.large,
+  fontSize: typography.label.large.size,
+  fontWeight: typography.label.large.weight,
   color: color.on.surfaceVariant,
   backgroundColor: "transparent",
-
   selectors: {
     "&:focus-visible": {
       outline: "none",

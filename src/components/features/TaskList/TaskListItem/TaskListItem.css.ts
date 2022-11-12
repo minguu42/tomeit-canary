@@ -56,7 +56,8 @@ export const rightIconLayout = style({
 });
 
 export const heading = style({
-  font: typography.body.large,
+  fontSize: typography.body.large.size,
+  fontWeight: typography.body.large.weight,
   color: color.on.surface,
 });
 
@@ -64,5 +65,4 @@ export const flags = style({
   display: "flex",
   gap: 8,
   alignItems: "center",
-  font: typography.label.medium,
 });

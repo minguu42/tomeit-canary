@@ -12,15 +12,15 @@ export const container = style({
 });
 
 export const name = style({
-  font: typography.body.large,
+  fontSize: typography.body.large.size,
+  fontWeight: typography.body.large.weight,
   color: `${color.on.surfaceVariant}`,
 });
 
 export const value = style({
-  font: typography.body.large,
+  fontSize: typography.body.large.size,
+  fontWeight: typography.body.large.weight,
   color: `${color.on.surface}`,
 });
 
-export const spacer = style({
-  flex: "1 1 0",
-});
+export const spacer = style({ flex: "1 1 0" });

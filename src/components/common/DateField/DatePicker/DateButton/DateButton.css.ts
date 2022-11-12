@@ -10,7 +10,8 @@ export const container = style({
   width: 40,
   height: 40,
   borderRadius: "50%",
-  font: typography.label.large,
+  fontSize: typography.label.large.size,
+  fontWeight: typography.label.large.weight,
   color: color.on.surface,
   backgroundColor: "transparent",
 });
@@ -19,7 +20,6 @@ export const stateLayer = style([
   stateLayerBase,
   {
     backgroundColor: color.on.surfaceVariant,
-
     selectors: {
       [`${container}:hover > &`]: { opacity: stateLayerOpacity.hover },
       [`${container}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },

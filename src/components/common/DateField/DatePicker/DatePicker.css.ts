@@ -25,7 +25,8 @@ export const header = style({
 export const menuButton = style({
   padding: "0 4px",
   border: "0",
-  font: typography.label.large,
+  fontSize: typography.label.large.size,
+  fontWeight: typography.label.large.weight,
   color: color.on.surfaceVariant,
   backgroundColor: "transparent",
 });
@@ -50,6 +51,7 @@ export const weekdaysItem = style({
   placeItems: "center",
   width: 40,
   height: 40,
-  font: typography.body.large,
+  fontSize: typography.body.large.size,
+  fontWeight: typography.body.large.weight,
   color: color.on.surface,
 });

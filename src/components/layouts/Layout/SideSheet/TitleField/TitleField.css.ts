@@ -11,7 +11,8 @@ export const textbox = style({
   width: "100%",
   border: "0",
   paddingLeft: 4,
-  font: typography.title.large,
+  fontSize: typography.title.large.size,
+  fontWeight: typography.title.large.weight,
   color: color.on.surface,
   backgroundColor: "transparent",
 });

@@ -18,13 +18,15 @@ export const container = style({
 
 export const headline = style({
   marginBottom: 16,
-  font: typography.title.large,
+  fontSize: typography.title.large.size,
+  fontWeight: typography.title.large.weight,
   color: color.on.surface,
 });
 
 export const supportingText = style({
   marginBottom: 24,
-  font: typography.body.medium,
+  fontSize: typography.body.medium.size,
+  fontWeight: typography.body.medium.weight,
   color: color.on.surfaceVariant,
 });
 

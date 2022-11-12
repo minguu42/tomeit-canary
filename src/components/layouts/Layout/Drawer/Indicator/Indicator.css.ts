@@ -57,7 +57,8 @@ export const icon = style({
 
 export const labelText = style({
   flex: "1 1 0",
-  font: typography.label.large,
+  fontSize: typography.label.large.size,
+  fontWeight: typography.label.large.weight,
   color: color.on.surfaceVariant,
   selectors: {
     [`${containerActive} > &`]: {
@@ -67,6 +68,7 @@ export const labelText = style({
 });
 
 export const badgeLabelText = style({
-  font: typography.label.large,
+  fontSize: typography.label.large.size,
+  fontWeight: typography.label.large.weight,
   color: color.on.surfaceVariant,
 });

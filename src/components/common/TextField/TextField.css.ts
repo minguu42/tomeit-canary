@@ -22,10 +22,10 @@ export const inputText = style({
   padding: "0 16px 0 52px",
   border: "none",
   borderBottom: `1px solid ${color.on.surfaceVariant}`,
-  font: typography.body.large,
+  fontSize: typography.body.large.size,
+  fontWeight: typography.body.large.weight,
   color: color.on.surfaceVariant,
   backgroundColor: "transparent",
-
   selectors: {
     ["&:focus-visible"]: {
       outline: "none",

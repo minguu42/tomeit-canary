@@ -12,7 +12,8 @@ export const container = style({
 });
 
 export const heading = style({
-  font: typography.title.large,
+  fontSize: typography.title.large.size,
+  fontWeight: typography.title.large.weight,
   color: color.on.surface,
 });
 

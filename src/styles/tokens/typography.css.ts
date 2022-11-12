@@ -2,15 +2,33 @@ import { createGlobalTheme } from "@vanilla-extract/css";
 
 export const typography = createGlobalTheme(":root", {
   title: {
-    large: "400 1.375rem inherit",
-    medium: "400 1rem inherit",
+    large: {
+      size: "1.375rem",
+      weight: "400",
+    },
+    medium: {
+      size: "1rem",
+      weight: "400",
+    },
   },
   body: {
-    large: "400 1rem inherit",
-    medium: "400 0.875rem inherit",
+    large: {
+      size: "1rem",
+      weight: "400",
+    },
+    medium: {
+      size: "0.875rem",
+      weight: "400",
+    },
   },
   label: {
-    large: "500 0.875rem inherit",
-    medium: "500 0.75rem inherit",
+    large: {
+      size: "0.875rem",
+      weight: "500",
+    },
+    medium: {
+      size: "0.75rem",
+      weight: "500",
+    },
   },
 });

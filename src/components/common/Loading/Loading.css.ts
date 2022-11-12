@@ -10,6 +10,7 @@ export const background = style({
 });
 
 export const message = style({
-  font: typography.title.large,
+  fontSize: typography.title.large.size,
+  fontWeight: typography.title.large.weight,
   color: color.on.background,
 });
