@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { color, stateLayerOpacity, typography } from "@/styles/tokens";
+import { color, typography, stateLayerOpacity } from "@/styles/tokens";
 import { stateLayerBase } from "@/styles/utils.css";
 
 export const container = style({
@@ -55,18 +55,14 @@ export const rightIconLayout = style({
   right: 24,
 });
 
-export const heading = style([
-  typography.body.large,
-  {
-    color: color.on.surface,
-  },
-]);
+export const heading = style({
+  fontSize: typography.body.large.size,
+  fontWeight: typography.body.large.weight,
+  color: color.on.surface,
+});
 
-export const flags = style([
-  typography.body.small,
-  {
-    display: "flex",
-    gap: 8,
-    alignItems: "center",
-  },
-]);
+export const flags = style({
+  display: "flex",
+  gap: 8,
+  alignItems: "center",
+});

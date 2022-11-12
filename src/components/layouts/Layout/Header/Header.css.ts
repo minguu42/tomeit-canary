@@ -11,10 +11,12 @@ export const container = style({
   backgroundColor: color.surface,
 });
 
-export const heading = style([typography.title.large, { color: color.on.surface }]);
+export const heading = style({
+  fontSize: typography.title.large.size,
+  fontWeight: typography.title.large.weight,
+  color: color.on.surface,
+});
 
 export const spacer = style({ flex: "1 1 0" });
 
-export const space4 = style({
-  width: 8,
-});
+export const space4 = style({ width: 8 });

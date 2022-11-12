@@ -6,28 +6,29 @@ export const container = style({
   position: "absolute",
   top: "40%",
   left: "50%",
-  transform: "translate(-50%, -50%)",
-  zIndex: 6,
+  zIndex: 5,
   minWidth: 280,
   maxWidth: 560,
   padding: 24,
   borderRadius: 28,
-  backgroundColor: color.surface,
   boxShadow: elevation.level3,
+  backgroundColor: color.surface,
+  transform: "translate(-50%, -50%)",
 });
 
-export const headline = style([
-  typography.headline.small,
-  { marginBottom: 16, color: color.on.surface },
-]);
+export const headline = style({
+  marginBottom: 16,
+  fontSize: typography.title.large.size,
+  fontWeight: typography.title.large.weight,
+  color: color.on.surface,
+});
 
-export const supportingText = style([
-  typography.body.medium,
-  {
-    marginBottom: 24,
-    color: color.on.surfaceVariant,
-  },
-]);
+export const supportingText = style({
+  marginBottom: 24,
+  fontSize: typography.body.medium.size,
+  fontWeight: typography.body.medium.weight,
+  color: color.on.surfaceVariant,
+});
 
 export const alignCenter = style({
   display: "flex",

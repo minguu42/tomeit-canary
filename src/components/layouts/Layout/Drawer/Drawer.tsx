@@ -19,6 +19,7 @@ export const Drawer: FC<Props> = ({ isOpen, toggleDrawer }) => {
 
   return (
     <>
+      <button className={s.scrim} onClick={toggleDrawer} />
       <ul className={s.container}>
         <Indicator
           url="/focus"
@@ -33,7 +34,6 @@ export const Drawer: FC<Props> = ({ isOpen, toggleDrawer }) => {
           labelText="タスク"
         />
       </ul>
-      <button className={s.scrim} onClick={toggleDrawer} />
     </>
   );
 };

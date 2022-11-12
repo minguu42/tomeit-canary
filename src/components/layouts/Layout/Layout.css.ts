@@ -7,10 +7,6 @@ export const container = style({
   backgroundColor: color.background,
 });
 
-export const sideLayout = style({
-  display: "flex",
-});
+export const sideLayout = style({ display: "flex" });
 
-export const main = style({
-  flex: "1 1 0",
-});
+export const main = style({ flex: "1 1 0" });

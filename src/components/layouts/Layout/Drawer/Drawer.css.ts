@@ -3,10 +3,10 @@ import { style } from "@vanilla-extract/css";
 import { color } from "@/styles/tokens";
 
 export const container = style({
-  paddingTop: 8,
   width: "360px",
-  backgroundColor: color.surface,
+  paddingTop: 8,
   borderRadius: "0 16px 16px 0",
+  backgroundColor: color.surface,
   "@media": {
     "screen and (min-width: 0) and (max-width: 839px)": {
       position: "absolute",
@@ -19,11 +19,6 @@ export const container = style({
       minHeight: "calc(100vh - 64px)",
     },
   },
-});
-
-export const divider = style({
-  margin: "0 28px",
-  border: `1px solid ${color.outline}`,
 });
 
 export const scrim = style({

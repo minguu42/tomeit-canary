@@ -4,11 +4,11 @@ import { IconButton } from "@/components/common/IconButton";
 import {
   AlarmIcon,
   AlarmOnIcon,
-  CalendarMonthIcon,
+  CalendarIcon,
   CheckCircleIcon,
   CircleIcon,
   DescriptionIcon,
-  PlayArrowIcon,
+  PlayIcon,
 } from "@/components/common/icons";
 import { Flag } from "@/components/features/TaskList/TaskListItem/Flag";
 import * as s from "./TaskListItem.css";
@@ -80,7 +80,7 @@ export const TaskListItem: FC<Props> = ({ task }) => {
               )}
               {task.dueOn !== null && (
                 <Flag
-                  icon={<CalendarMonthIcon size={18} />}
+                  icon={<CalendarIcon size={18} />}
                   labelText={formatDate(task.dueOn, "locale")}
                 />
               )}
@@ -116,7 +116,7 @@ export const TaskListItem: FC<Props> = ({ task }) => {
             )}
             {task.dueOn !== null && (
               <Flag
-                icon={<CalendarMonthIcon size={18} />}
+                icon={<CalendarIcon size={18} />}
                 labelText={formatDate(task.dueOn, "locale")}
               />
             )}
@@ -127,11 +127,7 @@ export const TaskListItem: FC<Props> = ({ task }) => {
         <IconButton icon={<CircleIcon />} label="タスクの完了" onClick={handleCircleButtonClick} />
       </div>
       <div className={s.rightIconLayout}>
-        <IconButton
-          icon={<PlayArrowIcon />}
-          label="ポモドーロの実行"
-          onClick={handlePlayButtonClick}
-        />
+        <IconButton icon={<PlayIcon />} label="ポモドーロの実行" onClick={handlePlayButtonClick} />
       </div>
     </li>
   );

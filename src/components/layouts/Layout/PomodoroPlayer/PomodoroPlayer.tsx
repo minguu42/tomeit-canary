@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 
 import { IconButton } from "@/components/common/IconButton";
-import { DoneIcon, PauseIcon, PlayArrowIcon, StopIcon } from "@/components/common/icons";
+import { DoneIcon, PauseIcon, PlayIcon, StopIcon } from "@/components/common/icons";
 import * as s from "./PomodoroPlayer.css";
 import { usePlayingTask } from "@/globalStates/playingTask";
 import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
@@ -74,11 +74,11 @@ export const PomodoroPlayer: FC = () => {
       {!isActive &&
         (time === POMODORO_TIME ||
           ((time === SHORT_BREAK_TIME || time === LONG_BREAK_TIME) && isNextPomodoro)) && (
-          <IconButton icon={<PlayArrowIcon />} label="ポモドーロの開始" onClick={startPomodoro} />
+          <IconButton icon={<PlayIcon />} label="ポモドーロの開始" onClick={startPomodoro} />
         )}
       {!isActive && time !== POMODORO_TIME && !isNextPomodoro && (
         <>
-          <IconButton icon={<PlayArrowIcon />} label="ポモドーロの再開" onClick={startPomodoro} />
+          <IconButton icon={<PlayIcon />} label="ポモドーロの再開" onClick={startPomodoro} />
           <IconButton icon={<StopIcon />} label="ポモドーロの中止" onClick={stopPomodoro} />
         </>
       )}

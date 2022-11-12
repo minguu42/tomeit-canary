@@ -13,25 +13,23 @@ export const container = style({
   backgroundColor: color.surfaceVariant,
 });
 
-export const field = style([
-  {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    paddingLeft: 28,
-    border: "0",
-    color: color.on.surfaceVariant,
-    backgroundColor: "transparent",
-
-    selectors: {
-      "&:focus-visible": {
-        outline: "0",
-        color: color.primary,
-        borderBottom: `1px solid ${color.primary}`,
-      },
+export const field = style({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  paddingLeft: 28,
+  border: "none",
+  fontSize: typography.label.large.size,
+  fontWeight: typography.label.large.weight,
+  color: color.on.surfaceVariant,
+  backgroundColor: "transparent",
+  selectors: {
+    "&:focus-visible": {
+      outline: "none",
+      color: color.primary,
+      borderBottom: `1px solid ${color.primary}`,
     },
   },
-  typography.label.large,
-]);
+});

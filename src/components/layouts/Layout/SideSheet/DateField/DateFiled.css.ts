@@ -11,19 +11,17 @@ export const container = style({
   color: color.on.surfaceVariant,
 });
 
-export const name = style([
-  {
-    color: color.on.surfaceVariant,
-  },
-  typography.body.large,
-]);
+export const name = style({
+  fontSize: typography.body.large.size,
+  fontWeight: typography.body.large.weight,
+  color: color.on.surfaceVariant,
+});
 
-export const value = style([
-  {
-    color: color.on.surface,
-  },
-  typography.body.large,
-]);
+export const value = style({
+  fontSize: typography.body.large.size,
+  fontWeight: typography.body.large.weight,
+  color: color.on.surface,
+});
 
 export const spacer = style({
   flex: "1 1 0",

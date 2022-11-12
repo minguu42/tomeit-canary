@@ -8,8 +8,8 @@ export const container = style({
   left: 0,
   display: "flex",
   alignItems: "center",
-  height: 64,
   width: "100%",
+  height: 64,
   padding: "0 4px",
   backgroundColor: color.primaryContainer,
 });

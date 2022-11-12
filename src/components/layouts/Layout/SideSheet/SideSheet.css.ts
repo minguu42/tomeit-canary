@@ -4,8 +4,8 @@ import { color } from "@/styles/tokens";
 
 export const container = style({
   width: 400,
-  backgroundColor: color.surface,
   borderRadius: "16px 0 0 16px",
+  backgroundColor: color.surface,
   "@media": {
     "screen and (min-width: 840px)": {
       minHeight: "calc(100vh - 64px)",

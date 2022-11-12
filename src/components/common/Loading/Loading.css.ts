@@ -3,11 +3,14 @@ import { style } from "@vanilla-extract/css";
 import { color, typography } from "@/styles/tokens";
 
 export const background = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+  display: "grid",
+  placeItems: "center",
   height: "100vh",
   backgroundColor: color.background,
 });
 
-export const message = style([typography.title.large, { color: color.on.background }]);
+export const message = style({
+  fontSize: typography.title.large.size,
+  fontWeight: typography.title.large.weight,
+  color: color.on.background,
+});
