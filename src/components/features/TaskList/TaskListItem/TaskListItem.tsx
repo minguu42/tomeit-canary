@@ -4,7 +4,7 @@ import { IconButton } from "@/components/common/IconButton";
 import {
   AlarmIcon,
   AlarmOnIcon,
-  CalendarMonthIcon,
+  CalendarIcon,
   CheckCircleIcon,
   CircleIcon,
   DescriptionIcon,
@@ -80,7 +80,7 @@ export const TaskListItem: FC<Props> = ({ task }) => {
               )}
               {task.dueOn !== null && (
                 <Flag
-                  icon={<CalendarMonthIcon size={18} />}
+                  icon={<CalendarIcon size={18} />}
                   labelText={formatDate(task.dueOn, "locale")}
                 />
               )}
@@ -116,7 +116,7 @@ export const TaskListItem: FC<Props> = ({ task }) => {
             )}
             {task.dueOn !== null && (
               <Flag
-                icon={<CalendarMonthIcon size={18} />}
+                icon={<CalendarIcon size={18} />}
                 labelText={formatDate(task.dueOn, "locale")}
               />
             )}

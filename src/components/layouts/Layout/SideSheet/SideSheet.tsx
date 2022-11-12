@@ -5,7 +5,7 @@ import {
   AddIcon,
   AlarmIcon,
   AlarmOnIcon,
-  CalendarMonthIcon,
+  CalendarIcon,
   CheckCircleIcon,
   CircleIcon,
   CloseIcon,
@@ -106,7 +106,7 @@ export const SideSheet: FC = () => {
         value={remarkedTask.estimatedCount}
       />
       <NumberField icon={<AlarmOnIcon />} name="実ポモドーロ数" value={remarkedTask.actualCount} />
-      <DateField icon={<CalendarMonthIcon />} name="期限" value={remarkedTask.dueOn} />
+      <DateField icon={<CalendarIcon />} name="期限" value={remarkedTask.dueOn} />
       {remarkedTask.hasDoToday ? (
         <Action
           leadingIcon={<RemoveIcon />}

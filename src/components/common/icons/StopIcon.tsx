@@ -2,18 +2,18 @@ import { FC } from "react";
 
 type Props = {
   size?: 18 | 24;
+  className?: string;
 };
 
-const MenuOpen: FC<Props> = ({ size }) => (
+export const StopIcon: FC<Props> = ({ size, className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     width={size ?? 24}
     height={size ?? 24}
     fill="currentColor"
+    className={className}
   >
-    <path d="M3 18v-2h13v2Zm16.6-1-5-5 5-5L21 8.4 17.4 12l3.6 3.6ZM3 13v-2h10v2Zm0-5V6h13v2Z" />
+    <path d="M8 8v8ZM6 18V6h12v12Zm2-2h8V8H8Z" />
   </svg>
 );
-
-export default MenuOpen;
