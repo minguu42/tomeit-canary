@@ -2,7 +2,6 @@ import { FC } from "react";
 import Image from "next/image";
 
 import * as s from "./GoogleLoginButton.css";
-import { imageLoader } from "@/lib/loader";
 
 type Props = {
   login: () => void;
@@ -14,12 +13,9 @@ export const GoogleLoginButton: FC<Props> = ({ login }) => (
     <div className={s.logoBackground}>
       <Image
         src="/images/google.png"
+        alt=""
         width={18}
         height={18}
-        layout="fixed"
-        alt=""
-        loader={imageLoader}
-        unoptimized={true}
       />
     </div>
     Sign in with Google
