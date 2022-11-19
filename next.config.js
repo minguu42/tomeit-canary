@@ -5,9 +5,6 @@ const withVanillaExtract = createVanillaExtractPlugin();
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  images: {
-    loader: "custom",
-  },
   eslint: {
     dirs: [
       "src/components",
