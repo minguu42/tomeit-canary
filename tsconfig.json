@@ -18,8 +18,10 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/globalStates/*": ["globalStates/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/lib/*": ["lib/*"],
       "@/pages/*": ["pages/*"],
+      "@/server/*": ["server/*"],
       "@/styles/*": ["styles/*"],
       "@/types/*": ["types/*"]
     }

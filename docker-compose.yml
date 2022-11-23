@@ -1,21 +1,6 @@
 version: "3"
 
 services:
-  api:
-    build:
-      context: ./backend
-    environment:
-      - API_ENV
-      - ALLOWED_ORIGINS
-      - DSN
-      - GOOGLE_CREDENTIALS_JSON
-    container_name: tomeit-api
-    volumes:
-      - ./backend:/app
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db-dev
   db-dev:
     image: mysql:8.0.29
     environment:
@@ -25,7 +10,6 @@ services:
     restart: always
     volumes:
       - data-dev:/var/lib/mysql
-      - ./backend/build/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
   db-test:
     image: mysql:8.0.29
     environment:
@@ -37,15 +21,6 @@ services:
       - "13306:3306"
     volumes:
       - data-test:/var/lib/mysql
-  docs:
-    image: swaggerapi/swagger-ui:v4.11.0
-    container_name: tomeit-api-docs
-    environment:
-      API_URL: openapi.yml
-    ports:
-      - "8000:8080"
-    volumes:
-      - ./docs/openapi.yml:/usr/share/nginx/html/openapi.yml
 
 volumes:
   data-dev:

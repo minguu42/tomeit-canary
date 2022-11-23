@@ -1,2 +1,0 @@
-GET http://localhost:8080/v0/healthz
-Accept: application/json
