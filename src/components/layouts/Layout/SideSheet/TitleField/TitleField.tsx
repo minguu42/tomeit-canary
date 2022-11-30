@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } from "react";
 
 import * as s from "./TitleField.css";
-import { useTasksMutators } from "@/globalStates/tasks";
+import { useTasksMutators } from "@/stores/tasks";
 
 type Props = {
   taskID: number;

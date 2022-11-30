@@ -17,8 +17,8 @@ import { NumberField } from "@/components/layouts/Layout/SideSheet/NumberField/N
 import { DateField } from "@/components/layouts/Layout/SideSheet/DateField";
 import { Action } from "@/components/layouts/Layout/SideSheet/Action";
 import * as s from "./SideSheet.css";
-import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
-import { useTasksMutators } from "@/globalStates/tasks";
+import { useRemarkedTask, useRemarkedTaskMutators } from "@/stores/remarkedTask";
+import { useTasksMutators } from "@/stores/tasks";
 import { Task } from "@/types/task";
 
 export const SideSheet: FC = () => {

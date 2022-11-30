@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useIsDarkThemeMutators } from "@/globalStates/isDarkTheme";
+import { useIsDarkThemeMutators } from "@/stores/isDarkTheme";
 
 export const useTheme = (): boolean => {
   const [isLoading, setIsLoading] = useState(true);

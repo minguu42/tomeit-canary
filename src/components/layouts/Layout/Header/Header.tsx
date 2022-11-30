@@ -11,9 +11,9 @@ import {
   MenuOpenIcon,
 } from "@/components/common/icons";
 import * as s from "./Header.css";
-import { useIsDarkTheme, useIsDarkThemeMutators } from "@/globalStates/isDarkTheme";
-import { useUser } from "@/globalStates/user";
 import { logout } from "@/lib/auth";
+import { useIsDarkTheme, useIsDarkThemeMutators } from "@/stores/isDarkTheme";
+import { useUser } from "@/stores/user";
 
 type Props = {
   isDrawerOpen: boolean;
