@@ -1,6 +1,7 @@
-import { Task } from "@/types/task";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { useCallback } from "react";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+
+import { Task } from "@/types/task";
 
 type PlayingTask = Task | null;
 
