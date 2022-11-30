@@ -36,8 +36,8 @@ export const containerTonal = style([
   containerBase,
   {
     padding: "0 24px",
-    color: color.on.secondaryContainer,
-    backgroundColor: color.secondaryContainer,
+    color: color.on.primaryContainer,
+    backgroundColor: color.primaryContainer,
     ":hover": {
       zIndex: 1,
       boxShadow: elevation.level1,
@@ -67,7 +67,7 @@ export const stateLayerFilled = style([
 export const stateLayerTonal = style([
   stateLayerBase,
   {
-    backgroundColor: color.on.secondaryContainer,
+    backgroundColor: color.on.primaryContainer,
     selectors: {
       [`${containerTonal}:hover > &`]: { opacity: stateLayerOpacity.hover },
       [`${containerTonal}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },
