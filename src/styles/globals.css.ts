@@ -4,7 +4,6 @@ globalStyle("*", {
   boxSizing: "border-box",
   padding: "0",
   margin: "0",
-  backgroundRepeat: "no-repeat",
 });
 
 globalStyle(":where(html)", {
@@ -19,7 +18,7 @@ globalStyle(":where(a)", {
 globalStyle(`:where(button, [type="button"], [type="reset"], [type="submit"], [role="button"])`, {
   color: "inherit",
   cursor: "pointer",
-  borderWidth: "0",
+  border: "none",
 });
 
 globalStyle(":where(nav, ol, ul, menu)", {

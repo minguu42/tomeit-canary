@@ -18,7 +18,7 @@ export const container = style({
 export const containerActive = style([
   container,
   {
-    backgroundColor: color.secondaryContainer,
+    backgroundColor: color.primaryContainer,
   },
 ]);
 
@@ -37,7 +37,7 @@ export const stateLayer = style([
 export const stateLayerActive = style([
   stateLayerBase,
   {
-    backgroundColor: color.on.secondaryContainer,
+    backgroundColor: color.on.primaryContainer,
     selectors: {
       [`${containerActive}:hover > &`]: { opacity: stateLayerOpacity.hover },
       [`${containerActive}:focus-visible > &`]: { opacity: stateLayerOpacity.focus },
@@ -50,7 +50,7 @@ export const icon = style({
   color: color.on.surfaceVariant,
   selectors: {
     [`${containerActive} > &`]: {
-      color: color.on.secondaryContainer,
+      color: color.on.primaryContainer,
     },
   },
 });
@@ -62,7 +62,7 @@ export const labelText = style({
   color: color.on.surfaceVariant,
   selectors: {
     [`${containerActive} > &`]: {
-      color: color.on.secondaryContainer,
+      color: color.on.primaryContainer,
     },
   },
 });

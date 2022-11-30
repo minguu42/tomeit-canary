@@ -12,10 +12,10 @@ import {
 } from "@/components/common/icons";
 import { Flag } from "@/components/features/TaskList/TaskListItem/Flag";
 import * as s from "./TaskListItem.css";
-import { usePlayingTask, usePlayingTaskMutators } from "@/globalStates/playingTask";
-import { useRemarkedTask, useRemarkedTaskMutators } from "@/globalStates/remarkedTask";
-import { useTasksMutators } from "@/globalStates/tasks";
 import { formatDate } from "@/lib/formatDate";
+import { usePlayingTask, usePlayingTaskMutators } from "@/stores/playingTask";
+import { useRemarkedTask, useRemarkedTaskMutators } from "@/stores/remarkedTask";
+import { useTasksMutators } from "@/stores/tasks";
 import { Task } from "@/types/task";
 
 type Props = {

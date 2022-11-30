@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Image from "next/image";
 
-import googleLogo from "../../../../../../../public/images/google.png";
+import googleLogo from "../../../../../../public/images/google.png";
 import * as s from "./GoogleLoginButton.css";
 
 type Props = {

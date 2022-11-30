@@ -6,7 +6,7 @@ import { AddTaskIcon, AlarmIcon, CalendarIcon } from "@/components/common/icons"
 import { NumberField } from "@/components/common/NumberField";
 import { TextFiled } from "@/components/common/TextField";
 import * as s from "./TaskAddForm.css";
-import { useTasksMutators } from "@/globalStates/tasks";
+import { useTasksMutators } from "@/stores/tasks";
 import { Task } from "@/types/task";
 
 export const TaskAddForm: FC = () => {

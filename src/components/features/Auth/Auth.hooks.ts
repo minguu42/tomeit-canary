@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-import { useUser, useUserMutators } from "@/globalStates/user";
 import { app } from "@/lib/firebase";
+import { useUser, useUserMutators } from "@/stores/user";
 
 const REDIRECT_TARGET_URL_AT_NOT_LOGIN = "/";
 

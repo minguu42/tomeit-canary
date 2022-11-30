@@ -6,42 +6,21 @@ on:
       - src/**
 
 jobs:
-  check-style:
-    runs-on: ubuntu-20.04
+  rome-ci:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: "16"
-      - name: Install dependencies
-        run: npm install
-      - name: Check style
-        run: npm run check-style
-  lint:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16"
-      - name: Install dependencies
-        run: npm install
-      - name: Lint
-        run: npm run lint
+          node-version: "18"
+      - run: npm ci
+      - run: npm run rome-ci
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: "16"
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
+          node-version: "18"
+      - run: npm ci
+      - run: npm run build

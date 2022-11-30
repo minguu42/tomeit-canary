@@ -3,8 +3,8 @@ import { FC, useEffect, useState } from "react";
 import { IconButton } from "@/components/common/IconButton";
 import { DoneIcon, PauseIcon, PlayIcon, StopIcon } from "@/components/common/icons";
 import * as s from "./PomodoroPlayer.css";
-import { usePlayingTask } from "@/globalStates/playingTask";
 import { formatSecondsToMinutesSeconds } from "@/lib/formatDate";
+import { usePlayingTask } from "@/stores/playingTask";
 
 const POMODORO_TIME = 1500;
 const SHORT_BREAK_TIME = 300;

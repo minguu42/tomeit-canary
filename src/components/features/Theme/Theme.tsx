@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { darkTheme, lightTheme } from "@/styles/tokens/theme.css";
-import { useIsDarkTheme } from "@/globalStates/isDarkTheme";
+import { useIsDarkTheme } from "@/stores/isDarkTheme";
 import { useTheme } from "./Theme.hooks";
 
 type Props = {
