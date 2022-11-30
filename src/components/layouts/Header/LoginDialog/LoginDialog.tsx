@@ -1,6 +1,6 @@
 import { FC, MouseEventHandler } from "react";
 
-import { GoogleLoginButton } from "@/components/layouts/Layout/Header/LoginDialog/GoogleLoginButton";
+import { GoogleLoginButton } from "@/components/layouts/Header/LoginDialog/GoogleLoginButton";
 import * as s from "./LoginDialog.css";
 import { login } from "@/lib/auth";
 

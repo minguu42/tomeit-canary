@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 
 import { Button } from "@/components/common/Button";
 import { IconButton } from "@/components/common/IconButton";
-import { LoginDialog } from "@/components/layouts/Layout/Header/LoginDialog";
+import { LoginDialog } from "@/components/layouts/Header/LoginDialog";
 import {
   DarkModeIcon,
   LightModeIcon,
