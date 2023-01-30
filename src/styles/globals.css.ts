@@ -11,14 +11,14 @@ globalStyle(":where(html)", {
 });
 
 globalStyle(":where(a)", {
-  color: "inherit",
   textDecoration: "none",
+  color: "inherit",
 });
 
 globalStyle(`:where(button, [type="button"], [type="reset"], [type="submit"], [role="button"])`, {
-  color: "inherit",
   cursor: "pointer",
   border: "none",
+  color: "inherit",
 });
 
 globalStyle(":where(nav, ol, ul, menu)", {
