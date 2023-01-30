@@ -1,3 +1,3 @@
-import { TasksPage } from "@/components/pages/TasksPage";
+import { TasksPage } from "@/features/pages/TasksPage";
 
 export default TasksPage;
