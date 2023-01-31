@@ -1,6 +1,6 @@
 import { createGlobalTheme, createTheme, createThemeContract } from "@vanilla-extract/css";
 
-export const theme = createThemeContract({
+const theme = createThemeContract({
   color: {
     primary: null,
     primaryContainer: null,
@@ -37,6 +37,9 @@ export const theme = createThemeContract({
     level5: null,
   },
 });
+
+export const color = theme.color;
+export const elevation = theme.elevation;
 
 export const lightTheme = createTheme(theme, {
   color: {
