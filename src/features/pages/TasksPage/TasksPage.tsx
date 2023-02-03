@@ -1,7 +1,7 @@
 import { TaskAddForm } from "@/features/task/TaskAddForm/TaskAddForm";
 import { TaskList } from "@/features/task/TaskList/TaskList";
 import { Task } from "@/features/task/task";
-import * as s from "./TasksPage.css"
+import * as s from "./TasksPage.css";
 
 const ts: Task[] = [
   {

@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
-  padding: "0 8px"
-})
+  padding: "0 8px",
+});
