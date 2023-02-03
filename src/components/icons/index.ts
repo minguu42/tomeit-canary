@@ -1,4 +1,5 @@
 export * from "./AddTaskIcon";
+export * from "./AlarmIcon";
 export * from "./CalendarIcon";
 export * from "./DarkModeIcon";
 export * from "./LightModeIcon";
