@@ -18,8 +18,10 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/features/*": ["features/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/lib/*": ["lib/*"],
       "@/pages/*": ["pages/*"],
+      "@/server/*": ["server/*"],
       "@/styles/*": ["styles/*"]
     }
   },
