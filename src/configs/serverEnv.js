@@ -2,9 +2,10 @@
 const { z } = require("zod");
 
 const serverSchema = z.object({
-  NEXTAUTH_SECRET: z.string(),
-  GOOGLE_CLIENT_ID: z.string(),
-  GOOGLE_CLIENT_SECRET: z.string(),
+  NEXTAUTH_SECRET: z.string().min(1),
+  NEXTAUTH_URL: z.string().url(),
+  GOOGLE_CLIENT_ID: z.string().min(1),
+  GOOGLE_CLIENT_SECRET: z.string().min(1),
 });
 
 const _serverEnv = serverSchema.safeParse(process.env);
