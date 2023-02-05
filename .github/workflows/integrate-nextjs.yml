@@ -17,6 +17,11 @@ jobs:
       - run: npm run rome-ci
   build:
     runs-on: ubuntu-22.04
+    env:
+      NEXTAUTH_SECRET: nextauth_secret_example
+      NEXTAUTH_URL: http://localhost:3000
+      GOOGLE_CLIENT_ID: google_client_id_example
+      GOOGLE_CLIENT_SECRET: google_client_secret_example
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
