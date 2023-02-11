@@ -7,6 +7,7 @@ export * from "./CircleIcon";
 export * from "./DarkModeIcon";
 export * from "./DescriptionIcon";
 export * from "./LightModeIcon";
+export * from "./LoginIcon";
 export * from "./LogoutIcon";
 export * from "./NavigationBeforeIcon";
 export * from "./NavigationNextIcon";
