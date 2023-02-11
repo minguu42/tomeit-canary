@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React from "react";
 
 import { IconButton } from "@/components/IconButton";
 import {
@@ -19,7 +19,7 @@ type Props = {
   task: Task;
 };
 
-export const TaskListItem: FC<Props> = ({ task }) => {
+export const TaskListItem: React.FC<Props> = ({ task }) => {
   const flagsExist =
     task.actualCount !== 0 || task.estimatedCount !== 0 || task.hasDoToday || task.dueOn !== null;
 

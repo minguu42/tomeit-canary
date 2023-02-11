@@ -1,10 +1,11 @@
+import React from "react";
 import { IconButton } from "@/components/IconButton";
 import { DarkModeIcon, LightModeIcon, LogoutIcon } from "@/components/icons";
 import { useIsDarkTheme, useIsDarkThemeMutators } from "@/features/theme/useIsDarkTheme";
 
 import * as s from "./Header.css";
 
-export const Header = (): JSX.Element => {
+export const Header: React.FC = () => {
   const isDarkTheme = useIsDarkTheme();
   const { toggleTheme } = useIsDarkThemeMutators();
   return (

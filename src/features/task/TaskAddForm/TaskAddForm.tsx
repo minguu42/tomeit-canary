@@ -1,21 +1,21 @@
-import { MouseEventHandler, useState } from "react";
+import React, { useState } from "react";
 
 import { Button } from "@/components/Button";
 import { DateFiled } from "@/components/DateField";
 import { AddTaskIcon, AlarmIcon, CalendarIcon } from "@/components/icons";
 import { NumberField } from "@/components/NumberField";
 import { TextField } from "@/components/TextField";
-import * as s from "./TaskAddForm.css";
 import { Task } from "@/features/task/task";
 import { useTRPC } from "@/hooks/useTRPC";
+import * as s from "./TaskAddForm.css";
 
-export const TaskAddForm = (): JSX.Element => {
+export const TaskAddForm: React.FC = () => {
   const [title, setTitle] = useState("");
   const [dueOn, setDueOn] = useState<Date | null>(null);
   const [estimatedCount, setEstimatedCount] = useState(0);
   const trpc = useTRPC();
 
-  const handleSubmitButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleSubmitButtonClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     if (title === "") {
       return;

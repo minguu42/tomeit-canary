@@ -1,13 +1,13 @@
-import type { ReactNode } from "react";
+import React from "react";
 
 import * as s from "./Flag.css";
 
 type Props = {
-  icon: ReactNode;
+  icon: React.ReactNode;
   labelText: string;
 };
 
-export const Flag = ({ icon, labelText }: Props): JSX.Element => {
+export const Flag: React.FC<Props> = ({ icon, labelText }) => {
   return (
     <div className={s.container}>
       {icon}
