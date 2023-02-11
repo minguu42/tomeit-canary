@@ -1,21 +1,21 @@
-import { Dispatch, FC, MouseEventHandler, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 
 import { DatePicker } from "@/components/DateField/DatePicker";
 import { IconButton } from "@/components/IconButton";
-import * as s from "./DateField.css";
 import { formatDate } from "@/lib/formatDate";
+import * as s from "./DateField.css";
 
 type Props = {
   value: Date | null;
-  setValue: Dispatch<SetStateAction<Date | null>>;
+  setValue: React.Dispatch<React.SetStateAction<Date | null>>;
   icon: JSX.Element;
   label: string;
 };
 
-export const DateFiled = ({ value, setValue, icon, label }: Props): JSX.Element => {
+export const DateFiled: React.FC<Props> = ({ value, setValue, icon, label }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const toggleMenu: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     setIsMenuOpen((prev) => !prev);
   };

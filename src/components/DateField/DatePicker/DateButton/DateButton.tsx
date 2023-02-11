@@ -1,20 +1,19 @@
-import type { MouseEventHandler } from "react";
+import React from "react";
 
 import * as s from "./DateButton.css";
 
-type Props = {
+type Props = React.ComponentPropsWithoutRef<"button"> & {
   date: Date | null;
-  handleClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const DateButton = ({ date, handleClick }: Props): JSX.Element => {
+export const DateButton: React.FC<Props> = ({ date, onClick }) => {
   if (date === null) {
     return <li className={s.container} />;
   }
 
   return (
     <li>
-      <button onClick={handleClick} className={s.container} type="button">
+      <button onClick={onClick} className={s.container} type="button">
         <div className={s.stateLayer} />
         {date.getDate()}
       </button>

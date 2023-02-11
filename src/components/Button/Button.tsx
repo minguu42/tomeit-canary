@@ -1,16 +1,13 @@
-import { FC, MouseEventHandler } from "react";
+import React from "react";
 
 import * as s from "./Button.css";
 
-type Props = {
+type Props = React.ComponentPropsWithoutRef<"button"> & {
   variant: "filled" | "tonal";
   labelText: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-  type?: "submit" | "reset" | "button";
-  disabled?: boolean;
 };
 
-export const Button: FC<Props> = ({ variant, labelText, onClick, type, disabled }) => {
+export const Button: React.FC<Props> = ({ variant, labelText, onClick, type, disabled }) => {
   let container;
   let stateLayer;
   if (variant === "filled") {

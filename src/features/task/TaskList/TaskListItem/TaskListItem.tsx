@@ -32,17 +32,23 @@ export const TaskListItem: FC<Props> = ({ task }) => {
           {flagsExist && (
             <div className={s.flags}>
               {task.actualCount !== 0 && (
-                <Flag icon={<AlarmOnIcon size={18} />} labelText={String(task.actualCount)} />
+                <Flag
+                  icon={<AlarmOnIcon width={18} height={18} />}
+                  labelText={String(task.actualCount)}
+                />
               )}
               {task.estimatedCount !== 0 && (
-                <Flag icon={<AlarmIcon size={18} />} labelText={String(task.estimatedCount)} />
+                <Flag
+                  icon={<AlarmIcon width={18} height={18} />}
+                  labelText={String(task.estimatedCount)}
+                />
               )}
               {task.hasDoToday && (
-                <Flag icon={<DescriptionIcon size={18} />} labelText="今日やること" />
+                <Flag icon={<DescriptionIcon width={18} height={18} />} labelText="今日やること" />
               )}
               {task.dueOn !== null && (
                 <Flag
-                  icon={<CalendarIcon size={18} />}
+                  icon={<CalendarIcon width={18} height={18} />}
                   labelText={formatDate(task.dueOn, "locale")}
                 />
               )}
@@ -68,17 +74,23 @@ export const TaskListItem: FC<Props> = ({ task }) => {
         {flagsExist && (
           <div className={s.flags}>
             {task.actualCount !== 0 && (
-              <Flag icon={<AlarmOnIcon size={18} />} labelText={String(task.actualCount)} />
+              <Flag
+                icon={<AlarmOnIcon width={18} height={18} />}
+                labelText={String(task.actualCount)}
+              />
             )}
             {task.estimatedCount !== 0 && (
-              <Flag icon={<AlarmIcon size={18} />} labelText={String(task.estimatedCount)} />
+              <Flag
+                icon={<AlarmIcon width={18} height={18} />}
+                labelText={String(task.estimatedCount)}
+              />
             )}
             {task.hasDoToday && (
-              <Flag icon={<DescriptionIcon size={18} />} labelText="今日やること" />
+              <Flag icon={<DescriptionIcon width={18} height={18} />} labelText="今日やること" />
             )}
             {task.dueOn !== null && (
               <Flag
-                icon={<CalendarIcon size={18} />}
+                icon={<CalendarIcon width={18} height={18} />}
                 labelText={formatDate(task.dueOn, "locale")}
               />
             )}

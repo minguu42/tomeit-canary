@@ -1,14 +1,15 @@
-type Props = {
-  size?: 18 | 24;
-  className?: string;
-};
+import React from "react";
 
-export const AlarmOnIcon = ({ size, className }: Props): JSX.Element => (
+export const AlarmOnIcon: React.FC<React.ComponentPropsWithoutRef<"svg">> = ({
+  width = 24,
+  height = 24,
+  className,
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    width={size ?? 24}
-    height={size ?? 24}
+    width={width}
+    height={height}
     fill="currentColor"
     className={className}
   >

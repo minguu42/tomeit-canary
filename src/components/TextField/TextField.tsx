@@ -1,16 +1,16 @@
-import type { ChangeEventHandler, Dispatch, ReactNode, SetStateAction } from "react";
+import React from "react";
 
 import * as s from "./TextField.css";
 
 type Props = {
   value: string;
   placeholder: string;
-  setValue: Dispatch<SetStateAction<string>>;
-  icon: ReactNode;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+  icon: React.ReactNode;
 };
 
-export const TextField = ({ value, placeholder, setValue, icon }: Props): JSX.Element => {
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+export const TextField: React.FC<Props> = ({ value, placeholder, setValue, icon }) => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setValue(e.target.value);
   };
 

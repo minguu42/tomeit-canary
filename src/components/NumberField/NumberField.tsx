@@ -1,4 +1,4 @@
-import type { ChangeEventHandler, Dispatch, SetStateAction } from "react";
+import React from "react";
 
 import * as s from "./NumberField.css";
 
@@ -6,12 +6,12 @@ type Props = {
   value: number;
   min: number;
   max: number;
-  setValue: Dispatch<SetStateAction<number>>;
+  setValue: React.Dispatch<React.SetStateAction<number>>;
   icon: JSX.Element;
 };
 
-export const NumberField = ({ value, min, max, setValue, icon }: Props): JSX.Element => {
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+export const NumberField: React.FC<Props> = ({ value, min, max, setValue, icon }) => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setValue(Number(e.target.value));
   };
 

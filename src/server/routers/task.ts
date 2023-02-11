@@ -1,7 +1,30 @@
+import { Firestore } from "@google-cloud/firestore";
+
+import { serverEnv } from "@/configs/serverEnv";
 import type { Task } from "@/features/task/task";
 import { procedure, router } from "@/server/trpc";
 
 export const taskRouter = router({
+  create: procedure.mutation(() => {
+    const firestore = new Firestore({
+      projectId: serverEnv.GCLOUD_PROJECT,
+      credentials: {
+        client_email: serverEnv.GCLOUD_CLIENT_EMAIL,
+        private_key: serverEnv.GCLOUD_PRIVATE_KEY,
+      },
+    });
+    firestore
+      .collection("users")
+      .doc("akira")
+      .set({
+        first: "Akira",
+        last: "Furukawa",
+        born: 2000,
+      })
+      .then(() => {
+        console.log("set is success!");
+      });
+  }),
   list: procedure.query(() => {
     const ts: Task[] = [
       {

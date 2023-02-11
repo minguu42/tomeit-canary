@@ -1,16 +1,13 @@
-import type { MouseEventHandler, ReactNode } from "react";
+import React from "react";
 
 import * as s from "./IconButton.css";
 
-type Props = {
-  icon: ReactNode;
+type Props = React.ComponentPropsWithoutRef<"button"> & {
+  icon: React.ReactNode;
   label: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-  type?: "submit" | "reset" | "button";
-  disabled?: boolean;
 };
 
-export const IconButton = ({ icon, label, onClick, type, disabled }: Props): JSX.Element => (
+export const IconButton: React.FC<Props> = ({ icon, label, onClick, type, disabled }) => (
   <button
     aria-label={label}
     onClick={onClick}

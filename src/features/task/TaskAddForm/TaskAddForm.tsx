@@ -7,11 +7,13 @@ import { NumberField } from "@/components/NumberField";
 import { TextField } from "@/components/TextField";
 import * as s from "./TaskAddForm.css";
 import { Task } from "@/features/task/task";
+import { useTRPC } from "@/hooks/useTRPC";
 
 export const TaskAddForm = (): JSX.Element => {
   const [title, setTitle] = useState("");
   const [dueOn, setDueOn] = useState<Date | null>(null);
   const [estimatedCount, setEstimatedCount] = useState(0);
+  const trpc = useTRPC();
 
   const handleSubmitButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -30,6 +32,8 @@ export const TaskAddForm = (): JSX.Element => {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
+
+    void trpc.task.create.mutate();
 
     setTitle("");
     setDueOn(null);

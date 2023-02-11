@@ -1,16 +1,16 @@
-import { ChangeEventHandler, Dispatch, MouseEventHandler, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 
 import { DateButton } from "@/components/DateField/DatePicker/DateButton";
 import { IconButton } from "@/components/IconButton";
 import { NavigateBeforeIcon, NavigateNextIcon } from "@/components/icons";
-import * as s from "./DatePicker.css";
 import { formatDate } from "@/lib/formatDate";
+import * as s from "./DatePicker.css";
 
 type Props = {
-  setValue: Dispatch<SetStateAction<Date | null>>;
+  setValue: React.Dispatch<React.SetStateAction<Date | null>>;
 };
 
-export const DatePicker = ({ setValue }: Props): JSX.Element => {
+export const DatePicker: React.FC<Props> = ({ setValue }) => {
   const now = new Date();
   const [displayingDate, setDisplayingDate] = useState(
     new Date(now.getFullYear(), now.getMonth() + 1),
@@ -21,14 +21,14 @@ export const DatePicker = ({ setValue }: Props): JSX.Element => {
     return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((m) => new Date(y, m, 1));
   };
 
-  const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+  const handleSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const y = Number(e.target.value.split("-")[0]);
     const m = Number(e.target.value.split("-")[1]);
     const d = Number(e.target.value.split("-")[2]);
     setDisplayingDate(new Date(y, m - 1, d));
   };
 
-  const handleBeforeButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleBeforeButtonClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     setDisplayingDate((prev) => {
       const y = Number(prev.getFullYear());
@@ -38,7 +38,7 @@ export const DatePicker = ({ setValue }: Props): JSX.Element => {
     });
   };
 
-  const handleNextButtonClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleNextButtonClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     setDisplayingDate((prev) => {
       const y = Number(prev.getFullYear());
@@ -110,7 +110,7 @@ export const DatePicker = ({ setValue }: Props): JSX.Element => {
           <DateButton
             key={i}
             date={d}
-            handleClick={(e) => {
+            onClick={(e) => {
               e.preventDefault();
               setValue(d);
             }}
