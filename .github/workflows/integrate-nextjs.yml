@@ -18,10 +18,13 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     env:
-      NEXTAUTH_SECRET: nextauth_secret_example
+      GCLOUD_PROJECT: xxx
+      GCLOUD_CLIENT_EMAIL: xxx@example.com
+      GCLOUD_PRIVATE_KEY: xxx
+      NEXTAUTH_SECRET: xxx
       NEXTAUTH_URL: http://localhost:3000
-      GOOGLE_CLIENT_ID: google_client_id_example
-      GOOGLE_CLIENT_SECRET: google_client_secret_example
+      GOOGLE_CLIENT_ID: xxx
+      GOOGLE_CLIENT_SECRET: xxx
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
